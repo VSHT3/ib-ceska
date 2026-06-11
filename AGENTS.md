@@ -5,48 +5,54 @@ Website for the IB Diploma Programme at **Súkromné Gymnázium Česká** in Bra
 
 ## Language
 - **Primary: English** — all UI, content, and commit messages.
-- **Secondary: Slovak** — i18n option planned. Current Czech placeholder text must be replaced with English.
+- **Secondary: Slovak** — i18n option planned.
 - Do not write or generate Czech in code or content.
 
 ## Commands
 ```bash
-npm run dev          # dev server (localhost:4321)
-npm run build        # static build to dist/
+npm run dev          # dev server (localhost:4321, includes /keystatic admin)
+npm run build        # hybrid build to dist/ (static pages + server routes)
 npm run preview      # preview built site
 npm run astro check  # type-check (astro check)
 npm run astro add    # add integrations
 ```
 
 ## Stack
-- **Astro 6** (static, no SSR)
-- **Tailwind CSS 4** via `@tailwindcss/vite` plugin (no `tailwind.config.*` — use CSS-first config)
-- **MDX** via `@astrojs/mdx` (required for `.mdx` content files)
+- **Astro 6** — hybrid mode (static prerender + Node adapter for `/keystatic/` API routes)
+- **Tailwind CSS 4** via `@tailwindcss/vite` plugin (CSS-first config, no `tailwind.config.*`)
+- **MDX** via `@astrojs/mdx` (for `.astro` page components with JSX)
+- **Keystatic CMS** via `@keystatic/astro` — admin UI at `/keystatic/`
+- **Node adapter** — required for Keystatic server routes (`@astrojs/node`)
 - Node >= 22.12.0
 - Strict TypeScript (`astro/tsconfigs/strict`)
 
-## Content collections (Astro 6 loader API)
-Config lives at `src/content.config.ts` (not `src/content/config.ts` — Astro 6 moved it).
+## Content system (Keystatic Reader API + .mdoc files)
+Content is managed by **Keystatic CMS**, NOT Astro content collections. No `src/content.config.ts` — removed.
 
-Each collection uses `glob()` loader from `astro/loaders` with `base` set to the content subdirectory:
-```ts
-loader: glob({ pattern: '**/*.mdx', base: './src/content/subjects' })
-```
+- **Content files:** `.mdoc` format (YAML frontmatter + Markdoc body) in `src/content/`
+- **Schemas:** Defined in `keystatic.config.ts` (not Zod — Keystatic `fields.*` API)
+- **Reader:** `src/lib/keystatic.ts` exports a singleton `reader` used by all pages
+- **Pages use:** `reader.collections.subjects.all()` instead of `getCollection('subjects')`
+- **Entry shape:** `{ slug: string, entry: { title, description, ... } }` — no `.data` nesting
 
-Collections: `subjects`, `news`, `cas`, `tok`.
+## Storage modes
+- **Dev:** `kind: 'local'` — reads/writes `.mdoc` files directly on disk
+- **Production:** `kind: 'github'` — commits to GitHub via OAuth, triggers redeploy
 
 ## Directory structure
 ```
 src/
-├── content/            # .mdx content files (never .md — MDX required for entry type recognition)
-│   ├── subjects/       # IB subject group listings
-│   ├── news/           # news articles
-│   ├── cas/            # CAS activity logs
-│   └── tok/            # TOK essays and materials
-├── pages/              # route-based pages
+├── content/            # .mdoc content files (Keystatic-managed, never edit manually)
+│   ├── subjects/       # IB subject listings (one .mdoc per subject)
+│   ├── news/           # news articles (.mdoc)
+│   ├── cas/            # CAS activity logs (.mdoc)
+│   └── tok/            # TOK essays and materials (.mdoc)
+├── pages/              # route-based Astro pages (use Keystatic reader)
 ├── layouts/            # Layout.astro — shared shell with nav + footer
 ├── components/         # reusable .astro components
-├── styles/             # global.css (Tailwind import)
-└── content.config.ts   # collection schemas + loaders
+├── lib/                # keystatic.ts — reader singleton
+└── styles/             # global.css (Tailwind import)
+keystatic.config.ts     # CMS config — collections, fields, storage
 ```
 
 ## Style conventions
@@ -65,12 +71,21 @@ Use `/caveman-commit` for every commit — not just when asked. Commit after eac
 
 ## Documentation
 Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. Update after significant feature work:
-- `humans/CONTENT.md` — field reference, examples, adding content
-- `humans/DESIGN.md` — design tokens, layout, styling rules
+- `humans/CONTENT.md` — field reference, editor workflow, adding content via Keystatic
+- `humans/DESIGN.md` — design tokens, layout, styling rules, CMS architecture
 - `humans/README.md` — onboarding index
 
+## Deployment
+- **Target:** Coolify on VPS
+- **Build:** `npm run build` outputs `dist/client/` (static) + `dist/server/` (Node)
+- **Keystatic:** Production uses GitHub OAuth storage — set `KEYSTATIC_GITHUB_CLIENT_ID` and `KEYSTATIC_GITHUB_CLIENT_SECRET` env vars
+- **Coolify tip:** Set build command to `npm run build`, start command to `node dist/server/entry.mjs`, port to `4321`
+
 ## Gotchas
-- `.md` files won't work for collections without registering a markdown entry type. Use `.mdx` everywhere for content.
+- Content files are `.mdoc`, NOT `.mdx` or `.md`. Don't create `.mdx` files in `src/content/`.
 - Tailwind 4 uses CSS-based config (`@import "tailwindcss"` in global.css). There is no `tailwind.config.js`.
 - The `site` URL in `astro.config.mjs` is `https://ceska-skola.cz` — update before production deploy.
 - `tsconfig.json` uses `"exclude": ["dist"]` — do not remove.
+- Keystatic schema changes (`keystatic.config.ts`) require restarting `npm run dev`.
+- The Node adapter is required even for static pages — Keystatic API routes need a server.
+- YAML values with colons (e.g. `LO1: text`) must be quoted in `.mdoc` frontmatter.

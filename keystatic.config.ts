@@ -1,9 +1,14 @@
 import { config, fields, collection } from '@keystatic/core';
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 export default config({
-  storage: {
-    kind: 'local',
-  },
+  storage: isDev
+    ? { kind: 'local' }
+    : {
+        kind: 'github',
+        repo: { owner: 'VSHT3', name: 'ib-ceska' },
+      },
   collections: {
     subjects: collection({
       label: 'Subjects',

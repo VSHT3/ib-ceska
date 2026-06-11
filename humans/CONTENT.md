@@ -1,125 +1,118 @@
 # Content editing guide
 
-All website content lives in `.mdx` files under `src/content/`. Each file has *frontmatter* (metadata between `---` markers) that the site uses to display the content correctly.
+All website content is managed through the **Keystatic CMS admin panel** — a visual editor that requires no coding knowledge. You edit content in your browser, and changes are saved directly to the repository.
+
+## How to edit content
+
+1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
+2. **Choose a collection** — Subjects, News, CAS Activities, or TOK Materials
+3. **Click an entry** to edit, or **"Create"** to add a new one
+4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
+5. **Save** — changes are committed to GitHub
+
+## Production workflow (GitHub OAuth)
+
+When editing on the live site:
+- You log in with your GitHub account
+- Edits create commits directly to the repository
+- Coolify detects the push and automatically redeploys the site
+- Changes go live within seconds
+
+## Local workflow
+
+When running `npm run dev` locally:
+- The admin panel is available at `http://localhost:4321/keystatic/`
+- Edits write directly to `.mdoc` files in `src/content/`
+- No GitHub auth required — changes stay local
 
 ## Collections
 
-### subjects (`src/content/subjects/`)
+### Subjects (`src/content/subjects/`)
 
-Each file represents one IB subject offering.
+Each entry represents one IB subject offering.
 
 **Fields:**
 
 | Field        | Type     | Required | Description                                          |
 | ------------ | -------- | -------- | ---------------------------------------------------- |
-| `title`      | string   | yes      | Subject name (e.g. "English Language and Literature") |
-| `group`      | enum     | yes      | IB group: `"1"`, `"2"`, `"3"`, `"4"`, `"5"`, `"6"`, or `"core"` |
-| `level`      | enum     | no       | Offering level: `"HL"`, `"SL"`, or `"both"`         |
-| `description`| string   | yes      | Brief description of the course                      |
-| `teacher`    | string   | no       | Teacher's name and title                             |
+| `title`      | slug     | yes      | Subject name — also used as the URL slug             |
+| `group`      | select   | yes      | IB group: 1 through 6, or Core                       |
+| `level`      | select   | no       | HL or SL                                             |
+| `description`| textarea | yes      | Brief course description                             |
+| `teacher`    | text     | no       | Teacher's name and title                             |
 | `order`      | number   | no       | Display order within the group (default: 0)          |
+| `content`    | richtext | no       | Full syllabus details, assessment criteria, etc.     |
 
-**Example:**
-```mdx
----
-title: "Mathematics: Analysis and Approaches"
-group: "5"
-level: "HL"
-order: 1
-description: "Calculus, statistics, probability, and algebra."
-teacher: "Mgr. Ondřej Bílý"
----
-```
+### CAS Activities (`src/content/cas/`)
 
-### cas (`src/content/cas/`)
-
-Each file is one CAS activity entry.
+Each entry is one CAS activity or project.
 
 **Fields:**
 
-| Field             | Type           | Required | Description                              |
-| ----------------- | -------------- | -------- | ---------------------------------------- |
-| `title`           | string         | yes      | Activity name                            |
-| `date`            | date           | yes      | When it happened (YYYY-MM-DD)            |
-| `strand`          | enum           | yes      | `"Creativity"`, `"Activity"`, or `"Service"` |
-| `description`     | string         | yes      | What was done                            |
-| `learningOutcomes`| array of string| no       | IB learning outcomes addressed (e.g. `"LO1: Awareness of strengths"`) |
+| Field             | Type       | Required | Description                              |
+| ----------------- | ---------- | -------- | ---------------------------------------- |
+| `title`           | slug       | yes      | Activity name                            |
+| `date`            | date       | yes      | When it took place                       |
+| `strand`          | select     | yes      | Creativity, Activity, or Service         |
+| `description`     | textarea   | yes      | Summary of the activity                  |
+| `learningOutcomes`| list       | no       | IB learning outcomes addressed           |
+| `content`         | richtext   | no       | Full reflection, evidence, photos        |
 
-**Example:**
-```mdx
----
-title: "School theatre production"
-date: 2025-11-20
-strand: "Creativity"
-description: "IB students wrote and performed an original play."
-learningOutcomes:
-  - "LO1: Awareness of strengths"
-  - "LO4: Perseverance and commitment"
----
-```
-
-### tok (`src/content/tok/`)
+### TOK Materials (`src/content/tok/`)
 
 Theory of Knowledge essays, themes, and discussion materials.
 
 **Fields:**
 
-| Field         | Type   | Required | Description                            |
-| ------------- | ------ | -------- | -------------------------------------- |
-| `title`       | string | yes      | Essay or topic title                   |
-| `date`        | date   | yes      | Publication date (YYYY-MM-DD)         |
-| `theme`       | string | yes      | TOK theme (e.g. "Ethics", "Language as a Way of Knowing") |
-| `description` | string | yes      | Summary of the essay or discussion     |
+| Field         | Type     | Required | Description                              |
+| ------------- | -------- | -------- | ---------------------------------------- |
+| `title`       | slug     | yes      | Essay or topic title                     |
+| `date`        | date     | yes      | Publication date                         |
+| `theme`       | select   | yes      | TOK theme (12 options)                   |
+| `description` | textarea | yes      | Summary of the essay or discussion       |
+| `content`     | richtext | no       | Full essay text                          |
 
-**Example:**
-```mdx
----
-title: "Ethical limits of artificial intelligence"
-date: 2025-11-10
-theme: "Ethics"
-description: "Discussion material on AI ethics — connecting natural and human sciences."
----
-```
-
-### news (`src/content/news/`)
+### News (`src/content/news/`)
 
 Announcements, exam schedules, and events.
 
 **Fields:**
 
-| Field     | Type   | Required | Description                     |
-| --------- | ------ | -------- | ------------------------------- |
-| `title`   | string | yes      | Headline                        |
-| `date`    | date   | yes      | Publication date (YYYY-MM-DD)  |
-| `excerpt` | string | no       | Short summary shown on listing  |
-| `author`  | string | no       | Author attribution              |
-
-**Example:**
-```mdx
----
-title: "IB exams 2026 — schedule published"
-date: 2025-11-01
-excerpt: "The IB has released the official exam schedule for the May 2026 session."
-author: "IB Coordinator"
----
-```
+| Field     | Type     | Required | Description                     |
+| --------- | -------- | -------- | ------------------------------- |
+| `title`   | slug     | yes      | Headline                        |
+| `date`    | date     | yes      | Publication date                |
+| `excerpt` | textarea | no       | Short summary shown on listing  |
+| `author`  | text     | no       | Author attribution              |
+| `content` | richtext | no       | Full article body               |
 
 ## Language
 
-**All new content must be written in English.** Czech placeholder text that already exists will be replaced with English. Slovak translations will be added later as an i18n option.
+- **All content must be written in English.**
+- Slovak translations will be added later as an i18n option.
 
-## Adding a new file
+## File format (for developers)
 
-1. Create a new `.mdx` file in the appropriate `src/content/` subdirectory
-2. Add the required frontmatter fields (see tables above)
-3. Rebuild the site: `npm run build`
+Content is stored as `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`. The CMS handles this automatically — manual editing is not recommended unless you know what you're doing.
 
-**File naming:** Use lowercase, hyphenated slugs (e.g. `ib-exams-2026.mdx`). The filename becomes part of the URL if individual pages are added later.
+**Example `.mdoc` file:**
+```yaml
+---
+title: Mathematics Analysis and Approaches
+group: "5"
+level: HL
+description: Calculus, statistics, probability, and algebra
+teacher: Mgr. Ondřej Bílý
+order: 1
+---
 
-## Adding a new frontmatter field
+Full syllabus content here using rich text...
+```
 
-If you need a field that doesn't exist yet:
+## Adding a new field
 
-1. Update the Zod schema in `src/content.config.ts`
-2. Add the field to all existing files in that collection
-3. Use it in the relevant Astro page component under `src/pages/`
+If a field is missing from the editor:
+
+1. Update `keystatic.config.ts` — add the field to the schema
+2. Restart the dev server (`npm run dev`)
+3. The new field appears in the admin UI automatically

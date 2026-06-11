@@ -51,10 +51,29 @@ Keep components reusable and small. Each `.astro` component should do one thing:
 
 - **Favicon:** `public/favicon.svg` (vector) + `public/favicon.ico` (fallback)
 - **Other assets:** Place in `public/` for direct URL access, or `src/assets/` for imported assets
-- **No external icon libraries** unless specifically needed
+- **CMS images:** Uploaded via Keystatic's rich text editor, stored in `public/images/`
 
 ## Responsive behaviour
 
 - Mobile-first: base styles target small screens, breakpoints add columns/layout
 - Nav stays horizontal (no hamburger yet — add if content grows)
 - Cards stack vertically on mobile, 2 columns on sm, 3 on lg
+
+## CMS architecture
+
+The site uses **Keystatic CMS** for content management:
+
+- **Admin panel** at `/keystatic/` — visual editor with no coding required
+- **Storage:**
+  - **Dev (local):** Writes to `.mdoc` files directly on disk
+  - **Production (github):** Commits changes to the GitHub repository, triggering Coolify redeploy
+- **Rendering:** Astro pages read content via the Keystatic Reader API (`src/lib/keystatic.ts`)
+- **Content format:** `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`
+- **Types:** Defined in `keystatic.config.ts` using Keystatic's `fields.*` API
+
+## Deployment
+
+- **Target:** Coolify (VPS)
+- **Build:** `npm run build` produces `dist/client/` (static pages) + `dist/server/` (Node server)
+- **Start:** `node dist/server/entry.mjs` on port 4321
+- **Env vars:** `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` (for GitHub OAuth in production)
