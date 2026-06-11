@@ -1,5 +1,5 @@
 ---
-import { reader } from '../../lib/keystatic';
+import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
@@ -32,13 +32,13 @@ const allEssays = await reader.collections.tok.all();
           .map((e) => (
             <div class="rounded-lg border border-stone-200 bg-white p-4">
               <div class="flex items-center justify-between mb-1">
-                <h3 class="font-semibold">{e.entry.title}</h3>
+                <h3 class="font-semibold">{pick(locale, e.entry.sk.title, e.entry.title)}</h3>
                 <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">{e.entry.theme}</span>
               </div>
               <time class="text-xs text-stone-400">
                 {new Date(e.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
               </time>
-              <p class="text-sm text-stone-600 mt-1">{e.entry.description}</p>
+              <p class="text-sm text-stone-600 mt-1">{pick(locale, e.entry.sk.description, e.entry.description)}</p>
             </div>
           ))}
       </div>

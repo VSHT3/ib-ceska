@@ -1,5 +1,5 @@
 ---
-import { reader } from '../../../lib/keystatic';
+import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
@@ -35,8 +35,8 @@ const allNews = await reader.collections.news.all();
                 day: 'numeric',
               })}
             </time>
-            <h2 class="text-xl font-semibold mt-1 mb-2">{n.entry.title}</h2>
-            {n.entry.excerpt && <p class="text-stone-600">{n.entry.excerpt}</p>}
+            <h2 class="text-xl font-semibold mt-1 mb-2">{pick(locale, n.entry.sk.title, n.entry.title)}</h2>
+            {n.entry.excerpt && <p class="text-stone-600">{pick(locale, n.entry.sk.excerpt, n.entry.excerpt)}</p>}
             {n.entry.author && <p class="text-xs text-stone-400 mt-2">{n.entry.author}</p>}
           </article>
         ))}

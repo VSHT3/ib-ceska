@@ -2,6 +2,24 @@ import { config, fields, collection } from '@keystatic/core';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
+// Grouped Slovak translation fields. All optional — pages fall back to the
+// English fields when a translation is empty.
+const slovakFields = (opts: { description?: string; excerpt?: boolean; body?: string } = {}) =>
+  fields.object(
+    {
+      title: fields.text({ label: 'Title (Slovak)' }),
+      ...(opts.description
+        ? { description: fields.text({ label: `${opts.description} (Slovak)`, multiline: true }) }
+        : {}),
+      ...(opts.excerpt ? { excerpt: fields.text({ label: 'Excerpt (Slovak)', multiline: true }) } : {}),
+      ...(opts.body ? { body: fields.markdoc.inline({ label: `${opts.body} (Slovak)` }) } : {}),
+    },
+    {
+      label: 'Slovak translation',
+      description: 'Optional — visitors see the English version where a Slovak field is left empty.',
+    }
+  );
+
 export default config({
   storage: isDev
     ? { kind: 'local' }
@@ -41,6 +59,7 @@ export default config({
         description: fields.text({ label: 'Description', multiline: true }),
         teacher: fields.text({ label: 'Teacher' }),
         order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
+        sk: slovakFields({ description: 'Description', body: 'Syllabus Details' }),
         content: fields.markdoc({ label: 'Syllabus Details', options: { image: { directory: 'public/images/subjects', publicPath: '/images/subjects' } } }),
       },
     }),
@@ -54,6 +73,7 @@ export default config({
         date: fields.date({ label: 'Date' }),
         excerpt: fields.text({ label: 'Excerpt', multiline: true }),
         author: fields.text({ label: 'Author' }),
+        sk: slovakFields({ excerpt: true, body: 'Article Body' }),
         content: fields.markdoc({ label: 'Article Body', options: { image: { directory: 'public/images/news', publicPath: '/images/news' } } }),
       },
     }),
@@ -79,6 +99,7 @@ export default config({
           fields.text({ label: 'Learning Outcome' }),
           { label: 'Learning Outcomes', itemLabel: (props) => props.value ?? 'LO' }
         ),
+        sk: slovakFields({ description: 'Description', body: 'Reflection' }),
         content: fields.markdoc({ label: 'Reflection', options: { image: { directory: 'public/images/cas', publicPath: '/images/cas' } } }),
       },
     }),
@@ -109,6 +130,7 @@ export default config({
           defaultValue: 'Ethics',
         }),
         description: fields.text({ label: 'Summary', multiline: true }),
+        sk: slovakFields({ description: 'Summary', body: 'Full Essay' }),
         content: fields.markdoc({ label: 'Full Essay', options: { image: { directory: 'public/images/tok', publicPath: '/images/tok' } } }),
       },
     }),

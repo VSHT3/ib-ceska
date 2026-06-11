@@ -1,5 +1,5 @@
 ---
-import { reader } from '../../../lib/keystatic';
+import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
@@ -44,12 +44,12 @@ const groups = [
             {groupSubjects.map((s) => (
               <div class="rounded-lg border border-stone-200 bg-white p-4">
                 <div class="flex items-center justify-between mb-1">
-                  <h3 class="font-semibold">{s.entry.title}</h3>
+                  <h3 class="font-semibold">{pick(locale, s.entry.sk.title, s.entry.title)}</h3>
                   {s.entry.level && (
                     <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium">{s.entry.level}</span>
                   )}
                 </div>
-                <p class="text-sm text-stone-600">{s.entry.description}</p>
+                <p class="text-sm text-stone-600">{pick(locale, s.entry.sk.description, s.entry.description)}</p>
                 {s.entry.teacher && (
                   <p class="text-xs text-stone-400 mt-1">{dict.subjects.teacher}: {s.entry.teacher}</p>
                 )}
