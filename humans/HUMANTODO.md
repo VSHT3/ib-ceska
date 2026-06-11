@@ -11,6 +11,12 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Provide actual CAS activity records with dates, descriptions, and learning outcomes
 - [ ] Provide real TOK essay titles and themes
 - [ ] Provide real news/announcement content
+- [ ] Provide the real subjects list (incl. HL/SL offerings and any preset subject combinations students choose from)
+- [ ] Provide teachers list — names, roles, subjects, photos (with their consent)
+- [ ] Provide student testimonials — quotes, names, year (with consent)
+- [ ] Provide school events list (dates, descriptions, photos)
+- [ ] Provide public works to showcase: student EEs, exhibition materials, science collaboration project details — **needs student/parent consent to publish**
+- [ ] Provide real CAS project records to feature
 
 ## Content review
 - [ ] Review English translations once AI replaces Czech placeholders
@@ -21,6 +27,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Branding & design
 - [ ] Provide brand color if emerald-700 is not the right primary
+- [ ] Confirm IB logo usage is allowed (candidate schools have restrictions — check the school's IB agreement before AI adds official IB/MYP/DP logos)
 - [ ] Decide if external fonts should replace the system font stack
 - [x] ~~Provide any photography or imagery for pages~~ — photos pulled from the old website (`public/images/school/`); replace with higher-quality originals if available
 
