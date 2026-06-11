@@ -1,0 +1,99 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title} | IB Česká</title>
+        {description && <meta name="description" content={description} />}
+
+        {/* Open Graph / Twitter metadata for better sharing */}
+        <meta property="og:title" content={`${title} | IB Česká`} />
+        {
+            description && (
+                <meta property="og:description" content={description} />
+            )
+        }
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${title} | IB Česká`} />
+        {
+            description && (
+                <meta name="twitter:description" content={description} />
+            )
+        }
+    </head>
+    <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
+        <header
+            class="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50"
+        >
+            <nav
+                class="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between"
+            >
+                <a href="/" class="font-bold text-lg text-emerald-700"
+                    >IB Česká</a
+                >
+                <ul
+                    class="flex gap-6 text-sm font-medium"
+                    role="navigation"
+                    aria-label="Primary"
+                >
+                    <li>
+                        <a
+                            href="/subjects"
+                            class="hover:text-emerald-700 transition-colors"
+                            >Subjects</a>
+                    </li>
+                    <li>
+                        <a
+                            href="/cas"
+                            class="hover:text-emerald-700 transition-colors"
+                            >CAS</a>
+                    </li>
+                    <li>
+                        <a
+                            href="/tok"
+                            class="hover:text-emerald-700 transition-colors"
+                            >TOK</a>
+                    </li>
+                    <li>
+                        <a
+                            href="/ee"
+                            class="hover:text-emerald-700 transition-colors"
+                            >Extended Essay</a>
+                    </li>
+                    <li>
+                        <a
+                            href="/news"
+                            class="hover:text-emerald-700 transition-colors"
+                            >News</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="mx-auto max-w-5xl px-4 py-8">
+            <slot />
+        </main>
+
+        <footer
+            class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500"
+        >
+            <p>&copy; {currentYear} IB Česká. All rights reserved.</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const subjects = await getCollection('subjects');
+const groups = [
+  { key: '1', label: 'Skupina 1 – Studies in Language and Literature' },
+  { key: '2', label: 'Skupina 2 – Language Acquisition' },
+  { key: '3', label: 'Skupina 3 – Individuals and Societies' },
+  { key: '4', label: 'Skupina 4 – Sciences' },
+  { key: '5', label: 'Skupina 5 – Mathematics' },
+  { key: '6', label: 'Skupina 6 – The Arts' },
+  { key: 'core', label: 'Core – TOK, CAS, EE' },
+];
+---
+
+<Layout title="Předměty" description="Přehled IB předmětů podle skupin">
+  <h1 class="text-3xl font-bold mb-8">IB Předměty</h1>
+
+  {
+    groups.map((group) => {
+      const groupSubjects = subjects
+        .filter((s) => s.data.group === group.key)
+        .sort((a, b) => a.data.order - b.data.order);
+
+      if (groupSubjects.length === 0) return null;
+
+      return (
+        <section class="mb-10">
+          <h2 class="text-xl font-semibold mb-3 text-emerald-800">
+            {group.label}
+          </h2>
+          <div class="grid gap-3">
+            {groupSubjects.map((s) => (
+              <div class="rounded-lg border border-stone-200 bg-white p-4">
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="font-semibold">{s.data.title}</h3>
+                  {s.data.level && (
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium">
+                      {s.data.level}
+                    </span>
+                  )}
+                </div>
+                <p class="text-sm text-stone-600">{s.data.description}</p>
+                {s.data.teacher && (
+                  <p class="text-xs text-stone-400 mt-1">
+                    Vyučující: {s.data.teacher}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+</Layout>
