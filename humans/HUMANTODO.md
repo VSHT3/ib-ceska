@@ -14,14 +14,15 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Content review
 - [ ] Review English translations once AI replaces Czech placeholders
-- [ ] Provide Slovak translations of key UI strings (or approve AI-generated ones)
+- [ ] Review/approve the AI-generated Slovak UI strings (`src/i18n/dictionaries.ts`)
+- [ ] Fill Slovak translations of content entries via the CMS ("Slovak translation" section in each entry — English shows wherever Slovak is left empty)
 - [ ] Review EE timeline — adjust dates to match school calendar
 - [ ] Provide downloadable EE documents (EE Guide PDF, RPPF form, assessment criteria)
 
 ## Branding & design
 - [ ] Provide brand color if emerald-700 is not the right primary
 - [ ] Decide if external fonts should replace the system font stack
-- [ ] Provide any photography or imagery for pages (hero banners, CAS activity photos)
+- [x] ~~Provide any photography or imagery for pages~~ — photos pulled from the old website (`public/images/school/`); replace with higher-quality originals if available
 
 ## Legal & compliance
 - [ ] Confirm GDPR/privacy policy content for the footer

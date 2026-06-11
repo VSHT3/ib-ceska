@@ -16,25 +16,32 @@ Tasks the AI must complete. Checked = done.
 - [ ] 404 error page
 
 ## i18n
-- [ ] English/Slovak language switcher component
-- [ ] Slovak translation strings for all UI
-- [ ] Slovak translations for sample content
+- [x] English/Slovak language switcher component
+- [x] Slovak translation strings for all UI
+- [x] Slovak content fields in Keystatic (optional, EN fallback)
+- [ ] Slovak translations for sample content (fill `sk` fields via /keystatic)
+- [x] Browser-language detection on `/` (sk/cs → `/sk/`, else `/en/`)
 
 ## SEO & meta
 - [ ] `sitemap.xml` generation
 - [ ] `robots.txt`
-- [ ] Open Graph meta tags on all pages
-- [ ] Proper `<title>` structure across all pages
+- [x] Open Graph meta tags on all pages (incl. og:image)
+- [x] Proper `<title>` structure across all pages
+- [ ] `hreflang` alternate links between /en/ and /sk/ pages
 
 ## UI & UX
 - [ ] Replace default Astro favicon with school logo
 - [ ] Update nav logo with high-quality version when provided
-- [ ] Responsive mobile navigation (hamburger menu)
+- [x] Responsive mobile navigation (hamburger menu)
+- [x] Scroll-reveal animations, view transitions, count-up stats, photo marquee
+- [ ] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
+- [ ] Gallery page (old site had one; photos already in `public/images/school/`)
+- [ ] Admissions/contact page (old site had "Apply Now" flow)
 - [ ] Dark mode support (respects `prefers-color-scheme`)
 - [ ] Loading/empty states for empty collections
 
 ## DX
-- [ ] Add `astro check` script alias to `package.json`
+- [x] Add `astro check` script alias to `package.json` (`npm run check`)
 - [ ] Add `astro sync` to pre-build hook
 - [ ] Biome or ESLint config
 - [ ] Prettier config for `.astro` and `.mdx` files

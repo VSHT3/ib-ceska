@@ -35,12 +35,28 @@ Implemented and shipped.
 - [x] `/news` — chronological article listing
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
 
+## i18n (EN/SK)
+- [x] Locale-prefixed routes (`/en/…`, `/sk/…`) for every page
+- [x] `LanguageSwitcher` pill toggle preserving the current path
+- [x] Full Slovak UI dictionary (`src/i18n/dictionaries.ts`)
+- [x] Optional Slovak content fields in every Keystatic collection with English fallback
+- [x] Browser-language detection on `/` (sk/cs → `/sk/`, else `/en/`)
+
 ## Layout & design
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
-- [x] System font stack (no external webfonts)
-- [x] Tailwind-only CSS (no custom CSS, no `tailwind.config.js`)
+- [x] Inter Variable font (self-hosted via `@fontsource-variable/inter`)
+- [x] Tailwind-only CSS (animation utilities live in `global.css`)
+- [x] Full-photo homepage hero with Ken Burns zoom, badge, CTAs
+- [x] Count-up stats band, scroll-reveal sections, photo marquee gallery
+- [x] Astro view transitions (`<ClientRouter />`) for smooth navigation
+- [x] Mobile hamburger menu + active nav link states
+- [x] Dark 3-column footer with school contact details
+- [x] `PageHeader` gradient hero band on all subpages; EE visual timeline
+- [x] MYP candidate-school disclaimer + correct programme ages (14–16 / 16–19)
+- [x] School photography from the old Framer site (`public/images/school/`)
+- [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
 
 ## Sample content
 - [x] 8 subjects across all 6 IB groups
