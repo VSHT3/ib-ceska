@@ -84,7 +84,7 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 ## Gotchas
 - Content files are `.mdoc`, NOT `.mdx` or `.md`. Don't create `.mdx` files in `src/content/`.
 - Tailwind 4 uses CSS-based config (`@import "tailwindcss"` in global.css). There is no `tailwind.config.js`.
-- The `site` URL in `astro.config.mjs` is `https://ceska-skola.cz` — update before production deploy.
+- The `site` URL in `astro.config.mjs` is `https://ib.gymnaziumceska.sk`.
 - `tsconfig.json` uses `"exclude": ["dist"]` — do not remove.
 - Keystatic schema changes (`keystatic.config.ts`) require restarting `npm run dev`.
 - The Node adapter is required even for static pages — Keystatic API routes need a server.

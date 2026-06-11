@@ -7,7 +7,7 @@ import node from '@astrojs/node';
 import keystatic from '@keystatic/astro';
 
 export default defineConfig({
-  site: 'https://ceska-skola.cz',
+  site: 'https://ib.gymnaziumceska.sk',
   adapter: node({ mode: 'standalone' }),
   vite: {
     plugins: [tailwindcss()],

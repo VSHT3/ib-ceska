@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript)](https://www.typescriptlang.org)
 [![Node](https://img.shields.io/badge/Node-%3E%3D22.12.0-339933?logo=nodedotjs)](https://nodejs.org)
 
-Static website for the **International Baccalaureate Diploma Programme** at [Súkromné Gymnázium Česká](https://ceska-skola.cz) in Bratislava, Slovakia.
+Static website for the **International Baccalaureate Diploma Programme** at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia.
 
 ## Features
 
@@ -70,7 +70,7 @@ See [`humans/`](humans/) for onboarding docs, design decisions, and the original
 npm run build   # outputs static site to dist/
 ```
 
-Deploy `dist/` to any static host (Netlify, Vercel, GitHub Pages, etc.). The `site` URL in `astro.config.mjs` should be updated before production deploy.
+Deploy `dist/` to any static host (Netlify, Vercel, GitHub Pages, etc.). Live at [ib.gymnaziumceska.sk](https://ib.gymnaziumceska.sk).
 
 ## License
 

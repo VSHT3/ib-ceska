@@ -73,7 +73,8 @@ The site uses **Keystatic CMS** for content management:
 
 ## Deployment
 
-- **Target:** Coolify (VPS)
+- **Target:** Coolify on VPS
+- **Domain:** `https://ib.gymnaziumceska.sk`
 - **Build:** `npm run build` produces `dist/client/` (static pages) + `dist/server/` (Node server)
 - **Start:** `node dist/server/entry.mjs` on port 4321
 - **Env vars:** `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` (for GitHub OAuth in production)
