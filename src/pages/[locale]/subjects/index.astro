@@ -1,0 +1,63 @@
+---
+import { reader } from '../../../lib/keystatic';
+import Layout from '../../../layouts/Layout.astro';
+import { t } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'sk' } },
+  ];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+
+const allSubjects = await reader.collections.subjects.all();
+const groups = [
+  { key: '1', label: dict.subjects.group1 },
+  { key: '2', label: dict.subjects.group2 },
+  { key: '3', label: dict.subjects.group3 },
+  { key: '4', label: dict.subjects.group4 },
+  { key: '5', label: dict.subjects.group5 },
+  { key: '6', label: dict.subjects.group6 },
+  { key: 'core', label: dict.subjects.core },
+];
+---
+
+<Layout title={dict.subjects.title} description="IB subject listings by group" locale={locale}>
+  <h1 class="text-3xl font-bold mb-8">{dict.subjects.title}</h1>
+
+  {
+    groups.map((group) => {
+      const groupSubjects = allSubjects
+        .filter((s) => s.entry.group === group.key)
+        .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0));
+
+      if (groupSubjects.length === 0) return null;
+
+      return (
+        <section class="mb-10">
+          <h2 class="text-xl font-semibold mb-3 text-emerald-800">{group.label}</h2>
+          <div class="grid gap-3">
+            {groupSubjects.map((s) => (
+              <div class="rounded-lg border border-stone-200 bg-white p-4">
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="font-semibold">{s.entry.title}</h3>
+                  {s.entry.level && (
+                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium">{s.entry.level}</span>
+                  )}
+                </div>
+                <p class="text-sm text-stone-600">{s.entry.description}</p>
+                {s.entry.teacher && (
+                  <p class="text-xs text-stone-400 mt-1">{dict.subjects.teacher}: {s.entry.teacher}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+</Layout>

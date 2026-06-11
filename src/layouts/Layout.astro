@@ -1,103 +1,67 @@
 ---
-import "../styles/global.css";
+import '../styles/global.css';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { t, l } from '../i18n/dictionaries';
+import type { Locale } from '../i18n/dictionaries';
 
 interface Props {
-    title: string;
-    description?: string;
+  title: string;
+  description?: string;
+  locale: Locale;
 }
 
-const { title, description } = Astro.props;
+const { title, description, locale } = Astro.props;
+const dict = t(locale);
 const currentYear = new Date().getFullYear();
 ---
 
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title} | IB Česká</title>
-        {description && <meta name="description" content={description} />}
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | {dict.site.title}</title>
+    {description && <meta name="description" content={description} />}
 
-        {/* Open Graph / Twitter metadata for better sharing */}
-        <meta property="og:title" content={`${title} | IB Česká`} />
-        {
-            description && (
-                <meta property="og:description" content={description} />
-            )
-        }
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${title} | IB Česká`} />
-        {
-            description && (
-                <meta name="twitter:description" content={description} />
-            )
-        }
-    </head>
-    <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
-        <header
-            class="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50"
-        >
-            <nav
-                class="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between"
-            >
-                <a href="/" class="flex items-center">
-                    <img
-                        src="/logo-nav.png"
-                        alt="Súkromné Gymnázium Česká — IB Diploma Programme"
-                        class="h-12 w-auto"
-                    />
-                </a>
-                <ul
-                    class="flex gap-6 text-sm font-medium"
-                    role="navigation"
-                    aria-label="Primary"
-                >
-                    <li>
-                        <a
-                            href="/subjects"
-                            class="hover:text-emerald-700 transition-colors"
-                            >Subjects</a>
-                    </li>
-                    <li>
-                        <a
-                            href="/cas"
-                            class="hover:text-emerald-700 transition-colors"
-                            >CAS</a>
-                    </li>
-                    <li>
-                        <a
-                            href="/tok"
-                            class="hover:text-emerald-700 transition-colors"
-                            >TOK</a>
-                    </li>
-                    <li>
-                        <a
-                            href="/ee"
-                            class="hover:text-emerald-700 transition-colors"
-                            >Extended Essay</a>
-                    </li>
-                    <li>
-                        <a
-                            href="/news"
-                            class="hover:text-emerald-700 transition-colors"
-                            >News</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+    <meta property="og:title" content={`${title} | ${dict.site.title}`} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | ${dict.site.title}`} />
+    {description && <meta name="twitter:description" content={description} />}
+  </head>
+  <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
+    <header class="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <nav class="flex items-center justify-between px-6 py-3">
+        <a href={l('/', locale)} class="flex items-center shrink-0">
+          <img
+            src="/logo-nav.png"
+            alt="Súkromné Gymnázium Česká — IB Diploma Programme"
+            class="h-12 w-auto"
+          />
+        </a>
+        <ul class="flex gap-4 lg:gap-6 text-sm font-medium items-center" role="navigation" aria-label="Primary">
+          <li><a href={l('/subjects', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.subjects}</a></li>
+          <li><a href={l('/cas', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.cas}</a></li>
+          <li><a href={l('/tok', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.tok}</a></li>
+          <li><a href={l('/ee', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.ee}</a></li>
+          <li><a href={l('/news', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.news}</a></li>
+          <li class="ml-2 pl-2 border-l border-stone-200">
+            <LanguageSwitcher locale={locale} />
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-        <main class="mx-auto max-w-5xl px-4 py-8">
-            <slot />
-        </main>
+    <main class="mx-auto max-w-5xl px-4 py-8">
+      <slot />
+    </main>
 
-        <footer
-            class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500"
-        >
-            <p>&copy; {currentYear} IB Česká. All rights reserved.</p>
-        </footer>
-    </body>
+    <footer class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500">
+      <p>&copy; {currentYear} {dict.site.title}. {dict.footer.rights}</p>
+    </footer>
+  </body>
 </html>

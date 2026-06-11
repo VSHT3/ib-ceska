@@ -1,0 +1,193 @@
+const dict = {
+  en: {
+    site: { title: 'IB Gymnázium Česká', tagline: 'IB Diploma Programme' },
+    nav: {
+      subjects: 'Subjects',
+      cas: 'CAS',
+      tok: 'TOK',
+      ee: 'Extended Essay',
+      news: 'News',
+    },
+    footer: { rights: 'All rights reserved.' },
+    home: {
+      hero: 'Your IB Diploma Journey Starts Here',
+      heroSub:
+        'At Gymnázium Česká, the IB is more than a qualification — it is a journey of discovery. Our teachers guide you to think critically, collaborate with purpose, and grow the confidence to shape your future.',
+      whatIsIB: 'A global standard for curious minds',
+      whatIsIBBody1:
+        'The International Baccalaureate (IB) is a rigorous, internationally recognised educational framework taught in over 5,500 schools across 160 countries. At its heart is a commitment to developing inquiring, knowledgeable, and caring young people who are motivated to succeed.',
+      whatIsIBBody2:
+        'At Súkromné Gymnázium Česká, we offer the IB curriculum to prepare students for university and beyond — combining academic depth with personal growth and community engagement.',
+      programmesLabel: 'Programmes',
+      programmesHeading: 'Two stages, one journey',
+      mypTitle: 'Middle Years Programme (MYP)',
+      mypDesc:
+        'For students aged 11 to 16, the MYP builds a strong academic foundation while encouraging students to make practical connections between their studies and the real world.',
+      mypItem1: '8 subject groups with interdisciplinary learning',
+      mypItem2: 'Personal project in the final year',
+      mypItem3: 'Service as action — community engagement',
+      mypItem4: 'Prepares the mindset for the Diploma Programme',
+      dpTitle: 'Diploma Programme (DP)',
+      dpDesc:
+        'For students aged 16 to 19, the DP is a two-year, academically challenging programme that leads to the IB Diploma — a qualification respected by universities worldwide.',
+      dpItem1: '6 subject groups at Higher or Standard Level',
+      dpItem2: 'Theory of Knowledge (TOK) course',
+      dpItem3: 'Extended Essay — 4,000-word research paper',
+      dpItem4: 'Creativity, Activity, Service (CAS)',
+      exploreLabel: 'Explore',
+      exploreHeading: 'Everything you need, one place',
+      subjectsLabel: 'Subjects',
+      subjectsDesc: 'Browse IB subjects across all 6 groups, with syllabi and teacher info.',
+      casLabel: 'CAS',
+      casDesc: 'Creativity, Activity, Service — student projects and learning outcomes.',
+      tokLabel: 'TOK',
+      tokDesc: 'Theory of Knowledge — essays, themes, and critical thinking materials.',
+      eeLabel: 'Extended Essay',
+      eeDesc: 'Guide to the 4,000-word research paper — timeline, resources, and samples.',
+      newsLabel: 'News',
+      newsDesc: 'Announcements, exam schedules, and important programme updates.',
+    },
+    subjects: {
+      title: 'IB Subjects',
+      group1: 'Group 1 — Studies in Language and Literature',
+      group2: 'Group 2 — Language Acquisition',
+      group3: 'Group 3 — Individuals and Societies',
+      group4: 'Group 4 — Sciences',
+      group5: 'Group 5 — Mathematics',
+      group6: 'Group 6 — The Arts',
+      core: 'Core — TOK, CAS, EE',
+      teacher: 'Teacher',
+    },
+    cas: {
+      title: 'CAS',
+      subtitle:
+        'Creativity, Activity, Service — a core component of the IB Diploma Programme focused on personal development beyond academics.',
+      noActivities: 'No activities yet.',
+    },
+    tok: {
+      title: 'Theory of Knowledge',
+      subtitle:
+        'TOK explores the nature of knowledge and how we know what we claim to know. Students critically reflect on areas of knowledge and ways of knowing.',
+      heading: 'TOK Essays & Materials',
+      noMaterials: 'No materials yet.',
+    },
+    ee: {
+      title: 'Extended Essay',
+      subtitle:
+        'The Extended Essay is an independent, 4,000-word research paper. Students choose a topic from one of their six IB subjects and work under the guidance of a supervisor.',
+      timeline: 'Timeline',
+      timelineItem1: 'October — choose topic and supervisor',
+      timelineItem2: 'November — submit research proposal',
+      timelineItem3: 'January — first draft',
+      timelineItem4: 'March — final version',
+      timelineItem5: 'April — viva voce (oral defence)',
+      documents: 'Downloads',
+      resources: 'Useful Resources',
+    },
+    news: {
+      title: 'News',
+      noNews: 'No news yet.',
+    },
+  },
+  sk: {
+    site: { title: 'IB Gymnázium Česká', tagline: 'IB Diplomový Program' },
+    nav: {
+      subjects: 'Predmety',
+      cas: 'CAS',
+      tok: 'TOK',
+      ee: 'Rozšírená Esej',
+      news: 'Novinky',
+    },
+    footer: { rights: 'Všetky práva vyhradené.' },
+    home: {
+      hero: 'Vaša cesta k IB diplomu začína tu',
+      heroSub:
+        'Na Gymnáziu Česká je IB viac než kvalifikácia — je to cesta objavovania. Naši učitelia vás vedú ku kritickému mysleniu, zmysluplnej spolupráci a sebavedomiu pre budúcnosť.',
+      whatIsIB: 'Globálny štandard pre zvedavé mysle',
+      whatIsIBBody1:
+        'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací rámec vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
+      whatIsIBBody2:
+        'Na Súkromnom Gymnáziu Česká ponúkame IB kurikulum na prípravu študentov na univerzitu a ďalší život — spájame akademickú hĺbku s osobným rastom a komunitnou angažovanosťou.',
+      programmesLabel: 'Programy',
+      programmesHeading: 'Dva stupne, jedna cesta',
+      mypTitle: 'Middle Years Programme (MYP)',
+      mypDesc:
+        'Pre študentov vo veku 11 až 16 rokov. MYP buduje silné akademické základy a podporuje prepájanie štúdia s reálnym svetom.',
+      mypItem1: '8 predmetových skupín s medzipredmetovým učením',
+      mypItem2: 'Osobný projekt v poslednom ročníku',
+      mypItem3: 'Služba ako akcia — komunitná angažovanosť',
+      mypItem4: 'Pripravuje myslenie na Diplomový Program',
+      dpTitle: 'Diploma Programme (DP)',
+      dpDesc:
+        'Pre študentov vo veku 16 až 19 rokov. DP je dvojročný, akademicky náročný program vedúci k IB diplomu — kvalifikácii uznávanej univerzitami po celom svete.',
+      dpItem1: '6 predmetových skupín na vyššej alebo štandardnej úrovni',
+      dpItem2: 'Kurz Theory of Knowledge (TOK)',
+      dpItem3: 'Extended Essay — výskumná práca na 4 000 slov',
+      dpItem4: 'Creativity, Activity, Service (CAS)',
+      exploreLabel: 'Preskúmajte',
+      exploreHeading: 'Všetko, čo potrebujete, na jednom mieste',
+      subjectsLabel: 'Predmety',
+      subjectsDesc: 'Prehľad IB predmetov podľa skupín, vrátane sylabov a učiteľov.',
+      casLabel: 'CAS',
+      casDesc: 'Creativity, Activity, Service — študentské projekty a výstupy učenia.',
+      tokLabel: 'TOK',
+      tokDesc: 'Theory of Knowledge — eseje, témy a materiály na kritické myslenie.',
+      eeLabel: 'Rozšírená Esej',
+      eeDesc: 'Sprievodca výskumnou prácou — harmonogram, zdroje a príklady.',
+      newsLabel: 'Novinky',
+      newsDesc: 'Oznámenia, termíny skúšok a dôležité aktuality.',
+    },
+    subjects: {
+      title: 'IB Predmety',
+      group1: 'Skupina 1 — Jazyk a literatúra',
+      group2: 'Skupina 2 — Osvojovanie jazyka',
+      group3: 'Skupina 3 — Jednotlivci a spoločnosti',
+      group4: 'Skupina 4 — Prírodné vedy',
+      group5: 'Skupina 5 — Matematika',
+      group6: 'Skupina 6 — Umenie',
+      core: 'Jadro — TOK, CAS, EE',
+      teacher: 'Vyučujúci',
+    },
+    cas: {
+      title: 'CAS',
+      subtitle:
+        'Creativity, Activity, Service — základná súčasť IB diplomového programu zameraná na osobný rozvoj mimo akademických predmetov.',
+      noActivities: 'Zatiaľ žiadne aktivity.',
+    },
+    tok: {
+      title: 'Teória Poznania',
+      subtitle:
+        'TOK skúma povahu vedomostí a to, ako vieme to, čo tvrdíme, že vieme. Študenti kriticky reflektujú oblasti poznania a spôsoby poznávania.',
+      heading: 'TOK Eseje a Materiály',
+      noMaterials: 'Zatiaľ žiadne materiály.',
+    },
+    ee: {
+      title: 'Rozšírená Esej',
+      subtitle:
+        'Rozšírená esej je samostatná výskumná práca v rozsahu 4 000 slov. Študenti si volia tému z jedného zo šiestich IB predmetov a pracujú pod vedením školiteľa.',
+      timeline: 'Harmonogram',
+      timelineItem1: 'Október — výber témy a školiteľa',
+      timelineItem2: 'November — odovzdanie výskumného návrhu',
+      timelineItem3: 'Január — prvý koncept',
+      timelineItem4: 'Marec — finálna verzia',
+      timelineItem5: 'Apríl — viva voce (ústna obhajoba)',
+      documents: 'Na stiahnutie',
+      resources: 'Užitočné zdroje',
+    },
+    news: {
+      title: 'Novinky',
+      noNews: 'Zatiaľ žiadne novinky.',
+    },
+  },
+} as const;
+
+export type Locale = keyof typeof dict;
+export type Dict = (typeof dict)['en'];
+
+export function t(locale: Locale): Dict {
+  return dict[locale];
+}
+
+export function l(path: string, lang: Locale): string {
+  return `/${lang}${path}`;
+}

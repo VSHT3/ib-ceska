@@ -1,17 +1,26 @@
 ---
-import { reader } from '../lib/keystatic';
-import Layout from '../layouts/Layout.astro';
+import { reader } from '../../lib/keystatic';
+import Layout from '../../layouts/Layout.astro';
+import { t } from '../../i18n/dictionaries';
+import type { Locale } from '../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'sk' } },
+  ];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
 
 const allActivities = await reader.collections.cas.all();
 const strands = ['Creativity', 'Activity', 'Service'] as const;
 ---
 
-<Layout title="CAS" description="Creativity, Activity, Service">
-  <h1 class="text-3xl font-bold mb-2">CAS</h1>
-  <p class="text-stone-600 mb-8">
-    Creativity, Activity, Service — a core component of the IB Diploma Programme
-    focused on personal development beyond academics.
-  </p>
+<Layout title={dict.cas.title} description="Creativity, Activity, Service" locale={locale}>
+  <h1 class="text-3xl font-bold mb-2">{dict.cas.title}</h1>
+  <p class="text-stone-600 mb-8">{dict.cas.subtitle}</p>
 
   {strands.map((strand) => {
     const strandActivities = allActivities
@@ -22,14 +31,14 @@ const strands = ['Creativity', 'Activity', 'Service'] as const;
       <section class="mb-10">
         <h2 class="text-xl font-semibold mb-3 text-emerald-800">{strand}</h2>
         {strandActivities.length === 0 ? (
-          <p class="text-sm text-stone-400">No activities yet.</p>
+          <p class="text-sm text-stone-400">{dict.cas.noActivities}</p>
         ) : (
           <div class="grid gap-3">
             {strandActivities.map((a) => (
               <div class="rounded-lg border border-stone-200 bg-white p-4">
                 <h3 class="font-semibold">{a.entry.title}</h3>
                 <time class="text-xs text-stone-400">
-                  {new Date(a.entry.date).toLocaleDateString('en-GB')}
+                  {new Date(a.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
                 </time>
                 <p class="text-sm text-stone-600 mt-1">{a.entry.description}</p>
               </div>

@@ -9,6 +9,13 @@ import keystatic from '@keystatic/astro';
 export default defineConfig({
   site: 'https://ib.gymnaziumceska.sk',
   adapter: node({ mode: 'standalone' }),
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'sk'],
+    routing: {
+      prefixDefaultLocale: true,
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

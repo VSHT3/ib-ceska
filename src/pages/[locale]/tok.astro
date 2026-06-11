@@ -1,0 +1,47 @@
+---
+import { reader } from '../../lib/keystatic';
+import Layout from '../../layouts/Layout.astro';
+import { t } from '../../i18n/dictionaries';
+import type { Locale } from '../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'sk' } },
+  ];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+
+const allEssays = await reader.collections.tok.all();
+---
+
+<Layout title={dict.tok.title} description="Theory of Knowledge materials and essays" locale={locale}>
+  <h1 class="text-3xl font-bold mb-2">{dict.tok.title}</h1>
+  <p class="text-stone-600 mb-8">{dict.tok.subtitle}</p>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-4 text-emerald-800">{dict.tok.heading}</h2>
+    {allEssays.length === 0 ? (
+      <p class="text-sm text-stone-400">{dict.tok.noMaterials}</p>
+    ) : (
+      <div class="grid gap-3">
+        {allEssays
+          .sort((a, b) => new Date(b.entry.date).getTime() - new Date(a.entry.date).getTime())
+          .map((e) => (
+            <div class="rounded-lg border border-stone-200 bg-white p-4">
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-semibold">{e.entry.title}</h3>
+                <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">{e.entry.theme}</span>
+              </div>
+              <time class="text-xs text-stone-400">
+                {new Date(e.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
+              </time>
+              <p class="text-sm text-stone-600 mt-1">{e.entry.description}</p>
+            </div>
+          ))}
+      </div>
+    )}
+  </section>
+</Layout>
