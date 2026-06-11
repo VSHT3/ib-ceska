@@ -1,4 +1,24 @@
 ---
-// Redirect root to default locale
-return Astro.redirect('/en/');
+// Static locale gate: JS picks the visitor's language, meta refresh is the fallback.
 ---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>IB Gymnázium Česká</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="1; url=/en/" />
+    <script>
+      const preferred = (navigator.languages ?? [navigator.language])
+        .some((lang) => lang?.toLowerCase().startsWith('sk') || lang?.toLowerCase().startsWith('cs'))
+        ? 'sk'
+        : 'en';
+      location.replace(`/${preferred}/`);
+    </script>
+    <link rel="canonical" href="https://ib.gymnaziumceska.sk/en/" />
+  </head>
+  <body>
+    <p><a href="/en/">English</a> · <a href="/sk/">Slovensky</a></p>
+  </body>
+</html>

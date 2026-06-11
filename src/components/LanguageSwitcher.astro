@@ -6,13 +6,22 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const otherLocale: Locale = locale === 'en' ? 'sk' : 'en';
 const pathname = Astro.url.pathname;
-const otherPath = '/' + otherLocale + pathname.slice(pathname.indexOf('/', 1));
+// Strip the locale prefix; works for "/en", "/en/", and "/en/subjects"
+const rest = pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
+const pathFor = (target: Locale) => `/${target}${rest}`;
+const locales: { code: Locale; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'sk', label: 'SK' },
+];
 ---
 
-<span class="text-xs font-medium tracking-wide text-stone-500">
-  <span class={locale === 'en' ? 'text-emerald-700' : ''}>EN</span>
-  <span class="mx-1 text-stone-300">/</span>
-  <a href={otherPath} class={locale === 'sk' ? 'text-emerald-700' : 'hover:text-emerald-700 transition-colors'}>SK</a>
-</span>
+<div class="flex items-center rounded-full border border-stone-200 bg-stone-100 p-0.5 text-xs font-semibold tracking-wide" role="group" aria-label="Language">
+  {locales.map(({ code, label }) =>
+    code === locale ? (
+      <span aria-current="true" class="rounded-full bg-white px-2.5 py-1 text-emerald-700 shadow-sm">{label}</span>
+    ) : (
+      <a href={pathFor(code)} class="rounded-full px-2.5 py-1 text-stone-500 transition-colors hover:text-emerald-700">{label}</a>
+    )
+  )}
+</div>
