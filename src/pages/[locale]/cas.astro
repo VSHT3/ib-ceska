@@ -1,6 +1,7 @@
 ---
 import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -15,37 +16,48 @@ const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
 
 const allActivities = await reader.collections.cas.all();
-const strands = ['Creativity', 'Activity', 'Service'] as const;
+const strands = [
+  { key: 'Creativity', accent: 'bg-amber-100 text-amber-800', bar: 'bg-amber-500' },
+  { key: 'Activity', accent: 'bg-sky-100 text-sky-800', bar: 'bg-sky-500' },
+  { key: 'Service', accent: 'bg-emerald-100 text-emerald-800', bar: 'bg-emerald-600' },
+] as const;
 ---
 
 <Layout title={dict.cas.title} description="Creativity, Activity, Service" locale={locale}>
-  <h1 class="text-3xl font-bold mb-2">{dict.cas.title}</h1>
-  <p class="text-stone-600 mb-8">{dict.cas.subtitle}</p>
+  <PageHeader title={dict.cas.title} subtitle={dict.cas.subtitle} label="IB Core" />
 
-  {strands.map((strand) => {
-    const strandActivities = allActivities
-      .filter((a) => a.entry.strand === strand)
-      .sort((a, b) => new Date(b.entry.date).getTime() - new Date(a.entry.date).getTime());
+  <div class="mx-auto max-w-5xl px-4 py-12">
+    {strands.map((strand) => {
+      const strandActivities = allActivities
+        .filter((a) => a.entry.strand === strand.key)
+        .sort((a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime());
 
-    return (
-      <section class="mb-10">
-        <h2 class="text-xl font-semibold mb-3 text-emerald-800">{strand}</h2>
-        {strandActivities.length === 0 ? (
-          <p class="text-sm text-stone-400">{dict.cas.noActivities}</p>
-        ) : (
-          <div class="grid gap-3">
-            {strandActivities.map((a) => (
-              <div class="rounded-lg border border-stone-200 bg-white p-4">
-                <h3 class="font-semibold">{pick(locale, a.entry.sk.title, a.entry.title)}</h3>
-                <time class="text-xs text-stone-400">
-                  {new Date(a.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
-                </time>
-                <p class="text-sm text-stone-600 mt-1">{pick(locale, a.entry.sk.description, a.entry.description)}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-    );
-  })}
+      return (
+        <section class="mb-12" data-reveal>
+          <h2 class="text-xl font-semibold mb-4 text-stone-900 flex items-center gap-3">
+            <span class:list={['inline-block h-6 w-1 rounded-full', strand.bar]} />
+            {strand.key}
+          </h2>
+          {strandActivities.length === 0 ? (
+            <p class="text-sm text-stone-400">{dict.cas.noActivities}</p>
+          ) : (
+            <div class="grid gap-3 sm:grid-cols-2">
+              {strandActivities.map((a) => (
+                <div class="rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div class="flex items-center justify-between gap-3 mb-1">
+                    <h3 class="font-semibold">{pick(locale, a.entry.sk.title, a.entry.title)}</h3>
+                    <span class:list={['text-xs px-2 py-0.5 rounded-full font-medium shrink-0', strand.accent]}>{strand.key}</span>
+                  </div>
+                  <time class="text-xs text-stone-400">
+                    {a.entry.date && new Date(a.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
+                  </time>
+                  <p class="text-sm text-stone-600 mt-1">{pick(locale, a.entry.sk.description, a.entry.description)}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    })}
+  </div>
 </Layout>

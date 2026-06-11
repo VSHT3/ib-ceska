@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-import { t, l } from '../i18n/dictionaries';
+import { t, l, contact } from '../i18n/dictionaries';
 import type { Locale } from '../i18n/dictionaries';
 
 interface Props {
@@ -13,6 +14,17 @@ interface Props {
 const { title, description, locale } = Astro.props;
 const dict = t(locale);
 const currentYear = new Date().getFullYear();
+
+const navLinks = [
+  { href: l('/subjects', locale), label: dict.nav.subjects },
+  { href: l('/cas', locale), label: dict.nav.cas },
+  { href: l('/tok', locale), label: dict.nav.tok },
+  { href: l('/ee', locale), label: dict.nav.ee },
+  { href: l('/news', locale), label: dict.nav.news },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
 ---
 
 <!doctype html>
@@ -29,39 +41,181 @@ const currentYear = new Date().getFullYear();
     <meta property="og:title" content={`${title} | ${dict.site.title}`} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/school/school-building.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | ${dict.site.title}`} />
     {description && <meta name="twitter:description" content={description} />}
+    <ClientRouter />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
-    <header class="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-      <nav class="flex items-center justify-between px-6 py-3">
+    <header class="border-b border-stone-200/80 bg-white/85 backdrop-blur-md sticky top-0 z-50">
+      <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
         <a href={l('/', locale)} class="flex items-center shrink-0">
           <img
             src="/logo-nav.png"
             alt="Súkromné Gymnázium Česká — IB Diploma Programme"
-            class="h-12 w-auto"
+            class="h-11 w-auto"
           />
         </a>
-        <ul class="flex gap-4 lg:gap-6 text-sm font-medium items-center" role="navigation" aria-label="Primary">
-          <li><a href={l('/subjects', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.subjects}</a></li>
-          <li><a href={l('/cas', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.cas}</a></li>
-          <li><a href={l('/tok', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.tok}</a></li>
-          <li><a href={l('/ee', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.ee}</a></li>
-          <li><a href={l('/news', locale)} class="hover:text-emerald-700 transition-colors">{dict.nav.news}</a></li>
-          <li class="ml-2 pl-2 border-l border-stone-200">
+
+        <ul class="hidden md:flex gap-1 lg:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
+          {navLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={isActive(href) ? 'page' : undefined}
+                class:list={[
+                  'relative rounded-full px-3 py-1.5 transition-colors',
+                  isActive(href)
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+          <li class="ml-2 pl-3 border-l border-stone-200">
             <LanguageSwitcher locale={locale} />
           </li>
         </ul>
+
+        <div class="flex md:hidden items-center gap-3">
+          <LanguageSwitcher locale={locale} />
+          <button
+            id="menu-toggle"
+            type="button"
+            class="inline-flex items-center justify-center rounded-lg p-2 text-stone-600 hover:bg-stone-100 transition-colors"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            aria-label={dict.nav.menu}
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path class="menu-open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              <path class="menu-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
       </nav>
+
+      <div id="mobile-menu" class="hidden md:hidden border-t border-stone-200 bg-white px-4 py-3">
+        <ul class="flex flex-col gap-1 text-sm font-medium">
+          {navLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={isActive(href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-lg px-3 py-2.5 transition-colors',
+                  isActive(href)
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </header>
 
-    <main class="mx-auto max-w-5xl px-4 py-8">
+    <main>
       <slot />
     </main>
 
-    <footer class="border-t border-stone-200 mt-16 py-8 text-center text-sm text-stone-500">
-      <p>&copy; {currentYear} {dict.site.title}. {dict.footer.rights}</p>
+    <footer class="bg-stone-900 text-stone-300 mt-24">
+      <div class="mx-auto max-w-5xl px-6 py-14 grid gap-10 sm:grid-cols-3">
+        <div>
+          <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto mb-4 rounded-lg bg-white/90 p-1.5" />
+          <p class="text-sm leading-relaxed text-stone-400">{dict.site.tagline}</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.explore}</h3>
+          <ul class="space-y-2 text-sm">
+            {navLinks.map(({ href, label }) => (
+              <li><a href={href} class="hover:text-emerald-400 transition-colors">{label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.contact}</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href={`mailto:${contact.email}`} class="hover:text-emerald-400 transition-colors">{contact.email}</a></li>
+            <li><a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="hover:text-emerald-400 transition-colors">{contact.phone}</a></li>
+            <li class="text-stone-400">{contact.address}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-stone-800 py-6 text-center text-xs text-stone-500">
+        <p>&copy; {currentYear} {dict.site.title}. {dict.footer.rights}</p>
+      </div>
     </footer>
+
+    <script>
+      function initPage() {
+        // Scroll-reveal
+        const revealEls = document.querySelectorAll('[data-reveal]:not(.revealed)');
+        if (revealEls.length > 0) {
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('revealed');
+                  io.unobserve(entry.target);
+                }
+              }
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+          );
+          revealEls.forEach((el) => io.observe(el));
+        }
+
+        // Count-up stats
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+          const target = Number(el.dataset.count ?? '0');
+          const suffix = el.dataset.countSuffix ?? '';
+          const format = (n: number) => n.toLocaleString() + suffix;
+          if (prefersReduced) {
+            el.textContent = format(target);
+            return;
+          }
+          el.textContent = format(0);
+          const io = new IntersectionObserver(
+            (entries) => {
+              if (!entries[0].isIntersecting) return;
+              io.disconnect();
+              const duration = 1400;
+              const start = performance.now();
+              const tick = (now: number) => {
+                const p = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = format(Math.round(target * eased));
+                if (p < 1) requestAnimationFrame(tick);
+              };
+              requestAnimationFrame(tick);
+            },
+            { threshold: 0.4 }
+          );
+          io.observe(el);
+        });
+
+        // Mobile menu
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        if (toggle && menu) {
+          toggle.addEventListener('click', () => {
+            const open = menu.classList.toggle('hidden') === false;
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.querySelector('.menu-open')?.classList.toggle('hidden', open);
+            toggle.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+          });
+        }
+      }
+
+      document.addEventListener('astro:page-load', initPage);
+    </script>
   </body>
 </html>

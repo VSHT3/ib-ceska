@@ -1,18 +1,38 @@
+export const contact = {
+  phone: '+421 904 979 681',
+  email: 'ib@gymnaziumceska.sk',
+  address: 'Česká 10, 831 03 Bratislava, Slovakia',
+} as const;
+
 const dict = {
   en: {
-    site: { title: 'IB Gymnázium Česká', tagline: 'IB Diploma Programme' },
+    site: { title: 'IB Gymnázium Česká', tagline: 'To Inspire And Grow' },
     nav: {
       subjects: 'Subjects',
       cas: 'CAS',
       tok: 'TOK',
       ee: 'Extended Essay',
       news: 'News',
+      menu: 'Menu',
     },
-    footer: { rights: 'All rights reserved.' },
+    footer: {
+      rights: 'All rights reserved.',
+      explore: 'Explore',
+      contact: 'Contact',
+      visit: 'Visit Us',
+    },
     home: {
-      hero: 'Your IB Diploma Journey Starts Here',
+      badge: 'MYP & DP applications open',
+      hero: 'Your IB Journey Begins at Česká',
       heroSub:
         'At Gymnázium Česká, the IB is more than a qualification — it is a journey of discovery. Our teachers guide you to think critically, collaborate with purpose, and grow the confidence to shape your future.',
+      ctaPrimary: 'Explore Subjects',
+      ctaSecondary: 'Contact Us',
+      statSchools: 'IB World Schools globally',
+      statCountries: 'countries teach the IB',
+      statGroups: 'subject groups in the DP',
+      statProgrammes: 'programmes at Česká — MYP & DP',
+      whatIsIBLabel: 'What is the IB?',
       whatIsIB: 'A global standard for curious minds',
       whatIsIBBody1:
         'The International Baccalaureate (IB) is a rigorous, internationally recognised educational framework taught in over 5,500 schools across 160 countries. At its heart is a commitment to developing inquiring, knowledgeable, and caring young people who are motivated to succeed.',
@@ -21,19 +41,25 @@ const dict = {
       programmesLabel: 'Programmes',
       programmesHeading: 'Two stages, one journey',
       mypTitle: 'Middle Years Programme (MYP)',
+      mypAges: '14–16 years',
       mypDesc:
-        'For students aged 11 to 16, the MYP builds a strong academic foundation while encouraging students to make practical connections between their studies and the real world.',
+        'The MYP builds a strong academic foundation while encouraging students to make practical connections between their studies and the real world.',
       mypItem1: '8 subject groups with interdisciplinary learning',
       mypItem2: 'Personal project in the final year',
       mypItem3: 'Service as action — community engagement',
       mypItem4: 'Prepares the mindset for the Diploma Programme',
+      mypNote:
+        'Súkromné gymnázium Česká is a Candidate School* for the MYP and is pursuing authorization as an IB World School. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted. Learn more at www.ibo.org.',
       dpTitle: 'Diploma Programme (DP)',
+      dpAges: '16–19 years',
       dpDesc:
-        'For students aged 16 to 19, the DP is a two-year, academically challenging programme that leads to the IB Diploma — a qualification respected by universities worldwide.',
+        'The DP is a two-year, academically challenging programme that leads to the IB Diploma — a qualification respected by universities worldwide.',
       dpItem1: '6 subject groups at Higher or Standard Level',
       dpItem2: 'Theory of Knowledge (TOK) course',
       dpItem3: 'Extended Essay — 4,000-word research paper',
       dpItem4: 'Creativity, Activity, Service (CAS)',
+      galleryLabel: 'Life at Česká',
+      galleryHeading: 'A community of thinkers, creators, and leaders',
       exploreLabel: 'Explore',
       exploreHeading: 'Everything you need, one place',
       subjectsLabel: 'Subjects',
@@ -46,9 +72,14 @@ const dict = {
       eeDesc: 'Guide to the 4,000-word research paper — timeline, resources, and samples.',
       newsLabel: 'News',
       newsDesc: 'Announcements, exam schedules, and important programme updates.',
+      ctaHeading: 'Ready to begin your journey at Česká?',
+      ctaBody: 'Join a vibrant community of thinkers, creators, and leaders.',
+      ctaButton: 'Email Admissions',
+      ctaCall: 'Call Us',
     },
     subjects: {
       title: 'IB Subjects',
+      subtitle: 'Six subject groups, one balanced education — explore what you can study at Česká.',
       group1: 'Group 1 — Studies in Language and Literature',
       group2: 'Group 2 — Language Acquisition',
       group3: 'Group 3 — Individuals and Societies',
@@ -86,23 +117,38 @@ const dict = {
     },
     news: {
       title: 'News',
+      subtitle: 'Announcements, deadlines, and stories from the IB programme at Česká.',
       noNews: 'No news yet.',
     },
   },
   sk: {
-    site: { title: 'IB Gymnázium Česká', tagline: 'IB Diplomový Program' },
+    site: { title: 'IB Gymnázium Česká', tagline: 'Inšpirovať a rásť' },
     nav: {
       subjects: 'Predmety',
       cas: 'CAS',
       tok: 'TOK',
       ee: 'Rozšírená Esej',
       news: 'Novinky',
+      menu: 'Menu',
     },
-    footer: { rights: 'Všetky práva vyhradené.' },
+    footer: {
+      rights: 'Všetky práva vyhradené.',
+      explore: 'Preskúmajte',
+      contact: 'Kontakt',
+      visit: 'Navštívte nás',
+    },
     home: {
-      hero: 'Vaša cesta k IB diplomu začína tu',
+      badge: 'Prihlášky na MYP a DP otvorené',
+      hero: 'Vaša IB cesta začína na Českej',
       heroSub:
         'Na Gymnáziu Česká je IB viac než kvalifikácia — je to cesta objavovania. Naši učitelia vás vedú ku kritickému mysleniu, zmysluplnej spolupráci a sebavedomiu pre budúcnosť.',
+      ctaPrimary: 'Preskúmať predmety',
+      ctaSecondary: 'Kontaktujte nás',
+      statSchools: 'IB škôl po celom svete',
+      statCountries: 'krajín vyučuje IB',
+      statGroups: 'predmetových skupín v DP',
+      statProgrammes: 'programy na Českej — MYP a DP',
+      whatIsIBLabel: 'Čo je IB?',
       whatIsIB: 'Globálny štandard pre zvedavé mysle',
       whatIsIBBody1:
         'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací rámec vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
@@ -111,19 +157,25 @@ const dict = {
       programmesLabel: 'Programy',
       programmesHeading: 'Dva stupne, jedna cesta',
       mypTitle: 'Middle Years Programme (MYP)',
+      mypAges: '14–16 rokov',
       mypDesc:
-        'Pre študentov vo veku 11 až 16 rokov. MYP buduje silné akademické základy a podporuje prepájanie štúdia s reálnym svetom.',
+        'MYP buduje silné akademické základy a podporuje prepájanie štúdia s reálnym svetom.',
       mypItem1: '8 predmetových skupín s medzipredmetovým učením',
       mypItem2: 'Osobný projekt v poslednom ročníku',
       mypItem3: 'Služba ako akcia — komunitná angažovanosť',
       mypItem4: 'Pripravuje myslenie na Diplomový Program',
+      mypNote:
+        'Súkromné gymnázium Česká je kandidátskou školou* pre MYP a uchádza sa o autorizáciu ako IB World School. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje udelenie autorizácie. Viac na www.ibo.org.',
       dpTitle: 'Diploma Programme (DP)',
+      dpAges: '16–19 rokov',
       dpDesc:
-        'Pre študentov vo veku 16 až 19 rokov. DP je dvojročný, akademicky náročný program vedúci k IB diplomu — kvalifikácii uznávanej univerzitami po celom svete.',
+        'DP je dvojročný, akademicky náročný program vedúci k IB diplomu — kvalifikácii uznávanej univerzitami po celom svete.',
       dpItem1: '6 predmetových skupín na vyššej alebo štandardnej úrovni',
       dpItem2: 'Kurz Theory of Knowledge (TOK)',
       dpItem3: 'Extended Essay — výskumná práca na 4 000 slov',
       dpItem4: 'Creativity, Activity, Service (CAS)',
+      galleryLabel: 'Život na Českej',
+      galleryHeading: 'Komunita mysliteľov, tvorcov a lídrov',
       exploreLabel: 'Preskúmajte',
       exploreHeading: 'Všetko, čo potrebujete, na jednom mieste',
       subjectsLabel: 'Predmety',
@@ -136,9 +188,14 @@ const dict = {
       eeDesc: 'Sprievodca výskumnou prácou — harmonogram, zdroje a príklady.',
       newsLabel: 'Novinky',
       newsDesc: 'Oznámenia, termíny skúšok a dôležité aktuality.',
+      ctaHeading: 'Pripravení začať svoju cestu na Českej?',
+      ctaBody: 'Pridajte sa ku komunite mysliteľov, tvorcov a lídrov.',
+      ctaButton: 'Napíšte nám',
+      ctaCall: 'Zavolajte nám',
     },
     subjects: {
       title: 'IB Predmety',
+      subtitle: 'Šesť predmetových skupín, jedno vyvážené vzdelanie — pozrite si, čo môžete na Českej študovať.',
       group1: 'Skupina 1 — Jazyk a literatúra',
       group2: 'Skupina 2 — Osvojovanie jazyka',
       group3: 'Skupina 3 — Jednotlivci a spoločnosti',
@@ -176,10 +233,11 @@ const dict = {
     },
     news: {
       title: 'Novinky',
+      subtitle: 'Oznámenia, termíny a príbehy z IB programu na Českej.',
       noNews: 'Zatiaľ žiadne novinky.',
     },
   },
-} as const;
+};
 
 export type Locale = keyof typeof dict;
 export type Dict = (typeof dict)['en'];

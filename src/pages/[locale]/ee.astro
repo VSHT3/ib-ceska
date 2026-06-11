@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -12,26 +13,34 @@ export function getStaticPaths() {
 
 const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
+
+const timeline = [
+  dict.ee.timelineItem1,
+  dict.ee.timelineItem2,
+  dict.ee.timelineItem3,
+  dict.ee.timelineItem4,
+  dict.ee.timelineItem5,
+];
 ---
 
 <Layout title={dict.ee.title} description="Extended Essay" locale={locale}>
-  <h1 class="text-3xl font-bold mb-2">{dict.ee.title}</h1>
-  <p class="text-stone-600 mb-8">{dict.ee.subtitle}</p>
+  <PageHeader title={dict.ee.title} subtitle={dict.ee.subtitle} label="IB Core" />
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <div class="rounded-xl border border-stone-200 bg-white p-6">
-      <h2 class="text-lg font-semibold mb-2">{dict.ee.timeline}</h2>
-      <ul class="text-sm text-stone-600 space-y-2">
-        <li>{dict.ee.timelineItem1}</li>
-        <li>{dict.ee.timelineItem2}</li>
-        <li>{dict.ee.timelineItem3}</li>
-        <li>{dict.ee.timelineItem4}</li>
-        <li>{dict.ee.timelineItem5}</li>
-      </ul>
+  <div class="mx-auto max-w-5xl px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-1 rounded-2xl border border-stone-200 bg-white p-6" data-reveal>
+      <h2 class="text-lg font-semibold mb-5">{dict.ee.timeline}</h2>
+      <ol class="relative border-l-2 border-emerald-100 ml-2 space-y-6">
+        {timeline.map((item, i) => (
+          <li class="pl-5 relative">
+            <span class="absolute -left-[9px] top-1 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white ring-4 ring-white">{i + 1}</span>
+            <p class="text-sm text-stone-600 leading-relaxed">{item}</p>
+          </li>
+        ))}
+      </ol>
     </div>
 
-    <div class="rounded-xl border border-stone-200 bg-white p-6">
-      <h2 class="text-lg font-semibold mb-2">{dict.ee.documents}</h2>
+    <div class="rounded-2xl border border-stone-200 bg-white p-6 h-fit" data-reveal style="--reveal-delay: 100ms">
+      <h2 class="text-lg font-semibold mb-3">{dict.ee.documents}</h2>
       <ul class="text-sm text-stone-600 space-y-2">
         <li><a href="#" class="text-emerald-700 hover:underline">EE Guide (PDF)</a></li>
         <li><a href="#" class="text-emerald-700 hover:underline">RPPF Form</a></li>
@@ -39,10 +48,10 @@ const dict = t(locale);
       </ul>
     </div>
 
-    <div class="rounded-xl border border-stone-200 bg-white p-6">
-      <h2 class="text-lg font-semibold mb-2">{dict.ee.resources}</h2>
+    <div class="rounded-2xl border border-stone-200 bg-white p-6 h-fit" data-reveal style="--reveal-delay: 200ms">
+      <h2 class="text-lg font-semibold mb-3">{dict.ee.resources}</h2>
       <ul class="text-sm text-stone-600 space-y-2">
-        <li><a href="https://www.ibo.org/programmes/diploma-programme/curriculum/dp-core/extended-essay/" class="text-emerald-700 hover:underline" target="_blank">Official IBO Page</a></li>
+        <li><a href="https://www.ibo.org/programmes/diploma-programme/curriculum/dp-core/extended-essay/" class="text-emerald-700 hover:underline" target="_blank" rel="noopener">Official IBO Page</a></li>
         <li><a href="#" class="text-emerald-700 hover:underline">Sample Essays</a></li>
         <li><a href="#" class="text-emerald-700 hover:underline">Citation Guide</a></li>
       </ul>

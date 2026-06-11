@@ -1,6 +1,7 @@
 ---
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
@@ -27,37 +28,42 @@ const groups = [
 ---
 
 <Layout title={dict.subjects.title} description="IB subject listings by group" locale={locale}>
-  <h1 class="text-3xl font-bold mb-8">{dict.subjects.title}</h1>
+  <PageHeader title={dict.subjects.title} subtitle={dict.subjects.subtitle} label="IB DP" />
 
-  {
-    groups.map((group) => {
-      const groupSubjects = allSubjects
-        .filter((s) => s.entry.group === group.key)
-        .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0));
+  <div class="mx-auto max-w-5xl px-4 py-12">
+    {
+      groups.map((group) => {
+        const groupSubjects = allSubjects
+          .filter((s) => s.entry.group === group.key)
+          .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0));
 
-      if (groupSubjects.length === 0) return null;
+        if (groupSubjects.length === 0) return null;
 
-      return (
-        <section class="mb-10">
-          <h2 class="text-xl font-semibold mb-3 text-emerald-800">{group.label}</h2>
-          <div class="grid gap-3">
-            {groupSubjects.map((s) => (
-              <div class="rounded-lg border border-stone-200 bg-white p-4">
-                <div class="flex items-center justify-between mb-1">
-                  <h3 class="font-semibold">{pick(locale, s.entry.sk.title, s.entry.title)}</h3>
-                  {s.entry.level && (
-                    <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium">{s.entry.level}</span>
+        return (
+          <section class="mb-12" data-reveal>
+            <h2 class="text-xl font-semibold mb-4 text-emerald-800 flex items-center gap-3">
+              <span class="inline-block h-6 w-1 rounded-full bg-emerald-600" />
+              {group.label}
+            </h2>
+            <div class="grid gap-3 sm:grid-cols-2">
+              {groupSubjects.map((s) => (
+                <div class="rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+                  <div class="flex items-center justify-between mb-1 gap-3">
+                    <h3 class="font-semibold">{pick(locale, s.entry.sk.title, s.entry.title)}</h3>
+                    {s.entry.level && (
+                      <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium shrink-0">{s.entry.level}</span>
+                    )}
+                  </div>
+                  <p class="text-sm text-stone-600">{pick(locale, s.entry.sk.description, s.entry.description)}</p>
+                  {s.entry.teacher && (
+                    <p class="text-xs text-stone-400 mt-2">{dict.subjects.teacher}: {s.entry.teacher}</p>
                   )}
                 </div>
-                <p class="text-sm text-stone-600">{pick(locale, s.entry.sk.description, s.entry.description)}</p>
-                {s.entry.teacher && (
-                  <p class="text-xs text-stone-400 mt-1">{dict.subjects.teacher}: {s.entry.teacher}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      );
-    })
-  }
+              ))}
+            </div>
+          </section>
+        );
+      })
+    }
+  </div>
 </Layout>
