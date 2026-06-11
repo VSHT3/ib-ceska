@@ -55,7 +55,19 @@ src/
 - Nav is sticky, container is `max-w-5xl`
 
 ## Commits
-Use `/caveman-commit` to generate commit messages.
+Use `/caveman-commit` for every commit — not just when asked. Commit after each completed feature or logical unit of work. Keep messages ≤50 chars, Conventional Commits format.
+
+## Tracking files
+- [`TODO.md`](TODO.md) — AI task backlog (things the AI must build)
+- [`FEATURES.md`](FEATURES.md) — completed features (update when shipping)
+- [`humans/HUMANTODO.md`](humans/HUMANTODO.md) — decisions/content the humans must provide
+- Mark items `[x]` when done. Add new items as they come up.
+
+## Documentation
+Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. Update after significant feature work:
+- `humans/CONTENT.md` — field reference, examples, adding content
+- `humans/DESIGN.md` — design tokens, layout, styling rules
+- `humans/README.md` — onboarding index
 
 ## Gotchas
 - `.md` files won't work for collections without registering a markdown entry type. Use `.mdx` everywhere for content.
