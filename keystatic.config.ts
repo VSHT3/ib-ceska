@@ -1,0 +1,111 @@
+import { config, fields, collection } from '@keystatic/core';
+
+export default config({
+  storage: {
+    kind: 'local',
+  },
+  collections: {
+    subjects: collection({
+      label: 'Subjects',
+      slugField: 'title',
+      path: 'src/content/subjects/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Subject Name' } }),
+        group: fields.select({
+          label: 'IB Group',
+          options: [
+            { label: 'Group 1 — Language & Literature', value: '1' },
+            { label: 'Group 2 — Language Acquisition', value: '2' },
+            { label: 'Group 3 — Individuals & Societies', value: '3' },
+            { label: 'Group 4 — Sciences', value: '4' },
+            { label: 'Group 5 — Mathematics', value: '5' },
+            { label: 'Group 6 — The Arts', value: '6' },
+            { label: 'Core', value: 'core' },
+          ],
+          defaultValue: '1',
+        }),
+        level: fields.select({
+          label: 'Level',
+          options: [
+            { label: 'HL', value: 'HL' },
+            { label: 'SL', value: 'SL' },
+          ],
+          defaultValue: 'HL',
+        }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        teacher: fields.text({ label: 'Teacher' }),
+        order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
+        content: fields.markdoc({ label: 'Syllabus Details', options: { image: { directory: 'public/images/subjects', publicPath: '/images/subjects' } } }),
+      },
+    }),
+    news: collection({
+      label: 'News',
+      slugField: 'title',
+      path: 'src/content/news/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Headline' } }),
+        date: fields.date({ label: 'Date' }),
+        excerpt: fields.text({ label: 'Excerpt', multiline: true }),
+        author: fields.text({ label: 'Author' }),
+        content: fields.markdoc({ label: 'Article Body', options: { image: { directory: 'public/images/news', publicPath: '/images/news' } } }),
+      },
+    }),
+    cas: collection({
+      label: 'CAS Activities',
+      slugField: 'title',
+      path: 'src/content/cas/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Activity Name' } }),
+        date: fields.date({ label: 'Date' }),
+        strand: fields.select({
+          label: 'Strand',
+          options: [
+            { label: 'Creativity', value: 'Creativity' },
+            { label: 'Activity', value: 'Activity' },
+            { label: 'Service', value: 'Service' },
+          ],
+          defaultValue: 'Creativity',
+        }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        learningOutcomes: fields.array(
+          fields.text({ label: 'Learning Outcome' }),
+          { label: 'Learning Outcomes', itemLabel: (props) => props.value ?? 'LO' }
+        ),
+        content: fields.markdoc({ label: 'Reflection', options: { image: { directory: 'public/images/cas', publicPath: '/images/cas' } } }),
+      },
+    }),
+    tok: collection({
+      label: 'TOK Materials',
+      slugField: 'title',
+      path: 'src/content/tok/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Title' } }),
+        date: fields.date({ label: 'Date' }),
+        theme: fields.select({
+          label: 'Theme',
+          options: [
+            { label: 'Knowledge & the Knower', value: 'Knowledge & the Knower' },
+            { label: 'Knowledge & Technology', value: 'Knowledge & Technology' },
+            { label: 'Knowledge & Language', value: 'Knowledge & Language' },
+            { label: 'Knowledge & Politics', value: 'Knowledge & Politics' },
+            { label: 'Knowledge & Religion', value: 'Knowledge & Religion' },
+            { label: 'Knowledge & Indigenous Societies', value: 'Knowledge & Indigenous Societies' },
+            { label: 'Ethics', value: 'Ethics' },
+            { label: 'Natural Sciences', value: 'Natural Sciences' },
+            { label: 'Human Sciences', value: 'Human Sciences' },
+            { label: 'History', value: 'History' },
+            { label: 'The Arts', value: 'The Arts' },
+            { label: 'Mathematics', value: 'Mathematics' },
+          ],
+          defaultValue: 'Ethics',
+        }),
+        description: fields.text({ label: 'Summary', multiline: true }),
+        content: fields.markdoc({ label: 'Full Essay', options: { image: { directory: 'public/images/tok', publicPath: '/images/tok' } } }),
+      },
+    }),
+  },
+});
