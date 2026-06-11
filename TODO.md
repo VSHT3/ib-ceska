@@ -28,6 +28,7 @@ Tasks the AI must complete. Checked = done.
 
 ## UI & UX
 - [ ] Replace default Astro favicon with school logo
+- [ ] Update nav logo with high-quality version when provided
 - [ ] Responsive mobile navigation (hamburger menu)
 - [ ] Dark mode support (respects `prefers-color-scheme`)
 - [ ] Loading/empty states for empty collections

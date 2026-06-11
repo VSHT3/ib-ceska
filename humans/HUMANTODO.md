@@ -3,6 +3,7 @@
 Things the humans (IB coordinators, teachers, school staff) must provide or decide. AI cannot do these without your input.
 
 ## Critical — before launch
+- [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution
 - [ ] Provide school logo in vector format (SVG preferred) for favicon and nav branding
 - [ ] Confirm final domain name (currently set to `ceska-skola.cz` in `astro.config.mjs`)
 - [ ] Provide real teacher names and titles for all IB subjects
