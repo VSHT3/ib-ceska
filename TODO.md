@@ -5,8 +5,8 @@ Tasks the AI must complete. Checked = done.
 ## IB branding
 - [ ] Add official IB brand colors as design tokens — IB Organization, MYP, and DP each have their own specific color (verify against current IB brand guidelines)
 - [ ] Add official IB logos (IB Org, MYP, DP) — mind IB logo usage rules for candidate schools
-- [ ] Dedicated MYP subpage (`/myp`) using MYP color + logo
-- [ ] Dedicated DP subpage (`/dp`) using DP color + logo
+- [x] Dedicated bilingual MYP subpage (`/myp`)
+- [x] Dedicated bilingual DP subpage (`/dp`)
 
 ## Content
 - [ ] Replace all Czech placeholder text with English

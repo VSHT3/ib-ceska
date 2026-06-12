@@ -16,6 +16,8 @@ const dict = t(locale);
 const currentYear = new Date().getFullYear();
 
 const navLinks = [
+  { href: l('/myp', locale), label: dict.nav.myp },
+  { href: l('/dp', locale), label: dict.nav.dp },
   { href: l('/subjects', locale), label: dict.nav.subjects },
   { href: l('/cas', locale), label: dict.nav.cas },
   { href: l('/tok', locale), label: dict.nav.tok },
@@ -77,7 +79,7 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
           />
         </a>
 
-        <ul class="hidden md:flex gap-1 lg:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
+        <ul class="hidden lg:flex gap-1 xl:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
           {navLinks.map(({ href, label }) => (
             <li>
               <a
@@ -108,7 +110,7 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
           </li>
         </ul>
 
-        <div class="flex md:hidden items-center gap-3">
+        <div class="flex lg:hidden items-center gap-3">
           <LanguageSwitcher locale={locale} />
           <button
             id="menu-toggle"
@@ -126,7 +128,7 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
         </div>
       </nav>
 
-      <div id="mobile-menu" class="hidden md:hidden border-t border-stone-200 bg-white px-4 py-3">
+      <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200 bg-white px-4 py-3">
         <ul class="flex flex-col gap-1 text-sm font-medium">
           {navLinks.map(({ href, label }) => (
             <li>

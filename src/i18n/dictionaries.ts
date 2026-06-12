@@ -8,6 +8,8 @@ const dict = {
   en: {
     site: { title: 'IB Gymnázium Česká', tagline: 'To Inspire And Grow' },
     nav: {
+      myp: 'MYP',
+      dp: 'DP',
       subjects: 'Subjects',
       cas: 'CAS',
       tok: 'TOK',
@@ -214,10 +216,150 @@ const dict = {
       directBody: 'The IB team can give you the latest information for the current admissions cycle.',
       schoolWebsite: 'Main school website',
     },
+    myp: {
+      title: 'Middle Years Programme',
+      shortTitle: 'MYP',
+      subtitle: 'A connected, inquiry-led programme that helps students build strong learning habits before the Diploma Programme.',
+      age: 'Ages 14–16 at Česká',
+      duration: 'Final MYP years',
+      label: 'Middle Years Programme',
+      introTitle: 'Learn how subjects connect',
+      introBody:
+        'The MYP organises learning across eight subject groups and asks students to use knowledge in context. At Česká, it provides a bridge between earlier secondary education and the demands of the Diploma Programme.',
+      principlesLabel: 'How learning works',
+      principlesTitle: 'Knowledge matters more when students can use it',
+      principles: [
+        {
+          title: 'Learn in context',
+          body: 'Global contexts connect classroom topics to identities, culture, innovation, fairness, sustainability, and the wider world.',
+        },
+        {
+          title: 'Build transferable skills',
+          body: 'Approaches to learning develop communication, research, thinking, collaboration, and self-management across subjects.',
+        },
+        {
+          title: 'Connect disciplines',
+          body: 'Interdisciplinary units ask students to combine methods and ideas from more than one subject group.',
+        },
+      ],
+      curriculumLabel: 'Curriculum',
+      curriculumTitle: 'Eight subject groups',
+      curriculumBody:
+        'The full MYP curriculum includes eight subject groups. In later years, schools may offer flexibility within IB requirements and local education rules.',
+      curriculumItems: [
+        'Language and literature',
+        'Language acquisition',
+        'Individuals and societies',
+        'Sciences',
+        'Mathematics',
+        'Arts',
+        'Physical and health education',
+        'Design',
+      ],
+      featureLabel: 'Beyond lessons',
+      featureTitle: 'A long-term project and service in action',
+      featureBody:
+        'MYP students apply their skills through sustained independent work and meaningful action in their community.',
+      links: [
+        {
+          label: 'Explore subjects',
+          body: 'See the subject materials currently published on the Česká IB site.',
+          href: '/subjects',
+        },
+        {
+          label: 'How to apply',
+          body: 'Ask the school about current MYP entry requirements and dates.',
+          href: '/admissions',
+        },
+        {
+          label: 'Official MYP curriculum',
+          body: 'Read the current curriculum overview from the International Baccalaureate.',
+          href: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
+        },
+      ],
+      note:
+        'Súkromné gymnázium Česká is a Candidate School for the MYP and is pursuing authorization as an IB World School. Candidate status gives no guarantee that authorization will be granted.',
+      officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
+      officialLink: 'Read the official MYP curriculum',
+      exploreLink: 'Explore',
+      admissionsTitle: 'Is the MYP the right next step?',
+      admissionsBody: 'Contact the school for current entry requirements, dates, and programme details.',
+      admissionsLink: 'View admissions',
+    },
+    dp: {
+      title: 'Diploma Programme',
+      shortTitle: 'DP',
+      subtitle: 'A focused two-year programme built from six subjects and a core of research, reflection, and action.',
+      age: 'Ages 16–19',
+      duration: 'Two years',
+      label: 'Diploma Programme',
+      introTitle: 'Build depth, range, and independence',
+      introBody:
+        'DP students combine six subjects with three required core components. The programme expects careful subject choices, sustained work, and the ability to connect ideas across disciplines.',
+      principlesLabel: 'Programme shape',
+      principlesTitle: 'A demanding programme with a clear structure',
+      principles: [
+        {
+          title: 'Six subjects',
+          body: 'Students choose across language, individuals and societies, sciences, mathematics, and the arts, with permitted alternatives.',
+        },
+        {
+          title: 'Higher and Standard Level',
+          body: 'Students normally take three or four subjects at Higher Level, with the remaining subjects at Standard Level.',
+        },
+        {
+          title: 'Three-part core',
+          body: 'Theory of Knowledge, the Extended Essay, and CAS broaden learning beyond individual subject courses.',
+        },
+      ],
+      curriculumLabel: 'Subject choices',
+      curriculumTitle: 'Six groups, one coherent diploma',
+      curriculumBody:
+        'Subject selection should balance interests, strengths, future study plans, and the combinations currently available at the school.',
+      curriculumItems: [
+        'Studies in language and literature',
+        'Language acquisition',
+        'Individuals and societies',
+        'Sciences',
+        'Mathematics',
+        'The arts or an allowed alternative',
+      ],
+      featureLabel: 'DP core',
+      featureTitle: 'Research, reflection, and action',
+      featureBody:
+        'The core asks every student to examine knowledge, complete independent research, and learn through purposeful activity and service.',
+      links: [
+        {
+          label: 'Theory of Knowledge',
+          body: 'Question how knowledge is produced, justified, and used.',
+          href: '/tok',
+        },
+        {
+          label: 'Extended Essay',
+          body: 'Plan and write an independent 4,000-word research paper.',
+          href: '/ee',
+        },
+        {
+          label: 'CAS',
+          body: 'Reflect on creativity, activity, and service beyond academic courses.',
+          href: '/cas',
+        },
+      ],
+      note:
+        'The subjects shown on this website are current sample content until the school confirms its final subject offering and available combinations.',
+      officialUrl: 'https://www.ibo.org/programmes/diploma-programme/curriculum/',
+      officialLink: 'Read the official DP curriculum',
+      exploreLink: 'Explore',
+      admissionsTitle: 'Planning your Diploma Programme?',
+      admissionsBody: 'Ask the school about current subject availability, combinations, entry requirements, and dates.',
+      admissionsLink: 'View admissions',
+    },
   },
   sk: {
     site: { title: 'IB Gymnázium Česká', tagline: 'Inšpirovať a rásť' },
     nav: {
+      myp: 'MYP',
+      dp: 'DP',
       subjects: 'Predmety',
       cas: 'CAS',
       tok: 'TOK',
@@ -423,6 +565,144 @@ const dict = {
       directTitle: 'Kontaktujte školu priamo',
       directBody: 'IB tím vám poskytne najnovšie informácie pre aktuálny prijímací cyklus.',
       schoolWebsite: 'Hlavná webová stránka školy',
+    },
+    myp: {
+      title: 'Middle Years Programme',
+      shortTitle: 'MYP',
+      subtitle: 'Prepojený program založený na bádaní, ktorý pripravuje študentov na nároky Diploma Programme.',
+      age: 'Vek 14–16 rokov na Českej',
+      duration: 'Záverečné roky MYP',
+      label: 'Middle Years Programme',
+      introTitle: 'Spoznajte, ako predmety súvisia',
+      introBody:
+        'MYP organizuje učenie v ôsmich predmetových skupinách a vedie študentov k používaniu poznatkov v kontexte. Na Českej tvorí most medzi skorším stredoškolským vzdelávaním a nárokmi Diploma Programme.',
+      principlesLabel: 'Ako funguje učenie',
+      principlesTitle: 'Poznatky majú väčšiu hodnotu, keď ich študenti vedia použiť',
+      principles: [
+        {
+          title: 'Učenie v kontexte',
+          body: 'Globálne kontexty prepájajú učivo s identitou, kultúrou, inováciami, spravodlivosťou, udržateľnosťou a širším svetom.',
+        },
+        {
+          title: 'Prenositeľné zručnosti',
+          body: 'Prístupy k učeniu rozvíjajú komunikáciu, výskum, myslenie, spoluprácu a sebariadenie naprieč predmetmi.',
+        },
+        {
+          title: 'Prepájanie disciplín',
+          body: 'Medzipredmetové jednotky vyžadujú kombinovanie metód a myšlienok z viacerých predmetových skupín.',
+        },
+      ],
+      curriculumLabel: 'Kurikulum',
+      curriculumTitle: 'Osem predmetových skupín',
+      curriculumBody:
+        'Úplné kurikulum MYP zahŕňa osem predmetových skupín. V neskorších rokoch môžu školy ponúknuť flexibilitu v rámci požiadaviek IB a miestnych pravidiel.',
+      curriculumItems: [
+        'Jazyk a literatúra',
+        'Osvojovanie jazyka',
+        'Jednotlivci a spoločnosti',
+        'Prírodné vedy',
+        'Matematika',
+        'Umenie',
+        'Telesná a zdravotná výchova',
+        'Dizajn',
+      ],
+      featureLabel: 'Mimo vyučovania',
+      featureTitle: 'Dlhodobý projekt a služba v praxi',
+      featureBody:
+        'Študenti MYP používajú svoje zručnosti v dlhodobej samostatnej práci a zmysluplnej činnosti pre komunitu.',
+      links: [
+        {
+          label: 'Preskúmať predmety',
+          body: 'Pozrite si predmetové materiály aktuálne publikované na IB stránke Českej.',
+          href: '/subjects',
+        },
+        {
+          label: 'Ako sa prihlásiť',
+          body: 'Opýtajte sa školy na aktuálne požiadavky a termíny pre vstup do MYP.',
+          href: '/admissions',
+        },
+        {
+          label: 'Oficiálne kurikulum MYP',
+          body: 'Prečítajte si aktuálny prehľad kurikula od International Baccalaureate.',
+          href: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
+        },
+      ],
+      note:
+        'Súkromné gymnázium Česká je kandidátskou školou pre MYP a uchádza sa o autorizáciu ako IB World School. Kandidátsky status nezaručuje udelenie autorizácie.',
+      officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
+      officialLink: 'Prečítať oficiálne kurikulum MYP',
+      exploreLink: 'Preskúmať',
+      admissionsTitle: 'Je MYP správny ďalší krok?',
+      admissionsBody: 'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
+      admissionsLink: 'Prijímacie konanie',
+    },
+    dp: {
+      title: 'Diploma Programme',
+      shortTitle: 'DP',
+      subtitle: 'Intenzívny dvojročný program postavený na šiestich predmetoch a jadre výskumu, reflexie a činnosti.',
+      age: 'Vek 16–19 rokov',
+      duration: 'Dva roky',
+      label: 'Diploma Programme',
+      introTitle: 'Budujte hĺbku, rozsah a samostatnosť',
+      introBody:
+        'Študenti DP kombinujú šesť predmetov s tromi povinnými súčasťami jadra. Program vyžaduje premyslený výber predmetov, sústavnú prácu a schopnosť prepájať myšlienky naprieč disciplínami.',
+      principlesLabel: 'Štruktúra programu',
+      principlesTitle: 'Náročný program s jasnou štruktúrou',
+      principles: [
+        {
+          title: 'Šesť predmetov',
+          body: 'Študenti si vyberajú z jazykov, spoločenských vied, prírodných vied, matematiky a umenia s povolenými alternatívami.',
+        },
+        {
+          title: 'Vyššia a štandardná úroveň',
+          body: 'Študenti zvyčajne absolvujú tri alebo štyri predmety na vyššej úrovni a zvyšné na štandardnej úrovni.',
+        },
+        {
+          title: 'Tri súčasti jadra',
+          body: 'Theory of Knowledge, Extended Essay a CAS rozširujú učenie nad rámec jednotlivých predmetov.',
+        },
+      ],
+      curriculumLabel: 'Výber predmetov',
+      curriculumTitle: 'Šesť skupín, jeden ucelený diplom',
+      curriculumBody:
+        'Výber predmetov má vyvažovať záujmy, silné stránky, plány ďalšieho štúdia a kombinácie aktuálne dostupné na škole.',
+      curriculumItems: [
+        'Jazyk a literatúra',
+        'Osvojovanie jazyka',
+        'Jednotlivci a spoločnosti',
+        'Prírodné vedy',
+        'Matematika',
+        'Umenie alebo povolená alternatíva',
+      ],
+      featureLabel: 'Jadro DP',
+      featureTitle: 'Výskum, reflexia a činnosť',
+      featureBody:
+        'Jadro vedie každého študenta k skúmaniu poznania, samostatnému výskumu a učeniu cez zmysluplnú aktivitu a službu.',
+      links: [
+        {
+          label: 'Theory of Knowledge',
+          body: 'Skúmajte, ako poznanie vzniká, ako sa zdôvodňuje a používa.',
+          href: '/tok',
+        },
+        {
+          label: 'Extended Essay',
+          body: 'Naplánujte a napíšte samostatnú výskumnú prácu v rozsahu 4 000 slov.',
+          href: '/ee',
+        },
+        {
+          label: 'CAS',
+          body: 'Reflektujte tvorivosť, aktivitu a službu mimo akademických predmetov.',
+          href: '/cas',
+        },
+      ],
+      note:
+        'Predmety zobrazené na tejto stránke sú vzorovým obsahom, kým škola nepotvrdí finálnu ponuku predmetov a dostupné kombinácie.',
+      officialUrl: 'https://www.ibo.org/programmes/diploma-programme/curriculum/',
+      officialLink: 'Prečítať oficiálne kurikulum DP',
+      exploreLink: 'Preskúmať',
+      admissionsTitle: 'Plánujete Diploma Programme?',
+      admissionsBody: 'Opýtajte sa školy na aktuálnu ponuku predmetov, kombinácie, vstupné požiadavky a termíny.',
+      admissionsLink: 'Prijímacie konanie',
     },
   },
 };

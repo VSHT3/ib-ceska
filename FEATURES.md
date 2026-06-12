@@ -38,6 +38,8 @@ Implemented and shipped.
 - [x] `/news` — chronological article listing
 - [x] `/news/[slug]` — news article detail
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
+- [x] `/myp` — bilingual MYP curriculum, learning approach, and admissions overview
+- [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
 - [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
 - [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback

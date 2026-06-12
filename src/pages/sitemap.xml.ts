@@ -27,6 +27,8 @@ export const GET: APIRoute = async () => {
 
   const paths = [
     '/',
+    '/myp',
+    '/dp',
     '/subjects',
     '/cas',
     '/tok',
