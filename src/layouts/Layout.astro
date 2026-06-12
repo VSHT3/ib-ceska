@@ -38,8 +38,11 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#047857" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | {dict.site.title}</title>
     {description && <meta name="description" content={description} />}
