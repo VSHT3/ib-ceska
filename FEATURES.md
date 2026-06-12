@@ -26,14 +26,27 @@ Implemented and shipped.
 - [x] `cas` — title, date, strand (Creativity/Activity/Service), description, learning outcomes, reflection body
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
 
-## Pages (6 routes + admin)
-- [x] `/` — homepage with hero and section cards
-- [x] `/subjects` — grouped listing by IB group (1–6)
+## Pages (6 routes + detail pages + admin)
+- [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
+- [x] `/subjects` — grouped listing by IB group (1–6), cards link to detail
+- [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
 - [x] `/cas` — strand-based listing (Creativity, Activity, Service)
+- [x] `/cas/[slug]` — CAS detail with reflection + learning-outcome sidebar
 - [x] `/tok` — essay/material listing with theme badges
+- [x] `/tok/[slug]` — TOK detail with full rendered essay
 - [x] `/ee` — Extended Essay timeline and resources
 - [x] `/news` — chronological article listing
+- [x] `/news/[slug]` — news article detail
+- [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
+- [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback
+
+## SEO & feeds
+- [x] `sitemap.xml` — all locales + collection detail pages, with hreflang
+- [x] `robots.txt` — disallow `/keystatic/` + `/api/`, sitemap reference
+- [x] RSS 2.0 feed for news at `/rss.xml` + `<link>` autodiscovery
+- [x] Per-page canonical + `hreflang` (en/sk/x-default) alternates
+- [x] Open Graph `og:url` + `og:locale`, Twitter card meta
 
 ## i18n (EN/SK)
 - [x] Locale-prefixed routes (`/en/…`, `/sk/…`) for every page
@@ -52,7 +65,11 @@ Implemented and shipped.
 - [x] Count-up stats band, scroll-reveal sections, photo marquee gallery
 - [x] Astro view transitions (`<ClientRouter />`) for smooth navigation
 - [x] Mobile hamburger menu + active nav link states
-- [x] Dark 3-column footer with school contact details
+- [x] Dark 4-column footer: contact, explore, links (school site, ibo.org, RSS), candidate-school note
+- [x] Student benefits section (homepage) sourced from ibo.org
+- [x] School-seal favicon set (ico, 192/512 PNG, apple-touch) + PWA manifest
+- [x] Language switch preserves scroll position
+- [x] Overscroll background matches design (no white flash)
 - [x] `PageHeader` gradient hero band on all subpages; EE visual timeline
 - [x] MYP candidate-school disclaimer + correct programme ages (14–16 / 16–19)
 - [x] School photography from the old Framer site (`public/images/school/`)
