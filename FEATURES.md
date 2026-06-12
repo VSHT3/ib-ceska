@@ -37,6 +37,7 @@ Implemented and shipped.
 - [x] `/ee` — Extended Essay timeline and resources
 - [x] `/news` — chronological article listing
 - [x] `/news/[slug]` — news article detail
+- [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
 - [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback
@@ -66,7 +67,7 @@ Implemented and shipped.
 - [x] Astro view transitions (`<ClientRouter />`) for smooth navigation
 - [x] Mobile hamburger menu + active nav link states
 - [x] Dark 4-column footer: contact, explore, links (school site, ibo.org, RSS), candidate-school note
-- [x] Student benefits section (homepage) sourced from ibo.org
+- [x] Student-work homepage feature linking directly to CAS, TOK, and EE materials
 - [x] School-seal favicon set (ico, 192/512 PNG, apple-touch) + PWA manifest
 - [x] Language switch preserves scroll position
 - [x] Overscroll background matches design (no white flash)

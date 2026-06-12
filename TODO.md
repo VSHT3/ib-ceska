@@ -29,7 +29,7 @@ Tasks the AI must complete. Checked = done.
 - [ ] Update nav logo with high-quality version when provided (still missing better logo)
 - [ ] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
 - [ ] Gallery page (old site had one; photos already in `public/images/school/`)
-- [ ] Admissions/contact page (old site had "Apply Now" flow)
+- [x] Admissions/contact page with bilingual application guidance and direct school contact
 - [ ] Dark mode support (respects `prefers-color-scheme`)
 - [ ] Loading/empty states for empty collections
 

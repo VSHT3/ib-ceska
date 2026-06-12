@@ -38,7 +38,7 @@ export const GET: APIRoute = async () => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>IB Gymnázium Česká — News</title>
+    <title>IB Gymnázium Česká: News</title>
     <link>${SITE}/en/news/</link>
     <description>Announcements, deadlines, and stories from the IB programme at Súkromné Gymnázium Česká, Bratislava.</description>
     <language>en</language>
