@@ -12,9 +12,10 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'sk'],
-    routing: {
-      prefixDefaultLocale: true,
-    },
+    // Manual routing so src/middleware.ts can let Keystatic's injected routes
+    // (/keystatic, /api/keystatic) bypass i18n. Built-in routing modes 404 any
+    // path without a locale prefix, which kills the CMS admin routes.
+    routing: 'manual',
   },
   vite: {
     plugins: [tailwindcss()],
