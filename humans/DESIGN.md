@@ -62,6 +62,7 @@ Keep components reusable and small. Each `.astro` component should do one thing:
 - `Layout.astro` — page shell (head, nav with mobile menu, dark footer, page scripts)
 - `PageHeader.astro` — gradient hero band for subpages (title, subtitle, label)
 - `LanguageSwitcher.astro` — EN/SK pill toggle that preserves the current path
+- `ProgrammeOverview.astro` — full programme-page template (hero, principles, curriculum, admissions CTA; amber tone for MYP, emerald for DP) used by `/myp` and `/dp`
 - Future components can be added under `src/components/`
 
 ## Icons and assets

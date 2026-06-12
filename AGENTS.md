@@ -48,9 +48,13 @@ src/
 │   ├── cas/            # CAS activity logs (.mdoc)
 │   └── tok/            # TOK essays and materials (.mdoc)
 ├── pages/              # route-based Astro pages (use Keystatic reader)
+│   ├── [locale]/       # all localized pages (en/sk) live here
+│   └── …               # root: 404, locale redirects, rss.xml.ts, sitemap.xml.ts
 ├── layouts/            # Layout.astro — shared shell with nav + footer
-├── components/         # reusable .astro components
+├── components/         # reusable .astro components (PageHeader, LanguageSwitcher, ProgrammeOverview)
+├── i18n/               # dictionaries.ts — EN/SK UI strings
 ├── lib/                # keystatic.ts — reader singleton
+├── middleware.ts       # manual i18n routing; lets /keystatic + /api/keystatic bypass i18n
 └── styles/             # global.css (Tailwind import)
 keystatic.config.ts     # CMS config — collections, fields, storage
 ```
@@ -89,3 +93,4 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - Keystatic schema changes (`keystatic.config.ts`) require restarting `npm run dev`.
 - The Node adapter is required even for static pages — Keystatic API routes need a server.
 - YAML values with colons (e.g. `LO1: text`) must be quoted in `.mdoc` frontmatter.
+- i18n uses `routing: 'manual'` + `src/middleware.ts`. Built-in `prefixDefaultLocale` 404s any path without a locale prefix, which kills Keystatic's injected `/keystatic` and `/api/keystatic` routes — the middleware lets them bypass i18n. Don't switch back to built-in routing.

@@ -15,6 +15,8 @@ Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymná
 - **TOK materials** — Theory of Knowledge essays and themes, with full essay pages
 - **Extended Essay** — timeline, resources, and document downloads
 - **News** — exam schedules, announcements, events, with an RSS feed at `/rss.xml`
+- **Programme pages** — dedicated MYP (`/myp`) and DP (`/dp`) curriculum overviews
+- **Admissions** — application steps, programme guidance, and direct school contact at `/admissions`
 - **Bilingual** — English primary, full Slovak UI + optional Slovak content (English fallback)
 - **SEO** — `sitemap.xml`, `robots.txt`, canonical + `hreflang` (en/sk/x-default), Open Graph
 - **CMS** — content edited visually through Keystatic at `/keystatic/`, no code required
