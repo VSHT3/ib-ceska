@@ -34,7 +34,10 @@ const allEssays = await reader.collections.tok.all();
           {allEssays
             .sort((a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime())
             .map((e) => (
-              <div class="rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+              <a
+                href={`/${locale}/tok/${e.slug}`}
+                class="block rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+              >
                 <div class="flex items-center justify-between gap-3 mb-1">
                   <h3 class="font-semibold">{pick(locale, e.entry.sk.title, e.entry.title)}</h3>
                   <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full shrink-0">{e.entry.theme}</span>
@@ -43,7 +46,7 @@ const allEssays = await reader.collections.tok.all();
                   {e.entry.date && new Date(e.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
                 </time>
                 <p class="text-sm text-stone-600 mt-1">{pick(locale, e.entry.sk.description, e.entry.description)}</p>
-              </div>
+              </a>
             ))}
         </div>
       )}

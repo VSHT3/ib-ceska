@@ -1,0 +1,85 @@
+---
+import { reader, pick } from '../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../lib/markdoc';
+import Layout from '../../../layouts/Layout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import { t, l } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.subjects.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } }))
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+
+const subject = await reader.collections.subjects.read(slug);
+if (!subject) return Astro.redirect(l('/subjects', locale));
+
+const groupLabels: Record<string, string> = {
+  '1': dict.subjects.group1,
+  '2': dict.subjects.group2,
+  '3': dict.subjects.group3,
+  '4': dict.subjects.group4,
+  '5': dict.subjects.group5,
+  '6': dict.subjects.group6,
+  core: dict.subjects.core,
+};
+
+const title = pick(locale, subject.sk.title, subject.title);
+const description = pick(locale, subject.sk.description, subject.description);
+
+const enHtml = await renderMarkdoc(subject.content);
+const skHtml = await renderMarkdoc(subject.sk.body);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+---
+
+<Layout title={title} description={description} locale={locale}>
+  <PageHeader title={title} subtitle={description} label={groupLabels[subject.group]} />
+
+  <div class="mx-auto max-w-5xl px-4 py-12">
+    <a
+      href={l('/subjects', locale)}
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span> {dict.detail.backSubjects}
+    </a>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_260px]">
+      <article class="rich-text min-w-0" data-reveal>
+        {hasContent(bodyHtml) ? (
+          <Fragment set:html={bodyHtml} />
+        ) : (
+          <p class="text-stone-400">{dict.detail.comingSoon}</p>
+        )}
+      </article>
+
+      <aside class="lg:order-last order-first" data-reveal>
+        <div class="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 lg:sticky lg:top-24">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.detail.group}</p>
+            <p class="text-sm font-medium text-stone-800 mt-1">{groupLabels[subject.group]}</p>
+          </div>
+          {subject.level && (
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.detail.level}</p>
+              <span class="inline-block mt-1 text-xs bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full font-semibold">
+                {subject.level}
+              </span>
+            </div>
+          )}
+          {subject.teacher && (
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.detail.teacher}</p>
+              <p class="text-sm font-medium text-stone-800 mt-1">{subject.teacher}</p>
+            </div>
+          )}
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

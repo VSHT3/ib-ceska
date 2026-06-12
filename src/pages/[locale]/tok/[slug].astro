@@ -1,0 +1,63 @@
+---
+import { reader, pick } from '../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../lib/markdoc';
+import Layout from '../../../layouts/Layout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import { t, l } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.tok.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } }))
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+
+const material = await reader.collections.tok.read(slug);
+if (!material) return Astro.redirect(l('/tok', locale));
+
+const title = pick(locale, material.sk.title, material.title);
+const description = pick(locale, material.sk.description, material.description);
+
+const enHtml = await renderMarkdoc(material.content);
+const skHtml = await renderMarkdoc(material.sk.body);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+---
+
+<Layout title={title} description={description} locale={locale}>
+  <PageHeader title={title} subtitle={description} label={`TOK — ${material.theme}`} />
+
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <a
+      href={l('/tok', locale)}
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span> {dict.detail.backTok}
+    </a>
+
+    <div class="mt-6 flex items-center gap-3 text-sm" data-reveal>
+      <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-semibold">{material.theme}</span>
+      {material.date && (
+        <time class="text-stone-400">
+          {new Date(material.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+      )}
+    </div>
+
+    <article class="rich-text mt-6" data-reveal>
+      {hasContent(bodyHtml) ? (
+        <Fragment set:html={bodyHtml} />
+      ) : (
+        <p class="text-stone-400">{dict.detail.comingSoon}</p>
+      )}
+    </article>
+  </div>
+</Layout>

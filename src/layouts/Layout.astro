@@ -25,6 +25,12 @@ const navLinks = [
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
+
+const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
+const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
+const altUrl = (code: string) => new URL(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`, site).href;
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL('/images/school/school-building.jpg', site).href;
 ---
 
 <!doctype html>
@@ -38,10 +44,18 @@ const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || cu
     <title>{title} | {dict.site.title}</title>
     {description && <meta name="description" content={description} />}
 
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={altUrl('en')} />
+    <link rel="alternate" hreflang="sk" href={altUrl('sk')} />
+    <link rel="alternate" hreflang="x-default" href={altUrl('en')} />
+    <link rel="alternate" type="application/rss+xml" title={`${dict.site.title} — News`} href="/rss.xml" />
+
     <meta property="og:title" content={`${title} | ${dict.site.title}`} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/school/school-building.jpg" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={locale === 'sk' ? 'sk_SK' : 'en_GB'} />
+    <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={`${title} | ${dict.site.title}`} />
     {description && <meta name="twitter:description" content={description} />}
@@ -126,7 +140,7 @@ const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || cu
     </main>
 
     <footer class="bg-stone-900 text-stone-300 mt-24">
-      <div class="mx-auto max-w-5xl px-6 py-14 grid gap-10 sm:grid-cols-3">
+      <div class="mx-auto max-w-5xl px-6 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto mb-4 rounded-lg bg-white/90 p-1.5" />
           <p class="text-sm leading-relaxed text-stone-400">{dict.site.tagline}</p>
@@ -147,9 +161,34 @@ const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || cu
             <li class="text-stone-400">{contact.address}</li>
           </ul>
         </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.links}</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">
+                {dict.footer.school} ↗
+              </a>
+            </li>
+            <li>
+              <a href="https://www.ibo.org" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">
+                {dict.footer.ibo} ↗
+              </a>
+            </li>
+            <li>
+              <a href="/rss.xml" class="hover:text-emerald-400 transition-colors">RSS</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="border-t border-stone-800 py-6 text-center text-xs text-stone-500">
-        <p>&copy; {currentYear} {dict.site.title}. {dict.footer.rights}</p>
+      <div class="border-t border-stone-800 py-6">
+        <div class="mx-auto max-w-5xl px-6 space-y-3 text-xs text-stone-500">
+          <p class="leading-relaxed">{dict.footer.candidateNote}</p>
+          <p>
+            &copy; {currentYear} {dict.site.title}. {dict.footer.rights}
+            {' · '}
+            <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">gymnaziumceska.sk</a>
+          </p>
+        </div>
       </div>
     </footer>
 
@@ -201,6 +240,18 @@ const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || cu
           );
           io.observe(el);
         });
+
+        // Language switch keeps scroll position (ClientRouter scrolls to top by default)
+        document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
+          a.addEventListener('click', () => {
+            sessionStorage.setItem('lang-switch-scroll', String(window.scrollY));
+          });
+        });
+        const savedScroll = sessionStorage.getItem('lang-switch-scroll');
+        if (savedScroll !== null) {
+          sessionStorage.removeItem('lang-switch-scroll');
+          window.scrollTo({ top: Number(savedScroll), behavior: 'instant' });
+        }
 
         // Mobile menu
         const toggle = document.getElementById('menu-toggle');

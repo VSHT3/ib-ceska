@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { t } from '../i18n/dictionaries';
+
+export const prerender = true;
+
+const dict = t('en');
+const dictSk = t('sk');
+---
+
+<Layout title={dict.notFound.title} description={dict.notFound.body} locale="en">
+  <section class="mx-auto max-w-5xl px-6 py-24 sm:py-32 text-center">
+    <p class="hero-rise text-[7rem] sm:text-[10rem] font-bold leading-none tracking-tight bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent select-none">
+      404
+    </p>
+    <h1 class="hero-rise text-2xl sm:text-3xl font-bold text-stone-900 mt-4" style="--rise-delay: 80ms">
+      {dict.notFound.title}
+    </h1>
+    <p class="hero-rise mt-3 text-stone-600 max-w-md mx-auto" style="--rise-delay: 140ms">
+      {dict.notFound.body}
+    </p>
+    <p class="hero-rise mt-1 text-sm text-stone-400 max-w-md mx-auto" style="--rise-delay: 180ms">
+      {dictSk.notFound.body}
+    </p>
+    <div class="hero-rise mt-8 flex flex-wrap justify-center gap-3" style="--rise-delay: 240ms">
+      <a
+        href="/en/"
+        class="rounded-full bg-emerald-700 px-6 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 transition-colors"
+      >
+        {dict.notFound.home}
+      </a>
+      <a
+        href="/sk/"
+        class="rounded-full border border-stone-300 px-6 py-2.5 text-sm font-semibold text-stone-700 hover:border-emerald-400 hover:text-emerald-700 transition-colors"
+      >
+        {dictSk.notFound.home}
+      </a>
+    </div>
+  </section>
+</Layout>

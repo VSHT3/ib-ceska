@@ -21,7 +21,7 @@ const locales: { code: Locale; label: string }[] = [
     code === locale ? (
       <span aria-current="true" class="rounded-full bg-white px-2.5 py-1 text-emerald-700 shadow-sm">{label}</span>
     ) : (
-      <a href={pathFor(code)} class="rounded-full px-2.5 py-1 text-stone-500 transition-colors hover:text-emerald-700">{label}</a>
+      <a href={pathFor(code)} data-lang-switch class="rounded-full px-2.5 py-1 text-stone-500 transition-colors hover:text-emerald-700">{label}</a>
     )
   )}
 </div>

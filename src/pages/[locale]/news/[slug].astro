@@ -1,0 +1,64 @@
+---
+import { reader, pick } from '../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../lib/markdoc';
+import Layout from '../../../layouts/Layout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import { t, l } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.news.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } }))
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+
+const article = await reader.collections.news.read(slug);
+if (!article) return Astro.redirect(l('/news', locale));
+
+const title = pick(locale, article.sk.title, article.title);
+const excerpt = pick(locale, article.sk.excerpt, article.excerpt);
+
+const enHtml = await renderMarkdoc(article.content);
+const skHtml = await renderMarkdoc(article.sk.body);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+
+const dateLabel = article.date
+  ? new Date(article.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : undefined;
+---
+
+<Layout title={title} description={excerpt} locale={locale}>
+  <PageHeader title={title} subtitle={excerpt} label={dateLabel} />
+
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <a
+      href={l('/news', locale)}
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span> {dict.detail.backNews}
+    </a>
+
+    <article class="rich-text mt-6" data-reveal>
+      {hasContent(bodyHtml) ? (
+        <Fragment set:html={bodyHtml} />
+      ) : (
+        <p class="text-stone-400">{dict.detail.comingSoon}</p>
+      )}
+    </article>
+
+    {article.author && (
+      <p class="mt-8 pt-6 border-t border-stone-200 text-sm text-stone-400" data-reveal>
+        {article.author}
+      </p>
+    )}
+  </div>
+</Layout>
