@@ -3,9 +3,10 @@
 Things the humans (IB coordinators, teachers, school staff) must provide or decide. AI cannot do these without your input.
 
 ## Critical — before launch
-- [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution
-- [ ] Provide school logo in vector format (SVG preferred) for favicon and nav branding
-- [ ] Confirm final domain name (currently set to `ceska-skola.cz` in `astro.config.mjs`)
+- [ ] **Set up the production CMS login (developer task).** The live `/keystatic/` editor cannot save until a GitHub App is registered and `KEYSTATIC_GITHUB_CLIENT_ID` + `KEYSTATIC_GITHUB_CLIENT_SECRET` are set in the hosting environment. Once done, only people with write access to the `VSHT3/ib-ceska` repo can edit content.
+- [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
+- [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution; the nav and favicon currently use it
+- [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
 - [ ] Provide real teacher names and titles for all IB subjects
 - [ ] Confirm which subjects the school actually offers (current list is a template)
 - [ ] Provide actual CAS activity records with dates, descriptions, and learning outcomes
@@ -36,8 +37,15 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Confirm copyright statement in footer
 - [ ] Decide if cookie consent banner is needed
 
+## Succession (current maintainer leaving within ~a year)
+- [ ] Transfer GitHub repository ownership/admin to the school or the next maintainer
+- [ ] Transfer the hosting account (Coolify on the VPS) and document the server login
+- [ ] Transfer DNS control for `ib.gymnaziumceska.sk`
+- [ ] Hand over the production environment variables (Keystatic GitHub secrets) — these are **not** in the repo
+- [ ] Identify and brief the next developer; point them at `humans/README.md` → "Succession" and the root `AGENTS.md`
+
 ## Future decisions
 - [ ] Prioritize which i18n languages to implement first (English, Slovak, others?)
 - [ ] Decide if CAS entries should be publicly visible or login-gated
 - [ ] Decide if TOK essays should be public or restricted to students
-- [ ] Decide on hosting provider (Netlify, Vercel, GitHub Pages, custom server)
+- [x] ~~Decide on hosting provider~~ — Coolify on a VPS (see root `AGENTS.md` → Deployment)

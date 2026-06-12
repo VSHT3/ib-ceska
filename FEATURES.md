@@ -76,10 +76,10 @@ Implemented and shipped.
 - [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
 
 ## Sample content
-- [x] 8 subjects across all 6 IB groups
-- [x] 3 CAS entries (one per strand)
-- [x] 2 TOK essays/themes
-- [x] 2 news articles
+- [x] 9 subjects across all 6 IB groups — each with a full rendered syllabus body (overview, assessment table, IA detail)
+- [x] 3 CAS entries (one per strand) — each with a reflection mapped to learning outcomes
+- [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
+- [x] 2 news articles — with full article bodies
 
 ## Documentation
 - [x] `README.md` — badges, quick start, stack, collection overview, deploy section

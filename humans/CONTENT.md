@@ -13,10 +13,12 @@ All website content is managed through the **Keystatic CMS admin panel** — a v
 ## Production workflow (GitHub OAuth)
 
 When editing on the live site:
-- You log in with your GitHub account
+- You log in with your **GitHub account** — only accounts with write access to the `VSHT3/ib-ceska` repository can save. This is how editor access is controlled (see `README.md` → "Who is allowed to edit").
 - Edits create commits directly to the repository
 - Coolify detects the push and automatically redeploys the site
 - Changes go live within seconds
+
+> ⚠️ Production GitHub login still needs one-time developer setup before it works on the live site — see `HUMANTODO.md`. Until then, edit locally (below).
 
 ## Local workflow
 
@@ -103,6 +105,15 @@ The website shows every page in **English** (`/en/…`) and **Slovak** (`/sk/…
   - **CAS** — title, description, reflection
   - **TOK** — title, summary, full essay
 - Fixed UI text (menus, headings, buttons) is translated in code — you don't need to touch it.
+
+## Where content appears on the site
+
+Each entry shows up in two places, both generated automatically:
+
+- A **listing page** — the card grid at `/subjects`, `/cas`, `/tok`, or `/news`. Shows the title, short description, and badges from the top fields.
+- A **detail page** — its own page at `/subjects/<name>`, `/cas/<name>`, `/tok/<name>`, or `/news/<name>`. This is where the **rich-text body** (`content` field) is shown in full. Cards on the listing pages link to these detail pages.
+
+So: put the one-line summary in `description`/`excerpt`, and the full write-up (syllabus, reflection, essay, article) in the rich-text body.
 
 ## File format (for developers)
 
