@@ -8,8 +8,11 @@ const dict = {
   en: {
     site: { title: 'IB Gymnázium Česká', tagline: 'To Inspire And Grow' },
     nav: {
+      programmes: 'Programmes',
       myp: 'MYP',
+      mypDesc: 'Middle Years Programme · ages 14–16',
       dp: 'DP',
+      dpDesc: 'Diploma Programme · ages 16–19',
       subjects: 'Subjects',
       cas: 'CAS',
       tok: 'TOK',
@@ -358,8 +361,11 @@ const dict = {
   sk: {
     site: { title: 'IB Gymnázium Česká', tagline: 'Inšpirovať a rásť' },
     nav: {
+      programmes: 'Programy',
       myp: 'MYP',
+      mypDesc: 'Middle Years Programme · vek 14–16',
       dp: 'DP',
+      dpDesc: 'Diploma Programme · vek 16–19',
       subjects: 'Predmety',
       cas: 'CAS',
       tok: 'TOK',

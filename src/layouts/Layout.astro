@@ -15,19 +15,23 @@ const { title, description, locale } = Astro.props;
 const dict = t(locale);
 const currentYear = new Date().getFullYear();
 
-const navLinks = [
-  { href: l('/myp', locale), label: dict.nav.myp },
-  { href: l('/dp', locale), label: dict.nav.dp },
+const programmeLinks = [
+  { href: l('/myp', locale), label: dict.nav.myp, desc: dict.nav.mypDesc },
+  { href: l('/dp', locale), label: dict.nav.dp, desc: dict.nav.dpDesc },
+];
+const academicLinks = [
   { href: l('/subjects', locale), label: dict.nav.subjects },
   { href: l('/cas', locale), label: dict.nav.cas },
   { href: l('/tok', locale), label: dict.nav.tok },
   { href: l('/ee', locale), label: dict.nav.ee },
-  { href: l('/news', locale), label: dict.nav.news },
 ];
+const newsLink = { href: l('/news', locale), label: dict.nav.news };
+const navLinks = [...programmeLinks, ...academicLinks, newsLink]; // flat list for footer + mobile
 const admissionsHref = l('/admissions', locale);
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
+const programmesActive = programmeLinks.some(({ href }) => isActive(href));
 
 const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
 const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
@@ -69,7 +73,7 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
-    <header class="border-b border-stone-200/80 bg-white/85 backdrop-blur-md sticky top-0 z-50">
+    <header class="border-b border-stone-200/60 bg-white/70 backdrop-blur-xl backdrop-saturate-150 shadow-sm shadow-stone-900/5 sticky top-0 z-50">
       <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
         <a href={l('/', locale)} class="flex items-center shrink-0">
           <img
@@ -80,7 +84,43 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
         </a>
 
         <ul class="hidden lg:flex gap-1 xl:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
-          {navLinks.map(({ href, label }) => (
+          <li class="relative group">
+            <button
+              type="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+              class:list={[
+                'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
+                programmesActive
+                  ? 'bg-emerald-50 text-emerald-700'
+                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
+              ]}
+            >
+              {dict.nav.programmes}
+              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+              </svg>
+            </button>
+            <div class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2">
+              <div class="w-72 rounded-2xl border border-stone-200/70 bg-white/90 backdrop-blur-xl p-1.5 shadow-lg shadow-stone-900/10">
+                {programmeLinks.map(({ href, label, desc }) => (
+                  <a
+                    href={href}
+                    aria-current={isActive(href) ? 'page' : undefined}
+                    class:list={[
+                      'block rounded-xl px-3.5 py-2.5 transition-colors',
+                      isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
+                    ]}
+                  >
+                    <span class:list={['block font-semibold', isActive(href) ? 'text-emerald-700' : 'text-stone-800']}>{label}</span>
+                    <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </li>
+          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
+          {academicLinks.map(({ href, label }) => (
             <li>
               <a
                 href={href}
@@ -96,6 +136,21 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
               </a>
             </li>
           ))}
+          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
+          <li>
+            <a
+              href={newsLink.href}
+              aria-current={isActive(newsLink.href) ? 'page' : undefined}
+              class:list={[
+                'relative rounded-full px-3 py-1.5 transition-colors',
+                isActive(newsLink.href)
+                  ? 'bg-emerald-50 text-emerald-700'
+                  : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
+              ]}
+            >
+              {newsLink.label}
+            </a>
+          </li>
           <li class="ml-2 pl-3 border-l border-stone-200">
             <LanguageSwitcher locale={locale} />
           </li>
@@ -128,9 +183,28 @@ const ogImage = new URL('/images/school/school-building.jpg', site).href;
         </div>
       </nav>
 
-      <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200 bg-white px-4 py-3">
+      <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200/60 bg-white/90 backdrop-blur-xl px-4 py-3">
         <ul class="flex flex-col gap-1 text-sm font-medium">
-          {navLinks.map(({ href, label }) => (
+          <li class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.nav.programmes}</li>
+          {programmeLinks.map(({ href, label, desc }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={isActive(href) ? 'page' : undefined}
+                class:list={[
+                  'block rounded-lg px-3 py-2.5 transition-colors',
+                  isActive(href)
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
+                ]}
+              >
+                {label}
+                <span class="block text-xs font-normal text-stone-500">{desc}</span>
+              </a>
+            </li>
+          ))}
+          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
+          {[...academicLinks, newsLink].map(({ href, label }) => (
             <li>
               <a
                 href={href}
