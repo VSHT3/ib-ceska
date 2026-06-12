@@ -82,6 +82,29 @@ const dict = {
       dpItem2: 'Theory of Knowledge (TOK) course',
       dpItem3: 'Extended Essay — 4,000-word research paper',
       dpItem4: 'Creativity, Activity, Service (CAS)',
+      benefitsLabel: 'Why the IB',
+      benefitsHeading: 'An education that lasts a lifetime',
+      benefitsIntro:
+        'The IB does more than prepare students for exams — it builds the skills, mindset, and confidence to thrive at university and beyond.',
+      benefit1Title: 'Think critically',
+      benefit1Desc:
+        'Students learn to question assumptions, weigh evidence, and form independent, well-reasoned judgements.',
+      benefit2Title: 'Communicate & research',
+      benefit2Desc:
+        'Strong writing, presentation, and research skills — honed through the Extended Essay and across every subject.',
+      benefit3Title: 'Connect knowledge',
+      benefit3Desc:
+        'Theory of Knowledge and an interdisciplinary approach help students link ideas across subjects and the real world.',
+      benefit4Title: 'Own their learning',
+      benefit4Desc:
+        'Through CAS and independent projects, students take genuine ownership of their growth and direction.',
+      benefit5Title: 'Internationally minded',
+      benefit5Desc:
+        'Students grow into globally aware citizens who appreciate different cultures and perspectives.',
+      benefit6Title: 'University-ready',
+      benefit6Desc:
+        'The IB Diploma is recognised by leading universities worldwide; graduates are far more likely to enrol at top institutions.',
+      benefitsSource: 'Source: International Baccalaureate Organization (ibo.org)',
       galleryLabel: 'Life at Česká',
       galleryHeading: 'A community of thinkers, creators, and leaders',
       exploreLabel: 'Explore',
@@ -222,6 +245,29 @@ const dict = {
       dpItem2: 'Kurz Theory of Knowledge (TOK)',
       dpItem3: 'Extended Essay — výskumná práca na 4 000 slov',
       dpItem4: 'Creativity, Activity, Service (CAS)',
+      benefitsLabel: 'Prečo IB',
+      benefitsHeading: 'Vzdelanie, ktoré vydrží celý život',
+      benefitsIntro:
+        'IB nepripravuje študentov len na skúšky — buduje zručnosti, myslenie a sebavedomie potrebné na úspech na univerzite a v živote.',
+      benefit1Title: 'Kritické myslenie',
+      benefit1Desc:
+        'Študenti sa učia spochybňovať predpoklady, zvažovať dôkazy a formovať samostatné, podložené úsudky.',
+      benefit2Title: 'Komunikácia a výskum',
+      benefit2Desc:
+        'Silné písomné, prezentačné a výskumné zručnosti — rozvíjané v rámci Extended Essay a vo všetkých predmetoch.',
+      benefit3Title: 'Prepájanie poznatkov',
+      benefit3Desc:
+        'Theory of Knowledge a medzipredmetový prístup pomáhajú študentom prepájať myšlienky naprieč predmetmi aj realitou.',
+      benefit4Title: 'Vlastné učenie',
+      benefit4Desc:
+        'Cez CAS a samostatné projekty preberajú študenti skutočnú zodpovednosť za svoj rast a smerovanie.',
+      benefit5Title: 'Medzinárodné myslenie',
+      benefit5Desc:
+        'Študenti dospievajú na globálne uvedomelých občanov, ktorí oceňujú rôzne kultúry a perspektívy.',
+      benefit6Title: 'Pripravení na univerzitu',
+      benefit6Desc:
+        'IB diplom uznávajú popredné univerzity po celom svete; absolventi sa oveľa častejšie dostávajú na špičkové školy.',
+      benefitsSource: 'Zdroj: International Baccalaureate Organization (ibo.org)',
       galleryLabel: 'Život na Českej',
       galleryHeading: 'Komunita mysliteľov, tvorcov a lídrov',
       exploreLabel: 'Preskúmajte',
