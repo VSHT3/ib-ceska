@@ -134,5 +134,25 @@ const steps = [
         </div>
       </div>
     </section>
+
+    <section class="mt-28 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div data-reveal>
+        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">{admissions.faqLabel}</span>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.faqTitle}</h2>
+      </div>
+      <div class="border-t border-stone-200">
+        {admissions.faqItems.map((item, i) => (
+          <details class="group border-b border-stone-200" data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-emerald-700 [&::-webkit-details-marker]:hidden">
+              <span>{item.q}</span>
+              <svg class="h-5 w-5 shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-45 group-hover:text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <p class="pb-5 -mt-1 text-stone-600 leading-relaxed">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
   </div>
 </Layout>

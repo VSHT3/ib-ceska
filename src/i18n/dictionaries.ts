@@ -255,6 +255,30 @@ const dict = {
       directTitle: 'Talk directly with the school',
       directBody: 'The IB team can give you the latest information for the current admissions cycle.',
       schoolWebsite: 'Main school website',
+      faqLabel: 'Good to know',
+      faqTitle: 'Frequently asked questions',
+      faqItems: [
+        {
+          q: 'When can I apply?',
+          a: 'Admissions windows vary by year and programme. Contact the IB team and they will confirm the current dates and whether places are still available for your year of entry.',
+        },
+        {
+          q: 'What are the entry requirements?',
+          a: 'Requirements depend on the programme and the student’s background. Rather than publishing figures that may change, the school confirms the current requirements directly once you get in touch.',
+        },
+        {
+          q: 'Do I need to speak Slovak?',
+          a: 'The Diploma Programme at Česká is taught in English. Slovak is helpful for daily life but is not required to apply — tell us your preferred language and the team will work with you.',
+        },
+        {
+          q: 'Can I transfer from another school mid-programme?',
+          a: 'Sometimes, depending on subjects already taken and timing. Reach out with the student’s current courses and year group and the coordinator will advise on what is possible.',
+        },
+        {
+          q: 'How much does the programme cost?',
+          a: 'As a private school, Česká charges tuition. The school will share current fees and any available support during your first conversation.',
+        },
+      ],
     },
     myp: {
       title: 'Middle Years Programme',
@@ -645,6 +669,30 @@ const dict = {
       directTitle: 'Kontaktujte školu priamo',
       directBody: 'IB tím vám poskytne najnovšie informácie pre aktuálny prijímací cyklus.',
       schoolWebsite: 'Hlavná webová stránka školy',
+      faqLabel: 'Dobré vedieť',
+      faqTitle: 'Často kladené otázky',
+      faqItems: [
+        {
+          q: 'Kedy sa môžem prihlásiť?',
+          a: 'Termíny prijímania sa líšia podľa roka a programu. Kontaktujte IB tím a potvrdí vám aktuálne dátumy a dostupnosť miest pre váš rok nástupu.',
+        },
+        {
+          q: 'Aké sú podmienky prijatia?',
+          a: 'Požiadavky závisia od programu a doterajšieho štúdia študenta. Namiesto zverejňovania údajov, ktoré sa môžu meniť, vám škola potvrdí aktuálne podmienky priamo po kontaktovaní.',
+        },
+        {
+          q: 'Musím vedieť po slovensky?',
+          a: 'Diploma Programme na Českej prebieha v angličtine. Slovenčina pomáha v bežnom živote, ale na prihlásenie sa nevyžaduje — uveďte preferovaný jazyk a tím sa vám prispôsobí.',
+        },
+        {
+          q: 'Môžem prestúpiť z inej školy počas programu?',
+          a: 'Niekedy áno, závisí to od už absolvovaných predmetov a načasovania. Napíšte nám aktuálne predmety a ročník študenta a koordinátor poradí, čo je možné.',
+        },
+        {
+          q: 'Koľko program stojí?',
+          a: 'Ako súkromná škola Česká vyberá školné. Aktuálnu výšku školného a možnú podporu vám škola poskytne počas prvého rozhovoru.',
+        },
+      ],
     },
     myp: {
       title: 'Middle Years Programme',
