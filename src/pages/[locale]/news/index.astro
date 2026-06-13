@@ -1,6 +1,7 @@
 ---
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
+import EmptyState from '../../../components/EmptyState.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
@@ -35,7 +36,7 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
   {allNews.length === 0 ? (
     <div class="mx-auto max-w-6xl px-4 sm:px-6 py-24">
       <h1 class="text-5xl sm:text-6xl font-bold tracking-tight">{dict.news.title}</h1>
-      <p class="mt-6 text-stone-400">{dict.news.noNews}</p>
+      <div class="mt-10"><EmptyState message={dict.news.noNews} /></div>
     </div>
   ) : (
     <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">

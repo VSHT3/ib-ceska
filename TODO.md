@@ -31,7 +31,7 @@ Tasks the AI must complete. Checked = done.
 - [x] Gallery page (photos now in `src/assets/school/`)
 - [x] Admissions/contact page with bilingual application guidance and direct school contact
 - [ ] Dark mode support (respects `prefers-color-scheme`)
-- [ ] Loading/empty states for empty collections
+- [x] Loading/empty states for empty collections
 
 ## Security & access
 - [ ] Wire up Keystatic GitHub OAuth for production so only repo collaborators can save content (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` + GitHub App) — human setup tracked in `humans/HUMANTODO.md`

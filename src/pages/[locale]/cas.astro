@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
+import EmptyState from '../../components/EmptyState.astro';
 import { school } from '../../assets/school';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
@@ -128,7 +129,7 @@ const fmtDate = (date: string | null) =>
       </div>
 
       {sorted.length === 0 ? (
-        <p class="text-sm text-stone-400">{dict.cas.noActivities}</p>
+        <EmptyState message={dict.cas.noActivities} />
       ) : (
         <ol class="relative border-l-2 border-stone-200 ml-2.5 space-y-8">
           {sorted.map((a, i) => {
