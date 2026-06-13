@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { school } from '../../assets/school';
+import { t } from '../../i18n/dictionaries';
+import type { Locale } from '../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'en' } },
+    { params: { locale: 'sk' } },
+  ];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+
+// Captions are bilingual; logo asset is intentionally excluded.
+const photos = [
+  { img: school.classroom, en: 'In the classroom', sk: 'V triede' },
+  { img: school.studentsReading, en: 'Reading in the library', sk: 'Čítanie v knižnici' },
+  { img: school.projectPresentation, en: 'Presenting project work', sk: 'Prezentácia projektov' },
+  { img: school.volunteering, en: 'Service in the community', sk: 'Dobrovoľníctvo v komunite' },
+  { img: school.hallwayLibrary, en: 'Hallways and shared spaces', sk: 'Chodby a spoločné priestory' },
+  { img: school.studentsFun, en: 'Between lessons', sk: 'Medzi hodinami' },
+  { img: school.entranceBanner, en: 'The school entrance', sk: 'Vchod do školy' },
+  { img: school.studentsSelfie, en: 'With our teachers', sk: 'S našimi učiteľmi' },
+  { img: school.schoolBuilding, en: 'Súkromné Gymnázium Česká', sk: 'Súkromné Gymnázium Česká' },
+];
+const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
+---
+
+<Layout title={dict.gallery.title} description="Photo gallery — life at Súkromné Gymnázium Česká" locale={locale}>
+  <!-- Editorial hero -->
+  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
+    <span class="absolute -right-8 -bottom-16 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none" aria-hidden="true">＋</span>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
+      <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.gallery.label}</span>
+      <h1 class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight" style="--rise-delay: 80ms">{dict.gallery.title}</h1>
+      <p class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed" style="--rise-delay: 160ms">{dict.gallery.subtitle}</p>
+    </div>
+  </section>
+
+  <!-- Masonry -->
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+      {photos.map((p, i) => (
+        <figure
+          class="group relative mb-4 break-inside-avoid overflow-hidden rounded-2xl bg-stone-100 shadow-sm"
+          data-reveal
+          style={`--reveal-delay: ${Math.min(i, 5) * 60}ms`}
+        >
+          <Image
+            src={p.img}
+            alt={caption(p)}
+            class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            widths={[320, 480, 768]}
+            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+            loading={i < 3 ? 'eager' : 'lazy'}
+          />
+          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 p-4 text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+            {caption(p)}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -27,7 +27,9 @@ const academicLinks = [
   { href: l('/ee', locale), label: dict.nav.ee },
 ];
 const newsLink = { href: l('/news', locale), label: dict.nav.news };
-const navLinks = [...programmeLinks, ...academicLinks, newsLink]; // flat list for footer + mobile
+const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
+const secondaryLinks = [newsLink, galleryLink];
+const navLinks = [...programmeLinks, ...academicLinks, ...secondaryLinks]; // flat list for footer + mobile
 const admissionsHref = l('/admissions', locale);
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
@@ -138,20 +140,22 @@ const ogImage = new URL(schoolBuilding.src, site).href;
             </li>
           ))}
           <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
-          <li>
-            <a
-              href={newsLink.href}
-              aria-current={isActive(newsLink.href) ? 'page' : undefined}
-              class:list={[
-                'relative rounded-full px-3 py-1.5 transition-colors',
-                isActive(newsLink.href)
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
-              ]}
-            >
-              {newsLink.label}
-            </a>
-          </li>
+          {secondaryLinks.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={isActive(href) ? 'page' : undefined}
+                class:list={[
+                  'relative rounded-full px-3 py-1.5 transition-colors',
+                  isActive(href)
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
           <li class="ml-2 pl-3 border-l border-stone-200">
             <LanguageSwitcher locale={locale} />
           </li>
@@ -205,7 +209,7 @@ const ogImage = new URL(schoolBuilding.src, site).href;
             </li>
           ))}
           <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          {[...academicLinks, newsLink].map(({ href, label }) => (
+          {[...academicLinks, ...secondaryLinks].map(({ href, label }) => (
             <li>
               <a
                 href={href}

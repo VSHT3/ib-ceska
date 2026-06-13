@@ -18,6 +18,7 @@ const dict = {
       tok: 'TOK',
       ee: 'Extended Essay',
       news: 'News',
+      gallery: 'Gallery',
       apply: 'Apply',
       menu: 'Menu',
     },
@@ -202,6 +203,11 @@ const dict = {
       latest: 'Latest',
       readMore: 'Read article',
       allArticles: 'All articles',
+    },
+    gallery: {
+      title: 'Life at Česká',
+      subtitle: 'Lessons, projects, service, and the everyday moments that shape our IB community.',
+      label: 'Gallery',
     },
     admissions: {
       title: 'Admissions',
@@ -392,6 +398,7 @@ const dict = {
       tok: 'TOK',
       ee: 'Rozšírená Esej',
       news: 'Novinky',
+      gallery: 'Galéria',
       apply: 'Prihlásiť sa',
       menu: 'Menu',
     },
@@ -576,6 +583,11 @@ const dict = {
       latest: 'Najnovšie',
       readMore: 'Prečítať článok',
       allArticles: 'Všetky články',
+    },
+    gallery: {
+      title: 'Život na Českej',
+      subtitle: 'Vyučovanie, projekty, dobrovoľníctvo a každodenné momenty, ktoré formujú našu IB komunitu.',
+      label: 'Galéria',
     },
     admissions: {
       title: 'Prijímacie konanie',
