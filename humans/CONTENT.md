@@ -20,6 +20,25 @@ When editing on the live site:
 
 > ⚠️ Production GitHub login still needs one-time developer setup before it works on the live site — see `HUMANTODO.md`. Until then, edit locally (below).
 
+### Getting an editor their own access (do this — don't share one login)
+
+Each editor (teacher, coordinator) uses **their own free GitHub account**. Do **not** hand out a shared login.
+
+1. The editor creates a free account at [github.com](https://github.com) (if they don't have one) and sends you their GitHub username.
+2. A repo owner/admin adds them as a **collaborator** with **Write** access on `VSHT3/ib-ceska`
+   (GitHub → repo → **Settings → Collaborators → Add people**).
+3. They accept the email invite, then log in at `/keystatic/` with their own GitHub account and can save.
+4. To remove access later: remove them from the repo collaborators list.
+
+Why own accounts, not a shared one:
+- Every save is committed as that person, so the history shows **who changed what**.
+- Access is revoked per-person without disrupting anyone else.
+- No one is handed a password that also carries repo-admin powers.
+
+Notes:
+- The repo is **public**, so anyone can *read* the source — that's fine (it's a school website and no secrets live in the repo; the production secrets are stored in Coolify, not GitHub). **Only collaborators can write/save.**
+- GitHub places no limit on free collaborators (public or private), so add as many editors as needed.
+
 ## Local workflow
 
 When running `npm run dev` locally:
