@@ -49,7 +49,7 @@ Tasks the AI must complete. Checked = done.
 - [ ] PDF upload support for EE resources
 
 ## Ideas (unprioritized)
-- [ ] Interactive DP subject-combination picker ("build your diploma")
+- [x] Interactive DP subject-combination picker ("build your diploma") — `/build-your-diploma`, driven by the `offeredLevels` subject field
 - [ ] Countdown to exam session / application deadline on homepage
 - [ ] FAQ accordion for admissions
 - [ ] Instagram/social feed embed

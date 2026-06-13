@@ -39,7 +39,8 @@ Each entry represents one IB subject offering.
 | ------------ | -------- | -------- | ---------------------------------------------------- |
 | `title`      | slug     | yes      | Subject name — also used as the URL slug             |
 | `group`      | select   | yes      | IB group: 1 through 6, or Core                       |
-| `level`      | select   | no       | HL or SL                                             |
+| `level`      | select   | no       | HL or SL — the level shown on the catalogue card     |
+| `offeredLevels`| select | no       | HL & SL / HL only / SL only — controls which levels the diploma builder lets a student pick (default: HL & SL) |
 | `description`| textarea | yes      | Brief course description                             |
 | `teacher`    | text     | no       | Teacher's name and title                             |
 | `order`      | number   | no       | Display order within the group (default: 0)          |

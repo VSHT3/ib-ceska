@@ -27,7 +27,7 @@ Implemented and shipped.
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
 - [x] `events` — title, date, endDate, time, location, description, details body; auto upcoming/past split
 
-## Pages (6 routes + detail pages + admin)
+## Pages (routes + detail pages + admin)
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
 - [x] `/subjects` — grouped listing by IB group (1–6), cards link to detail
 - [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
@@ -36,8 +36,11 @@ Implemented and shipped.
 - [x] `/tok` — essay/material listing with theme badges
 - [x] `/tok/[slug]` — TOK detail with full rendered essay
 - [x] `/ee` — Extended Essay timeline and resources
-- [x] `/news` — chronological article listing
+- [x] `/news` — masthead feed with featured-latest + archive
 - [x] `/news/[slug]` — news article detail
+- [x] `/events` — calendar page, auto-split into upcoming/past
+- [x] `/gallery` — bilingual masonry photo gallery
+- [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/myp` — bilingual MYP curriculum, learning approach, and admissions overview
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview

@@ -56,6 +56,16 @@ export default config({
           ],
           defaultValue: 'HL',
         }),
+        offeredLevels: fields.select({
+          label: 'Offered at',
+          description: 'Levels a student can choose for this subject in the diploma builder.',
+          options: [
+            { label: 'HL & SL', value: 'both' },
+            { label: 'HL only', value: 'HL' },
+            { label: 'SL only', value: 'SL' },
+          ],
+          defaultValue: 'both',
+        }),
         description: fields.text({ label: 'Description', multiline: true }),
         teacher: fields.text({ label: 'Teacher' }),
         order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
