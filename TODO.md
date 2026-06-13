@@ -14,7 +14,7 @@ Tasks the AI must complete. Checked = done.
 - [ ] Add real CAS projects the school has done
 
 ## Pages
-- [ ] School events page/section (Keystatic collection)
+- [x] School events page/section (Keystatic collection)
 - [ ] Public works showcase — student EEs, exhibitions, science collaboration project
 - [ ] Student testimonials section (homepage + own page?)
 - [ ] Teachers list page (photo, role, subjects)
@@ -27,8 +27,8 @@ Tasks the AI must complete. Checked = done.
 
 ## UI & UX
 - [ ] Update nav logo with high-quality version when provided (still missing better logo)
-- [ ] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
-- [ ] Gallery page (old site had one; photos already in `public/images/school/`)
+- [x] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
+- [x] Gallery page (photos now in `src/assets/school/`)
 - [x] Admissions/contact page with bilingual application guidance and direct school contact
 - [ ] Dark mode support (respects `prefers-color-scheme`)
 - [ ] Loading/empty states for empty collections

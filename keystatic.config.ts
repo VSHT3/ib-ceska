@@ -134,5 +134,21 @@ export default config({
         content: fields.markdoc({ label: 'Full Essay', options: { image: { directory: 'public/images/tok', publicPath: '/images/tok' } } }),
       },
     }),
+    events: collection({
+      label: 'Events',
+      slugField: 'title',
+      path: 'src/content/events/*',
+      format: { contentField: 'content' },
+      schema: {
+        title: fields.slug({ name: { label: 'Event Name' } }),
+        date: fields.date({ label: 'Date' }),
+        endDate: fields.date({ label: 'End date (optional, for multi-day events)' }),
+        time: fields.text({ label: 'Time (e.g. 17:00–19:00)' }),
+        location: fields.text({ label: 'Location' }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        sk: slovakFields({ description: 'Description', body: 'Details' }),
+        content: fields.markdoc({ label: 'Details', options: { image: { directory: 'public/images/events', publicPath: '/images/events' } } }),
+      },
+    }),
   },
 });

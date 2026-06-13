@@ -5,7 +5,7 @@ All website content is managed through the **Keystatic CMS admin panel** — a v
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Subjects, News, CAS Activities, or TOK Materials
+2. **Choose a collection** — Subjects, News, Events, CAS Activities, or TOK Materials
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -92,6 +92,25 @@ Announcements, exam schedules, and events.
 | `sk`      | group    | no       | Slovak translation (title, excerpt, body) |
 | `content` | richtext | no       | Full article body               |
 
+### Events (`src/content/events/`)
+
+Open evenings, deadlines, exhibitions, and key calendar dates. The `/events`
+page automatically splits entries into **Upcoming** and **Past** based on
+today's date — no manual archiving needed.
+
+**Fields:**
+
+| Field         | Type     | Required | Description                                |
+| ------------- | -------- | -------- | ------------------------------------------ |
+| `title`       | slug     | yes      | Event name                                 |
+| `date`        | date     | yes      | Start date                                 |
+| `endDate`     | date     | no       | End date — only for multi-day events       |
+| `time`        | text     | no       | e.g. `17:00–19:30`; blank shows "All day"  |
+| `location`    | text     | no       | Where it happens                           |
+| `description` | textarea | no       | Short summary shown on the card            |
+| `sk`          | group    | no       | Slovak translation (title, description, details) |
+| `content`     | richtext | no       | Full details                               |
+
 ## Language — English + Slovak
 
 The website shows every page in **English** (`/en/…`) and **Slovak** (`/sk/…`). Content works like this:
@@ -104,6 +123,7 @@ The website shows every page in **English** (`/en/…`) and **Slovak** (`/sk/…
   - **News** — title, excerpt, article body
   - **CAS** — title, description, reflection
   - **TOK** — title, summary, full essay
+  - **Events** — title, description, details
 - Fixed UI text (menus, headings, buttons) is translated in code — you don't need to touch it.
 
 ## Where content appears on the site

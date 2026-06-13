@@ -11,7 +11,7 @@ Implemented and shipped.
 - [x] Git + GitHub repo with topics and description
 
 ## CMS — Keystatic
-- [x] `keystatic.config.ts` — 4 collections with typed schemas
+- [x] `keystatic.config.ts` — 5 collections with typed schemas
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
 - [x] `src/lib/keystatic.ts` — shared reader singleton
@@ -20,11 +20,12 @@ Implemented and shipped.
 - [x] Markdoc rich-text editor for long-form content (subjects, CAS, TOK, news bodies)
 - [x] Select fields, date pickers, array fields with validation
 
-## Content (4 collections)
+## Content (5 collections)
 - [x] `subjects` — title, group (1-6/core), level (HL/SL), description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
 - [x] `cas` — title, date, strand (Creativity/Activity/Service), description, learning outcomes, reflection body
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
+- [x] `events` — title, date, endDate, time, location, description, details body; auto upcoming/past split
 
 ## Pages (6 routes + detail pages + admin)
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
