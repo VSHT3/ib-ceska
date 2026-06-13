@@ -80,10 +80,12 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - `humans/README.md` — onboarding index
 
 ## Deployment
-- **Target:** Coolify on VPS
-- **Build:** `npm run build` outputs `dist/client/` (static) + `dist/server/` (Node)
-- **Keystatic:** Production uses GitHub OAuth storage — set `KEYSTATIC_GITHUB_CLIENT_ID` and `KEYSTATIC_GITHUB_CLIENT_SECRET` env vars
-- **Coolify tip:** Set build command to `npm run build`, start command to `node dist/server/entry.mjs`, port to `4321`
+- **Live on Coolify (VPS).** Project `IB Česká` → env `production` → app `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via the `v-s-h-t3` GitHub App. Full reference: [`humans/DEPLOY.md`](humans/DEPLOY.md).
+- **Auto-deploy:** push to `main` (incl. a Keystatic Save, which commits) → GitHub webhook → Coolify pulls + builds + redeploys. No manual trigger except first deploy / forced rebuild.
+- **Build:** nixpacks (Node 22). `npm run build` → `dist/client/` (static) + `dist/server/` (Node); start `node dist/server/entry.mjs`; expose port `4321`.
+- **Required env:** `HOST=0.0.0.0` and `PORT=4321` — Astro's Node adapter binds `localhost` by default, unreachable inside the container; without `HOST=0.0.0.0` the app comes up `exited:unhealthy` / 502.
+- **Keystatic:** Production uses GitHub OAuth storage — set `KEYSTATIC_GITHUB_CLIENT_ID` and `KEYSTATIC_GITHUB_CLIENT_SECRET` (not yet set; `/keystatic/` loads but login/save won't work until they are).
+- **Domain:** target `ib.gymnaziumceska.sk`; currently on a temporary `sslip.io` URL until DNS points at the VPS.
 
 ## Gotchas
 - Content files are `.mdoc`, NOT `.mdx` or `.md`. Don't create `.mdx` files in `src/content/`.

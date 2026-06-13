@@ -82,14 +82,14 @@ See [`humans/`](humans/) for onboarding, the content-editing guide, design decis
 
 ## Deploy
 
-Target: **Coolify** on a VPS.
+Hosted on **Coolify** on a VPS — Coolify project `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via a GitHub App. **Pushing to `main` auto-deploys** (GitHub webhook → Coolify pulls, builds, redeploys); a Keystatic Save also commits to `main`, so content edits redeploy too.
 
 ```bash
 npm run build                 # → dist/client/ (static) + dist/server/ (Node)
 node dist/server/entry.mjs    # start command, port 4321
 ```
 
-Set `KEYSTATIC_GITHUB_CLIENT_ID` and `KEYSTATIC_GITHUB_CLIENT_SECRET` in the environment for the production CMS. Live at [ib.gymnaziumceska.sk](https://ib.gymnaziumceska.sk).
+Build pack is nixpacks (Node 22). Set `HOST=0.0.0.0` and `PORT=4321` so the Node adapter binds inside the container, and set `KEYSTATIC_GITHUB_CLIENT_ID` + `KEYSTATIC_GITHUB_CLIENT_SECRET` for the production CMS login. Full hosting/build/troubleshooting reference: [`humans/DEPLOY.md`](humans/DEPLOY.md). Target domain [ib.gymnaziumceska.sk](https://ib.gymnaziumceska.sk) (currently on a temporary `sslip.io` URL until DNS is pointed).
 
 ## License
 

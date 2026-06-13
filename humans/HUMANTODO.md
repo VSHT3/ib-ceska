@@ -39,7 +39,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Succession (current maintainer leaving within ~a year)
 - [ ] Transfer GitHub repository ownership/admin to the school or the next maintainer
-- [ ] Transfer the hosting account (Coolify on the VPS) and document the server login
+- [ ] Transfer the hosting account (Coolify on the VPS) and document the server login — the site is already deployed there (Coolify project `IB Česká`); see `humans/DEPLOY.md`
 - [ ] Transfer DNS control for `ib.gymnaziumceska.sk`
 - [ ] Hand over the production environment variables (Keystatic GitHub secrets) — these are **not** in the repo
 - [ ] Identify and brief the next developer; point them at `humans/README.md` → "Succession" and the root `AGENTS.md`
@@ -48,4 +48,4 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Prioritize which i18n languages to implement first (English, Slovak, others?)
 - [ ] Decide if CAS entries should be publicly visible or login-gated
 - [ ] Decide if TOK essays should be public or restricted to students
-- [x] ~~Decide on hosting provider~~ — Coolify on a VPS (see root `AGENTS.md` → Deployment)
+- [x] ~~Decide on hosting provider~~ — Coolify on a VPS; **site is live and auto-deploys on push** (see `humans/DEPLOY.md`)

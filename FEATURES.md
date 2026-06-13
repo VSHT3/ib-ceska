@@ -88,12 +88,19 @@ Implemented and shipped.
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
 
+## Deployment
+- [x] Live on Coolify (VPS) — project `IB Česká`, app via GitHub App on `VSHT3/ib-ceska` `main`
+- [x] nixpacks build (Node 22): `npm run build` → start `node dist/server/entry.mjs`, port 4321
+- [x] `HOST=0.0.0.0` + `PORT=4321` runtime env so the Node adapter binds inside the container
+- [x] Auto-deploy on push to `main` (GitHub App webhook); first deploy verified (`/`, `/en/`, `/keystatic` all 200)
+
 ## Documentation
 - [x] `README.md` — badges, quick start, stack, collection overview, deploy section
 - [x] `AGENTS.md` — AI agent conventions, gotchas, stack details
 - [x] `humans/README.md` — onboarding for non-technical collaborators
 - [x] `humans/CONTENT.md` — per-collection field reference, editor workflow
 - [x] `humans/DESIGN.md` — design tokens, layout rules, CMS architecture
+- [x] `humans/DEPLOY.md` — hosting, build config, auto-deploy, troubleshooting
 - [x] `humans/HUMANTODO.md` — tasks for human collaborators
 - [x] `TODO.md` — AI task backlog
 - [x] `FEATURES.md` — this file

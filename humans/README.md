@@ -9,6 +9,7 @@ Welcome. This is the documentation hub for everyone who helps run the IB website
 | `README.md`      | This file — start here                                   |
 | `CONTENT.md`     | How to add and edit content (subjects, news, CAS, TOK)   |
 | `DESIGN.md`      | Design choices, colors, and layout rules                 |
+| `DEPLOY.md`      | Where the site is hosted, how deploys work (developer)   |
 | `HUMANTODO.md`   | Decisions and material the school must provide           |
 | `handover.pdf`   | Original handover brief from the start of the project    |
 
