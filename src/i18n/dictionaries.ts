@@ -156,6 +156,8 @@ const dict = {
       teacher: 'Teacher',
       onThisPage: 'Subject groups',
       catalogueLabel: 'Course catalogue',
+      enrolmentNote:
+        'Subjects run each year only if enough students choose them, so the exact offering — and the levels available — can vary from year to year. Ask the school to confirm current options.',
     },
     builder: {
       title: 'Build Your Diploma',
@@ -598,6 +600,8 @@ const dict = {
       teacher: 'Vyučujúci',
       onThisPage: 'Predmetové skupiny',
       catalogueLabel: 'Katalóg kurzov',
+      enrolmentNote:
+        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka — aj dostupné úrovne — sa môže rok od roka líšiť. Aktuálne možnosti si overte u školy.',
     },
     builder: {
       title: 'Zostavte si diplom',

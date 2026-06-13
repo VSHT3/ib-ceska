@@ -49,6 +49,10 @@ const groups = groupDefs
         <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.subjects.catalogueLabel}</span>
         <h1 class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight" style="--rise-delay: 80ms">{dict.subjects.title}</h1>
         <p class="hero-rise mt-5 max-w-xl text-lg text-stone-600 leading-relaxed" style="--rise-delay: 160ms">{dict.subjects.subtitle}</p>
+        <p class="hero-rise mt-4 max-w-xl flex gap-2.5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 leading-relaxed" style="--rise-delay: 200ms">
+          <span aria-hidden="true">ℹ️</span>
+          <span>{dict.subjects.enrolmentNote}</span>
+        </p>
         <div class="hero-rise mt-8 flex flex-wrap gap-2" style="--rise-delay: 240ms">
           {groups.map((g) => (
             <a
