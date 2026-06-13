@@ -1,7 +1,6 @@
 ---
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
-import PageHeader from '../../../components/PageHeader.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
@@ -15,41 +14,114 @@ export function getStaticPaths() {
 const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
 
-const allNews = await reader.collections.news.all();
+const allNews = (await reader.collections.news.all()).sort(
+  (a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime()
+);
+
+const [featured, ...rest] = allNews;
+
+const fmtDate = (date: string | null) =>
+  date
+    ? new Date(date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
+const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : null);
 ---
 
 <Layout title={dict.news.title} description="IB programme announcements" locale={locale}>
-  <PageHeader title={dict.news.title} subtitle={dict.news.subtitle} />
+  {allNews.length === 0 ? (
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-24">
+      <h1 class="text-5xl sm:text-6xl font-bold tracking-tight">{dict.news.title}</h1>
+      <p class="mt-6 text-stone-400">{dict.news.noNews}</p>
+    </div>
+  ) : (
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
+      <!-- Masthead -->
+      <header class="flex items-end justify-between gap-6 border-b-4 border-stone-900 pb-5">
+        <h1 class="hero-rise text-5xl sm:text-7xl font-bold tracking-tighter leading-none">{dict.news.title}</h1>
+        <p class="hero-rise hidden sm:block max-w-xs text-sm text-stone-500 leading-relaxed text-right" style="--rise-delay: 80ms">{dict.news.subtitle}</p>
+      </header>
 
-  <div class="mx-auto max-w-5xl px-4 py-12">
-    {allNews.length === 0 ? (
-      <p class="text-stone-400">{dict.news.noNews}</p>
-    ) : (
-      <div class="grid gap-5">
-        {allNews
-          .sort((a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime())
-          .map((n, i) => (
-            <a
-              href={`/${locale}/news/${n.slug}`}
-              class="block rounded-2xl border border-stone-200 bg-white p-6 sm:p-8 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
-              data-reveal
-              style={`--reveal-delay: ${Math.min(i, 4) * 80}ms`}
-            >
-              {n.entry.date && (
-                <time class="text-xs font-medium text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-1">
-                  {new Date(n.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              )}
-              <h2 class="text-xl font-semibold mt-3 mb-2">{pick(locale, n.entry.sk.title, n.entry.title)}</h2>
-              {n.entry.excerpt && <p class="text-stone-600">{pick(locale, n.entry.sk.excerpt, n.entry.excerpt)}</p>}
-              {n.entry.author && <p class="text-xs text-stone-400 mt-3">{n.entry.author}</p>}
-            </a>
-          ))}
-      </div>
-    )}
-  </div>
+      <!-- Featured latest -->
+      <a
+        href={`/${locale}/news/${featured.slug}`}
+        class="group block border-b border-stone-200 py-10 sm:py-14"
+        data-reveal
+      >
+        <div class="grid lg:grid-cols-[auto_1fr] gap-x-10 gap-y-4 items-start">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-emerald-700">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" aria-hidden="true" />
+            {dict.news.latest}
+          </span>
+          <div class="min-w-0">
+            {featured.entry.date && (
+              <time class="block text-sm text-stone-400 mb-3">{fmtDate(featured.entry.date)}</time>
+            )}
+            <h2 class="text-3xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-stone-900 group-hover:text-emerald-700 transition-colors">
+              {pick(locale, featured.entry.sk.title, featured.entry.title)}
+            </h2>
+            {featured.entry.excerpt && (
+              <p class="mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed">
+                {pick(locale, featured.entry.sk.excerpt, featured.entry.excerpt)}
+              </p>
+            )}
+            <div class="mt-6 flex items-center gap-4">
+              {featured.entry.author && <span class="text-sm text-stone-400">{featured.entry.author}</span>}
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700">
+                {dict.news.readMore}
+                <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Archive feed -->
+      {rest.length > 0 && (
+        <section class="mt-12">
+          <h2 class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">{dict.news.allArticles}</h2>
+          <ol>
+            {rest.map((n, i) => {
+              const year = yearOf(n.entry.date);
+              const prevYear = i === 0 ? yearOf(featured.entry.date) : yearOf(rest[i - 1].entry.date);
+              const showYear = year !== null && year !== prevYear;
+              return (
+                <li data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}>
+                  {showYear && (
+                    <div class="pt-8 pb-1 text-sm font-bold tracking-tight text-stone-300 select-none">{year}</div>
+                  )}
+                  <a
+                    href={`/${locale}/news/${n.slug}`}
+                    class="group grid grid-cols-[1fr_auto] sm:grid-cols-[7rem_1fr_auto] items-baseline gap-x-4 sm:gap-x-8 gap-y-1 border-b border-stone-200 py-6"
+                  >
+                    <time class="hidden sm:block text-sm text-stone-400 tabular-nums group-hover:text-emerald-600 transition-colors">
+                      {n.entry.date && new Date(n.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', { day: '2-digit', month: 'short' })}
+                    </time>
+                    <div class="min-w-0">
+                      <h3 class="text-xl sm:text-2xl font-semibold tracking-tight text-stone-900 group-hover:text-emerald-700 transition-colors">
+                        {pick(locale, n.entry.sk.title, n.entry.title)}
+                      </h3>
+                      {n.entry.excerpt && (
+                        <p class="mt-1.5 text-sm sm:text-base text-stone-500 leading-relaxed max-w-2xl line-clamp-2">
+                          {pick(locale, n.entry.sk.excerpt, n.entry.excerpt)}
+                        </p>
+                      )}
+                      <div class="mt-2 flex items-center gap-3 text-xs text-stone-400 sm:hidden">
+                        {n.entry.date && <time>{fmtDate(n.entry.date)}</time>}
+                        {n.entry.author && <span>· {n.entry.author}</span>}
+                      </div>
+                    </div>
+                    <span class="text-emerald-700 font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+    </div>
+  )}
 </Layout>

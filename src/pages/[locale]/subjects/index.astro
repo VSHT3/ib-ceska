@@ -1,7 +1,6 @@
 ---
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
-import PageHeader from '../../../components/PageHeader.astro';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
@@ -16,7 +15,7 @@ const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
 
 const allSubjects = await reader.collections.subjects.all();
-const groups = [
+const groupDefs = [
   { key: '1', label: dict.subjects.group1 },
   { key: '2', label: dict.subjects.group2 },
   { key: '3', label: dict.subjects.group3 },
@@ -25,48 +24,142 @@ const groups = [
   { key: '6', label: dict.subjects.group6 },
   { key: 'core', label: dict.subjects.core },
 ];
+
+const groups = groupDefs
+  .map((g) => ({
+    ...g,
+    id: `group-${g.key}`,
+    ghost: g.key === 'core' ? 'C' : `0${g.key}`,
+    // strip the "Group N: " / "Skupina N: " prefix — the ghost numeral already says it
+    shortLabel: g.label.replace(/^[^:]+:\s*/, ''),
+    subjects: allSubjects
+      .filter((s) => s.entry.group === g.key)
+      .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0)),
+  }))
+  .filter((g) => g.subjects.length > 0);
 ---
 
 <Layout title={dict.subjects.title} description="IB subject listings by group" locale={locale}>
-  <PageHeader title={dict.subjects.title} subtitle={dict.subjects.subtitle} label="IB DP" />
+  <!-- Editorial split hero -->
+  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20 grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-16 items-center">
+      <div>
+        <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.subjects.catalogueLabel}</span>
+        <h1 class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight" style="--rise-delay: 80ms">{dict.subjects.title}</h1>
+        <p class="hero-rise mt-5 max-w-xl text-lg text-stone-600 leading-relaxed" style="--rise-delay: 160ms">{dict.subjects.subtitle}</p>
+        <div class="hero-rise mt-8 flex flex-wrap gap-2" style="--rise-delay: 240ms">
+          {groups.map((g) => (
+            <a
+              href={`#${g.id}`}
+              class="rounded-full border border-stone-200 bg-stone-50 px-3.5 py-1.5 text-xs font-semibold text-stone-600 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50 transition-colors"
+            >
+              {g.ghost === 'C' ? 'Core' : g.ghost} · {g.shortLabel}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="relative hidden lg:block hero-rise" style="--rise-delay: 200ms">
+        <div class="absolute -top-4 -right-4 w-full h-full rounded-3xl bg-emerald-100" />
+        <img
+          src="/images/school/classroom.jpg"
+          alt="A lesson in progress at Česká"
+          class="relative rounded-3xl object-cover h-80 w-full shadow-lg"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
 
-  <div class="mx-auto max-w-5xl px-4 py-12">
-    {
-      groups.map((group) => {
-        const groupSubjects = allSubjects
-          .filter((s) => s.entry.group === group.key)
-          .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0));
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[230px_1fr] lg:gap-14">
+    <!-- Sticky group rail (desktop) -->
+    <aside class="hidden lg:block">
+      <nav class="sticky top-28" aria-label={dict.subjects.onThisPage}>
+        <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-4">{dict.subjects.onThisPage}</p>
+        <ul class="space-y-1 border-l border-stone-200">
+          {groups.map((g) => (
+            <li>
+              <a
+                href={`#${g.id}`}
+                data-spy-link={g.id}
+                class="group flex items-baseline justify-between gap-2 -ml-px border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-emerald-700 data-[active]:border-emerald-600 data-[active]:text-emerald-700 data-[active]:font-semibold"
+              >
+                <span class="truncate">{g.shortLabel}</span>
+                <span class="text-xs text-stone-300 group-data-[active]:text-emerald-400">{g.subjects.length}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
 
-        if (groupSubjects.length === 0) return null;
-
-        return (
-          <section class="mb-12" data-reveal>
-            <h2 class="text-xl font-semibold mb-4 text-emerald-800 flex items-center gap-3">
-              <span class="inline-block h-6 w-1 rounded-full bg-emerald-600" />
-              {group.label}
-            </h2>
-            <div class="grid gap-3 sm:grid-cols-2">
-              {groupSubjects.map((s) => (
+    <!-- Group sections -->
+    <div class="min-w-0">
+      {groups.map((group) => (
+        <section id={group.id} class="scroll-mt-28 mb-16" data-spy-section data-reveal>
+          <header class="relative flex items-end gap-4 border-b-2 border-stone-900 pb-3">
+            <span class="text-6xl sm:text-7xl font-extrabold leading-none tracking-tighter text-stone-200 select-none" aria-hidden="true">{group.ghost}</span>
+            <div class="pb-1">
+              <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">{group.label.split(':')[0]}</p>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-stone-900">{group.shortLabel}</h2>
+            </div>
+          </header>
+          <ul>
+            {group.subjects.map((s, i) => (
+              <li>
                 <a
                   href={`/${locale}/subjects/${s.slug}`}
-                  class="block rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+                  class="group grid grid-cols-[1fr_auto] items-center gap-4 border-b border-stone-200 py-5 sm:py-6 transition-colors hover:bg-emerald-50/40 sm:px-3 sm:-mx-3 rounded-lg"
+                  data-reveal
+                  style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}
                 >
-                  <div class="flex items-center justify-between mb-1 gap-3">
-                    <h3 class="font-semibold">{pick(locale, s.entry.sk.title, s.entry.title)}</h3>
-                    {s.entry.level && (
-                      <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-medium shrink-0">{s.entry.level}</span>
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <h3 class="text-lg sm:text-xl font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
+                        {pick(locale, s.entry.sk.title, s.entry.title)}
+                      </h3>
+                      {s.entry.level && (
+                        <span class="text-[11px] font-bold tracking-wide bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full shrink-0">{s.entry.level}</span>
+                      )}
+                    </div>
+                    <p class="mt-1.5 text-sm text-stone-600 leading-relaxed max-w-2xl">{pick(locale, s.entry.sk.description, s.entry.description)}</p>
+                    {s.entry.teacher && (
+                      <p class="mt-2 text-xs text-stone-400">{dict.subjects.teacher}: {s.entry.teacher}</p>
                     )}
                   </div>
-                  <p class="text-sm text-stone-600">{pick(locale, s.entry.sk.description, s.entry.description)}</p>
-                  {s.entry.teacher && (
-                    <p class="text-xs text-stone-400 mt-2">{dict.subjects.teacher}: {s.entry.teacher}</p>
-                  )}
+                  <span class="text-emerald-700 font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" aria-hidden="true">→</span>
                 </a>
-              ))}
-            </div>
-          </section>
-        );
-      })
-    }
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
   </div>
+
+  <script>
+    function initSubjectsSpy() {
+      const links = document.querySelectorAll<HTMLAnchorElement>('[data-spy-link]');
+      const sections = document.querySelectorAll<HTMLElement>('[data-spy-section]');
+      if (links.length === 0 || sections.length === 0) return;
+
+      const setActive = (id: string) => {
+        links.forEach((link) => {
+          if (link.dataset.spyLink === id) link.setAttribute('data-active', '');
+          else link.removeAttribute('data-active');
+        });
+      };
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          // Pick the entry closest to the top of the reading band
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (visible.length > 0) setActive(visible[0].target.id);
+        },
+        { rootMargin: '-25% 0px -65% 0px' }
+      );
+      sections.forEach((s) => io.observe(s));
+    }
+
+    document.addEventListener('astro:page-load', initSubjectsSpy);
+  </script>
 </Layout>

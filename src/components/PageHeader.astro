@@ -1,23 +1,62 @@
 ---
+type Tone = 'emerald' | 'dark' | 'amber' | 'sky' | 'stone';
+
 interface Props {
   title: string;
   subtitle?: string;
   label?: string;
+  tone?: Tone;
 }
 
-const { title, subtitle, label } = Astro.props;
+const { title, subtitle, label, tone = 'emerald' } = Astro.props;
+
+const tones: Record<Tone, { band: string; blob: string; label: string; subtitle: string }> = {
+  emerald: {
+    band: 'from-emerald-800 via-emerald-700 to-teal-800',
+    blob: 'bg-emerald-500/20',
+    label: 'text-emerald-200',
+    subtitle: 'text-emerald-100/90',
+  },
+  dark: {
+    band: 'from-stone-900 via-stone-800 to-emerald-950',
+    blob: 'bg-emerald-500/15',
+    label: 'text-emerald-300',
+    subtitle: 'text-stone-300',
+  },
+  amber: {
+    band: 'from-amber-700 via-amber-600 to-orange-700',
+    blob: 'bg-amber-400/20',
+    label: 'text-amber-100',
+    subtitle: 'text-amber-50/90',
+  },
+  sky: {
+    band: 'from-sky-800 via-sky-700 to-cyan-800',
+    blob: 'bg-sky-400/20',
+    label: 'text-sky-200',
+    subtitle: 'text-sky-100/90',
+  },
+  stone: {
+    band: 'from-stone-800 via-stone-700 to-stone-900',
+    blob: 'bg-stone-400/10',
+    label: 'text-stone-300',
+    subtitle: 'text-stone-300',
+  },
+};
+
+const c = tones[tone];
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-800 text-white">
+<section class:list={['relative overflow-hidden bg-gradient-to-br text-white', c.band]}>
   <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
-  <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full bg-emerald-500/20 blur-3xl" />
+  <div class:list={['absolute -bottom-24 -left-24 w-72 h-72 rounded-full blur-3xl', c.blob]} />
   <div class="relative mx-auto max-w-5xl px-6 py-16 sm:py-20">
-    {label && <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-200 mb-3">{label}</span>}
+    {label && <span class:list={['hero-rise inline-block text-xs font-semibold tracking-widest uppercase mb-3', c.label]}>{label}</span>}
     <h1 class="hero-rise text-4xl sm:text-5xl font-bold tracking-tight" style="--rise-delay: 80ms">{title}</h1>
     {subtitle && (
-      <p class="hero-rise mt-4 max-w-2xl text-lg text-emerald-100/90 leading-relaxed" style="--rise-delay: 160ms">
+      <p class:list={['hero-rise mt-4 max-w-2xl text-lg leading-relaxed', c.subtitle]} style="--rise-delay: 160ms">
         {subtitle}
       </p>
     )}
+    <slot />
   </div>
 </section>

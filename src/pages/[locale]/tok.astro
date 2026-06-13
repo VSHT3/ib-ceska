@@ -1,7 +1,6 @@
 ---
 import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -15,41 +14,68 @@ export function getStaticPaths() {
 const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
 
-const allEssays = await reader.collections.tok.all();
+const allEssays = (await reader.collections.tok.all()).sort(
+  (a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime()
+);
+
+const fmtDate = (date: string | null) =>
+  date
+    ? new Date(date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
 ---
 
 <Layout title={dict.tok.title} description="Theory of Knowledge materials and essays" locale={locale}>
-  <PageHeader title={dict.tok.title} subtitle={dict.tok.subtitle} label="IB Core" />
+  <!-- Contemplative dark hero -->
+  <section class="relative overflow-hidden bg-stone-900 text-white">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
+    <div class="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl" />
+    <span class="absolute -right-8 -top-24 text-[20rem] sm:text-[26rem] font-extrabold leading-none text-white/[0.04] select-none" aria-hidden="true">?</span>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-20 sm:py-28">
+      <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-amber-300">IB Core</span>
+      <h1 class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight" style="--rise-delay: 80ms">{dict.tok.title}</h1>
+      <p class="hero-rise mt-5 max-w-2xl text-lg text-stone-300 leading-relaxed" style="--rise-delay: 160ms">{dict.tok.subtitle}</p>
+      <div class="hero-rise mt-10 border-l-2 border-amber-400/60 pl-5" style="--rise-delay: 240ms">
+        <p class="text-xs font-semibold tracking-widest uppercase text-stone-400">{dict.tok.heroQuoteLabel}</p>
+        <p class="mt-2 text-2xl sm:text-3xl font-medium italic text-amber-100 tracking-tight">“{dict.tok.heroQuote}”</p>
+      </div>
+    </div>
+  </section>
 
-  <div class="mx-auto max-w-5xl px-4 py-12">
-    <section data-reveal>
-      <h2 class="text-xl font-semibold mb-4 text-emerald-800 flex items-center gap-3">
-        <span class="inline-block h-6 w-1 rounded-full bg-emerald-600" />
-        {dict.tok.heading}
-      </h2>
-      {allEssays.length === 0 ? (
-        <p class="text-sm text-stone-400">{dict.tok.noMaterials}</p>
-      ) : (
-        <div class="grid gap-3 sm:grid-cols-2">
-          {allEssays
-            .sort((a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime())
-            .map((e) => (
-              <a
-                href={`/${locale}/tok/${e.slug}`}
-                class="block rounded-2xl border border-stone-200 bg-white p-5 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
-              >
-                <div class="flex items-center justify-between gap-3 mb-1">
-                  <h3 class="font-semibold">{pick(locale, e.entry.sk.title, e.entry.title)}</h3>
-                  <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full shrink-0">{e.entry.theme}</span>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 py-14">
+    <h2 class="text-2xl font-bold tracking-tight mb-2" data-reveal>{dict.tok.heading}</h2>
+
+    {allEssays.length === 0 ? (
+      <p class="text-sm text-stone-400 mt-6">{dict.tok.noMaterials}</p>
+    ) : (
+      <ol class="mt-8 border-t border-stone-300">
+        {allEssays.map((e, i) => (
+          <li data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 80}ms`}>
+            <a
+              href={`/${locale}/tok/${e.slug}`}
+              class="group grid grid-cols-[3.5rem_1fr_auto] sm:grid-cols-[4.5rem_1fr_auto] gap-4 sm:gap-6 items-start border-b border-stone-300 py-8 sm:py-10"
+            >
+              <span class="text-4xl sm:text-5xl font-extrabold leading-none tracking-tighter text-stone-200 group-hover:text-amber-200 transition-colors select-none" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5 mb-2">
+                  <span class="text-[11px] font-bold rounded-full bg-amber-100 text-amber-800 px-2.5 py-0.5">{e.entry.theme}</span>
+                  {e.entry.date && <time class="text-xs text-stone-400">{fmtDate(e.entry.date)}</time>}
                 </div>
-                <time class="text-xs text-stone-400">
-                  {e.entry.date && new Date(e.entry.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB')}
-                </time>
-                <p class="text-sm text-stone-600 mt-1">{pick(locale, e.entry.sk.description, e.entry.description)}</p>
-              </a>
-            ))}
-        </div>
-      )}
-    </section>
+                <h3 class="text-xl sm:text-2xl font-semibold italic tracking-tight text-stone-900 group-hover:text-amber-800 transition-colors">
+                  “{pick(locale, e.entry.sk.title, e.entry.title)}”
+                </h3>
+                <p class="mt-2.5 text-sm sm:text-base text-stone-600 leading-relaxed">{pick(locale, e.entry.sk.description, e.entry.description)}</p>
+              </div>
+              <span class="pt-1 text-amber-700 font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    )}
   </div>
 </Layout>
