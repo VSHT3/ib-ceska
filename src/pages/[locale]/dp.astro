@@ -1,5 +1,6 @@
 ---
 import ProgrammeOverview from '../../components/ProgrammeOverview.astro';
+import { school } from '../../assets/school';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -17,6 +18,6 @@ const locale = (Astro.params.locale ?? 'en') as Locale;
   locale={locale}
   programme={t(locale).dp}
   tone="emerald"
-  image="/images/school/project-presentation.jpg"
+  image={school.projectPresentation}
   imageAlt="Students presenting project work at Česká"
 />

@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
+import { school } from '../../../assets/school';
 import { t } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
@@ -60,10 +62,13 @@ const groups = groupDefs
       </div>
       <div class="relative hidden lg:block hero-rise" style="--rise-delay: 200ms">
         <div class="absolute -top-4 -right-4 w-full h-full rounded-3xl bg-emerald-100" />
-        <img
-          src="/images/school/classroom.jpg"
+        <Image
+          src={school.classroom}
           alt="A lesson in progress at Česká"
           class="relative rounded-3xl object-cover h-80 w-full shadow-lg"
+          widths={[480, 768]}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+          loading="eager"
           fetchpriority="high"
         />
       </div>

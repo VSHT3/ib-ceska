@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import schoolBuilding from '../assets/school/school-building.jpg';
 import { t, l, contact } from '../i18n/dictionaries';
 import type { Locale } from '../i18n/dictionaries';
 
@@ -37,7 +38,7 @@ const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
 const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
 const altUrl = (code: string) => new URL(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`, site).href;
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
-const ogImage = new URL('/images/school/school-building.jpg', site).href;
+const ogImage = new URL(schoolBuilding.src, site).href;
 ---
 
 <!doctype html>

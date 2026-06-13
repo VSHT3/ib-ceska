@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
+import { school } from '../../assets/school';
 import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -68,10 +70,13 @@ const fmtDate = (date: string | null) =>
 <Layout title={dict.cas.title} description="Creativity, Activity, Service" locale={locale}>
   <!-- Photo hero -->
   <section class="relative overflow-hidden bg-stone-900 text-white">
-    <img
-      src="/images/school/volunteering.png"
+    <Image
+      src={school.volunteering}
       alt=""
       class="absolute inset-0 h-full w-full object-cover opacity-40"
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      loading="eager"
       fetchpriority="high"
     />
     <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/50 to-stone-900/30" />

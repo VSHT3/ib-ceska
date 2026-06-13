@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import { school } from '../../assets/school';
 import { t, l, contact } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -48,10 +50,13 @@ const steps = [
       </div>
 
       <div class="relative" data-reveal style="--reveal-delay: 100ms">
-        <img
-          src="/images/school/entrance-banner.jpg"
+        <Image
+          src={school.entranceBanner}
           alt="Entrance to Súkromné Gymnázium Česká"
           class="h-72 sm:h-96 w-full rounded-3xl object-cover shadow-lg"
+          widths={[480, 768, 1024]}
+          sizes="(min-width: 1024px) 52vw, 100vw"
+          loading="lazy"
         />
         <div class="absolute -bottom-5 left-5 right-5 rounded-2xl bg-stone-900 px-5 py-4 text-sm text-stone-200 shadow-xl sm:left-auto sm:max-w-xs">
           <p class="font-semibold text-white">{contact.address}</p>

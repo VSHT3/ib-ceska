@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Layout from '../layouts/Layout.astro';
 import { l } from '../i18n/dictionaries';
 import type { Locale } from '../i18n/dictionaries';
@@ -47,7 +49,7 @@ interface Props {
   locale: Locale;
   programme: Programme;
   tone: 'amber' | 'emerald';
-  image: string;
+  image: ImageMetadata;
   imageAlt: string;
 }
 
@@ -61,7 +63,7 @@ const accentButton = isMyp ? 'bg-amber-600 hover:bg-amber-700' : 'bg-emerald-600
 
 <Layout title={programme.title} description={programme.subtitle} locale={locale}>
   <section class:list={['relative overflow-hidden text-white', accentDark]}>
-    <img src={image} alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" />
+    <Image src={image} alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" />
     <div class="absolute inset-0 bg-gradient-to-r from-stone-950/60 via-stone-950/25 to-transparent" />
     <div class="relative mx-auto max-w-5xl px-6 py-24 sm:py-32">
       <p class="text-xs font-semibold uppercase tracking-widest text-white/70">{programme.label}</p>
@@ -89,10 +91,12 @@ const accentButton = isMyp ? 'bg-amber-600 hover:bg-amber-700' : 'bg-emerald-600
           {programme.officialLink} ↗
         </a>
       </div>
-      <img
+      <Image
         src={image}
         alt={imageAlt}
         class="h-72 w-full rounded-3xl object-cover shadow-lg sm:h-96"
+        widths={[480, 768, 1024]}
+        sizes="(min-width: 1024px) 55vw, 100vw"
         loading="lazy"
         data-reveal
         style="--reveal-delay: 100ms"
