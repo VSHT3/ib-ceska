@@ -7,6 +7,7 @@ Welcome. This is the documentation hub for everyone who helps run the IB website
 | File             | Purpose                                                  |
 | ---------------- | -------------------------------------------------------- |
 | `README.md`      | This file — start here                                   |
+| `TUTORIAL.md`    | Step-by-step "how to edit the site" walkthrough for teachers |
 | `CONTENT.md`     | How to add and edit content (subjects, news, CAS, TOK)   |
 | `DESIGN.md`      | Design choices, colors, and layout rules                 |
 | `DEPLOY.md`      | Where the site is hosted, how deploys work (developer)   |
@@ -33,7 +34,7 @@ Everything visitors read is edited through the **Keystatic CMS**, a visual edito
 3. Click an entry to edit, or **Create** a new one.
 4. Fill in the fields and **Save**. On the live site this saves as a commit to GitHub and the site redeploys automatically.
 
-Full field-by-field instructions are in [`CONTENT.md`](CONTENT.md). No HTML, CSS, or JavaScript required.
+New to this? Start with the step-by-step [`TUTORIAL.md`](TUTORIAL.md). Full field-by-field instructions are in [`CONTENT.md`](CONTENT.md). No HTML, CSS, or JavaScript required.
 
 ## Who is allowed to edit (access & security)
 

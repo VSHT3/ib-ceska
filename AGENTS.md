@@ -84,8 +84,9 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - **Auto-deploy:** push to `main` (incl. a Keystatic Save, which commits) → GitHub webhook → Coolify pulls + builds + redeploys. No manual trigger except first deploy / forced rebuild.
 - **Build:** nixpacks (Node 22). `npm run build` → `dist/client/` (static) + `dist/server/` (Node); start `node dist/server/entry.mjs`; expose port `4321`.
 - **Required env:** `HOST=0.0.0.0` and `PORT=4321` — Astro's Node adapter binds `localhost` by default, unreachable inside the container; without `HOST=0.0.0.0` the app comes up `exited:unhealthy` / 502.
-- **Keystatic:** Production uses GitHub OAuth storage — set `KEYSTATIC_GITHUB_CLIENT_ID` and `KEYSTATIC_GITHUB_CLIENT_SECRET` (not yet set; `/keystatic/` loads but login/save won't work until they are).
-- **Domain:** target `ib.gymnaziumceska.sk`; currently on a temporary `sslip.io` URL until DNS points at the VPS.
+- **Keystatic:** Production uses GitHub OAuth storage — **three** env vars set: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` (from the `IB Ceska CMS` GitHub App, ID `4043810` — separate from the `v-s-h-t3` deploy app), and `KEYSTATIC_SECRET` (random hex, signs login sessions). The CMS app's OAuth callback must equal `<origin>/api/keystatic/github/oauth/callback`.
+- **HTTPS is mandatory for the CMS** — Keystatic uses `crypto.subtle.digest`, which is `undefined` on plain HTTP, crashing the editor with `Cannot read properties of undefined (reading 'digest')` / "Unable to load collection". The FQDN must be `https://` so Traefik issues a Let's Encrypt cert. See [`humans/DEPLOY.md`](humans/DEPLOY.md).
+- **Domain:** live on a temporary **`https://`** `sslip.io` URL (LE cert issued); target `ib.gymnaziumceska.sk` once DNS points at the VPS — switch steps in `TODO.md`.
 
 ## Gotchas
 - Content files are `.mdoc`, NOT `.mdx` or `.md`. Don't create `.mdx` files in `src/content/`.
@@ -95,4 +96,5 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - Keystatic schema changes (`keystatic.config.ts`) require restarting `npm run dev`.
 - The Node adapter is required even for static pages — Keystatic API routes need a server.
 - YAML values with colons (e.g. `LO1: text`) must be quoted in `.mdoc` frontmatter.
+- Keystatic CMS needs a **secure origin** (HTTPS or localhost). On plain HTTP `crypto.subtle` is undefined → "Unable to load collection" / `reading 'digest'` crash. Never deploy the CMS on an `http://` FQDN.
 - i18n uses `routing: 'manual'` + `src/middleware.ts`. Built-in `prefixDefaultLocale` 404s any path without a locale prefix, which kills Keystatic's injected `/keystatic` and `/api/keystatic` routes — the middleware lets them bypass i18n. Don't switch back to built-in routing.

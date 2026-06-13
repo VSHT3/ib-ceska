@@ -3,7 +3,7 @@
 Things the humans (IB coordinators, teachers, school staff) must provide or decide. AI cannot do these without your input.
 
 ## Critical — before launch
-- [ ] **Set up the production CMS login (developer task).** The live `/keystatic/` editor cannot save until a GitHub App is registered and `KEYSTATIC_GITHUB_CLIENT_ID` + `KEYSTATIC_GITHUB_CLIENT_SECRET` are set in the hosting environment. Once done, only people with write access to the `VSHT3/ib-ceska` repo can edit content.
+- [x] ~~**Set up the production CMS login (developer task).**~~ Done — `IB Ceska CMS` GitHub App registered, the three `KEYSTATIC_*` env vars set in Coolify, site served over HTTPS, and login + Save verified on the temporary URL. Only people with write access to `VSHT3/ib-ceska` can edit. (When the real domain goes live, the App callback URL must be updated — see root `TODO.md` → "Domain switch".)
 - [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
 - [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution; the nav and favicon currently use it
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`

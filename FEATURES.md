@@ -93,6 +93,8 @@ Implemented and shipped.
 - [x] nixpacks build (Node 22): `npm run build` → start `node dist/server/entry.mjs`, port 4321
 - [x] `HOST=0.0.0.0` + `PORT=4321` runtime env so the Node adapter binds inside the container
 - [x] Auto-deploy on push to `main` (GitHub App webhook); first deploy verified (`/`, `/en/`, `/keystatic` all 200)
+- [x] Production Keystatic GitHub OAuth wired (`IB Ceska CMS` app + 3 `KEYSTATIC_*` env vars); login + content Save verified
+- [x] HTTPS via Let's Encrypt (required — Keystatic's `crypto.subtle` needs a secure origin)
 
 ## Documentation
 - [x] `README.md` — badges, quick start, stack, collection overview, deploy section

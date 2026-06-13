@@ -34,8 +34,18 @@ Tasks the AI must complete. Checked = done.
 - [x] Loading/empty states for empty collections
 
 ## Security & access
-- [ ] Wire up Keystatic GitHub OAuth for production so only repo collaborators can save content (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` + GitHub App) — human setup tracked in `humans/HUMANTODO.md`
+- [x] Wire up Keystatic GitHub OAuth for production so only repo collaborators can save content — `IB Ceska CMS` GitHub App (ID 4043810) + 3 env vars (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` / `KEYSTATIC_SECRET`) set in Coolify; login + Save verified
 - [ ] Defence-in-depth: gate the `/keystatic/` route behind reverse-proxy basic-auth in Coolify (the admin UI is publicly reachable even though saves require GitHub auth)
+- [ ] Rotate the `IB Ceska CMS` client secret — the initial value was pasted into a chat during setup; regenerate on GitHub and update `KEYSTATIC_GITHUB_CLIENT_SECRET` in Coolify
+
+## Domain switch — when DNS for `ib.gymnaziumceska.sk` is available
+Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz0i06hyg.87.106.7.54.sslip.io` URL. When the real domain is ready:
+- [ ] Point DNS: `A` record `ib.gymnaziumceska.sk` → VPS IP `87.106.7.54` (wait for propagation)
+- [ ] Coolify → app `IB Česká` → **Domains**: set FQDN to `https://ib.gymnaziumceska.sk` and redeploy (Traefik auto-requests a Let's Encrypt cert — must stay `https://`, the CMS needs a secure origin)
+- [ ] `IB Ceska CMS` GitHub App → **Callback URL** → `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback` (and update Homepage URL)
+- [ ] Verify Keystatic login + Save still work on the new origin
+- [ ] (Optional) keep or remove the old sslip.io domain in Coolify; if removed, the temp callback URL can come off the GitHub App
+- [ ] No code change needed — `astro.config.mjs` `site` is already `https://ib.gymnaziumceska.sk`; `keystatic.config.ts` repo is `VSHT3/ib-ceska` (origin-independent)
 
 ## DX
 - [ ] Add `astro sync` to pre-build hook
