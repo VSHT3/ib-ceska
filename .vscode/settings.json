@@ -1,0 +1,6 @@
+{
+  "// Tailwind 4 uses CSS at-rules (@theme, @apply, @import \"tailwindcss\") the built-in CSS linter doesn't recognise": "",
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore"
+}
