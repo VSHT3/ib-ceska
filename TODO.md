@@ -16,7 +16,7 @@ Tasks the AI must complete. Checked = done.
 ## Pages
 - [x] School events page/section (Keystatic collection)
 - [ ] Public works showcase — student EEs, exhibitions, science collaboration project
-- [ ] Student testimonials section (homepage + own page?)
+- [x] Student testimonials — `/testimonials` page + homepage featured strip (Keystatic collection; sample entries seeded, real ones await consent)
 - [ ] Teachers list page (photo, role, subjects)
 
 ## i18n

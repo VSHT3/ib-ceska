@@ -42,6 +42,7 @@ Implemented and shipped.
 - [x] `/gallery` — bilingual masonry photo gallery
 - [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
+- [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
 - [x] `/myp` — bilingual MYP curriculum, learning approach, and admissions overview
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
 - [x] `404` — branded bilingual not-found page

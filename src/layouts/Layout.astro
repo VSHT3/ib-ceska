@@ -30,7 +30,8 @@ const academicLinks = [
 const newsLink = { href: l('/news', locale), label: dict.nav.news };
 const eventsLink = { href: l('/events', locale), label: dict.nav.events };
 const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
-const secondaryLinks = [newsLink, eventsLink, galleryLink];
+const testimonialsLink = { href: l('/testimonials', locale), label: dict.nav.testimonials };
+const secondaryLinks = [newsLink, eventsLink, galleryLink, testimonialsLink];
 const navLinks = [...programmeLinks, ...academicLinks, ...secondaryLinks]; // flat list for footer + mobile
 const admissionsHref = l('/admissions', locale);
 

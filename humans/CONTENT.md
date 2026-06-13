@@ -5,7 +5,7 @@ All website content is managed through the **Keystatic CMS admin panel** — a v
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Subjects, News, Events, CAS Activities, or TOK Materials
+2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, or Testimonials
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -18,7 +18,6 @@ When editing on the live site:
 - Coolify detects the push and automatically redeploys the site
 - Changes go live within seconds
 
-> ⚠️ Production GitHub login still needs one-time developer setup before it works on the live site — see `HUMANTODO.md`. Until then, edit locally (below).
 
 ### Getting an editor their own access (do this — don't share one login)
 
@@ -130,6 +129,28 @@ today's date — no manual archiving needed.
 | `description` | textarea | no       | Short summary shown on the card            |
 | `sk`          | group    | no       | Slovak translation (title, description, details) |
 | `content`     | richtext | no       | Full details                               |
+
+### Testimonials (`src/content/testimonials/`)
+
+Student and alumni voices shown on the `/testimonials` page, with the
+"Feature on homepage" ones also appearing on the homepage.
+
+> ⚠️ **Consent first.** Only publish a real name, quote, or photo with the
+> student's (and, for minors, parent's) written consent. The collection ships
+> with three entries marked **"(sample)"** — replace these with real ones.
+
+**Fields:**
+
+| Field      | Type     | Required | Description                                              |
+| ---------- | -------- | -------- | -------------------------------------------------------- |
+| `name`     | slug     | yes      | Student/alumnus name (or first name + initial for privacy) |
+| `role`     | text     | no       | e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE" |
+| `gradYear` | number   | no       | Graduation year                                          |
+| `photo`    | image    | no       | Headshot — **only with written consent**; a coloured initial shows if empty |
+| `order`    | number   | no       | Display order (lower = first)                            |
+| `featured` | checkbox | no       | Show this one on the homepage strip                      |
+| `sk`       | group    | no       | Slovak translation (role, quote)                         |
+| `quote`    | textarea | yes      | The testimonial itself                                   |
 
 ## Language — English + Slovak
 

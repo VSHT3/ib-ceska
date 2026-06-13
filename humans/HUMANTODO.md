@@ -14,7 +14,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Provide real news/announcement content
 - [ ] Provide the real subjects list (incl. HL/SL offerings and any preset subject combinations students choose from)
 - [ ] Provide teachers list — names, roles, subjects, photos (with their consent)
-- [ ] Provide student testimonials — quotes, names, year (with consent)
+- [ ] Provide student testimonials — quotes, names, year (with consent). The `/testimonials` page is **built and live** with three clearly-marked **sample** entries; replace them via Keystatic (Testimonials collection) with real, consented quotes. Tick "Feature on homepage" on the best 2–3. Only add a photo with the student's written consent.
 - [ ] Provide school events list (dates, descriptions, photos)
 - [ ] Provide public works to showcase: student EEs, exhibition materials, science collaboration project details — **needs student/parent consent to publish**
 - [ ] Provide real CAS project records to feature

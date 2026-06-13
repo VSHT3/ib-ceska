@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { school } from '../../assets/school';
+import { reader, pick } from '../../lib/keystatic';
 import { t, l, contact } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
@@ -31,6 +32,12 @@ const workItems = [
   { href: l('/tok', locale), title: dict.home.workTokTitle, desc: dict.home.workTokDesc, number: '02' },
   { href: l('/ee', locale), title: dict.home.workEeTitle, desc: dict.home.workEeDesc, number: '03' },
 ];
+
+const allTestimonials = await reader.collections.testimonials.all();
+const featuredTestimonials = allTestimonials
+  .filter((s) => s.entry.featured)
+  .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0))
+  .slice(0, 3);
 
 const exploreCards = [
   { href: l('/subjects', locale), label: dict.home.subjectsLabel, desc: dict.home.subjectsDesc, color: 'emerald', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
@@ -193,6 +200,46 @@ const exploreCards = [
         </div>
       </div>
     </section>
+
+    {featuredTestimonials.length > 0 && (
+      <section class="my-24" data-reveal>
+        <div class="mb-10 text-center">
+          <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.testimonials.homeLabel}</span>
+          <h2 class="text-3xl font-bold mt-2 tracking-tight">{dict.testimonials.homeHeading}</h2>
+        </div>
+        <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredTestimonials.map((s, i) => {
+            const quote = pick(locale, s.entry.sk.quote, s.entry.quote ?? '');
+            const role = pick(locale, s.entry.sk.role, s.entry.role ?? '');
+            return (
+              <li data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}>
+                <figure class="flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-6 transition-all hover:border-emerald-300 hover:shadow-md">
+                  <span class="text-4xl leading-none text-emerald-200 font-serif" aria-hidden="true">“</span>
+                  <blockquote class="mt-1 flex-1 text-stone-700 leading-relaxed">{quote}</blockquote>
+                  <figcaption class="mt-5 flex items-center gap-3 border-t border-stone-100 pt-4">
+                    {s.entry.photo ? (
+                      <img src={s.entry.photo} alt={s.entry.name} width="40" height="40" loading="lazy" class="h-10 w-10 rounded-full object-cover" />
+                    ) : (
+                      <span class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700" aria-hidden="true">{s.entry.name.trim().charAt(0).toUpperCase()}</span>
+                    )}
+                    <div class="min-w-0">
+                      <p class="text-sm font-semibold text-stone-900 truncate">{s.entry.name}</p>
+                      {role && <p class="text-xs text-stone-500 truncate">{role}</p>}
+                    </div>
+                  </figcaption>
+                </figure>
+              </li>
+            );
+          })}
+        </ul>
+        <div class="mt-10 text-center">
+          <a href={l('/testimonials', locale)} class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors">
+            {dict.testimonials.homeCta}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+    )}
   </div>
 
   <!-- Photo marquee (full bleed) -->

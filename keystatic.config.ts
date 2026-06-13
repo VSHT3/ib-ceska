@@ -160,5 +160,34 @@ export default config({
         content: fields.markdoc({ label: 'Details', options: { image: { directory: 'public/images/events', publicPath: '/images/events' } } }),
       },
     }),
+    testimonials: collection({
+      label: 'Testimonials',
+      slugField: 'name',
+      path: 'src/content/testimonials/*',
+      schema: {
+        name: fields.slug({ name: { label: 'Student / alumnus name' } }),
+        role: fields.text({ label: 'Role', description: 'e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE"' }),
+        gradYear: fields.integer({ label: 'Graduation year (optional)' }),
+        photo: fields.image({
+          label: 'Photo (optional)',
+          description: 'Headshot. Only publish with the student’s written consent.',
+          directory: 'public/images/testimonials',
+          publicPath: '/images/testimonials',
+        }),
+        order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
+        featured: fields.checkbox({ label: 'Feature on homepage', defaultValue: false }),
+        sk: fields.object(
+          {
+            role: fields.text({ label: 'Role (Slovak)' }),
+            quote: fields.text({ label: 'Quote (Slovak)', multiline: true }),
+          },
+          {
+            label: 'Slovak translation',
+            description: 'Optional — visitors see the English version where a Slovak field is left empty.',
+          }
+        ),
+        quote: fields.text({ label: 'Quote', multiline: true }),
+      },
+    }),
   },
 });
