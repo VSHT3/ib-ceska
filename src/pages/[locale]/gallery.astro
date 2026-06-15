@@ -30,7 +30,7 @@ const photos = [
 const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
 ---
 
-<Layout title={dict.gallery.title} description="Photo gallery — life at Súkromné Gymnázium Česká" locale={locale}>
+<Layout title={dict.gallery.title} description={dict.gallery.subtitle} locale={locale} pageSchemaType="CollectionPage">
   <!-- Editorial hero -->
   <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
     <span class="absolute -right-8 -bottom-16 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none" aria-hidden="true">＋</span>

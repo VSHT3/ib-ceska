@@ -61,7 +61,17 @@ const accentDark = isMyp ? 'bg-amber-800' : 'bg-emerald-800';
 const accentButton = isMyp ? 'bg-amber-600 hover:bg-amber-700' : 'bg-emerald-600 hover:bg-emerald-700';
 ---
 
-<Layout title={programme.title} description={programme.subtitle} locale={locale}>
+<Layout
+  title={programme.title}
+  description={programme.subtitle}
+  locale={locale}
+  pageSchemaType="Course"
+  pageSchema={{
+    name: programme.title,
+    courseCode: programme.shortTitle,
+    provider: { '@id': new URL('/#school', Astro.site).href },
+  }}
+>
   <section class:list={['relative overflow-hidden text-white', accentDark]}>
     <Image src={image} alt="" class="absolute inset-0 h-full w-full object-cover opacity-25" widths={[768, 1280, 1920]} sizes="100vw" loading="eager" />
     <div class="absolute inset-0 bg-gradient-to-r from-stone-950/60 via-stone-950/25 to-transparent" />

@@ -24,7 +24,22 @@ const steps = [
 ];
 ---
 
-<Layout title={admissions.title} description={admissions.subtitle} locale={locale}>
+<Layout
+  title={admissions.title}
+  description={admissions.subtitle}
+  locale={locale}
+  pageSchemaType="FAQPage"
+  pageSchema={{
+    mainEntity: admissions.faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  }}
+>
   <PageHeader title={admissions.title} subtitle={admissions.subtitle} label={admissions.label} />
 
   <div class="mx-auto max-w-5xl px-4 py-16 sm:py-20">

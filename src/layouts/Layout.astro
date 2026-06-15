@@ -10,9 +10,27 @@ interface Props {
   title: string;
   description?: string;
   locale: Locale;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  publishedTime?: string | null;
+  author?: string | null;
+  pageSchemaType?: string;
+  pageSchema?: Record<string, unknown>;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, locale } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  noindex = false,
+  ogType = 'website',
+  publishedTime,
+  author,
+  pageSchemaType = 'WebPage',
+  pageSchema = {},
+  structuredData = [],
+} = Astro.props;
 const dict = t(locale);
 const currentYear = new Date().getFullYear();
 
@@ -41,9 +59,105 @@ const programmesActive = programmeLinks.some(({ href }) => isActive(href));
 
 const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
 const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
-const altUrl = (code: string) => new URL(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`, site).href;
-const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const withTrailingSlash = (path: string) => (path === '/' || path.endsWith('/') ? path : `${path}/`);
+const altUrl = (code: string) => new URL(withTrailingSlash(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`), site).href;
+const canonicalUrl = new URL(withTrailingSlash(Astro.url.pathname), site).href;
 const ogImage = new URL(schoolBuilding.src, site).href;
+const logoUrl = new URL('/logo.png', site).href;
+const fullTitle = title === dict.site.title ? title : `${title} | ${dict.site.title}`;
+const metaDescription = description ?? dict.site.tagline;
+
+const routeLabels: Record<string, string> = {
+  myp: dict.nav.myp,
+  dp: dict.nav.dp,
+  'build-your-diploma': dict.nav.builder,
+  subjects: dict.nav.subjects,
+  cas: dict.nav.cas,
+  tok: dict.nav.tok,
+  ee: dict.nav.ee,
+  news: dict.nav.news,
+  events: dict.nav.events,
+  gallery: dict.nav.gallery,
+  testimonials: dict.nav.testimonials,
+  admissions: dict.nav.apply,
+};
+const segments = pathSansLocale.split('/').filter(Boolean);
+const breadcrumbs = [
+  { name: dict.site.title, item: new URL(`/${locale}/`, site).href },
+  ...segments.map((segment, index) => {
+    const path = `/${locale}/${segments.slice(0, index + 1).join('/')}/`;
+    return {
+      name: index === segments.length - 1 ? title : (routeLabels[segment] ?? segment),
+      item: new URL(path, site).href,
+    };
+  }),
+];
+
+const schoolId = new URL('/#school', site).href;
+const websiteId = new URL('/#website', site).href;
+const webpageId = `${canonicalUrl}#webpage`;
+const baseSchemas: Record<string, unknown>[] = [
+  {
+    '@type': 'HighSchool',
+    '@id': schoolId,
+    name: 'Súkromné Gymnázium Česká',
+    alternateName: dict.site.title,
+    url: new URL('/', site).href,
+    logo: logoUrl,
+    image: ogImage,
+    email: contact.email,
+    telephone: contact.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Česká 10',
+      postalCode: '831 03',
+      addressLocality: 'Bratislava',
+      addressCountry: 'SK',
+    },
+    sameAs: ['https://www.gymnaziumceska.sk'],
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: new URL('/', site).href,
+    name: dict.site.title,
+    inLanguage: ['en', 'sk'],
+    publisher: { '@id': schoolId },
+  },
+  {
+    '@type': pageSchemaType,
+    '@id': webpageId,
+    url: canonicalUrl,
+    name: fullTitle,
+    description: metaDescription,
+    inLanguage: locale,
+    isPartOf: { '@id': websiteId },
+    about: { '@id': schoolId },
+    image: ogImage,
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: ogImage,
+    },
+    ...pageSchema,
+  },
+];
+if (breadcrumbs.length > 1) {
+  baseSchemas.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonicalUrl}#breadcrumb`,
+    itemListElement: breadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.item,
+    })),
+  });
+}
+const extraSchemas = Array.isArray(structuredData) ? structuredData : [structuredData];
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [...baseSchemas, ...extraSchemas],
+}).replaceAll('<', '\\u003c');
 ---
 
 <!doctype html>
@@ -57,24 +171,36 @@ const ogImage = new URL(schoolBuilding.src, site).href;
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#047857" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | {dict.site.title}</title>
-    {description && <meta name="description" content={description} />}
+    <title>{fullTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta
+      name="robots"
+      content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+    />
 
-    <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href={altUrl('en')} />
-    <link rel="alternate" hreflang="sk" href={altUrl('sk')} />
-    <link rel="alternate" hreflang="x-default" href={altUrl('en')} />
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="en" href={altUrl('en')} />}
+    {!noindex && <link rel="alternate" hreflang="sk" href={altUrl('sk')} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={altUrl('en')} />}
     <link rel="alternate" type="application/rss+xml" title={`${dict.site.title}: News`} href="/rss.xml" />
 
-    <meta property="og:title" content={`${title} | ${dict.site.title}`} />
-    {description && <meta property="og:description" content={description} />}
-    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={dict.site.title} />
     <meta property="og:locale" content={locale === 'sk' ? 'sk_SK' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={locale === 'sk' ? 'en_GB' : 'sk_SK'} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Súkromné Gymnázium Česká in Bratislava" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {author && <meta property="article:author" content={author} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | ${dict.site.title}`} />
-    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Súkromné Gymnázium Česká in Bratislava" />
+    <script is:inline type="application/ld+json" set:html={jsonLd}></script>
     <ClientRouter />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>

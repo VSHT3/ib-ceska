@@ -23,7 +23,7 @@ Tasks the AI must complete. Checked = done.
 - [ ] Slovak translations for sample content (fill `sk` fields via /keystatic)
 
 ## SEO & meta
-- [ ] Full SEO pass (structured data, meta descriptions per page) — later
+- [x] Full SEO pass (structured data, localized meta descriptions, complete sitemap)
 
 ## UI & UX
 - [ ] Update nav logo with high-quality version when provided (still missing better logo)

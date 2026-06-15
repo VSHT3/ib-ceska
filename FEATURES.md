@@ -55,6 +55,9 @@ Implemented and shipped.
 - [x] RSS 2.0 feed for news at `/rss.xml` + `<link>` autodiscovery
 - [x] Per-page canonical + `hreflang` (en/sk/x-default) alternates
 - [x] Open Graph `og:url` + `og:locale`, Twitter card meta
+- [x] Localized page descriptions, normalized canonical URLs, and indexable-page robots directives
+- [x] Schema.org JSON-LD for the school, website, breadcrumbs, courses, articles, events, and admissions FAQ
+- [x] Search-safe 404 response metadata (`noindex`, no canonical)
 
 ## i18n (EN/SK)
 - [x] Locale-prefixed routes (`/en/…`, `/sk/…`) for every page

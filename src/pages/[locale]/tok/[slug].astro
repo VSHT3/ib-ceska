@@ -28,7 +28,21 @@ const skHtml = await renderMarkdoc(material.sk.body);
 const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
 ---
 
-<Layout title={title} description={description} locale={locale}>
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  ogType="article"
+  publishedTime={material.date}
+  pageSchemaType="Article"
+  pageSchema={{
+    headline: title,
+    datePublished: material.date,
+    about: material.theme,
+    author: { '@id': new URL('/#school', Astro.site).href },
+    publisher: { '@id': new URL('/#school', Astro.site).href },
+  }}
+>
   <PageHeader title={title} subtitle={description} label={`TOK: ${material.theme}`} />
 
   <div class="mx-auto max-w-3xl px-4 py-12">

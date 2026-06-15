@@ -36,9 +36,28 @@ const description = pick(locale, subject.sk.description, subject.description);
 const enHtml = await renderMarkdoc(subject.content);
 const skHtml = await renderMarkdoc(subject.sk.body);
 const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+
+const courseId = `${new URL(`/${locale}/subjects/${slug}/`, Astro.site).href}#course`;
+const courseSchema = {
+  '@type': 'Course',
+  '@id': courseId,
+  name: title,
+  description,
+  inLanguage: locale,
+  educationalLevel: subject.offeredLevels === 'both' ? ['Higher Level', 'Standard Level'] : subject.offeredLevels,
+  about: groupLabels[subject.group],
+  provider: { '@id': new URL('/#school', Astro.site).href },
+};
 ---
 
-<Layout title={title} description={description} locale={locale}>
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  pageSchemaType="ItemPage"
+  pageSchema={{ mainEntity: { '@id': courseId } }}
+  structuredData={courseSchema}
+>
   <PageHeader title={title} subtitle={description} label={groupLabels[subject.group]} />
 
   <div class="mx-auto max-w-5xl px-4 py-12">

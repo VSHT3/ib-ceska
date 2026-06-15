@@ -36,7 +36,23 @@ const dateLabel = article.date
   : undefined;
 ---
 
-<Layout title={title} description={excerpt} locale={locale}>
+<Layout
+  title={title}
+  description={excerpt}
+  locale={locale}
+  ogType="article"
+  publishedTime={article.date}
+  author={article.author}
+  pageSchemaType="NewsArticle"
+  pageSchema={{
+    headline: title,
+    datePublished: article.date,
+    author: article.author
+      ? { '@type': 'Person', name: article.author }
+      : { '@id': new URL('/#school', Astro.site).href },
+    publisher: { '@id': new URL('/#school', Astro.site).href },
+  }}
+>
   <PageHeader title={title} subtitle={excerpt} label={dateLabel} />
 
   <div class="mx-auto max-w-3xl px-4 py-12">

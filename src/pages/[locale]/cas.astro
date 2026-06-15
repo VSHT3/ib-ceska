@@ -68,7 +68,7 @@ const fmtDate = (date: string | null) =>
     : null;
 ---
 
-<Layout title={dict.cas.title} description="Creativity, Activity, Service" locale={locale}>
+<Layout title={dict.cas.title} description={dict.cas.subtitle} locale={locale} pageSchemaType="CollectionPage">
   <!-- Photo hero -->
   <section class="relative overflow-hidden bg-stone-900 text-white">
     <Image

@@ -18,7 +18,7 @@ Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymná
 - **Programme pages** — dedicated MYP (`/myp`) and DP (`/dp`) curriculum overviews
 - **Admissions** — application steps, programme guidance, and direct school contact at `/admissions`
 - **Bilingual** — English primary, full Slovak UI + optional Slovak content (English fallback)
-- **SEO** — `sitemap.xml`, `robots.txt`, canonical + `hreflang` (en/sk/x-default), Open Graph
+- **SEO** — complete bilingual sitemap, canonical + `hreflang`, social cards, and schema.org structured data
 - **CMS** — content edited visually through Keystatic at `/keystatic/`, no code required
 
 ## Quick start

@@ -58,7 +58,13 @@ const levelChips = (offered: Choice['offered']) =>
   offered === 'both' ? ['HL', 'SL'] : [offered];
 ---
 
-<Layout title={b.title} description="Plan an IB Diploma subject combination" locale={locale}>
+<Layout
+  title={b.title}
+  description={b.subtitle}
+  locale={locale}
+  pageSchemaType="WebApplication"
+  pageSchema={{ applicationCategory: 'EducationalApplication', browserRequirements: 'JavaScript' }}
+>
   <!-- Hero -->
   <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
     <span class="absolute -right-8 -bottom-20 text-[13rem] sm:text-[20rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none" aria-hidden="true">IB</span>

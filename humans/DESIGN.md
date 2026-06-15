@@ -65,6 +65,17 @@ Keep components reusable and small. Each `.astro` component should do one thing:
 - `ProgrammeOverview.astro` — full programme-page template (hero, principles, curriculum, admissions CTA; amber tone for MYP, emerald for DP) used by `/myp` and `/dp`
 - Future components can be added under `src/components/`
 
+## Search metadata
+
+`Layout.astro` owns the shared search and social metadata so every public page stays consistent:
+
+- canonical URLs always use the same trailing-slash format as `sitemap.xml`
+- English and Slovak routes link to each other with `hreflang`
+- page titles, descriptions, Open Graph, and Twitter cards come from localized page content
+- JSON-LD describes the school, website, current page, and breadcrumb trail
+
+Pages add more specific schema where useful: subjects are `Course` entries, news/CAS/TOK detail pages are articles, the events page publishes `Event` entries, and admissions exposes its FAQ. Keep `sitemap.xml.ts` updated whenever a new static route is added. Error pages must stay `noindex`.
+
 ## Icons and assets
 
 - **Favicon:** `public/favicon.svg` (vector) + `public/favicon.ico` (fallback)
