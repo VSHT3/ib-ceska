@@ -38,6 +38,7 @@ export const GET: APIRoute = async () => {
     '/gallery',
     '/build-your-diploma',
     '/testimonials',
+    '/teachers',
     '/admissions',
     ...subjects.map((slug) => `/subjects/${slug}`),
     ...cas.map((slug) => `/cas/${slug}`),

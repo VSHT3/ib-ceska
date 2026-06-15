@@ -17,7 +17,7 @@ Tasks the AI must complete. Checked = done.
 - [x] School events page/section (Keystatic collection)
 - [ ] Public works showcase — student EEs, exhibitions, science collaboration project
 - [x] Student testimonials — `/testimonials` page + homepage featured strip (Keystatic collection; sample entries seeded, real ones await consent)
-- [ ] Teachers list page (photo, role, subjects)
+- [x] Teachers list page (verified current IB roster, published portraits, roles, and subjects)
 
 ## i18n
 - [ ] Slovak translations for sample content (fill `sk` fields via /keystatic)

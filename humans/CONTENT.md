@@ -1,6 +1,11 @@
 # Content editing guide
 
-All website content is managed through the **Keystatic CMS admin panel** — a visual editor that requires no coding knowledge. You edit content in your browser, and changes are saved directly to the repository.
+Most website content is managed through the **Keystatic CMS admin panel** — a visual editor that requires no coding knowledge. You edit content in your browser, and changes are saved directly to the repository.
+
+The verified IB team roster and published portraits on `/teachers` are the one
+exception. A developer maintains them in `src/data/teachers.ts` and
+`src/assets/teachers/` using the school's
+[official IB team page](https://ib.gymnaziumceska.sk/about) as the source.
 
 ## How to edit content
 
@@ -187,7 +192,7 @@ title: Mathematics Analysis and Approaches
 group: "5"
 level: HL
 description: Calculus, statistics, probability, and algebra
-teacher: Mgr. Ondřej Bílý
+teacher: Lucia Horáčiková
 order: 1
 ---
 

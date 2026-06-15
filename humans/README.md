@@ -51,6 +51,7 @@ The person who built this site is handing it off. If you are the new maintainer,
 
 - **Where things live**
   - Content (what visitors read): `.mdoc` files in `src/content/` — but edit them through `/keystatic/`, not by hand.
+  - Verified IB team roster and published portraits: `src/data/teachers.ts` and `src/assets/teachers/` — update these when the official IB team page changes.
   - Page layouts and components: `src/pages/`, `src/layouts/`, `src/components/`.
   - All translatable interface text (menus, buttons, headings): `src/i18n/dictionaries.ts`.
   - CMS schema (what fields each content type has): `keystatic.config.ts`.

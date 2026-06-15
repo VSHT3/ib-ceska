@@ -92,6 +92,8 @@ Pages add more specific schema where useful: subjects are `Course` entries, news
 
 School photos live in `public/images/school/` (sourced from the previous Framer website, resized to ≤1920px). Used on the homepage hero (`school-building.jpg`), the "What is the IB?" section (`students-reading.jpg`), and the gallery marquee.
 
+Published IB faculty portraits live in `src/assets/teachers/` and are rendered through Astro's image pipeline on `/teachers`. The verified roster and bilingual roles live in `src/data/teachers.ts`; update that file when the [official IB team page](https://ib.gymnaziumceska.sk/about) changes.
+
 ## CMS architecture
 
 The site uses **Keystatic CMS** for content management:

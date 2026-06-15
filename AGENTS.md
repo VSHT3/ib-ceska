@@ -52,6 +52,7 @@ src/
 │   └── …               # root: 404, locale redirects, rss.xml.ts, sitemap.xml.ts
 ├── layouts/            # Layout.astro — shared shell with nav + footer
 ├── components/         # reusable .astro components (PageHeader, LanguageSwitcher, ProgrammeOverview)
+├── data/               # verified code-managed reference data (e.g. current IB team roster)
 ├── i18n/               # dictionaries.ts — EN/SK UI strings
 ├── lib/                # keystatic.ts — reader singleton
 ├── middleware.ts       # manual i18n routing; lets /keystatic + /api/keystatic bypass i18n

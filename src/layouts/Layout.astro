@@ -49,7 +49,8 @@ const newsLink = { href: l('/news', locale), label: dict.nav.news };
 const eventsLink = { href: l('/events', locale), label: dict.nav.events };
 const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
 const testimonialsLink = { href: l('/testimonials', locale), label: dict.nav.testimonials };
-const secondaryLinks = [newsLink, eventsLink, galleryLink, testimonialsLink];
+const teachersLink = { href: l('/teachers', locale), label: dict.nav.teachers };
+const secondaryLinks = [newsLink, eventsLink, galleryLink, testimonialsLink, teachersLink];
 const navLinks = [...programmeLinks, ...academicLinks, ...secondaryLinks]; // flat list for footer + mobile
 const admissionsHref = l('/admissions', locale);
 
@@ -79,6 +80,7 @@ const routeLabels: Record<string, string> = {
   events: dict.nav.events,
   gallery: dict.nav.gallery,
   testimonials: dict.nav.testimonials,
+  teachers: dict.nav.teachers,
   admissions: dict.nav.apply,
 };
 const segments = pathSansLocale.split('/').filter(Boolean);
@@ -215,7 +217,7 @@ const jsonLd = JSON.stringify({
           />
         </a>
 
-        <ul class="hidden lg:flex gap-1 xl:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
+        <ul class="hidden xl:flex gap-1 xl:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
           <li class="relative group">
             <button
               type="button"
@@ -299,7 +301,7 @@ const jsonLd = JSON.stringify({
           </li>
         </ul>
 
-        <div class="flex lg:hidden items-center gap-3">
+        <div class="flex xl:hidden items-center gap-3">
           <LanguageSwitcher locale={locale} />
           <button
             id="menu-toggle"
@@ -317,7 +319,7 @@ const jsonLd = JSON.stringify({
         </div>
       </nav>
 
-      <div id="mobile-menu" class="hidden lg:hidden border-t border-stone-200/60 bg-white/90 backdrop-blur-xl px-4 py-3">
+      <div id="mobile-menu" class="hidden xl:hidden border-t border-stone-200/60 bg-white/90 backdrop-blur-xl px-4 py-3">
         <ul class="flex flex-col gap-1 text-sm font-medium">
           <li class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.nav.programmes}</li>
           {programmeLinks.map(({ href, label, desc }) => (

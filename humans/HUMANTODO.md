@@ -7,13 +7,13 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
 - [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution; the nav and favicon currently use it
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
-- [ ] Provide real teacher names and titles for all IB subjects
+- [x] ~~Provide real teacher names and titles for all IB subjects~~ — current IB roster and responsibilities were taken from the school’s published IB website on 15 June 2026
 - [ ] Confirm which subjects the school actually offers (current list is a template)
 - [ ] Provide actual CAS activity records with dates, descriptions, and learning outcomes
 - [ ] Provide real TOK essay titles and themes
 - [ ] Provide real news/announcement content
 - [ ] Provide the real subjects list (incl. HL/SL offerings and any preset subject combinations students choose from)
-- [ ] Provide teachers list — names, roles, subjects, photos (with their consent)
+- [x] ~~Provide teachers list — names, roles, subjects, photos~~ — `/teachers` now uses the roster and portraits already published on the school’s official IB website; keep that source page current
 - [ ] Provide student testimonials — quotes, names, year (with consent). The `/testimonials` page is **built and live** with three clearly-marked **sample** entries; replace them via Keystatic (Testimonials collection) with real, consented quotes. Tick "Feature on homepage" on the best 2–3. Only add a photo with the student's written consent.
 - [ ] Provide school events list (dates, descriptions, photos)
 - [ ] Provide public works to showcase: student EEs, exhibition materials, science collaboration project details — **needs student/parent consent to publish**
