@@ -31,6 +31,8 @@ Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users w
 | Text subtle       | `stone-400/500`     | Dates, metadata, footer        |
 | Border            | `stone-200`         | Card borders, separators       |
 | Amber accent      | `amber-100/800`     | TOK theme badges               |
+| IB brand blue     | `ib-blue` (#004587) | Official IB accent (footer bar) |
+| IB brand blue light | `ib-blue-light` (#2FB4E9) | Official IB accent (footer bar) |
 
 ## Typography
 
@@ -44,9 +46,9 @@ Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users w
 | Element    | Width       | Notes                                    |
 | ---------- | ----------- | ---------------------------------------- |
 | Container  | `max-w-5xl` | 1024px max, centered, 16px padding       |
-| Nav        | full-width  | Sticky, blurred glass background          |
+| Nav        | full-width  | Sticky, blurred glass; Home link, Programmes + IB Core dropdowns, Apply CTA |
 | Grid cards | 1-3 columns | Responsive: 1 col mobile, 2 sm, 3 lg     |
-| Footer     | full-width  | Dark (`stone-900`), 3 columns: logo+tagline, explore links, contact |
+| Footer     | full-width  | Dark (`stone-900`), IB-accent top bar, brand/mission column (school + IB marks) + grouped link columns (Programme / School life / Contact) + Apply CTA |
 | Hero bands | full-width  | Homepage photo hero + gradient `PageHeader` on subpages |
 
 ## Styling rules

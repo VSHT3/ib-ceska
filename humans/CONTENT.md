@@ -10,7 +10,7 @@ exception. A developer maintains them in `src/data/teachers.ts` and
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, or Testimonials
+2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, or Testimonials (6 collections)
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -80,7 +80,7 @@ Each entry is one CAS activity or project.
 | ----------------- | ---------- | -------- | ---------------------------------------- |
 | `title`           | slug       | yes      | Activity name                            |
 | `date`            | date       | yes      | When it took place                       |
-| `strand`          | select     | yes      | Creativity, Activity, or Service         |
+| `strands`         | multi-select | yes    | One or more of Creativity, Activity, Service (an activity can span several) |
 | `description`     | textarea   | yes      | Summary of the activity                  |
 | `learningOutcomes`| list       | no       | IB learning outcomes addressed           |
 | `sk`              | group      | no       | Slovak translation (title, description, reflection) |

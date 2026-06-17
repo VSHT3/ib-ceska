@@ -11,7 +11,7 @@ Implemented and shipped.
 - [x] Git + GitHub repo with topics and description
 
 ## CMS — Keystatic
-- [x] `keystatic.config.ts` — 5 collections with typed schemas
+- [x] `keystatic.config.ts` — 6 collections with typed schemas
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
 - [x] `src/lib/keystatic.ts` — shared reader singleton
@@ -20,26 +20,27 @@ Implemented and shipped.
 - [x] Markdoc rich-text editor for long-form content (subjects, CAS, TOK, news bodies)
 - [x] Select fields, date pickers, array fields with validation
 
-## Content (5 collections)
-- [x] `subjects` — title, group (1-6/core), level (HL/SL), description, teacher, order, syllabus body
+## Content (6 collections)
+- [x] `subjects` — title, group (1-6/core), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
-- [x] `cas` — title, date, strand (Creativity/Activity/Service), description, learning outcomes, reflection body
+- [x] `cas` — title, date, strands (multi-select: Creativity/Activity/Service), description, learning outcomes, reflection body
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
 - [x] `events` — title, date, endDate, time, location, description, details body; auto upcoming/past split
+- [x] `testimonials` — name, role, gradYear, photo, order, featured, quote (+ SK)
 
 ## Pages (routes + detail pages + admin)
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
 - [x] `/subjects` — grouped listing by IB group (1–6), cards link to detail
 - [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
-- [x] `/cas` — strand-based listing (Creativity, Activity, Service)
-- [x] `/cas/[slug]` — CAS detail with reflection + learning-outcome sidebar
+- [x] `/cas` — strand-based listing (Creativity, Activity, Service); activities can span multiple strands and appear under each filter
+- [x] `/cas/[slug]` — CAS detail with reflection + multi-strand badges + learning-outcome sidebar
 - [x] `/tok` — essay/material listing with theme badges
 - [x] `/tok/[slug]` — TOK detail with full rendered essay
 - [x] `/ee` — Extended Essay timeline and resources
 - [x] `/news` — masthead feed with featured-latest + archive
 - [x] `/news/[slug]` — news article detail
 - [x] `/events` — calendar page, auto-split into upcoming/past
-- [x] `/gallery` — bilingual masonry photo gallery
+- [x] `/gallery` — bilingual masonry photo gallery with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
@@ -69,15 +70,19 @@ Implemented and shipped.
 
 ## Layout & design
 - [x] Shared `Layout.astro` with sticky nav + footer
+- [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
+- [x] Higher-resolution nav logo (`/logo.png`)
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
+- [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
+- [x] Official IB logos: IB sphere mark (`/ib-logo.svg`) in footer + What-is-IB; DP/MYP banner logos (`/ib-dp-logo.png`, `/ib-myp-logo.png`) on `/dp` `/myp` headers + homepage programme cards
 - [x] Inter Variable font (self-hosted via `@fontsource-variable/inter`)
 - [x] Tailwind-only CSS (animation utilities live in `global.css`)
-- [x] Full-photo homepage hero with Ken Burns zoom, badge, CTAs
+- [x] Full-photo homepage hero with Ken Burns zoom + staggered fade-in entrance, CTAs
 - [x] Count-up stats band, scroll-reveal sections, photo marquee gallery
 - [x] Astro view transitions (`<ClientRouter />`) for smooth navigation
 - [x] Mobile hamburger menu + active nav link states
-- [x] Dark 4-column footer: contact, explore, links (school site, ibo.org, RSS), candidate-school note
+- [x] Dark brand footer: IB-accent top bar, brand/mission column with school + IB marks, grouped links (Programme / School life / Contact), Apply CTA, candidate-school note
 - [x] Student-work homepage feature linking directly to CAS, TOK, and EE materials
 - [x] School-seal favicon set (ico, 192/512 PNG, apple-touch) + PWA manifest
 - [x] Language switch preserves scroll position
@@ -89,7 +94,7 @@ Implemented and shipped.
 
 ## Sample content
 - [x] 9 subjects across all 6 IB groups — each with a full rendered syllabus body (overview, assessment table, IA detail)
-- [x] 3 CAS entries (one per strand) — each with a reflection mapped to learning outcomes
+- [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
 
