@@ -3,6 +3,7 @@
 import type { ImageMetadata } from 'astro';
 
 import classroom from './school/classroom.jpg';
+import daffodilDay from './school/daffodil-day-2026.jpg';
 import entranceBanner from './school/entrance-banner.jpg';
 import hallwayLibrary from './school/hallway-library.jpg';
 import projectPresentation from './school/project-presentation.jpg';
@@ -14,6 +15,7 @@ import volunteering from './school/volunteering.png';
 
 export const school = {
   classroom,
+  daffodilDay,
   entranceBanner,
   hallwayLibrary,
   projectPresentation,
