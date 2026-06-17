@@ -1,9 +1,7 @@
 import type { ImageMetadata } from 'astro';
 
-import brooksGuetschow from '../assets/teachers/brooks-guetschow.jpg';
 import danielZahumenicky from '../assets/teachers/daniel-zahumenicky.png';
 import danielaMojzisova from '../assets/teachers/daniela-mojzisova.jpg';
-import jakelineJimenez from '../assets/teachers/jakeline-jimenez.png';
 import janGonda from '../assets/teachers/jan-gonda.jpg';
 import janaSismisova from '../assets/teachers/jana-sismisova.jpg';
 import jurajBabic from '../assets/teachers/juraj-babic.jpg';
@@ -99,7 +97,7 @@ export const teachers: Teacher[] = [
   },
   {
     name: 'Jakeline Jimenez',
-    image: jakelineJimenez,
+    image: null,
     leadership: false,
     areas: {
       en: ['Spanish'],
@@ -195,7 +193,7 @@ export const teachers: Teacher[] = [
   },
   {
     name: 'Brooks Guetschow',
-    image: brooksGuetschow,
+    image: null,
     leadership: false,
     areas: { en: [], sk: [] },
     responsibilities: {

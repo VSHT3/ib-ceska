@@ -3,6 +3,13 @@
 
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Official IB corporate brand colours (IB brand guidelines / digital toolkit).
+     The site's own palette stays emerald-led; these are available as accents
+     where the IB identity should read through (e.g. IB-branded callouts).
+     IB blue: Pantone 2186 C · light blue: Pantone 298 C. */
+  --color-ib-blue: #004587;
+  --color-ib-blue-light: #2fb4e9;
 }
 
 html {
@@ -113,7 +120,7 @@ html.js [data-reveal].revealed {
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(34px);
   }
   to {
     opacity: 1;
@@ -122,8 +129,19 @@ html.js [data-reveal].revealed {
 }
 
 .hero-rise {
-  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-rise 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--rise-delay, 0ms);
+}
+
+/* Hero background image eases in (opacity) while slowly zooming (ken-burns).
+   Both animations run on one element via a single shorthand list. */
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
 }
 
 /* ---------- Slow Ken Burns zoom on hero imagery ---------- */
@@ -137,7 +155,9 @@ html.js [data-reveal].revealed {
 }
 
 .ken-burns {
-  animation: ken-burns 18s ease-in-out infinite alternate;
+  animation:
+    hero-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) both,
+    ken-burns 18s ease-in-out infinite alternate;
 }
 
 /* ---------- Photo marquee ---------- */

@@ -3,8 +3,8 @@
 Tasks the AI must complete. Checked = done.
 
 ## IB branding
-- [ ] Add official IB brand colors as design tokens — IB Organization, MYP, and DP each have their own specific color (verify against current IB brand guidelines)
-- [ ] Add official IB logos (IB Org, MYP, DP) — mind IB logo usage rules for candidate schools
+- [x] Add official IB brand colors as design tokens — IB corporate blue (`#004587`) + light blue (`#2FB4E9`) added to `@theme` in `global.css` as `--color-ib-blue` / `--color-ib-blue-light`. (Programme-specific PYP/MYP/DP hexes are not publicly published by the IB; not added.)
+- [ ] Add official IB logos (IB Org, MYP, DP) — mind IB logo usage rules for candidate schools. Human-OK granted; **blocked only on the actual logo asset files** — drop them into `public/` and wire into nav/programme pages once provided.
 - [x] Dedicated bilingual MYP subpage (`/myp`)
 - [x] Dedicated bilingual DP subpage (`/dp`)
 
@@ -61,6 +61,6 @@ Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz
 ## Ideas (unprioritized)
 - [x] Interactive DP subject-combination picker ("build your diploma") — `/build-your-diploma`, driven by the `offeredLevels` subject field
 - [ ] Countdown to exam session / application deadline on homepage
-- [ ] FAQ accordion for admissions
+- [x] FAQ accordion for admissions
 - [ ] Instagram/social feed embed
 - [ ] Downloadable school calendar (ICS)

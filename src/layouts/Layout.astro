@@ -52,8 +52,12 @@ const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
 const testimonialsLink = { href: l('/testimonials', locale), label: dict.nav.testimonials };
 const teachersLink = { href: l('/teachers', locale), label: dict.nav.teachers };
 const secondaryLinks = [newsLink, eventsLink, galleryLink, testimonialsLink, teachersLink];
-const navLinks = [...programmeLinks, subjectsLink, ...coreLinks, ...secondaryLinks]; // flat list for footer + mobile
 const admissionsHref = l('/admissions', locale);
+
+// Footer link groups (label + href only)
+const strip = ({ href, label }: { href: string; label: string }) => ({ href, label });
+const footerProgramme = [...programmeLinks, subjectsLink, ...coreLinks].map(strip);
+const footerSchoolLife = secondaryLinks.map(strip);
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
@@ -214,7 +218,7 @@ const jsonLd = JSON.stringify({
       <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
         <a href={l('/', locale)} class="flex items-center shrink-0">
           <img
-            src="/logo-nav.png"
+            src="/logo.png"
             alt="Súkromné Gymnázium Česká IB Diploma Programme"
             class="h-11 w-auto"
           />
@@ -457,50 +461,60 @@ const jsonLd = JSON.stringify({
       <slot />
     </main>
 
-    <footer class="bg-stone-900 text-stone-300 mt-24">
-      <div class="mx-auto max-w-5xl px-6 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
-          <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto mb-4 rounded-lg bg-white/90 p-1.5" />
-          <p class="text-sm leading-relaxed text-stone-400">{dict.site.tagline}</p>
+    <footer class="mt-24 bg-stone-900 text-stone-300">
+      <div class="h-1 w-full bg-gradient-to-r from-ib-blue via-emerald-600 to-ib-blue-light"></div>
+      <div class="mx-auto max-w-6xl px-6 py-16 grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr]">
+        <!-- Brand -->
+        <div class="max-w-sm">
+          <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto rounded-lg bg-white/90 p-1.5" />
+          <p class="mt-5 text-sm leading-relaxed text-stone-400">{dict.footer.mission}</p>
+          <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.school} ↗</a>
+            <a href="https://www.ibo.org" target="_blank" rel="noopener" class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.ibo} ↗</a>
+          </div>
         </div>
+
+        <!-- Programme -->
         <div>
-          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.explore}</h3>
-          <ul class="space-y-2 text-sm">
-            {navLinks.map(({ href, label }) => (
-              <li><a href={href} class="hover:text-emerald-400 transition-colors">{label}</a></li>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.programmeGroup}</h3>
+          <ul class="space-y-2.5 text-sm">
+            {footerProgramme.map(({ href, label }) => (
+              <li><a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">{label}</a></li>
             ))}
           </ul>
         </div>
+
+        <!-- School life -->
         <div>
-          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.contact}</h3>
-          <ul class="space-y-2 text-sm">
-            <li><a href={`mailto:${contact.email}`} class="hover:text-emerald-400 transition-colors">{contact.email}</a></li>
-            <li><a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="hover:text-emerald-400 transition-colors">{contact.phone}</a></li>
-            <li class="text-stone-400">{contact.address}</li>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.schoolLifeGroup}</h3>
+          <ul class="space-y-2.5 text-sm">
+            {footerSchoolLife.map(({ href, label }) => (
+              <li><a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">{label}</a></li>
+            ))}
+            <li><a href="/rss.xml" class="text-stone-400 hover:text-emerald-400 transition-colors">RSS</a></li>
           </ul>
         </div>
+
+        <!-- Contact -->
         <div>
-          <h3 class="text-sm font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.links}</h3>
-          <ul class="space-y-2 text-sm">
-            <li>
-              <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">
-                {dict.footer.school} ↗
-              </a>
-            </li>
-            <li>
-              <a href="https://www.ibo.org" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">
-                {dict.footer.ibo} ↗
-              </a>
-            </li>
-            <li><a href={admissionsHref} class="hover:text-emerald-400 transition-colors">{dict.footer.admissions}</a></li>
-            <li>
-              <a href="/rss.xml" class="hover:text-emerald-400 transition-colors">RSS</a>
-            </li>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.contact}</h3>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href={`mailto:${contact.email}`} class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a></li>
+            <li><a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a></li>
+            <li class="text-stone-400 leading-relaxed">{contact.address}</li>
           </ul>
+          <a
+            href={admissionsHref}
+            class="mt-5 inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+          >
+            {dict.footer.visitCta}
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
+
       <div class="border-t border-stone-800 py-6">
-        <div class="mx-auto max-w-5xl px-6 space-y-3 text-xs text-stone-500">
+        <div class="mx-auto max-w-6xl px-6 space-y-3 text-xs text-stone-500">
           <p class="leading-relaxed">{dict.footer.candidateNote}</p>
           <p>
             &copy; {currentYear} {dict.site.title}. {dict.footer.rights}
