@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { school } from '../../assets/school';
 import { t } from '../../i18n/dictionaries';
@@ -29,6 +29,12 @@ const photos = [
   { img: school.schoolBuilding, en: 'Súkromné Gymnázium Česká', sk: 'Súkromné Gymnázium Česká' },
 ];
 const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
+
+// Generate a large (lightbox) variant of each image so the overlay shows a
+// crisp full view rather than the small masonry thumbnail.
+const fullImages = await Promise.all(
+  photos.map((p) => getImage({ src: p.img, width: 1600, format: 'webp' }))
+);
 ---
 
 <Layout title={dict.gallery.title} description={dict.gallery.subtitle} locale={locale} pageSchemaType="CollectionPage">
@@ -46,8 +52,14 @@ const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
     <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
       {photos.map((p, i) => (
-        <figure
-          class="group relative mb-4 break-inside-avoid overflow-hidden rounded-2xl bg-stone-100 shadow-sm"
+        <button
+          type="button"
+          data-lightbox
+          data-index={i}
+          data-full={fullImages[i].src}
+          data-caption={caption(p)}
+          aria-label={caption(p)}
+          class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-2xl bg-stone-100 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
           data-reveal
           style={`--reveal-delay: ${Math.min(i, 5) * 60}ms`}
         >
@@ -60,11 +72,96 @@ const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
             loading={i < 3 ? 'eager' : 'lazy'}
           />
           <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 p-4 text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 p-4 text-left text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
             {caption(p)}
           </figcaption>
-        </figure>
+        </button>
       ))}
     </div>
   </div>
+
+  <!-- Lightbox overlay -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-stone-950/90 p-4 backdrop-blur-sm sm:p-8"
+    role="dialog"
+    aria-modal="true"
+    aria-label={dict.gallery.title}
+  >
+    <button type="button" data-lb-close aria-label={dict.gallery.close} class="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <button type="button" data-lb-prev aria-label={dict.gallery.prev} class="absolute left-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    <button type="button" data-lb-next aria-label={dict.gallery.next} class="absolute right-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+    </button>
+    <figure class="flex max-h-full max-w-5xl flex-col items-center">
+      <img data-lb-img src="" alt="" class="max-h-[80vh] w-auto max-w-full rounded-lg object-contain shadow-2xl" />
+      <figcaption data-lb-caption class="mt-4 text-center text-sm text-stone-200"></figcaption>
+    </figure>
+  </div>
+
+  <script>
+    function initLightbox() {
+      const overlay = document.getElementById('lightbox');
+      const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-lightbox]'));
+      if (!overlay || triggers.length === 0) return;
+
+      const imgEl = overlay.querySelector<HTMLImageElement>('[data-lb-img]')!;
+      const capEl = overlay.querySelector<HTMLElement>('[data-lb-caption]')!;
+      const closeBtn = overlay.querySelector<HTMLButtonElement>('[data-lb-close]')!;
+      const prevBtn = overlay.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+      const nextBtn = overlay.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+
+      const items = triggers.map((t) => ({
+        full: t.dataset.full ?? '',
+        caption: t.dataset.caption ?? '',
+      }));
+      let current = 0;
+      let lastFocused: HTMLElement | null = null;
+
+      const show = (i: number) => {
+        current = (i + items.length) % items.length;
+        const item = items[current];
+        imgEl.src = item.full;
+        imgEl.alt = item.caption;
+        capEl.textContent = item.caption;
+      };
+
+      const open = (i: number) => {
+        lastFocused = document.activeElement as HTMLElement;
+        show(i);
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      };
+
+      const close = () => {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+        imgEl.src = '';
+        lastFocused?.focus();
+      };
+
+      triggers.forEach((t, i) => t.addEventListener('click', () => open(i)));
+      closeBtn.addEventListener('click', close);
+      prevBtn.addEventListener('click', () => show(current - 1));
+      nextBtn.addEventListener('click', () => show(current + 1));
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (overlay.classList.contains('hidden')) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') show(current - 1);
+        else if (e.key === 'ArrowRight') show(current + 1);
+      });
+    }
+
+    document.addEventListener('astro:page-load', initLightbox);
+  </script>
 </Layout>

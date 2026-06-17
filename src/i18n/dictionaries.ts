@@ -265,6 +265,9 @@ const dict = {
       title: 'Life at Česká',
       subtitle: 'Lessons, projects, service, and the everyday moments that shape our IB community.',
       label: 'Gallery',
+      close: 'Close',
+      prev: 'Previous image',
+      next: 'Next image',
     },
     events: {
       title: 'Events',
@@ -761,6 +764,9 @@ const dict = {
       title: 'Život na Českej',
       subtitle: 'Vyučovanie, projekty, dobrovoľníctvo a každodenné momenty, ktoré formujú našu IB komunitu.',
       label: 'Galéria',
+      close: 'Zavrieť',
+      prev: 'Predchádzajúca fotka',
+      next: 'Ďalšia fotka',
     },
     events: {
       title: 'Udalosti',
