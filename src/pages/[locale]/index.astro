@@ -126,7 +126,8 @@ const exploreCards = [
         <h2 class="text-3xl font-bold mt-2 tracking-tight">{dict.home.programmesHeading}</h2>
       </div>
       <div class="grid md:grid-cols-2 gap-8">
-        <a href={l('/myp', locale)} class="group flex flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-amber-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0" data-reveal>
+        <div data-reveal>
+        <a href={l('/myp', locale)} class="group flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-amber-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
           <div class="flex items-center justify-between gap-3 mb-6">
             <img src="/ib-myp-logo.png" alt="IB Middle Years Programme logo" width="640" height="256" class="h-12 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none" />
             <span class="text-xs font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 shrink-0">{dict.home.mypAges}</span>
@@ -145,8 +146,10 @@ const exploreCards = [
             <span class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true">→</span>
           </span>
         </a>
+        </div>
 
-        <a href={l('/dp', locale)} class="group flex flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-emerald-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0" data-reveal style="--reveal-delay: 120ms">
+        <div data-reveal style="--reveal-delay: 120ms">
+        <a href={l('/dp', locale)} class="group flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-emerald-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
           <div class="flex items-center justify-between gap-3 mb-6">
             <img src="/ib-dp-logo.png" alt="IB Diploma Programme logo" width="640" height="256" class="h-12 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none" />
             <span class="text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 shrink-0">{dict.home.dpAges}</span>
@@ -164,6 +167,7 @@ const exploreCards = [
             <span class="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true">→</span>
           </span>
         </a>
+        </div>
       </div>
     </section>
 
