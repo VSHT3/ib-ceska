@@ -106,8 +106,13 @@ const exploreCards = [
           />
         </div>
         <div data-reveal style="--reveal-delay: 120ms">
-          <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.home.whatIsIBLabel}</span>
-          <h2 class="text-3xl font-bold mt-2 mb-4 tracking-tight">{dict.home.whatIsIB}</h2>
+          <div class="flex items-center gap-4 mb-4">
+            <img src="/ib-logo.svg" alt="International Baccalaureate" class="h-14 w-auto shrink-0" width="135" height="135" />
+            <div>
+              <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.home.whatIsIBLabel}</span>
+              <h2 class="text-3xl font-bold mt-1 tracking-tight">{dict.home.whatIsIB}</h2>
+            </div>
+          </div>
           <p class="text-stone-600 leading-relaxed">{dict.home.whatIsIBBody1}</p>
           <p class="text-stone-600 leading-relaxed mt-3">{dict.home.whatIsIBBody2}</p>
         </div>
@@ -122,11 +127,9 @@ const exploreCards = [
       </div>
       <div class="grid md:grid-cols-2 gap-8">
         <a href={l('/myp', locale)} class="group flex flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-amber-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0" data-reveal>
-          <div class="flex items-center justify-between mb-6">
-            <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 motion-reduce:transition-none">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            </div>
-            <span class="text-xs font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1">{dict.home.mypAges}</span>
+          <div class="flex items-center justify-between gap-3 mb-6">
+            <img src="/ib-myp-logo.png" alt="IB Middle Years Programme logo" width="640" height="256" class="h-12 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none" />
+            <span class="text-xs font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 shrink-0">{dict.home.mypAges}</span>
           </div>
           <h3 class="text-xl font-semibold mb-3">{dict.home.mypTitle}</h3>
           <p class="text-stone-600 leading-relaxed mb-4">{dict.home.mypDesc}</p>
@@ -144,11 +147,9 @@ const exploreCards = [
         </a>
 
         <a href={l('/dp', locale)} class="group flex flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-emerald-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0" data-reveal style="--reveal-delay: 120ms">
-          <div class="flex items-center justify-between mb-6">
-            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110 motion-reduce:transition-none">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            </div>
-            <span class="text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1">{dict.home.dpAges}</span>
+          <div class="flex items-center justify-between gap-3 mb-6">
+            <img src="/ib-dp-logo.png" alt="IB Diploma Programme logo" width="640" height="256" class="h-12 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none" />
+            <span class="text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 shrink-0">{dict.home.dpAges}</span>
           </div>
           <h3 class="text-xl font-semibold mb-3">{dict.home.dpTitle}</h3>
           <p class="text-stone-600 leading-relaxed mb-4">{dict.home.dpDesc}</p>

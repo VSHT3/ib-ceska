@@ -4,7 +4,7 @@ Tasks the AI must complete. Checked = done.
 
 ## IB branding
 - [x] Add official IB brand colors as design tokens — IB corporate blue (`#004587`) + light blue (`#2FB4E9`) added to `@theme` in `global.css` as `--color-ib-blue` / `--color-ib-blue-light`. (Programme-specific PYP/MYP/DP hexes are not publicly published by the IB; not added.)
-- [ ] Add official IB logos (IB Org, MYP, DP) — mind IB logo usage rules for candidate schools. Human-OK granted; **blocked only on the actual logo asset files** — drop them into `public/` and wire into nav/programme pages once provided.
+- [x] Add official IB logos (IB Org, MYP, DP) — `public/ib-logo.svg` (IB sphere mark) in footer + homepage What-is-IB; `public/ib-dp-logo.png` / `ib-myp-logo.png` on the `/dp` `/myp` page headers and the homepage programme cards. (Mind IB logo usage rules for candidate schools.)
 - [x] Dedicated bilingual MYP subpage (`/myp`)
 - [x] Dedicated bilingual DP subpage (`/dp`)
 

@@ -466,7 +466,10 @@ const jsonLd = JSON.stringify({
       <div class="mx-auto max-w-6xl px-6 py-16 grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr]">
         <!-- Brand -->
         <div class="max-w-sm">
-          <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto rounded-lg bg-white/90 p-1.5" />
+          <div class="flex items-center gap-4">
+            <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto rounded-lg bg-white/90 p-1.5" />
+            <img src="/ib-logo.svg" alt="International Baccalaureate" class="h-12 w-auto" width="135" height="135" />
+          </div>
           <p class="mt-5 text-sm leading-relaxed text-stone-400">{dict.footer.mission}</p>
           <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.school} ↗</a>
