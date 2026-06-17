@@ -95,14 +95,15 @@ export default config({
       schema: {
         title: fields.slug({ name: { label: 'Activity Name' } }),
         date: fields.date({ label: 'Date' }),
-        strand: fields.select({
-          label: 'Strand',
+        strands: fields.multiselect({
+          label: 'Strands',
+          description: 'One or more CAS strands this activity covers.',
           options: [
             { label: 'Creativity', value: 'Creativity' },
             { label: 'Activity', value: 'Activity' },
             { label: 'Service', value: 'Service' },
           ],
-          defaultValue: 'Creativity',
+          defaultValue: ['Creativity'],
         }),
         description: fields.text({ label: 'Description', multiline: true }),
         learningOutcomes: fields.array(

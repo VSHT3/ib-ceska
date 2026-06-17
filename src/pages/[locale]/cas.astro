@@ -55,8 +55,11 @@ const strands = [
   },
 ] as const;
 
-const strandOf = (key: string) => strands.find((s) => s.key === key) ?? strands[0];
-const countOf = (key: string) => sorted.filter((a) => a.entry.strand === key).length;
+// strands is a multiselect array; keep the canonical C→A→S order for display.
+const strandsOf = (entry: { strands: readonly string[] }) =>
+  strands.filter((s) => entry.strands.includes(s.key));
+const countOf = (key: string) =>
+  sorted.filter((a) => (a.entry.strands as readonly string[]).includes(key)).length;
 
 const fmtDate = (date: string | null) =>
   date
@@ -133,17 +136,20 @@ const fmtDate = (date: string | null) =>
       ) : (
         <ol class="relative border-l-2 border-stone-200 ml-2.5 space-y-8">
           {sorted.map((a, i) => {
-            const strand = strandOf(a.entry.strand);
+            const itemStrands = strandsOf(a.entry);
+            const primary = itemStrands[0] ?? strands[0];
             return (
-              <li class="relative pl-8" data-journal-item data-strand={a.entry.strand} data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}>
-                <span class:list={['absolute -left-[7px] top-2 h-3 w-3 rounded-full ring-4 ring-stone-50', strand.dot]} aria-hidden="true" />
+              <li class="relative pl-8" data-journal-item data-strands={itemStrands.map((s) => s.key).join(' ')} data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}>
+                <span class:list={['absolute -left-[7px] top-2 h-3 w-3 rounded-full ring-4 ring-stone-50', primary.dot]} aria-hidden="true" />
                 <a
                   href={`/${locale}/cas/${a.slug}`}
                   class="group block rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 transition-all hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5"
                 >
                   <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     {a.entry.date && <time class="text-xs font-medium text-stone-400">{fmtDate(a.entry.date)}</time>}
-                    <span class:list={['text-[11px] font-bold rounded-full px-2 py-0.5', strand.chip]}>{strand.label}</span>
+                    {itemStrands.map((s) => (
+                      <span class:list={['text-[11px] font-bold rounded-full px-2 py-0.5', s.chip]}>{s.label}</span>
+                    ))}
                   </div>
                   <h3 class="mt-2 text-lg font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
                     {pick(locale, a.entry.sk.title, a.entry.title)}
@@ -169,7 +175,8 @@ const fmtDate = (date: string | null) =>
       const apply = (filter: string) => {
         current = filter;
         items.forEach((item) => {
-          item.classList.toggle('hidden', filter !== 'all' && item.dataset.strand !== filter);
+          const itemStrands = (item.dataset.strands ?? '').split(' ');
+          item.classList.toggle('hidden', filter !== 'all' && !itemStrands.includes(filter));
         });
         buttons.forEach((btn) => {
           const active = btn.dataset.strandFilter === filter;

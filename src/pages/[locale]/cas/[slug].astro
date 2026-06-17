@@ -25,6 +25,10 @@ const strandStyles: Record<string, string> = {
   Activity: 'bg-sky-100 text-sky-800',
   Service: 'bg-emerald-100 text-emerald-800',
 };
+// Keep canonical C→A→S order regardless of how it was stored.
+const strandOrder = ['Creativity', 'Activity', 'Service'];
+const activityStrands = strandOrder.filter((s) => (activity.strands as readonly string[]).includes(s));
+const strandsLabel = activityStrands.join(' · ');
 
 const title = pick(locale, activity.sk.title, activity.title);
 const description = pick(locale, activity.sk.description, activity.description);
@@ -44,12 +48,12 @@ const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
   pageSchema={{
     headline: title,
     datePublished: activity.date,
-    about: activity.strand,
+    about: activityStrands,
     author: { '@id': new URL('/#school', Astro.site).href },
     publisher: { '@id': new URL('/#school', Astro.site).href },
   }}
 >
-  <PageHeader title={title} subtitle={description} label={`CAS: ${activity.strand}`} />
+  <PageHeader title={title} subtitle={description} label={`CAS: ${strandsLabel}`} />
 
   <div class="mx-auto max-w-5xl px-4 py-12">
     <a
@@ -72,9 +76,13 @@ const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
         <div class="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 lg:sticky lg:top-24">
           <div>
             <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.detail.strand}</p>
-            <span class:list={['inline-block mt-1 text-xs px-2.5 py-1 rounded-full font-semibold', strandStyles[activity.strand] ?? 'bg-stone-100 text-stone-700']}>
-              {activity.strand}
-            </span>
+            <div class="mt-1.5 flex flex-wrap gap-1.5">
+              {activityStrands.map((s) => (
+                <span class:list={['inline-block text-xs px-2.5 py-1 rounded-full font-semibold', strandStyles[s] ?? 'bg-stone-100 text-stone-700']}>
+                  {s}
+                </span>
+              ))}
+            </div>
           </div>
           {activity.date && (
             <div>
