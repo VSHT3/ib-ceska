@@ -8,6 +8,7 @@ const dict = {
   en: {
     site: { title: 'IB Gymnázium Česká', tagline: 'To Inspire And Grow' },
     nav: {
+      home: 'Home',
       programmes: 'Programmes',
       myp: 'MYP',
       mypDesc: 'Middle Years Programme · ages 14–16',
@@ -16,9 +17,13 @@ const dict = {
       builder: 'Build your diploma',
       builderDesc: 'Plan a subject combination',
       subjects: 'Subjects',
+      core: 'IB Core',
       cas: 'CAS',
+      casDesc: 'Creativity, Activity, Service',
       tok: 'TOK',
+      tokDesc: 'Theory of Knowledge',
       ee: 'Extended Essay',
+      eeDesc: 'Independent research essay',
       news: 'News',
       events: 'Events',
       gallery: 'Gallery',
@@ -127,14 +132,15 @@ const dict = {
         'The IB Diploma is recognised by leading universities worldwide; graduates are far more likely to enrol at top institutions.',
       benefitsSource: 'Source: International Baccalaureate Organization (ibo.org)',
       daffodilLabel: 'CAS in action',
-      daffodilHeading: 'Daffodil Day 2026 — thank you for your support',
+      daffodilHeading: 'Daffodil Day 2026: thank you for your support',
       daffodilBody1:
         'As part of their CAS project, two IB students took the lead in organising our school’s participation in Daffodil Day (Deň narcisov), Slovakia’s nationwide fundraising campaign organised by the League Against Cancer. They managed all aspects of the project, including communication with the organisation, volunteer coordination, promotion of the event, and fundraising efforts both within the school and in the local community.',
       daffodilBody2:
         'Working together with fellow IB students and other volunteers, they helped raise €1,637.36 in support of the League Against Cancer. This contribution will help fund services and programmes that provide assistance to cancer patients and their families across Slovakia.',
       daffodilBody3:
         'We would like to thank everyone who donated, volunteered, and supported this initiative. Their generosity and commitment helped turn a student-led project into a meaningful contribution to an important cause. 💛🌼',
-      daffodilCaption: 'Daffodil Day 2026 — League Against Cancer certificate of thanks',
+      daffodilCaption: 'Daffodil Day 2026, League Against Cancer certificate of thanks',
+      daffodilCta: 'Read the full CAS project',
       galleryLabel: 'Life at Česká',
       galleryHeading: 'Inside the school, beyond the syllabus',
       exploreLabel: 'Explore',
@@ -490,6 +496,7 @@ const dict = {
   sk: {
     site: { title: 'IB Gymnázium Česká', tagline: 'Inšpirovať a rásť' },
     nav: {
+      home: 'Domov',
       programmes: 'Programy',
       myp: 'MYP',
       mypDesc: 'Middle Years Programme · vek 14–16',
@@ -498,9 +505,13 @@ const dict = {
       builder: 'Zostavte si diplom',
       builderDesc: 'Naplánujte si kombináciu predmetov',
       subjects: 'Predmety',
+      core: 'IB Core',
       cas: 'CAS',
+      casDesc: 'Creativity, Activity, Service',
       tok: 'TOK',
+      tokDesc: 'Theory of Knowledge',
       ee: 'Rozšírená Esej',
+      eeDesc: 'Samostatná výskumná esej',
       news: 'Novinky',
       events: 'Udalosti',
       gallery: 'Galéria',
@@ -609,14 +620,15 @@ const dict = {
         'IB diplom uznávajú popredné univerzity po celom svete; absolventi sa oveľa častejšie dostávajú na špičkové školy.',
       benefitsSource: 'Zdroj: International Baccalaureate Organization (ibo.org)',
       daffodilLabel: 'CAS v praxi',
-      daffodilHeading: 'Deň narcisov 2026 — ďakujeme za vašu podporu',
+      daffodilHeading: 'Deň narcisov 2026: ďakujeme za vašu podporu',
       daffodilBody1:
         'V rámci svojho CAS projektu dvaja IB študenti viedli organizáciu účasti našej školy na Dni narcisov, celoslovenskej zbierke Ligy proti rakovine. Postarali sa o všetky časti projektu — komunikáciu s organizáciou, koordináciu dobrovoľníkov, propagáciu podujatia aj samotnú zbierku v škole i v miestnej komunite.',
       daffodilBody2:
         'Spolu s ďalšími IB študentmi a dobrovoľníkmi pomohli vyzbierať 1 637,36 € na podporu Ligy proti rakovine. Tento príspevok pomôže financovať služby a programy, ktoré poskytujú pomoc onkologickým pacientom a ich rodinám na celom Slovensku.',
       daffodilBody3:
         'Ďakujeme všetkým, ktorí prispeli, dobrovoľnícky pomohli a podporili túto iniciatívu. Ich štedrosť a odhodlanie premenili študentský projekt na zmysluplný príspevok k dôležitej veci. 💛🌼',
-      daffodilCaption: 'Deň narcisov 2026 — ďakovný certifikát Ligy proti rakovine',
+      daffodilCaption: 'Deň narcisov 2026, ďakovný certifikát Ligy proti rakovine',
+      daffodilCta: 'Prečítať celý CAS projekt',
       galleryLabel: 'Život na Českej',
       galleryHeading: 'V škole aj mimo syláb',
       exploreLabel: 'Preskúmajte',
