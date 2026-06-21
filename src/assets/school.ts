@@ -25,5 +25,3 @@ export const school = {
   studentsSelfie,
   volunteering,
 } satisfies Record<string, ImageMetadata>;
-
-export type SchoolImageKey = keyof typeof school;
