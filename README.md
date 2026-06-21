@@ -6,21 +6,21 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript)](https://www.typescriptlang.org)
 [![Node](https://img.shields.io/badge/Node-%3E%3D22.12.0-339933?logo=nodedotjs)](https://nodejs.org)
 
-Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia. Built with Astro in **hybrid mode** — pages are statically prerendered, and a small Node server backs the Keystatic CMS admin routes.
+Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia. Built with Astro in **hybrid mode**: pages are statically prerendered, and a small Node server backs the Keystatic CMS admin routes.
 
 ## Features
 
-- **Subject listings + detail pages** — IB groups 1–6 with HL/SL levels, rendered syllabi, and teacher info
-- **CAS journal** — Creativity, Activity, Service entries with learning outcomes and reflection pages
-- **TOK materials** — Theory of Knowledge essays and themes, with full essay pages
-- **Extended Essay** — timeline, resources, and document downloads
-- **News** — exam schedules, announcements, events, with an RSS feed at `/rss.xml`
-- **Programme pages** — dedicated MYP (`/myp`) and DP (`/dp`) curriculum overviews
-- **Admissions** — application steps, programme guidance, and direct school contact at `/admissions`
-- **IB team** — verified programme leadership, subject teachers, coordinators, and support staff at `/teachers`
-- **Bilingual** — English primary, full Slovak UI + optional Slovak content (English fallback)
-- **SEO** — complete bilingual sitemap, canonical + `hreflang`, social cards, and schema.org structured data
-- **CMS** — content edited visually through Keystatic at `/keystatic/`, no code required
+- **Subject listings + detail pages**: IB groups 1–6 with HL/SL levels, rendered syllabi, and teacher info
+- **CAS journal**: Creativity, Activity, Service entries with learning outcomes and reflection pages
+- **TOK materials**: Theory of Knowledge essays and themes, with full essay pages
+- **Extended Essay**: timeline, resources, and document downloads
+- **News**: exam schedules, announcements, events, with an RSS feed at `/rss.xml`
+- **Programme pages**: dedicated MYP (`/myp`) and DP (`/dp`) curriculum overviews
+- **Admissions**: application steps, programme guidance, and direct school contact at `/admissions`
+- **IB team**: verified programme leadership, subject teachers, coordinators, and support staff at `/teachers`
+- **Bilingual**: English primary, full Slovak UI + optional Slovak content (English fallback)
+- **SEO**: complete bilingual sitemap, canonical + `hreflang`, social cards, and schema.org structured data
+- **CMS**: content edited visually through Keystatic at `/keystatic/`, no code required
 
 ## Quick start
 
@@ -40,12 +40,12 @@ npm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 
 ## Stack
 
-- **Astro 6** — hybrid mode (static prerender + `@astrojs/node` adapter for CMS routes)
-- **Tailwind CSS 4** — utility-first, CSS-based config (no `tailwind.config.js`)
-- **Keystatic CMS** — visual editor + Reader API; content stored as `.mdoc` files
-- **MDX** (`@astrojs/mdx`) — for `.astro` components that use JSX
-- **TypeScript** — strict mode via `astro/tsconfigs/strict`
-- **Node ≥ 22.12.0**
+- **Astro 6**: hybrid mode (static prerender + `@astrojs/node` adapter for CMS routes)
+- **Tailwind CSS 4**: utility-first, CSS-based config (no `tailwind.config.js`)
+- **Keystatic CMS**: visual editor + Reader API. Content stored as `.mdoc` files
+- **MDX** (`@astrojs/mdx`): for `.astro` components that use JSX
+- **TypeScript**: strict mode via `astro/tsconfigs/strict`
+- **Node 22.12.0 or newer**
 
 ## Content
 
@@ -66,15 +66,15 @@ Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files b
 
 ## Editing content (Keystatic)
 
-- **URL:** `/keystatic/` — `http://localhost:4321/keystatic/` in dev, `https://ib.gymnaziumceska.sk/keystatic/` in production.
+- **URL:** `/keystatic/` at `http://localhost:4321/keystatic/` in dev, `https://ib.gymnaziumceska.sk/keystatic/` in production.
 - **Dev** (`kind: 'local'`): writes `.mdoc` files straight to disk, no login.
-- **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth** — only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership *is* the access list.
+- **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth**, so only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership *is* the access list.
 - ⚠️ Production OAuth is **not configured yet** (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` + a GitHub App are required). Until then the live CMS cannot save. See `humans/HUMANTODO.md`.
 
 ## Language policy
 
-- **Primary: English** — all UI, content, and commit messages.
-- **Secondary: Slovak** — full UI translation shipped; content can be translated per-entry with English fallback.
+- **Primary: English** for all UI, content, and commit messages.
+- **Secondary: Slovak**, full UI translation shipped. Content can be translated per-entry with English fallback.
 - Do not write Czech in code or content.
 
 ## For collaborators
@@ -83,7 +83,7 @@ See [`humans/`](humans/) for onboarding, the content-editing guide, design decis
 
 ## Deploy
 
-Hosted on **Coolify** on a VPS — Coolify project `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via a GitHub App. **Pushing to `main` auto-deploys** (GitHub webhook → Coolify pulls, builds, redeploys); a Keystatic Save also commits to `main`, so content edits redeploy too.
+Hosted on **Coolify** on a VPS. Coolify project `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via a GitHub App. **Pushing to `main` auto-deploys** (GitHub webhook triggers Coolify to pull, build, and redeploy). A Keystatic Save also commits to `main`, so content edits redeploy too.
 
 ```bash
 npm run build                 # → dist/client/ (static) + dist/server/ (Node)
@@ -94,4 +94,4 @@ Build pack is nixpacks (Node 22). Set `HOST=0.0.0.0` and `PORT=4321` so the Node
 
 ## License
 
-Private — Súkromné Gymnázium Česká.
+Private. Súkromné Gymnázium Česká.
