@@ -24,6 +24,10 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .firecrawl/
+.fallow/
+
+# husky internal files
+.husky/_/
 
 # local Claude Code settings (personal, not shared)
 .claude/settings.local.json

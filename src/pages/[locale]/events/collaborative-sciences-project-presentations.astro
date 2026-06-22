@@ -63,18 +63,12 @@ const physicsData = [
         investigated across Biology, Chemistry, Physics, Environmental Science, and Computer
         Science.
       </p>
-      <div class="hero-rise mt-7 flex flex-wrap gap-3" style="--rise-delay: 240ms">
-        <a
-          href="#recommendation-tool"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-rose-600 font-semibold text-sm hover:bg-rose-50 transition-all duration-200"
-        >
-          Try the Recommendation Tool
-        </a>
+      <div class="hero-rise mt-7" style="--rise-delay: 240ms">
         <a
           href={PROJECT_URL}
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-rose-700/40 text-white font-medium text-sm hover:bg-rose-700/60 border border-rose-300/30 transition-all duration-200 backdrop-blur-sm"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-rose-600 font-semibold text-sm hover:bg-rose-50 transition-all duration-200"
         >
           Full Project Website ↗
         </a>
@@ -83,20 +77,26 @@ const physicsData = [
   </section>
 
   <div class="px-6 sm:px-12 lg:px-20 py-12 sm:py-16">
-    {/* Project summary */}
-    <div class="mb-10 sm:mb-14">
-      <p class="text-base sm:text-lg text-stone-600 leading-relaxed max-w-3xl">
-        Hui Ru Yang, Anna Udicova, Ela Sabolova, Milana Golubkova, and Alexander Hvezdon Stefko
-        compared seven products from three brands across five evaluation axes: safety, comfort,
-        performance, environment, and cost. Below is a snippet of their work: the physics lab
-        results and the interactive recommendation tool, reproduced from their website.
-      </p>
+    {/* Group 1 label */}
+    <div class="mb-8">
+      <span
+        class="inline-block text-xs font-bold tracking-widest uppercase bg-rose-100 text-rose-700 px-3 py-1 rounded-full"
+      >
+        Group 1
+      </span>
     </div>
 
     {/* Physics results + Recommendation tool side by side on large screens */}
     <div class="grid lg:grid-cols-[1fr_1.4fr] gap-6 sm:gap-10 mb-12 sm:mb-16 items-start">
-      {/* Physics table */}
+      {/* Left column: intro paragraph + physics table */}
       <div>
+        <p class="text-base sm:text-lg text-stone-600 leading-relaxed mb-8">
+          Hui Ru Yang, Anna Udicova, Ela Sabolova, Milana Golubkova, and Alexander Hvezdon Stefko
+          compared seven products from three brands across five evaluation axes: safety, comfort,
+          performance, environment, and cost. Below is a snippet of their work: the physics lab
+          results and the interactive recommendation tool, reproduced from their website.
+        </p>
+
         <h2 class="text-lg font-bold text-stone-900 mb-1">Physics Lab Results</h2>
         <p class="text-sm text-stone-500 mb-4">
           Absorption capacity (g/g) and rate (s/5 mL), averaged over 3 trials with simulated fluid.
@@ -133,7 +133,7 @@ const physicsData = [
         </p>
       </div>
 
-      {/* Recommendation tool */}
+      {/* Right column: recommendation tool */}
       <div id="recommendation-tool" class="scroll-mt-8">
         <h2 class="text-lg font-bold text-stone-900 mb-1">Recommendation Tool</h2>
         <p class="text-sm text-stone-500 mb-4">
