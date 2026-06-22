@@ -51,7 +51,15 @@ const eventsLink = { href: l('/events', locale), label: dict.nav.events };
 const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
 const testimonialsLink = { href: l('/testimonials', locale), label: dict.nav.testimonials };
 const teachersLink = { href: l('/teachers', locale), label: dict.nav.teachers };
-const secondaryLinks = [newsLink, eventsLink, galleryLink, testimonialsLink, teachersLink];
+const searchLink = { href: l('/search', locale), label: dict.nav.search };
+const secondaryLinks = [
+  searchLink,
+  newsLink,
+  eventsLink,
+  galleryLink,
+  testimonialsLink,
+  teachersLink,
+];
 const admissionsHref = l('/admissions', locale);
 
 // Footer link groups (label + href only)
@@ -60,15 +68,18 @@ const footerProgramme = [...programmeLinks, subjectsLink, ...coreLinks].map(stri
 const footerSchoolLife = secondaryLinks.map(strip);
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
-const isActive = (href: string) => currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
+const isActive = (href: string) =>
+  currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
 const homeActive = currentPath === homeLink.href.replace(/\/$/, '');
 const programmesActive = programmeLinks.some(({ href }) => isActive(href));
 const coreActive = coreLinks.some(({ href }) => isActive(href));
 
 const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
 const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
-const withTrailingSlash = (path: string) => (path === '/' || path.endsWith('/') ? path : `${path}/`);
-const altUrl = (code: string) => new URL(withTrailingSlash(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`), site).href;
+const withTrailingSlash = (path: string) =>
+  path === '/' || path.endsWith('/') ? path : `${path}/`;
+const altUrl = (code: string) =>
+  new URL(withTrailingSlash(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`), site).href;
 const canonicalUrl = new URL(withTrailingSlash(Astro.url.pathname), site).href;
 const ogImage = new URL(schoolBuilding.src, site).href;
 const logoUrl = new URL('/logo.png', site).href;
@@ -88,6 +99,7 @@ const routeLabels: Record<string, string> = {
   gallery: dict.nav.gallery,
   testimonials: dict.nav.testimonials,
   teachers: dict.nav.teachers,
+  search: dict.nav.search,
   admissions: dict.nav.apply,
 };
 const segments = pathSansLocale.split('/').filter(Boolean);
@@ -179,19 +191,27 @@ const jsonLd = JSON.stringify({
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#047857" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0c0a09" />
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     <meta name="description" content={metaDescription} />
     <meta
       name="robots"
-      content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
+      content={noindex
+        ? 'noindex, nofollow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
     />
 
     {!noindex && <link rel="canonical" href={canonicalUrl} />}
     {!noindex && <link rel="alternate" hreflang="en" href={altUrl('en')} />}
     {!noindex && <link rel="alternate" hreflang="sk" href={altUrl('sk')} />}
     {!noindex && <link rel="alternate" hreflang="x-default" href={altUrl('en')} />}
-    <link rel="alternate" type="application/rss+xml" title={`${dict.site.title}: News`} href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${dict.site.title}: News`}
+      href="/rss.xml"
+    />
 
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={metaDescription} />
@@ -209,12 +229,18 @@ const jsonLd = JSON.stringify({
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content="Súkromné Gymnázium Česká in Bratislava" />
-    <script is:inline type="application/ld+json" set:html={jsonLd}></script>
+    <script is:inline type="application/ld+json" set:html={jsonLd} />
     <ClientRouter />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
-  <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
-    <header class="border-b border-stone-200/60 bg-white/70 backdrop-blur-xl backdrop-saturate-150 shadow-sm shadow-stone-900/5 sticky top-0 z-50">
+  <body
+    class="min-h-screen bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 font-sans antialiased"
+  >
+    <header
+      class="border-b border-stone-200/60 dark:border-stone-800/60 bg-white/70 dark:bg-stone-900/70 backdrop-blur-xl backdrop-saturate-150 shadow-sm shadow-stone-900/5 sticky top-0 z-50"
+    >
       <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
         <a href={l('/', locale)} class="flex items-center shrink-0">
           <img
@@ -224,7 +250,11 @@ const jsonLd = JSON.stringify({
           />
         </a>
 
-        <ul class="hidden xl:flex gap-1 xl:gap-2 text-sm font-medium items-center" role="navigation" aria-label="Primary">
+        <ul
+          class="hidden xl:flex gap-1 xl:gap-2 text-sm font-medium items-center"
+          role="navigation"
+          aria-label="Primary"
+        >
           <li>
             <a
               href={homeLink.href}
@@ -232,8 +262,8 @@ const jsonLd = JSON.stringify({
               class:list={[
                 'relative rounded-full px-3 py-1.5 transition-colors',
                 homeActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
+                  ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                  : 'text-stone-600 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-stone-100 dark:hover:bg-stone-800',
               ]}
             >
               {homeLink.label}
@@ -247,34 +277,59 @@ const jsonLd = JSON.stringify({
               class:list={[
                 'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
                 programmesActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
+                  ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                  : 'text-stone-600 dark:text-stone-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 group-hover:bg-stone-100 dark:group-hover:bg-stone-800',
               ]}
             >
               {dict.nav.programmes}
-              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+              <svg
+                class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"></path>
               </svg>
             </button>
-            <div class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2">
-              <div class="w-72 rounded-2xl border border-stone-200/70 bg-white/90 backdrop-blur-xl p-1.5 shadow-lg shadow-stone-900/10">
-                {programmeLinks.map(({ href, label, desc }) => (
-                  <a
-                    href={href}
-                    aria-current={isActive(href) ? 'page' : undefined}
-                    class:list={[
-                      'block rounded-xl px-3.5 py-2.5 transition-colors',
-                      isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
-                    ]}
-                  >
-                    <span class:list={['block font-semibold', isActive(href) ? 'text-emerald-700' : 'text-stone-800']}>{label}</span>
-                    <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
-                  </a>
-                ))}
+            <div
+              class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2"
+            >
+              <div
+                class="w-72 rounded-2xl border border-stone-200/70 dark:border-stone-800/70 bg-white/90 dark:bg-stone-900/90 backdrop-blur-xl p-1.5 shadow-lg shadow-stone-900/10"
+              >
+                {
+                  programmeLinks.map(({ href, label, desc }) => (
+                    <a
+                      href={href}
+                      aria-current={isActive(href) ? 'page' : undefined}
+                      class:list={[
+                        'block rounded-xl px-3.5 py-2.5 transition-colors',
+                        isActive(href)
+                          ? 'bg-emerald-50 dark:bg-emerald-900/40'
+                          : 'hover:bg-stone-100 dark:hover:bg-stone-800',
+                      ]}
+                    >
+                      <span
+                        class:list={[
+                          'block font-semibold',
+                          isActive(href)
+                            ? 'text-emerald-700 dark:text-emerald-300'
+                            : 'text-stone-800 dark:text-stone-200',
+                        ]}
+                      >
+                        {label}
+                      </span>
+                      <span class="block text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                        {desc}
+                      </span>
+                    </a>
+                  ))
+                }
               </div>
             </div>
           </li>
-          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
+          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200 dark:bg-stone-800"></li>
           <li>
             <a
               href={subjectsLink.href}
@@ -282,8 +337,8 @@ const jsonLd = JSON.stringify({
               class:list={[
                 'relative rounded-full px-3 py-1.5 transition-colors',
                 isActive(subjectsLink.href)
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
+                  ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                  : 'text-stone-600 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-stone-100 dark:hover:bg-stone-800',
               ]}
             >
               {subjectsLink.label}
@@ -297,58 +352,85 @@ const jsonLd = JSON.stringify({
               class:list={[
                 'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
                 coreActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
+                  ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                  : 'text-stone-600 dark:text-stone-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 group-hover:bg-stone-100 dark:group-hover:bg-stone-800',
               ]}
             >
               {dict.nav.core}
-              <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+              <svg
+                class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"></path>
               </svg>
             </button>
-            <div class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2">
-              <div class="w-72 rounded-2xl border border-stone-200/70 bg-white/90 backdrop-blur-xl p-1.5 shadow-lg shadow-stone-900/10">
-                {coreLinks.map(({ href, label, desc }) => (
-                  <a
-                    href={href}
-                    aria-current={isActive(href) ? 'page' : undefined}
-                    class:list={[
-                      'block rounded-xl px-3.5 py-2.5 transition-colors',
-                      isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
-                    ]}
-                  >
-                    <span class:list={['block font-semibold', isActive(href) ? 'text-emerald-700' : 'text-stone-800']}>{label}</span>
-                    <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
-                  </a>
-                ))}
+            <div
+              class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2"
+            >
+              <div
+                class="w-72 rounded-2xl border border-stone-200/70 dark:border-stone-800/70 bg-white/90 dark:bg-stone-900/90 backdrop-blur-xl p-1.5 shadow-lg shadow-stone-900/10"
+              >
+                {
+                  coreLinks.map(({ href, label, desc }) => (
+                    <a
+                      href={href}
+                      aria-current={isActive(href) ? 'page' : undefined}
+                      class:list={[
+                        'block rounded-xl px-3.5 py-2.5 transition-colors',
+                        isActive(href)
+                          ? 'bg-emerald-50 dark:bg-emerald-900/40'
+                          : 'hover:bg-stone-100 dark:hover:bg-stone-800',
+                      ]}
+                    >
+                      <span
+                        class:list={[
+                          'block font-semibold',
+                          isActive(href)
+                            ? 'text-emerald-700 dark:text-emerald-300'
+                            : 'text-stone-800 dark:text-stone-200',
+                        ]}
+                      >
+                        {label}
+                      </span>
+                      <span class="block text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                        {desc}
+                      </span>
+                    </a>
+                  ))
+                }
               </div>
             </div>
           </li>
-          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
-          {secondaryLinks.map(({ href, label }) => (
-            <li>
-              <a
-                href={href}
-                aria-current={isActive(href) ? 'page' : undefined}
-                class:list={[
-                  'relative rounded-full px-3 py-1.5 transition-colors',
-                  isActive(href)
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
-                ]}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-          <li class="ml-2 pl-3 border-l border-stone-200">
+          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200 dark:bg-stone-800"></li>
+          {
+            secondaryLinks.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  class:list={[
+                    'relative rounded-full px-3 py-1.5 transition-colors',
+                    isActive(href)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                      : 'text-stone-600 dark:text-stone-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-stone-100 dark:hover:bg-stone-800',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+          <li class="ml-2 pl-3 border-l border-stone-200 dark:border-stone-800">
             <LanguageSwitcher locale={locale} />
           </li>
           <li>
             <a
               href={admissionsHref}
               aria-current={isActive(admissionsHref) ? 'page' : undefined}
-              class="ml-1 rounded-full bg-emerald-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-800"
+              class="ml-1 rounded-full bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-800"
             >
               {dict.nav.apply}
             </a>
@@ -360,20 +442,30 @@ const jsonLd = JSON.stringify({
           <button
             id="menu-toggle"
             type="button"
-            class="inline-flex items-center justify-center rounded-lg p-2 text-stone-600 hover:bg-stone-100 transition-colors"
+            class="inline-flex items-center justify-center rounded-lg p-2 text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             aria-expanded="false"
             aria-controls="mobile-menu"
             aria-label={dict.nav.menu}
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path class="menu-open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
-              <path class="menu-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              viewBox="0 0 24 24"
+            >
+              <path class="menu-open" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+              <path class="menu-close hidden" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"
+              ></path>
             </svg>
           </button>
         </div>
       </nav>
 
-      <div id="mobile-menu" class="hidden xl:hidden border-t border-stone-200/60 bg-white/90 backdrop-blur-xl px-4 py-3">
+      <div
+        id="mobile-menu"
+        class="hidden xl:hidden border-t border-stone-200/60 dark:border-stone-800/60 bg-white/90 dark:bg-stone-900/90 backdrop-blur-xl px-4 py-3"
+      >
         <ul class="flex flex-col gap-1 text-sm font-medium">
           <li>
             <a
@@ -382,73 +474,91 @@ const jsonLd = JSON.stringify({
               class:list={[
                 'block rounded-lg px-3 py-2.5 transition-colors',
                 homeActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
+                  ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                  : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-emerald-700 dark:hover:text-emerald-300',
               ]}
             >
               {homeLink.label}
             </a>
           </li>
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          <li class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.nav.programmes}</li>
-          {programmeLinks.map(({ href, label, desc }) => (
-            <li>
-              <a
-                href={href}
-                aria-current={isActive(href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-lg px-3 py-2.5 transition-colors',
-                  isActive(href)
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
-                ]}
-              >
-                {label}
-                <span class="block text-xs font-normal text-stone-500">{desc}</span>
-              </a>
-            </li>
-          ))}
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          <li class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.nav.core}</li>
-          {coreLinks.map(({ href, label, desc }) => (
-            <li>
-              <a
-                href={href}
-                aria-current={isActive(href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-lg px-3 py-2.5 transition-colors',
-                  isActive(href)
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
-                ]}
-              >
-                {label}
-                <span class="block text-xs font-normal text-stone-500">{desc}</span>
-              </a>
-            </li>
-          ))}
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          {[subjectsLink, ...secondaryLinks].map(({ href, label }) => (
-            <li>
-              <a
-                href={href}
-                aria-current={isActive(href) ? 'page' : undefined}
-                class:list={[
-                  'block rounded-lg px-3 py-2.5 transition-colors',
-                  isActive(href)
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
-                ]}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
+          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80 dark:bg-stone-800/80"></li>
+          <li
+            class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500"
+          >
+            {dict.nav.programmes}
+          </li>
+          {
+            programmeLinks.map(({ href, label, desc }) => (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  class:list={[
+                    'block rounded-lg px-3 py-2.5 transition-colors',
+                    isActive(href)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-emerald-700 dark:hover:text-emerald-300',
+                  ]}
+                >
+                  {label}
+                  <span class="block text-xs font-normal text-stone-500 dark:text-stone-400">
+                    {desc}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80 dark:bg-stone-800/80"></li>
+          <li
+            class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500"
+          >
+            {dict.nav.core}
+          </li>
+          {
+            coreLinks.map(({ href, label, desc }) => (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  class:list={[
+                    'block rounded-lg px-3 py-2.5 transition-colors',
+                    isActive(href)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-emerald-700 dark:hover:text-emerald-300',
+                  ]}
+                >
+                  {label}
+                  <span class="block text-xs font-normal text-stone-500 dark:text-stone-400">
+                    {desc}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80 dark:bg-stone-800/80"></li>
+          {
+            [subjectsLink, ...secondaryLinks].map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  class:list={[
+                    'block rounded-lg px-3 py-2.5 transition-colors',
+                    isActive(href)
+                      ? 'bg-emerald-50 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                      : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-emerald-700 dark:hover:text-emerald-300',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
           <li class="pt-2">
             <a
               href={admissionsHref}
               aria-current={isActive(admissionsHref) ? 'page' : undefined}
-              class="block rounded-lg bg-emerald-700 px-3 py-2.5 text-center font-semibold text-white transition-colors hover:bg-emerald-800"
+              class="block rounded-lg bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 px-3 py-2.5 text-center font-semibold text-white transition-colors hover:bg-emerald-800"
             >
               {dict.nav.apply}
             </a>
@@ -461,49 +571,99 @@ const jsonLd = JSON.stringify({
       <slot />
     </main>
 
-    <footer class="mt-24 bg-stone-900 text-stone-300">
+    <footer class="mt-24 bg-stone-900 dark:bg-black text-stone-300">
       <div class="h-1 w-full bg-gradient-to-r from-ib-blue via-emerald-600 to-ib-blue-light"></div>
       <div class="mx-auto max-w-6xl px-6 py-16 grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr]">
         <!-- Brand -->
         <div class="max-w-sm">
           <div class="flex items-center gap-4">
-            <img src="/logo.png" alt={dict.site.title} class="h-14 w-auto rounded-lg bg-white/90 p-1.5" />
-            <img src="/ib-logo.svg" alt="International Baccalaureate" class="h-12 w-auto" width="135" height="135" />
+            <img
+              src="/logo.png"
+              alt={dict.site.title}
+              class="h-14 w-auto rounded-lg bg-white/90 p-1.5"
+            />
+            <img
+              src="/ib-logo.svg"
+              alt="International Baccalaureate"
+              class="h-12 w-auto"
+              width="135"
+              height="135"
+            />
           </div>
           <p class="mt-5 text-sm leading-relaxed text-stone-400">{dict.footer.mission}</p>
           <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.school} ↗</a>
-            <a href="https://www.ibo.org" target="_blank" rel="noopener" class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.ibo} ↗</a>
+            <a
+              href="https://www.gymnaziumceska.sk"
+              target="_blank"
+              rel="noopener"
+              class="text-stone-300 hover:text-emerald-400 transition-colors"
+              >{dict.footer.school} ↗</a
+            >
+            <a
+              href="https://www.ibo.org"
+              target="_blank"
+              rel="noopener"
+              class="text-stone-300 hover:text-emerald-400 transition-colors">{dict.footer.ibo} ↗</a
+            >
           </div>
         </div>
 
         <!-- Programme -->
         <div>
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.programmeGroup}</h3>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">
+            {dict.footer.programmeGroup}
+          </h3>
           <ul class="space-y-2.5 text-sm">
-            {footerProgramme.map(({ href, label }) => (
-              <li><a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">{label}</a></li>
-            ))}
+            {
+              footerProgramme.map(({ href, label }) => (
+                <li>
+                  <a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </div>
 
         <!-- School life -->
         <div>
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.schoolLifeGroup}</h3>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">
+            {dict.footer.schoolLifeGroup}
+          </h3>
           <ul class="space-y-2.5 text-sm">
-            {footerSchoolLife.map(({ href, label }) => (
-              <li><a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">{label}</a></li>
-            ))}
-            <li><a href="/rss.xml" class="text-stone-400 hover:text-emerald-400 transition-colors">RSS</a></li>
+            {
+              footerSchoolLife.map(({ href, label }) => (
+                <li>
+                  <a href={href} class="text-stone-400 hover:text-emerald-400 transition-colors">
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a href="/rss.xml" class="text-stone-400 hover:text-emerald-400 transition-colors"
+                >RSS</a>
+            </li>
           </ul>
         </div>
 
         <!-- Contact -->
         <div>
-          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">{dict.footer.contact}</h3>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-stone-500 mb-4">
+            {dict.footer.contact}
+          </h3>
           <ul class="space-y-2.5 text-sm">
-            <li><a href={`mailto:${contact.email}`} class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a></li>
-            <li><a href={`tel:${contact.phone.replace(/\s/g, '')}`} class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a></li>
+            <li>
+              <a
+                href={`mailto:${contact.email}`}
+                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a>
+            </li>
+            <li>
+              <a
+                href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a>
+            </li>
             <li class="text-stone-400 leading-relaxed">{contact.address}</li>
           </ul>
           <a
@@ -520,9 +680,15 @@ const jsonLd = JSON.stringify({
         <div class="mx-auto max-w-6xl px-6 space-y-3 text-xs text-stone-500">
           <p class="leading-relaxed">{dict.footer.candidateNote}</p>
           <p>
-            &copy; {currentYear} {dict.site.title}. {dict.footer.rights}
+            &copy; {currentYear}
+            {dict.site.title}. {dict.footer.rights}
             {' · '}
-            <a href="https://www.gymnaziumceska.sk" target="_blank" rel="noopener" class="hover:text-emerald-400 transition-colors">gymnaziumceska.sk</a>
+            <a
+              href="https://www.gymnaziumceska.sk"
+              target="_blank"
+              rel="noopener"
+              class="hover:text-emerald-400 transition-colors">gymnaziumceska.sk</a
+            >
           </p>
         </div>
       </div>
@@ -542,7 +708,7 @@ const jsonLd = JSON.stringify({
                 }
               }
             },
-            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
           );
           revealEls.forEach((el) => io.observe(el));
         }

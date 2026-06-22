@@ -31,6 +31,7 @@ const dict = {
       teachers: 'Team',
       apply: 'Apply',
       menu: 'Menu',
+      search: 'Search',
     },
     footer: {
       rights: 'All rights reserved.',
@@ -41,7 +42,8 @@ const dict = {
       school: 'Main school website',
       ibo: 'International Baccalaureate',
       admissions: 'Admissions',
-      mission: 'An international education in the heart of Bratislava — preparing students to think critically, act with care, and grow into the world.',
+      mission:
+        'An international education in the heart of Bratislava — preparing students to think critically, act with care, and grow into the world.',
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
       resourcesGroup: 'Resources',
@@ -66,6 +68,14 @@ const dict = {
       title: 'Page not found',
       body: 'The page you are looking for does not exist or has moved.',
       home: 'Back to homepage',
+    },
+    search: {
+      title: 'Search',
+      subtitle: 'Find subjects, news, CAS activities, and more',
+      placeholder: 'Search the site…',
+      noResults: 'No results found',
+      noQuery: 'Start typing to search across all content',
+      resultsCount: '{n} results',
     },
     home: {
       badge: 'MYP & DP at Česká',
@@ -113,9 +123,11 @@ const dict = {
       workBody:
         'Explore the course materials, reflections, and independent work already taking shape at Česká.',
       workCasTitle: 'Plan and reflect through CAS',
-      workCasDesc: 'See how students connect creativity, activity, and service to clear learning outcomes.',
+      workCasDesc:
+        'See how students connect creativity, activity, and service to clear learning outcomes.',
       workTokTitle: 'Question knowledge through TOK',
-      workTokDesc: 'Read discussion materials that test claims, evidence, language, and responsibility.',
+      workTokDesc:
+        'Read discussion materials that test claims, evidence, language, and responsibility.',
       workEeTitle: 'Build an independent research project',
       workEeDesc: 'Understand the milestones behind the 4,000-word Extended Essay.',
       workLink: 'Explore',
@@ -163,9 +175,11 @@ const dict = {
       newsLabel: 'News',
       newsDesc: 'Announcements, exam schedules, and important programme updates.',
       teachersLabel: 'Meet the team',
-      teachersDesc: 'Get to know the programme leaders, subject teachers, coordinators, and student support team.',
+      teachersDesc:
+        'Get to know the programme leaders, subject teachers, coordinators, and student support team.',
       ctaHeading: 'Thinking about MYP or DP at Česká?',
-      ctaBody: 'See the application steps, then talk directly with the school about current requirements.',
+      ctaBody:
+        'See the application steps, then talk directly with the school about current requirements.',
       ctaButton: 'How to apply',
       ctaCall: 'Call Us',
     },
@@ -187,14 +201,16 @@ const dict = {
     },
     builder: {
       title: 'Build Your Diploma',
-      subtitle: 'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool — the school confirms the subjects actually on offer each year.',
+      subtitle:
+        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool — the school confirms the subjects actually on offer each year.',
       label: 'Plan your studies',
       pickHl: 'HL',
       pickSl: 'SL',
       hlCount: 'Higher Level',
       slCount: 'Standard Level',
       totalLabel: 'Subjects chosen',
-      group6Note: 'For your sixth subject, pick from The Arts — or take a second subject from groups 1–4.',
+      group6Note:
+        'For your sixth subject, pick from The Arts — or take a second subject from groups 1–4.',
       coreLabel: 'The core',
       coreNote: 'Every diploma also includes Theory of Knowledge, the Extended Essay, and CAS.',
       summaryTitle: 'Your diploma',
@@ -219,8 +235,10 @@ const dict = {
       strandCreativity: 'Creativity',
       strandActivity: 'Activity',
       strandService: 'Service',
-      creativityDesc: 'Arts and creative thinking — original work that students imagine, design, and carry out.',
-      activityDesc: 'Physical effort as part of a healthy lifestyle — sport, movement, and challenge.',
+      creativityDesc:
+        'Arts and creative thinking — original work that students imagine, design, and carry out.',
+      activityDesc:
+        'Physical effort as part of a healthy lifestyle — sport, movement, and challenge.',
       serviceDesc: 'Unpaid, voluntary work with a real benefit for the community.',
       filterAll: 'All strands',
       journalHeading: 'Activity journal',
@@ -299,14 +317,16 @@ const dict = {
       facultyTitle: 'Specialists across subjects and the IB core',
       contactLabel: 'Talk to the team',
       contactTitle: 'Questions about subjects or admissions?',
-      contactBody: 'The IB team can help you understand the programme, current subject options, and the application process.',
+      contactBody:
+        'The IB team can help you understand the programme, current subject options, and the application process.',
       admissionsLink: 'View admissions',
       emailLink: 'Email the IB team',
       viewSubject: 'View subject',
     },
     admissions: {
       title: 'Admissions',
-      subtitle: 'Start with the programme that fits your stage, then speak with the school about current requirements and dates.',
+      subtitle:
+        'Start with the programme that fits your stage, then speak with the school about current requirements and dates.',
       label: 'Join Česká',
       introTitle: 'Start with a conversation',
       introBody:
@@ -317,18 +337,22 @@ const dict = {
       programmesTitle: 'Where would you enter?',
       mypTitle: 'Middle Years Programme',
       mypAges: 'Ages 14–16 at Česká',
-      mypBody: 'For students building the academic habits and interdisciplinary thinking needed before the Diploma Programme.',
+      mypBody:
+        'For students building the academic habits and interdisciplinary thinking needed before the Diploma Programme.',
       dpTitle: 'Diploma Programme',
       dpAges: 'Ages 16–19',
-      dpBody: 'For students ready for a focused two-year programme with six subjects, TOK, CAS, and the Extended Essay.',
+      dpBody:
+        'For students ready for a focused two-year programme with six subjects, TOK, CAS, and the Extended Essay.',
       stepsLabel: 'Application process',
       stepsTitle: 'Three useful first steps',
       step1Title: 'Tell us where you are now',
       step1Body: 'Share the student’s current school, year group, and programme of interest.',
       step2Title: 'Ask for current requirements',
-      step2Body: 'The school will confirm relevant dates, documents, and the next stage of the process.',
+      step2Body:
+        'The school will confirm relevant dates, documents, and the next stage of the process.',
       step3Title: 'Prepare with the right information',
-      step3Body: 'Gather only the materials requested by the school and use the conversation to resolve open questions.',
+      step3Body:
+        'Gather only the materials requested by the school and use the conversation to resolve open questions.',
       prepareTitle: 'Useful details for your first message',
       prepareItems: [
         'Student name and current school year',
@@ -338,7 +362,8 @@ const dict = {
         'Questions about subjects, dates, or requirements',
       ],
       directTitle: 'Talk directly with the school',
-      directBody: 'The IB team can give you the latest information for the current admissions cycle.',
+      directBody:
+        'The IB team can give you the latest information for the current admissions cycle.',
       schoolWebsite: 'Main school website',
       faqLabel: 'Good to know',
       faqTitle: 'Frequently asked questions',
@@ -368,7 +393,8 @@ const dict = {
     myp: {
       title: 'Middle Years Programme',
       shortTitle: 'MYP',
-      subtitle: 'A connected, inquiry-led programme that helps students build strong learning habits before the Diploma Programme.',
+      subtitle:
+        'A connected, inquiry-led programme that helps students build strong learning habits before the Diploma Programme.',
       age: 'Ages 14–16 at Česká',
       duration: 'Final MYP years',
       label: 'Middle Years Programme',
@@ -426,19 +452,20 @@ const dict = {
           href: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
         },
       ],
-      note:
-        'Súkromné gymnázium Česká is a Candidate School for the MYP and is pursuing authorization as an IB World School. Candidate status gives no guarantee that authorization will be granted.',
+      note: 'Súkromné gymnázium Česká is a Candidate School for the MYP and is pursuing authorization as an IB World School. Candidate status gives no guarantee that authorization will be granted.',
       officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
       officialLink: 'Read the official MYP curriculum',
       exploreLink: 'Explore',
       admissionsTitle: 'Is the MYP the right next step?',
-      admissionsBody: 'Contact the school for current entry requirements, dates, and programme details.',
+      admissionsBody:
+        'Contact the school for current entry requirements, dates, and programme details.',
       admissionsLink: 'View admissions',
     },
     dp: {
       title: 'Diploma Programme',
       shortTitle: 'DP',
-      subtitle: 'A focused two-year programme built from six subjects and a core of research, reflection, and action.',
+      subtitle:
+        'A focused two-year programme built from six subjects and a core of research, reflection, and action.',
       age: 'Ages 16–19',
       duration: 'Two years',
       label: 'Diploma Programme',
@@ -494,13 +521,13 @@ const dict = {
           href: '/cas',
         },
       ],
-      note:
-        'The subjects shown on this website are current sample content until the school confirms its final subject offering and available combinations.',
+      note: 'The subjects shown on this website are current sample content until the school confirms its final subject offering and available combinations.',
       officialUrl: 'https://www.ibo.org/programmes/diploma-programme/curriculum/',
       officialLink: 'Read the official DP curriculum',
       exploreLink: 'Explore',
       admissionsTitle: 'Planning your Diploma Programme?',
-      admissionsBody: 'Ask the school about current subject availability, combinations, entry requirements, and dates.',
+      admissionsBody:
+        'Ask the school about current subject availability, combinations, entry requirements, and dates.',
       admissionsLink: 'View admissions',
     },
   },
@@ -530,6 +557,7 @@ const dict = {
       teachers: 'Tím',
       apply: 'Prihlásiť sa',
       menu: 'Menu',
+      search: 'Hľadať',
     },
     footer: {
       rights: 'Všetky práva vyhradené.',
@@ -540,7 +568,8 @@ const dict = {
       school: 'Hlavná stránka školy',
       ibo: 'International Baccalaureate',
       admissions: 'Prijímacie konanie',
-      mission: 'Medzinárodné vzdelávanie v srdci Bratislavy — pripravujeme študentov kriticky myslieť, konať s ohľaduplnosťou a rásť do sveta.',
+      mission:
+        'Medzinárodné vzdelávanie v srdci Bratislavy — pripravujeme študentov kriticky myslieť, konať s ohľaduplnosťou a rásť do sveta.',
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
       resourcesGroup: 'Zdroje',
@@ -565,6 +594,14 @@ const dict = {
       title: 'Stránka sa nenašla',
       body: 'Stránka, ktorú hľadáte, neexistuje alebo bola presunutá.',
       home: 'Späť na domovskú stránku',
+    },
+    search: {
+      title: 'Hľadať',
+      subtitle: 'Nájdite predmety, novinky, CAS aktivity a viac',
+      placeholder: 'Hľadať na stránke…',
+      noResults: 'Žiadne výsledky',
+      noQuery: 'Začnite písať pre vyhľadávanie',
+      resultsCount: '{n} výsledkov',
     },
     home: {
       badge: 'MYP a DP na Českej',
@@ -609,12 +646,13 @@ const dict = {
       benefitsHeading: 'IB stojí na práci, ktorú môžu študenti ukázať',
       benefitsIntro:
         'Študenti skúmajú otázky, prezentujú zistenia, píšu rozsiahle argumenty a plánujú zmysluplné projekty.',
-      workBody:
-        'Pozrite si materiály, reflexie a samostatnú prácu, ktoré vznikajú na Českej.',
+      workBody: 'Pozrite si materiály, reflexie a samostatnú prácu, ktoré vznikajú na Českej.',
       workCasTitle: 'Plánovanie a reflexia cez CAS',
-      workCasDesc: 'Pozrite si, ako študenti prepájajú tvorivosť, aktivitu a službu s jasnými vzdelávacími cieľmi.',
+      workCasDesc:
+        'Pozrite si, ako študenti prepájajú tvorivosť, aktivitu a službu s jasnými vzdelávacími cieľmi.',
       workTokTitle: 'Skúmanie poznania cez TOK',
-      workTokDesc: 'Prečítajte si materiály, ktoré preverujú tvrdenia, dôkazy, jazyk a zodpovednosť.',
+      workTokDesc:
+        'Prečítajte si materiály, ktoré preverujú tvrdenia, dôkazy, jazyk a zodpovednosť.',
       workEeTitle: 'Samostatný výskumný projekt',
       workEeDesc: 'Spoznajte etapy výskumnej práce Extended Essay v rozsahu 4 000 slov.',
       workLink: 'Preskúmať',
@@ -662,7 +700,8 @@ const dict = {
       newsLabel: 'Novinky',
       newsDesc: 'Oznámenia, termíny skúšok a dôležité aktuality.',
       teachersLabel: 'Spoznajte tím',
-      teachersDesc: 'Spoznajte vedenie programu, učiteľov predmetov, koordinátorov a tím podpory študentov.',
+      teachersDesc:
+        'Spoznajte vedenie programu, učiteľov predmetov, koordinátorov a tím podpory študentov.',
       ctaHeading: 'Zvažujete MYP alebo DP na Českej?',
       ctaBody: 'Pozrite si postup prihlásenia a získajte od školy aktuálne požiadavky.',
       ctaButton: 'Ako sa prihlásiť',
@@ -686,7 +725,8 @@ const dict = {
     },
     builder: {
       title: 'Zostavte si diplom',
-      subtitle: 'Vyberte si jeden predmet z každej skupiny a uvidíte, ako by mohol vyzerať váš IB diplom. Je to plánovací nástroj — škola každý rok potvrdzuje skutočne ponúkané predmety.',
+      subtitle:
+        'Vyberte si jeden predmet z každej skupiny a uvidíte, ako by mohol vyzerať váš IB diplom. Je to plánovací nástroj — škola každý rok potvrdzuje skutočne ponúkané predmety.',
       label: 'Naplánujte si štúdium',
       pickHl: 'HL',
       pickSl: 'SL',
@@ -718,7 +758,8 @@ const dict = {
       strandCreativity: 'Tvorivosť',
       strandActivity: 'Aktivita',
       strandService: 'Služba',
-      creativityDesc: 'Umenie a tvorivé myslenie — originálna práca, ktorú študenti vymyslia, navrhnú a zrealizujú.',
+      creativityDesc:
+        'Umenie a tvorivé myslenie — originálna práca, ktorú študenti vymyslia, navrhnú a zrealizujú.',
       activityDesc: 'Fyzická aktivita ako súčasť zdravého životného štýlu — šport, pohyb a výzvy.',
       serviceDesc: 'Dobrovoľnícka práca so skutočným prínosom pre komunitu.',
       filterAll: 'Všetky oblasti',
@@ -762,7 +803,8 @@ const dict = {
     },
     gallery: {
       title: 'Život na Českej',
-      subtitle: 'Vyučovanie, projekty, dobrovoľníctvo a každodenné momenty, ktoré formujú našu IB komunitu.',
+      subtitle:
+        'Vyučovanie, projekty, dobrovoľníctvo a každodenné momenty, ktoré formujú našu IB komunitu.',
       label: 'Galéria',
       close: 'Zavrieť',
       prev: 'Predchádzajúca fotka',
@@ -798,14 +840,16 @@ const dict = {
       facultyTitle: 'Odborníci naprieč predmetmi a jadrom IB',
       contactLabel: 'Kontaktujte tím',
       contactTitle: 'Máte otázky o predmetoch alebo prijímaní?',
-      contactBody: 'IB tím vám pomôže porozumieť programu, aktuálnej ponuke predmetov a prijímaciemu procesu.',
+      contactBody:
+        'IB tím vám pomôže porozumieť programu, aktuálnej ponuke predmetov a prijímaciemu procesu.',
       admissionsLink: 'Prijímacie konanie',
       emailLink: 'Napísať IB tímu',
       viewSubject: 'Zobraziť predmet',
     },
     admissions: {
       title: 'Prijímacie konanie',
-      subtitle: 'Vyberte si program podľa svojej fázy štúdia a kontaktujte školu pre aktuálne požiadavky a termíny.',
+      subtitle:
+        'Vyberte si program podľa svojej fázy štúdia a kontaktujte školu pre aktuálne požiadavky a termíny.',
       label: 'Pridajte sa k Českej',
       introTitle: 'Začnite rozhovorom',
       introBody:
@@ -816,10 +860,12 @@ const dict = {
       programmesTitle: 'Do ktorého programu nastupujete?',
       mypTitle: 'Middle Years Programme',
       mypAges: 'Vek 14–16 rokov na Českej',
-      mypBody: 'Pre študentov, ktorí si budujú akademické návyky a medzipredmetové myslenie pred Diploma Programme.',
+      mypBody:
+        'Pre študentov, ktorí si budujú akademické návyky a medzipredmetové myslenie pred Diploma Programme.',
       dpTitle: 'Diploma Programme',
       dpAges: 'Vek 16–19 rokov',
-      dpBody: 'Pre študentov pripravených na intenzívny dvojročný program so šiestimi predmetmi, TOK, CAS a Extended Essay.',
+      dpBody:
+        'Pre študentov pripravených na intenzívny dvojročný program so šiestimi predmetmi, TOK, CAS a Extended Essay.',
       stepsLabel: 'Postup prihlásenia',
       stepsTitle: 'Tri užitočné prvé kroky',
       step1Title: 'Povedzte nám, kde teraz študujete',
@@ -827,7 +873,8 @@ const dict = {
       step2Title: 'Vyžiadajte si aktuálne požiadavky',
       step2Body: 'Škola potvrdí príslušné termíny, dokumenty a ďalší krok prijímacieho procesu.',
       step3Title: 'Pripravte sa podľa správnych informácií',
-      step3Body: 'Zhromaždite len materiály požadované školou a počas rozhovoru vyriešte otvorené otázky.',
+      step3Body:
+        'Zhromaždite len materiály požadované školou a počas rozhovoru vyriešte otvorené otázky.',
       prepareTitle: 'Užitočné údaje pre prvú správu',
       prepareItems: [
         'Meno študenta a aktuálny ročník',
@@ -867,7 +914,8 @@ const dict = {
     myp: {
       title: 'Middle Years Programme',
       shortTitle: 'MYP',
-      subtitle: 'Prepojený program založený na bádaní, ktorý pripravuje študentov na nároky Diploma Programme.',
+      subtitle:
+        'Prepojený program založený na bádaní, ktorý pripravuje študentov na nároky Diploma Programme.',
       age: 'Vek 14–16 rokov na Českej',
       duration: 'Záverečné roky MYP',
       label: 'Middle Years Programme',
@@ -925,19 +973,20 @@ const dict = {
           href: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
         },
       ],
-      note:
-        'Súkromné gymnázium Česká je kandidátskou školou pre MYP a uchádza sa o autorizáciu ako IB World School. Kandidátsky status nezaručuje udelenie autorizácie.',
+      note: 'Súkromné gymnázium Česká je kandidátskou školou pre MYP a uchádza sa o autorizáciu ako IB World School. Kandidátsky status nezaručuje udelenie autorizácie.',
       officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
       officialLink: 'Prečítať oficiálne kurikulum MYP',
       exploreLink: 'Preskúmať',
       admissionsTitle: 'Je MYP správny ďalší krok?',
-      admissionsBody: 'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
+      admissionsBody:
+        'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
       admissionsLink: 'Prijímacie konanie',
     },
     dp: {
       title: 'Diploma Programme',
       shortTitle: 'DP',
-      subtitle: 'Intenzívny dvojročný program postavený na šiestich predmetoch a jadre výskumu, reflexie a činnosti.',
+      subtitle:
+        'Intenzívny dvojročný program postavený na šiestich predmetoch a jadre výskumu, reflexie a činnosti.',
       age: 'Vek 16–19 rokov',
       duration: 'Dva roky',
       label: 'Diploma Programme',
@@ -993,13 +1042,13 @@ const dict = {
           href: '/cas',
         },
       ],
-      note:
-        'Predmety zobrazené na tejto stránke sú vzorovým obsahom, kým škola nepotvrdí finálnu ponuku predmetov a dostupné kombinácie.',
+      note: 'Predmety zobrazené na tejto stránke sú vzorovým obsahom, kým škola nepotvrdí finálnu ponuku predmetov a dostupné kombinácie.',
       officialUrl: 'https://www.ibo.org/programmes/diploma-programme/curriculum/',
       officialLink: 'Prečítať oficiálne kurikulum DP',
       exploreLink: 'Preskúmať',
       admissionsTitle: 'Plánujete Diploma Programme?',
-      admissionsBody: 'Opýtajte sa školy na aktuálnu ponuku predmetov, kombinácie, vstupné požiadavky a termíny.',
+      admissionsBody:
+        'Opýtajte sa školy na aktuálnu ponuku predmetov, kombinácie, vstupné požiadavky a termíny.',
       admissionsLink: 'Prijímacie konanie',
     },
   },

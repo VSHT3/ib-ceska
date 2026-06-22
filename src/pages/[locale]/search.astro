@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import EmptyState from '../../components/EmptyState.astro';
+import { buildSearchIndex } from '../../lib/search-index';
+import { t } from '../../i18n/dictionaries';
+import type { Locale } from '../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+
+const index = await buildSearchIndex(locale);
+// Escape `<` so the inline JSON can never break out of the <script> element.
+const searchData = JSON.stringify(index).replaceAll('<', '\\u003c');
+---
+
+<Layout title={dict.search.title} description={dict.search.subtitle} locale={locale}>
+  <PageHeader tone="emerald" title={dict.search.title} subtitle={dict.search.subtitle} />
+
+  <div id="search-root" class="mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-16">
+    <div class="relative">
+      <svg
+        class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-400 dark:text-stone-500"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m21 21-4.35-4.35M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
+      </svg>
+      <input
+        id="search-input"
+        type="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder={dict.search.placeholder}
+        aria-label={dict.search.title}
+        class="w-full rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 py-3.5 pl-12 pr-4 text-base text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 shadow-sm outline-none transition-colors focus:border-emerald-500 dark:focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/20"
+      />
+    </div>
+
+    <!-- Results render client-side; instant (no entrance motion) to honor prefers-reduced-motion. -->
+    <div
+      id="search-results"
+      class="mt-8 space-y-8"
+      data-no-results={dict.search.noResults}
+      data-count={dict.search.resultsCount}
+      hidden
+    >
+    </div>
+
+    <div id="search-empty" class="mt-8">
+      <EmptyState message={dict.search.noQuery} />
+    </div>
+  </div>
+
+  <script is:inline type="application/json" id="search-data" set:html={searchData} />
+
+  <script>
+    interface Item {
+      title: string;
+      description: string;
+      type: string;
+      href: string;
+      body: string;
+    }
+
+    function initSearch() {
+      const root = document.getElementById('search-root');
+      if (!root) return; // not on the search page
+      const dataEl = document.getElementById('search-data');
+      const input = document.getElementById('search-input') as HTMLInputElement | null;
+      const results = document.getElementById('search-results');
+      const empty = document.getElementById('search-empty');
+      if (!dataEl || !input || !results || !empty) return;
+
+      const items = JSON.parse(dataEl.textContent || '[]') as Item[];
+      const noResultsMsg = results.dataset.noResults ?? 'No results found';
+      const countTpl = results.dataset.count ?? '{n} results';
+
+      const escMap: Record<string, string> = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      };
+      const esc = (s: string) => s.replace(/[&<>"']/g, (c) => escMap[c] ?? c);
+      const trunc = (s: string, n: number) => (s.length > n ? s.slice(0, n).trimEnd() + '…' : s);
+
+      const render = () => {
+        const q = input.value.trim().toLowerCase();
+        if (!q) {
+          results.hidden = true;
+          results.innerHTML = '';
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        results.hidden = false;
+        const hits = items.filter((it) => (it.body + ' ' + it.type).toLowerCase().includes(q));
+        if (hits.length === 0) {
+          results.innerHTML = `<p class="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 px-5 py-8 text-center text-stone-500 dark:text-stone-400">${esc(noResultsMsg)}</p>`;
+          return;
+        }
+        const groups: { type: string; items: Item[] }[] = [];
+        const byType = new Map<string, { type: string; items: Item[] }>();
+        for (const it of hits) {
+          let g = byType.get(it.type);
+          if (!g) {
+            g = { type: it.type, items: [] };
+            byType.set(it.type, g);
+            groups.push(g);
+          }
+          g.items.push(it);
+        }
+        const total = `<p class="mb-6 text-sm font-medium text-stone-500 dark:text-stone-400">${esc(countTpl.replace('{n}', String(hits.length)))}</p>`;
+        const sections = groups
+          .map(
+            (g) =>
+              `<section><h2 class="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500">${esc(g.type)}<span class="rounded-full bg-stone-100 dark:bg-stone-800 px-2 py-0.5 text-[11px] font-semibold text-stone-600 dark:text-stone-400">${g.items.length}</span></h2><ul class="space-y-3">` +
+              g.items
+                .map(
+                  (it) =>
+                    `<li><a href="${esc(it.href)}" class="group block rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-4 sm:p-5 transition-colors hover:border-emerald-300 dark:hover:border-emerald-700 hover:bg-stone-50 dark:hover:bg-stone-800/50"><div class="flex items-start justify-between gap-3"><h3 class="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors">${esc(it.title)}</h3><span class="shrink-0 rounded-full bg-emerald-50 dark:bg-emerald-900/40 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">${esc(it.type)}</span></div>${it.description ? `<p class="mt-1.5 text-sm leading-relaxed text-stone-600 dark:text-stone-400">${esc(trunc(it.description, 140))}</p>` : ''}</a></li>`,
+                )
+                .join('') +
+              `</ul></section>`,
+          )
+          .join('');
+        results.innerHTML = total + sections;
+      };
+
+      input.addEventListener('input', render);
+      render();
+    }
+
+    document.addEventListener('astro:page-load', initSearch);
+  </script>
+</Layout>

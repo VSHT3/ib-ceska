@@ -9,11 +9,11 @@ const LOCALES = ['en', 'sk'] as const;
 function urlEntry(path: string): string {
   const alternates = LOCALES.map(
     (code) =>
-      `    <xhtml:link rel="alternate" hreflang="${code}" href="${SITE}/${code}${path === '/' ? '/' : path + '/'}"/>`
+      `    <xhtml:link rel="alternate" hreflang="${code}" href="${SITE}/${code}${path === '/' ? '/' : path + '/'}"/>`,
   ).join('\n');
   return LOCALES.map(
     (code) =>
-      `  <url>\n    <loc>${SITE}/${code}${path === '/' ? '/' : path + '/'}</loc>\n${alternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/en${path === '/' ? '/' : path + '/'}"/>\n  </url>`
+      `  <url>\n    <loc>${SITE}/${code}${path === '/' ? '/' : path + '/'}</loc>\n${alternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/en${path === '/' ? '/' : path + '/'}"/>\n  </url>`,
   ).join('\n');
 }
 
@@ -40,6 +40,7 @@ export const GET: APIRoute = async () => {
     '/testimonials',
     '/teachers',
     '/admissions',
+    '/search',
     ...subjects.map((slug) => `/subjects/${slug}`),
     ...cas.map((slug) => `/cas/${slug}`),
     ...tok.map((slug) => `/tok/${slug}`),
