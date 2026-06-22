@@ -151,7 +151,12 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                           <button
                             type="button"
                             data-level={lv}
-                            class="rounded-full border border-stone-200 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
+                            class:list={[
+                              'rounded-full border px-2.5 py-0.5 text-xs font-bold transition-colors',
+                              lv === 'HL'
+                                ? 'border-emerald-200 text-emerald-700 hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white'
+                                : 'border-sky-200 text-sky-700 hover:border-sky-400 data-[on]:border-sky-600 data-[on]:bg-sky-600 data-[on]:text-white',
+                            ]}
                           >
                             {lv}
                           </button>
