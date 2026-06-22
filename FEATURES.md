@@ -3,6 +3,7 @@
 Implemented and shipped.
 
 ## Project foundation
+
 - [x] Astro 6 hybrid mode (static prerender + Node adapter for CMS routes)
 - [x] Tailwind CSS 4 via `@tailwindcss/vite` plugin (CSS-first config)
 - [x] MDX integration (`@astrojs/mdx`)
@@ -11,6 +12,7 @@ Implemented and shipped.
 - [x] Git + GitHub repo with topics and description
 
 ## CMS — Keystatic
+
 - [x] `keystatic.config.ts` — 6 collections with typed schemas
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
@@ -21,6 +23,7 @@ Implemented and shipped.
 - [x] Select fields, date pickers, array fields with validation
 
 ## Content (6 collections)
+
 - [x] `subjects` — title, group (1-6/core), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
 - [x] `cas` — title, date, strands (multi-select: Creativity/Activity/Service), description, learning outcomes, reflection body
@@ -29,6 +32,7 @@ Implemented and shipped.
 - [x] `testimonials` — name, role, gradYear, photo, order, featured, quote (+ SK)
 
 ## Pages (routes + detail pages + admin)
+
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
 - [x] `/subjects` — grouped listing by IB group (1–6), cards link to detail
 - [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
@@ -52,6 +56,7 @@ Implemented and shipped.
 - [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback
 
 ## SEO & feeds
+
 - [x] `sitemap.xml` — all locales + collection detail pages, with hreflang
 - [x] `robots.txt` — disallow `/keystatic/` + `/api/`, sitemap reference
 - [x] RSS 2.0 feed for news at `/rss.xml` + `<link>` autodiscovery
@@ -62,6 +67,7 @@ Implemented and shipped.
 - [x] Search-safe 404 response metadata (`noindex`, no canonical)
 
 ## i18n (EN/SK)
+
 - [x] Locale-prefixed routes (`/en/…`, `/sk/…`) for every page
 - [x] `LanguageSwitcher` pill toggle preserving the current path
 - [x] Full Slovak UI dictionary (`src/i18n/dictionaries.ts`)
@@ -69,6 +75,7 @@ Implemented and shipped.
 - [x] Browser-language detection on `/` (sk/cs → `/sk/`, else `/en/`)
 
 ## Layout & design
+
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
 - [x] Higher-resolution nav logo (`/logo.png`)
@@ -91,14 +98,18 @@ Implemented and shipped.
 - [x] MYP candidate-school disclaimer + correct programme ages (14–16 / 16–19)
 - [x] School photography from the old Framer site (`public/images/school/`)
 - [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
+- [x] Dark mode (`prefers-color-scheme: dark`) — Tailwind 4 media variant across all pages, components, layout, and `global.css`; stone-950 page bg, stone-900 surfaces, emerald-300 accents; solid accent pills stay light for contrast
 
 ## Sample content
+
 - [x] 9 subjects across all 6 IB groups — each with a full rendered syllabus body (overview, assessment table, IA detail)
 - [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
+- [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections (27 items), client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts, nav + footer link, sitemap entry
 
 ## Deployment
+
 - [x] Live on Coolify (VPS) — project `IB Česká`, app via GitHub App on `VSHT3/ib-ceska` `main`
 - [x] nixpacks build (Node 22): `npm run build` → start `node dist/server/entry.mjs`, port 4321
 - [x] `HOST=0.0.0.0` + `PORT=4321` runtime env so the Node adapter binds inside the container
@@ -106,7 +117,15 @@ Implemented and shipped.
 - [x] Production Keystatic GitHub OAuth wired (`IB Ceska CMS` app + 3 `KEYSTATIC_*` env vars); login + content Save verified
 - [x] HTTPS via Let's Encrypt (required — Keystatic's `crypto.subtle` needs a secure origin)
 
+## DX & tooling
+
+- [x] Prettier (single formatter, incl. `.astro` via `prettier-plugin-astro` + native `.mdx`)
+- [x] Biome linter (formatter disabled; `noExplicitAny` off for Keystatic types)
+- [x] `astro sync` pre-build hook (`prebuild` script)
+- [x] husky + lint-staged pre-commit (Prettier + Biome on staged files, then `astro check`)
+
 ## Documentation
+
 - [x] `README.md` — badges, quick start, stack, collection overview, deploy section
 - [x] `AGENTS.md` — AI agent conventions, gotchas, stack details
 - [x] `humans/README.md` — onboarding for non-technical collaborators
