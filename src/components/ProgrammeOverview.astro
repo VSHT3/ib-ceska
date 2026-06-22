@@ -56,12 +56,8 @@ interface Props {
 
 const { locale, programme, tone, image, imageAlt, logo } = Astro.props;
 const isMyp = tone === 'amber';
-const accentText = isMyp
-  ? 'text-amber-700'
-  : 'text-emerald-700';
-const accentSoft = isMyp
-  ? 'bg-amber-50'
-  : 'bg-emerald-50';
+const accentText = isMyp ? 'text-amber-700' : 'text-emerald-700';
+const accentSoft = isMyp ? 'bg-amber-50' : 'bg-emerald-50';
 const accentDark = isMyp ? 'bg-amber-800' : 'bg-emerald-800';
 const accentButton = isMyp
   ? 'bg-amber-600 hover:bg-amber-700'
@@ -79,55 +75,69 @@ const accentButton = isMyp
     provider: { '@id': new URL('/#school', Astro.site).href },
   }}
 >
-  <section class:list={['relative overflow-hidden text-white', accentDark]}>
-    <Image
-      src={image}
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover opacity-25"
-      widths={[768, 1280, 1920]}
-      sizes="100vw"
-      loading="eager"
-    />
+  <!-- Hero (edge-to-edge split: brand panel + full-strength photo) -->
+  <section class="grid items-stretch lg:grid-cols-2">
     <div
-      class="absolute inset-0 bg-gradient-to-r from-stone-950/60 via-stone-950/25 to-transparent"
+      class:list={[
+        'flex items-center px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28',
+        accentDark,
+      ]}
     >
-    </div>
-    <div class="relative mx-auto max-w-5xl px-6 py-24 sm:py-32">
-      {
-        logo && (
-          <img
-            src={logo}
-            alt={`IB ${programme.shortTitle} logo`}
-            class="mb-7 h-16 w-auto rounded-xl bg-white p-2 shadow-md sm:h-20"
-            width="640"
-            height="256"
-          />
-        )
-      }
-      <p class="text-xs font-semibold uppercase tracking-widest text-white/70">{programme.label}</p>
-      <h1 class="mt-3 max-w-3xl text-4xl font-bold tracking-tight sm:text-6xl">
-        {programme.title}
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">{programme.subtitle}</p>
-      <div class="mt-8 flex flex-wrap gap-3 text-sm font-semibold">
-        <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2"
-          >{programme.age}</span
-        >
-        <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2"
-          >{programme.duration}</span
-        >
+      <div class="max-w-xl">
+        {
+          logo && (
+            <img
+              src={logo}
+              alt={`IB ${programme.shortTitle} logo`}
+              class="mb-7 h-16 w-auto rounded-xl bg-white p-2 shadow-md sm:h-20"
+              width="640"
+              height="256"
+            />
+          )
+        }
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/70">
+          {programme.label}
+        </p>
+        <h1 class="mt-3 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+          {programme.title}
+        </h1>
+        <p class="mt-5 text-lg leading-relaxed text-white/80">{programme.subtitle}</p>
+        <div class="mt-8 flex flex-wrap gap-3 text-sm font-semibold">
+          <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2"
+            >{programme.age}</span
+          >
+          <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2"
+            >{programme.duration}</span
+          >
+        </div>
       </div>
+    </div>
+    <div class="relative min-h-[20rem] lg:min-h-[34rem]">
+      <Image
+        src={image}
+        alt={imageAlt}
+        class="absolute inset-0 h-full w-full object-cover"
+        widths={[768, 1024, 1280]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
   </section>
 
-  <div class="mx-auto max-w-5xl px-4 py-16 sm:py-20">
-    <section class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 items-start">
+  <div class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-24">
+    <!-- Intro (wide two-column editorial text) -->
+    <section class="grid gap-8 lg:grid-cols-[0.85fr_1fr] lg:gap-16 items-start">
       <div data-reveal>
         <p class:list={['text-xs font-semibold uppercase tracking-widest', accentText]}>
           {programme.shortTitle}
         </p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{programme.introTitle}</h2>
-        <p class="mt-5 text-stone-600 leading-relaxed">{programme.introBody}</p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          {programme.introTitle}
+        </h2>
+      </div>
+      <div data-reveal style="--reveal-delay: 100ms">
+        <p class="text-lg text-stone-600 leading-relaxed">{programme.introBody}</p>
         <a
           href={programme.officialUrl}
           target="_blank"
@@ -137,16 +147,6 @@ const accentButton = isMyp
           {programme.officialLink} ↗
         </a>
       </div>
-      <Image
-        src={image}
-        alt={imageAlt}
-        class="h-72 w-full rounded-3xl object-cover shadow-lg sm:h-96"
-        widths={[480, 768, 1024]}
-        sizes="(min-width: 1024px) 55vw, 100vw"
-        loading="lazy"
-        data-reveal
-        style="--reveal-delay: 100ms"
-      />
     </section>
 
     <section class="mt-28">
@@ -154,7 +154,7 @@ const accentButton = isMyp
         <p class:list={['text-xs font-semibold uppercase tracking-widest', accentText]}>
           {programme.principlesLabel}
         </p>
-        <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight">
+        <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
           {programme.principlesTitle}
         </h2>
       </div>
@@ -168,9 +168,7 @@ const accentButton = isMyp
             >
               <span class:list={['text-xs font-semibold pt-1', accentText]}>0{i + 1}</span>
               <h3 class="text-lg font-semibold">{principle.title}</h3>
-              <p class="text-sm leading-relaxed text-stone-600">
-                {principle.body}
-              </p>
+              <p class="text-sm leading-relaxed text-stone-600">{principle.body}</p>
             </article>
           ))
         }
@@ -182,7 +180,9 @@ const accentButton = isMyp
         <p class:list={['text-xs font-semibold uppercase tracking-widest', accentText]}>
           {programme.curriculumLabel}
         </p>
-        <h2 class="mt-3 text-3xl font-bold tracking-tight">{programme.curriculumTitle}</h2>
+        <h2 class="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+          {programme.curriculumTitle}
+        </h2>
         <p class="mt-5 text-stone-600 leading-relaxed">
           {programme.curriculumBody}
         </p>
@@ -206,7 +206,9 @@ const accentButton = isMyp
         <p class:list={['text-xs font-semibold uppercase tracking-widest', accentText]}>
           {programme.featureLabel}
         </p>
-        <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight">{programme.featureTitle}</h2>
+        <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+          {programme.featureTitle}
+        </h2>
         <p class="mt-4 max-w-2xl text-stone-600 leading-relaxed">
           {programme.featureBody}
         </p>
@@ -223,9 +225,7 @@ const accentButton = isMyp
               <h3 class="font-semibold group-hover:text-emerald-700 transition-colors">
                 {item.label}
               </h3>
-              <p class="mt-2 text-sm text-stone-500 leading-relaxed">
-                {item.body}
-              </p>
+              <p class="mt-2 text-sm text-stone-500 leading-relaxed">{item.body}</p>
               <span
                 class:list={[
                   'mt-4 block text-sm font-semibold group-hover:translate-x-1 transition-transform',
@@ -240,17 +240,18 @@ const accentButton = isMyp
       </div>
       {
         programme.note && (
-          <p class="mt-8 max-w-3xl text-xs leading-relaxed text-stone-500">
-            {programme.note}
-          </p>
+          <p class="mt-8 max-w-3xl text-xs leading-relaxed text-stone-500">{programme.note}</p>
         )
       }
     </section>
+  </div>
 
-    <section class:list={['mt-28 rounded-3xl p-8 text-white sm:p-12', accentDark]} data-reveal>
+  <!-- Admissions (full-bleed brand band) -->
+  <section class:list={['text-white', accentDark]} data-reveal>
+    <div class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
       <div class="grid gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
-          <h2 class="text-3xl font-bold tracking-tight">{programme.admissionsTitle}</h2>
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{programme.admissionsTitle}</h2>
           <p class="mt-3 max-w-2xl leading-relaxed text-white/75">{programme.admissionsBody}</p>
         </div>
         <a
@@ -263,6 +264,6 @@ const accentButton = isMyp
           {programme.admissionsLink}
         </a>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </Layout>
