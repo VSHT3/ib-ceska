@@ -54,33 +54,29 @@ const products: Record<string, Product> = {
   },
 };
 
-const axes: { key: AxisKey; label: string; description: string }[] = [
-  { key: 'safety', label: 'Safety', description: 'TSS, bacterial, chemical' },
-  { key: 'comfort', label: 'Comfort', description: 'Skin irritation, breathability' },
-  { key: 'performance', label: 'Performance', description: 'Absorption capacity and rate' },
-  { key: 'environment', label: 'Environment', description: 'Waste, biodegradability' },
-  { key: 'cost', label: 'Cost', description: 'Annual spend' },
+const axes: { key: AxisKey; label: string }[] = [
+  { key: 'safety', label: 'Safety' },
+  { key: 'comfort', label: 'Comfort' },
+  { key: 'performance', label: 'Performance' },
+  { key: 'environment', label: 'Environment' },
+  { key: 'cost', label: 'Cost' },
 ];
 
-const presets: { label: string; desc: string; weights: Record<AxisKey, number> }[] = [
+const presets: { label: string; weights: Record<AxisKey, number> }[] = [
   {
     label: 'Balanced',
-    desc: 'All axes equal',
     weights: { safety: 5, comfort: 5, performance: 5, environment: 5, cost: 5 },
   },
   {
     label: 'Health First',
-    desc: 'Safety and comfort first',
     weights: { safety: 10, comfort: 9, performance: 5, environment: 2, cost: 2 },
   },
   {
     label: 'Performance',
-    desc: 'Absorption matters most',
     weights: { safety: 1, comfort: 1, performance: 10, environment: 1, cost: 1 },
   },
   {
     label: 'Eco and Budget',
-    desc: 'Environment and cost first',
     weights: { safety: 2, comfort: 2, performance: 2, environment: 10, cost: 10 },
   },
 ];
@@ -111,53 +107,38 @@ export default function RecommendTool() {
   const [activePreset, setActivePreset] = useState<string | null>(null);
 
   const ranked = computeScores(weights);
-  const winner = ranked[0];
   const top3 = ranked.slice(0, 3);
-  const totalWeight = axes.reduce((s, a) => s + weights[a.key], 0) || 1;
 
   return (
-    <div className="border border-stone-200 rounded-2xl p-6 sm:p-8 shadow-sm">
-      <h3 className="text-lg sm:text-xl font-bold text-stone-900 mb-1">Recommendation Tool</h3>
-      <p className="text-sm text-stone-500 mb-5">
-        Drag the sliders to match your priorities. The tool re-ranks all seven products using the
-        group's research data.
-      </p>
-
-      <div className="flex flex-wrap gap-2 mb-6">
-        {presets.map(({ label, desc, weights: pw }) => {
-          const isActive = activePreset === label;
-          return (
-            <button
-              type="button"
-              key={label}
-              onClick={() => {
-                setWeights(pw);
-                setActivePreset(label);
-              }}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-200 ${
-                isActive
-                  ? 'bg-rose-500 text-white border-rose-500'
-                  : 'bg-white text-stone-700 border-stone-300 hover:border-rose-300 hover:text-rose-600'
-              }`}
-              title={desc}
-            >
-              {label}
-            </button>
-          );
-        })}
+    <div className="border border-stone-200 rounded-xl p-5 sm:p-6 shadow-sm">
+      {/* Presets */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {presets.map(({ label, weights: pw }) => (
+          <button
+            type="button"
+            key={label}
+            onClick={() => {
+              setWeights(pw);
+              setActivePreset(label);
+            }}
+            className={`px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+              activePreset === label
+                ? 'bg-rose-500 text-white border-rose-500'
+                : 'bg-white text-stone-600 border-stone-300 hover:border-rose-300 hover:text-rose-600'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
-      <div className="space-y-5 mb-6">
-        {axes.map(({ key, label, description }) => (
+      {/* Sliders */}
+      <div className="space-y-3 mb-5">
+        {axes.map(({ key, label }) => (
           <div key={key}>
-            <div className="flex justify-between items-baseline mb-2">
-              <div>
-                <span className="text-sm sm:text-base font-semibold text-stone-900">{label}</span>
-                <span className="ml-2 text-xs sm:text-sm text-stone-500">{description}</span>
-              </div>
-              <span className="text-base font-bold text-rose-500 w-6 text-right">
-                {weights[key]}
-              </span>
+            <div className="flex justify-between items-baseline mb-1">
+              <span className="text-sm font-medium text-stone-800">{label}</span>
+              <span className="text-sm font-bold text-rose-500 w-5 text-right">{weights[key]}</span>
             </div>
             <input
               type="range"
@@ -168,93 +149,58 @@ export default function RecommendTool() {
                 setWeights((w) => ({ ...w, [key]: Number(e.target.value) }));
                 setActivePreset(null);
               }}
-              className="w-full accent-rose-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+              className="w-full accent-rose-500"
             />
-            <div className="flex justify-between text-xs text-stone-400 mt-0.5">
-              <span>Not important</span>
-              <span>Most important</span>
-            </div>
           </div>
         ))}
       </div>
 
-      <div className="grid sm:grid-cols-3 gap-3 mb-4">
+      {/* Top 3 */}
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
         {top3.map(({ key, score }, i) => (
           <div key={key} className="relative">
             {i === 0 && (
-              <span className="absolute -top-2 left-3 text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-rose-500 text-white px-2 py-0.5 rounded-full">
-                Best match
+              <span className="absolute -top-2 left-2 text-[9px] font-bold tracking-wider uppercase bg-rose-500 text-white px-1.5 py-0.5 rounded-full">
+                Best
               </span>
             )}
             <div
-              className="rounded-2xl p-5 text-white h-full"
+              className="rounded-xl p-3 sm:p-4 text-white"
               style={{ background: products[key].color }}
             >
-              <p className="text-sm font-bold opacity-80 mb-1">
-                {i === 0 ? 'Best match' : `#${i + 1}`}
-              </p>
-              <h4 className="text-lg sm:text-xl font-bold mb-0.5">{products[key].label}</h4>
-              <p className="text-xs sm:text-sm opacity-70">{products[key].brand}</p>
-              <p className="text-xs sm:text-sm opacity-70 mt-1.5">Score: {score.toFixed(2)} / 10</p>
+              <p className="text-xs font-bold opacity-80">{i === 0 ? 'Best' : `#${i + 1}`}</p>
+              <h4 className="text-xs sm:text-sm font-bold leading-tight mt-0.5">
+                {products[key].label}
+              </h4>
+              <p className="text-[10px] sm:text-xs opacity-70 mt-1">{score.toFixed(2)}/10</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="border border-stone-200 rounded-xl overflow-hidden">
-        <div className="px-5 py-3 bg-stone-50">
-          <span className="text-xs font-bold text-stone-700 uppercase tracking-wider">
-            Full Ranking
-          </span>
-        </div>
+      {/* Full ranking */}
+      <div className="space-y-1.5">
         {ranked.map(({ key, score }, i) => (
-          <div
-            key={key}
-            className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 border-t border-stone-100 hover:bg-stone-50/50 transition-colors duration-200"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-stone-400 text-sm font-bold w-6">{i + 1}</span>
-              <span className="w-3 h-3 rounded-full" style={{ background: products[key].color }} />
-              <span className="text-sm font-medium text-stone-900">{products[key].label}</span>
+          <div key={key} className="flex items-center gap-2.5 text-sm">
+            <span className="text-stone-400 text-xs font-bold w-4">{i + 1}</span>
+            <span
+              className="w-2.5 h-2.5 rounded-full shrink-0"
+              style={{ background: products[key].color }}
+            />
+            <span className="text-stone-800 text-xs sm:text-sm flex-1 truncate">
+              {products[key].label}
+            </span>
+            <div className="w-20 sm:w-32 bg-stone-100 rounded-full h-1.5">
+              <div
+                className="h-1.5 rounded-full"
+                style={{ width: `${(score / 10) * 100}%`, background: products[key].color }}
+              />
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-24 sm:w-36 bg-stone-100 rounded-full h-2">
-                <div
-                  className="h-2 rounded-full"
-                  style={{ width: `${(score / 10) * 100}%`, background: products[key].color }}
-                />
-              </div>
-              <span className="text-sm font-medium text-stone-800 w-12 text-right">
-                {score.toFixed(2)}
-              </span>
-            </div>
+            <span className="text-stone-600 text-xs tabular-nums w-10 text-right">
+              {score.toFixed(2)}
+            </span>
           </div>
         ))}
-      </div>
-
-      <div className="mt-4 border border-stone-200 rounded-xl p-4 sm:p-5">
-        <h4 className="text-sm sm:text-base font-bold text-stone-900 mb-3">
-          Score Breakdown - {products[winner.key].label}
-        </h4>
-        <div className="space-y-2">
-          {axes.map(({ key, label }) => {
-            const rawScore = products[winner.key].scores[key];
-            const weight = weights[key];
-            return (
-              <div key={key} className="flex items-center justify-between text-sm">
-                <span className="text-stone-700 font-medium">{label}</span>
-                <div className="flex items-center gap-3">
-                  <span className="text-stone-500 text-xs">
-                    score {rawScore.toFixed(1)} x {weight}/{totalWeight}
-                  </span>
-                  <span className="font-bold text-stone-900 w-12 text-right">
-                    {((weight / totalWeight) * rawScore).toFixed(2)}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </div>
   );
