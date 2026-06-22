@@ -178,6 +178,22 @@ html.js [data-reveal].revealed {
   animation-play-state: paused;
 }
 
+/* ---------- Panel content flash (interactive selectors) ---------- */
+@keyframes ctx-flash {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ctx-flash {
+  animation: ctx-flash 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* ---------- Reduced motion: settle everything instantly ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -190,7 +206,8 @@ html.js [data-reveal].revealed {
   }
   .hero-rise,
   .ken-burns,
-  .marquee-track {
+  .marquee-track,
+  .ctx-flash {
     animation: none;
   }
 }

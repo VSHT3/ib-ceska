@@ -1,24 +1,436 @@
 ---
-import ProgrammeOverview from '../../components/ProgrammeOverview.astro';
-import { school } from '../../assets/school';
-import { t } from '../../i18n/dictionaries';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { t, l } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
+import { school } from '../../assets/school';
 
 export function getStaticPaths() {
-  return [
-    { params: { locale: 'en' } },
-    { params: { locale: 'sk' } },
-  ];
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
 }
 
 const locale = (Astro.params.locale ?? 'en') as Locale;
+const p = t(locale).myp;
+const pad = (n: number) => String(n + 1).padStart(2, '0');
 ---
 
-<ProgrammeOverview
+<Layout
+  title={p.title}
+  description={p.subtitle}
   locale={locale}
-  programme={t(locale).myp}
-  tone="amber"
-  image={school.studentsReading}
-  imageAlt="Students reading together at Česká"
-  logo="/ib-myp-logo.png"
-/>
+  pageSchemaType="Course"
+  pageSchema={{
+    name: p.title,
+    courseCode: p.shortTitle,
+    provider: { '@id': new URL('/#school', Astro.site).href },
+  }}
+>
+  <!-- Hero: asymmetric split, entrance + ken-burns -->
+  <section class="grid items-stretch lg:grid-cols-2">
+    <div class="flex items-center bg-amber-800 px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+      <div class="max-w-xl">
+        <img
+          src="/ib-myp-logo.png"
+          alt="IB MYP logo"
+          class="hero-rise mb-7 h-16 w-auto rounded-xl bg-white p-2 shadow-md sm:h-20"
+          width="640"
+          height="256"
+          style="--rise-delay: 0ms"
+        />
+        <p
+          class="hero-rise text-xs font-semibold uppercase tracking-widest text-white/70"
+          style="--rise-delay: 120ms"
+        >
+          {p.label}
+        </p>
+        <h1
+          class="hero-rise mt-3 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
+          style="--rise-delay: 200ms"
+        >
+          {p.title}
+        </h1>
+        <p class="hero-rise mt-5 text-lg leading-relaxed text-white/80" style="--rise-delay: 320ms">
+          {p.subtitle}
+        </p>
+        <div
+          class="hero-rise mt-8 flex flex-wrap gap-3 text-sm font-semibold"
+          style="--rise-delay: 420ms"
+        >
+          <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2">{p.age}</span>
+          <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2">{p.duration}</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="relative min-h-[20rem] overflow-hidden lg:min-h-[34rem]">
+      <Image
+        src={school.studentsReading}
+        alt="Students reading together at Česká"
+        class="ken-burns absolute inset-0 h-full w-full object-cover"
+        widths={[768, 1024, 1280]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <!-- Intro: asymmetric editorial, offset right column -->
+  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-5" data-reveal>
+        <span
+          class="block text-7xl font-extrabold leading-none tracking-tighter text-amber-200 select-none sm:text-8xl"
+          >01</span
+        >
+        <p class="mt-4 text-xs font-semibold uppercase tracking-widest text-amber-700">
+          {p.shortTitle}
+        </p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          {p.introTitle}
+        </h2>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-24" data-reveal style="--reveal-delay: 100ms">
+        <p class="text-lg leading-relaxed text-stone-600">{p.introBody}</p>
+        <a
+          href={p.officialUrl}
+          target="_blank"
+          rel="noopener"
+          class="mt-7 inline-flex text-sm font-semibold text-amber-700 hover:underline"
+        >
+          {p.officialLink} ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global contexts: interactive chip selector -->
+  <section class="border-y border-stone-200 bg-stone-50/60">
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+      <div class="grid gap-8 lg:grid-cols-12 lg:gap-12" data-reveal>
+        <div class="lg:col-span-4">
+          <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+            {p.contextsLabel}
+          </p>
+          <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.contextsTitle}</h2>
+        </div>
+        <div class="lg:col-span-7 lg:col-start-6">
+          <p class="text-lg leading-relaxed text-stone-600">{p.contextsIntro}</p>
+        </div>
+      </div>
+
+      <div
+        class="mt-10 flex flex-wrap gap-2"
+        data-ctx-chips
+        role="tablist"
+        aria-label={p.contextsLabel}
+      >
+        {
+          p.contexts.map((c, i) => (
+            <button
+              type="button"
+              data-ctx={i}
+              data-desc={c.desc}
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              class:list={[
+                'rounded-full border px-4 py-2 text-sm font-semibold transition-colors',
+                i === 0
+                  ? 'border-amber-700 bg-amber-100 text-amber-800'
+                  : 'border-stone-300 bg-white text-stone-600 hover:border-amber-400 hover:text-amber-700',
+              ]}
+            >
+              {c.title}
+            </button>
+          ))
+        }
+      </div>
+
+      <div
+        class="mt-6 overflow-hidden rounded-2xl border border-stone-200 bg-white p-6 sm:p-8"
+        data-ctx-panel
+      >
+        <p class="text-xl font-bold tracking-tight text-stone-900" data-ctx-title>
+          {p.contexts[0].title}
+        </p>
+        <p class="mt-2 text-lg leading-relaxed text-stone-600" data-ctx-desc>
+          {p.contexts[0].desc}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approaches to learning: interactive accordion -->
+  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-4" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+          {p.atlLabel}
+        </p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.atlTitle}</h2>
+        <p class="mt-5 leading-relaxed text-stone-600">{p.atlIntro}</p>
+      </div>
+
+      <div class="lg:col-span-7 lg:col-start-6" data-atl data-reveal style="--reveal-delay: 100ms">
+        {
+          p.atl.map((a, i) => (
+            <div class="border-b border-stone-300">
+              <button
+                type="button"
+                data-atl-trigger={i}
+                aria-expanded={i === 0 ? 'true' : 'false'}
+                aria-controls={`atl-panel-${i}`}
+                class="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-amber-700"
+              >
+                <span class="flex items-baseline gap-4">
+                  <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
+                  <span class="text-lg">{a.title}</span>
+                </span>
+                <svg
+                  class="h-5 w-5 shrink-0 text-amber-700 transition-transform duration-300 data-[open]:rotate-45"
+                  data-atl-icon
+                  data-open={i === 0 ? '' : undefined}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+                </svg>
+              </button>
+              <div
+                id={`atl-panel-${i}`}
+                data-atl-panel={i}
+                class:list={[
+                  'grid transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                  i === 0 ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                ]}
+              >
+                <div class="overflow-hidden">
+                  <p class="pb-5 pr-8 leading-relaxed text-stone-600">{a.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Eight subject groups: interactive master-detail explorer -->
+  <section class="border-y border-stone-200 bg-stone-50/60">
+    <div class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+      <div data-reveal class="max-w-2xl">
+        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+          {p.curriculumLabel}
+        </p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.curriculumTitle}</h2>
+        <p class="mt-4 leading-relaxed text-stone-600">{p.curriculumBody}</p>
+      </div>
+
+      <div class="mt-10 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12" data-sg data-reveal>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {
+            p.subjectGroups.map((g, i) => (
+              <button
+                type="button"
+                data-sg-btn={i}
+                data-desc={g.desc}
+                data-index={pad(i)}
+                data-title={g.title}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+                class:list={[
+                  'rounded-xl border p-4 text-left transition-all',
+                  i === 0
+                    ? 'border-amber-600 bg-amber-50 shadow-sm'
+                    : 'border-stone-200 bg-white hover:border-amber-300 hover:bg-amber-50/50',
+                ]}
+              >
+                <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
+                <span class="mt-1 block font-semibold text-stone-900">{g.title}</span>
+              </button>
+            ))
+          }
+        </div>
+
+        <div
+          class="relative overflow-hidden rounded-2xl bg-amber-800 p-7 text-white sm:p-9 lg:sticky lg:top-24"
+          data-sg-panel
+        >
+          <span
+            class="pointer-events-none absolute -right-4 -top-6 text-[8rem] font-extrabold leading-none text-white/10 select-none"
+            data-sg-index
+          >
+            {pad(0)}
+          </span>
+          <p class="relative text-2xl font-bold tracking-tight" data-sg-title>
+            {p.subjectGroups[0].title}
+          </p>
+          <p class="relative mt-3 leading-relaxed text-white/80" data-sg-desc>
+            {p.subjectGroups[0].desc}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beyond lessons: Personal Project + Service -->
+  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+    <div data-reveal class="max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+        {p.featureLabel}
+      </p>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.featureTitle}</h2>
+      <p class="mt-4 leading-relaxed text-stone-600">{p.featureBody}</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-stone-200 bg-white p-8 transition-all hover:-translate-y-1 hover:shadow-lg sm:p-10"
+        data-reveal
+      >
+        <span class="text-5xl font-extrabold leading-none text-amber-200 select-none">01</span>
+        <h3 class="mt-4 text-2xl font-bold tracking-tight">{p.personalProjectTitle}</h3>
+        <p class="mt-3 leading-relaxed text-stone-600">{p.personalProjectBody}</p>
+      </div>
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-stone-200 bg-white p-8 transition-all hover:-translate-y-1 hover:shadow-lg sm:p-10"
+        data-reveal
+        style="--reveal-delay: 100ms"
+      >
+        <span class="text-5xl font-extrabold leading-none text-amber-200 select-none">02</span>
+        <h3 class="mt-4 text-2xl font-bold tracking-tight">{p.serviceTitle}</h3>
+        <p class="mt-3 leading-relaxed text-stone-600">{p.serviceBody}</p>
+      </div>
+    </div>
+
+    <!-- Links row -->
+    <div class="mt-12 grid gap-4 sm:grid-cols-3" data-reveal>
+      {
+        p.links.map((item) => (
+          <a
+            href={item.href.startsWith('/') ? l(item.href, locale) : item.href}
+            class="group border-t border-stone-300 py-6"
+          >
+            <h3 class="font-semibold text-stone-900 transition-colors group-hover:text-amber-700">
+              {item.label}
+            </h3>
+            <p class="mt-2 text-sm leading-relaxed text-stone-500">{item.body}</p>
+            <span class="mt-4 block text-sm font-semibold text-amber-700 transition-transform group-hover:translate-x-1">
+              {p.exploreLink} →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+
+    {p.note && <p class="mt-10 max-w-3xl text-xs leading-relaxed text-stone-500">{p.note}</p>}
+  </section>
+
+  <!-- Admissions band -->
+  <section class="bg-amber-800 text-white" data-reveal>
+    <div class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
+      <div class="grid gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
+        <div>
+          <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{p.admissionsTitle}</h2>
+          <p class="mt-3 max-w-2xl leading-relaxed text-white/75">{p.admissionsBody}</p>
+        </div>
+        <a
+          href={l('/admissions', locale)}
+          class="rounded-full bg-amber-600 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-amber-700"
+        >
+          {p.admissionsLink}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function initMyp() {
+      // ---- Global contexts: chip selector -> panel ----
+      const chips = document.querySelectorAll<HTMLButtonElement>('[data-ctx]');
+      const ctxTitle = document.querySelector<HTMLElement>('[data-ctx-title]');
+      const ctxDesc = document.querySelector<HTMLElement>('[data-ctx-desc]');
+      const ctxPanel = document.querySelector<HTMLElement>('[data-ctx-panel]');
+      if (chips.length && ctxTitle && ctxDesc) {
+        const selectCtx = (i: number) => {
+          chips.forEach((b, j) => {
+            const active = j === i;
+            b.setAttribute('aria-selected', String(active));
+            b.classList.toggle('border-amber-700', active);
+            b.classList.toggle('bg-amber-100', active);
+            b.classList.toggle('text-amber-800', active);
+            b.classList.toggle('border-stone-300', !active);
+            b.classList.toggle('bg-white', !active);
+            b.classList.toggle('text-stone-600', !active);
+          });
+          const btn = chips[i];
+          ctxTitle.textContent = (btn.textContent || '').trim();
+          ctxDesc.textContent = btn.dataset.desc || '';
+          if (ctxPanel) {
+            ctxPanel.classList.remove('ctx-flash');
+            void ctxPanel.offsetWidth;
+            ctxPanel.classList.add('ctx-flash');
+          }
+        };
+        chips.forEach((b, i) => {
+          b.addEventListener('click', () => selectCtx(i));
+          b.addEventListener('mouseenter', () => selectCtx(i));
+          b.addEventListener('focus', () => selectCtx(i));
+        });
+      }
+
+      // ---- ATL accordion ----
+      const atlTriggers = document.querySelectorAll<HTMLButtonElement>('[data-atl-trigger]');
+      atlTriggers.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const i = btn.dataset.atlTrigger;
+          const panel = document.querySelector<HTMLElement>(`[data-atl-panel="${i}"]`);
+          if (!panel) return;
+          const open = panel.classList.contains('grid-rows-[1fr]');
+          panel.classList.toggle('grid-rows-[1fr]', !open);
+          panel.classList.toggle('grid-rows-[0fr]', open);
+          btn.setAttribute('aria-expanded', String(!open));
+          const icon = btn.querySelector<SVGElement>('[data-atl-icon]');
+          if (icon) icon.toggleAttribute('data-open', !open);
+        });
+      });
+
+      // ---- Subject groups: master -> detail ----
+      const sgBtns = document.querySelectorAll<HTMLButtonElement>('[data-sg-btn]');
+      const sgIndex = document.querySelector<HTMLElement>('[data-sg-index]');
+      const sgTitle = document.querySelector<HTMLElement>('[data-sg-title]');
+      const sgDesc = document.querySelector<HTMLElement>('[data-sg-desc]');
+      const sgPanel = document.querySelector<HTMLElement>('[data-sg-panel]');
+      if (sgBtns.length && sgTitle && sgDesc) {
+        const selectSg = (i: number) => {
+          sgBtns.forEach((b, j) => {
+            const active = j === i;
+            b.setAttribute('aria-pressed', String(active));
+            b.classList.toggle('border-amber-600', active);
+            b.classList.toggle('bg-amber-50', active);
+            b.classList.toggle('shadow-sm', active);
+            b.classList.toggle('border-stone-200', !active);
+            b.classList.toggle('bg-white', !active);
+          });
+          const btn = sgBtns[i];
+          if (sgIndex) sgIndex.textContent = btn.dataset.index || '';
+          sgTitle.textContent = btn.dataset.title || '';
+          sgDesc.textContent = btn.dataset.desc || '';
+          if (sgPanel) {
+            sgPanel.classList.remove('ctx-flash');
+            void sgPanel.offsetWidth;
+            sgPanel.classList.add('ctx-flash');
+          }
+        };
+        sgBtns.forEach((b, i) => {
+          b.addEventListener('click', () => selectSg(i));
+          b.addEventListener('mouseenter', () => selectSg(i));
+          b.addEventListener('focus', () => selectSg(i));
+        });
+      }
+    }
+
+    document.addEventListener('astro:page-load', initMyp);
+  </script>
+</Layout>

@@ -49,7 +49,7 @@ Implemented and shipped.
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
 - [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits
-- [x] `/myp` — bilingual MYP curriculum, learning approach, and admissions overview
+- [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
 - [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
