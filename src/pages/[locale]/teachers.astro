@@ -9,10 +9,7 @@ import type { Locale } from '../../i18n/dictionaries';
 import type { Teacher } from '../../data/teachers';
 
 export function getStaticPaths() {
-  return [
-    { params: { locale: 'en' } },
-    { params: { locale: 'sk' } },
-  ];
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
 }
 
 const locale = (Astro.params.locale ?? 'en') as Locale;
@@ -71,135 +68,171 @@ const peopleSchemas = withPhoto.map((teacher) => ({
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
     <section>
       <div data-reveal>
-        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">{copy.leadershipLabel}</p>
+        <p
+          class="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-300"
+        >
+          {copy.leadershipLabel}
+        </p>
         <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <h2 class="max-w-2xl text-3xl font-bold tracking-tight">{copy.leadershipTitle}</h2>
-          <p class="max-w-md text-sm leading-relaxed text-stone-500">{copy.intro}</p>
+          <p class="max-w-md text-sm leading-relaxed text-stone-500 dark:text-stone-400">
+            {copy.intro}
+          </p>
         </div>
       </div>
 
       <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {leadership.map((teacher, index) => (
-          <li data-reveal style={`--reveal-delay: ${index * 70}ms`}>
-            <article class="group h-full overflow-hidden rounded-2xl border border-stone-200 bg-white transition-all hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg">
-              <div class="aspect-[4/5] overflow-hidden bg-stone-100">
-                {teacher.image ? (
-                  <Image
-                    src={teacher.image}
-                    alt={teacher.name}
-                    class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                    widths={[320, 480, 640]}
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    loading={index < 2 ? 'eager' : 'lazy'}
-                  />
-                ) : (
-                  <div class="flex h-full items-center justify-center bg-emerald-100 text-5xl font-bold text-emerald-700">
-                    {initials(teacher.name)}
-                  </div>
-                )}
-              </div>
-              <div class="p-5">
-                <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
-                <ul class="mt-3 space-y-1.5">
-                  {roleOf(teacher).map((role) => (
-                    <li class="text-sm leading-snug text-stone-600">{role}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          </li>
-        ))}
+        {
+          leadership.map((teacher, index) => (
+            <li data-reveal style={`--reveal-delay: ${index * 70}ms`}>
+              <article class="group h-full overflow-hidden rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 transition-all hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg">
+                <div class="aspect-[4/5] overflow-hidden bg-stone-100 dark:bg-stone-800">
+                  {teacher.image ? (
+                    <Image
+                      src={teacher.image}
+                      alt={teacher.name}
+                      class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                      widths={[320, 480, 640]}
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      loading={index < 2 ? 'eager' : 'lazy'}
+                    />
+                  ) : (
+                    <div class="flex h-full items-center justify-center bg-emerald-100 text-5xl font-bold text-emerald-700">
+                      {initials(teacher.name)}
+                    </div>
+                  )}
+                </div>
+                <div class="p-5">
+                  <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
+                  <ul class="mt-3 space-y-1.5">
+                    {roleOf(teacher).map((role) => (
+                      <li class="text-sm leading-snug text-stone-600 dark:text-stone-400">
+                        {role}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
     <section class="mt-20 sm:mt-24">
       <div data-reveal>
-        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">{copy.facultyLabel}</p>
+        <p
+          class="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-300"
+        >
+          {copy.facultyLabel}
+        </p>
         <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight">{copy.facultyTitle}</h2>
       </div>
 
       <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {faculty.map((teacher, index) => {
-          const subs = subjectsOf(teacher);
-          const single = subs.length === 1 ? subs[0] : null;
-          const CardTag = single ? 'a' : 'article';
-          return (
-          <li data-reveal style={`--reveal-delay: ${Math.min(index, 5) * 60}ms`}>
-            <CardTag
-              href={single ? l(`/subjects/${single.slug}`, locale) : undefined}
-              class="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition-all hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg"
-            >
-              <div class="aspect-[4/5] overflow-hidden bg-stone-100">
-                {teacher.image ? (
-                  <Image
-                    src={teacher.image}
-                    alt={teacher.name}
-                    class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                    widths={[320, 480, 640]}
-                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div class="flex h-full items-center justify-center bg-emerald-100 text-5xl font-bold text-emerald-700">
-                    {initials(teacher.name)}
+        {
+          faculty.map((teacher, index) => {
+            const subs = subjectsOf(teacher);
+            const single = subs.length === 1 ? subs[0] : null;
+            const CardTag = single ? 'a' : 'article';
+            return (
+              <li data-reveal style={`--reveal-delay: ${Math.min(index, 5) * 60}ms`}>
+                <CardTag
+                  href={single ? l(`/subjects/${single.slug}`, locale) : undefined}
+                  class="group flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 transition-all hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg"
+                >
+                  <div class="aspect-[4/5] overflow-hidden bg-stone-100 dark:bg-stone-800">
+                    {teacher.image ? (
+                      <Image
+                        src={teacher.image}
+                        alt={teacher.name}
+                        class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                        widths={[320, 480, 640]}
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="flex h-full items-center justify-center bg-emerald-100 text-5xl font-bold text-emerald-700">
+                        {initials(teacher.name)}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div class="flex flex-1 flex-col p-5">
-                <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
-                {subs.length > 1 ? (
-                  <div class="mt-3 flex flex-wrap gap-1.5">
-                    {subs.map((s) => (
-                      <a
-                        href={l(`/subjects/${s.slug}`, locale)}
-                        class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-800 transition-colors hover:bg-emerald-100 hover:text-emerald-900"
-                      >
-                        {s.title}
-                      </a>
-                    ))}
+                  <div class="flex flex-1 flex-col p-5">
+                    <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
+                    {subs.length > 1 ? (
+                      <div class="mt-3 flex flex-wrap gap-1.5">
+                        {subs.map((s) => (
+                          <a
+                            href={l(`/subjects/${s.slug}`, locale)}
+                            class="rounded-full bg-emerald-50 dark:bg-emerald-900/40 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-200 transition-colors hover:bg-emerald-100 hover:text-emerald-900"
+                          >
+                            {s.title}
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      teacher.areas[locale].length > 0 && (
+                        <div class="mt-3 flex flex-wrap gap-1.5">
+                          {teacher.areas[locale].map((area) => (
+                            <span class="rounded-full bg-emerald-50 dark:bg-emerald-900/40 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-200">
+                              {area}
+                            </span>
+                          ))}
+                        </div>
+                      )
+                    )}
+                    {teacher.responsibilities[locale].length > 0 && (
+                      <ul class="mt-3 space-y-1.5">
+                        {teacher.responsibilities[locale].map((role) => (
+                          <li class="text-sm leading-snug text-stone-500 dark:text-stone-400">
+                            {role}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {single && (
+                      <span class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
+                        {copy.viewSubject}
+                        <span
+                          class="transition-transform group-hover:translate-x-1"
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
+                      </span>
+                    )}
                   </div>
-                ) : (
-                  teacher.areas[locale].length > 0 && (
-                    <div class="mt-3 flex flex-wrap gap-1.5">
-                      {teacher.areas[locale].map((area) => (
-                        <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-800">{area}</span>
-                      ))}
-                    </div>
-                  )
-                )}
-                {teacher.responsibilities[locale].length > 0 && (
-                  <ul class="mt-3 space-y-1.5">
-                    {teacher.responsibilities[locale].map((role) => (
-                      <li class="text-sm leading-snug text-stone-500">{role}</li>
-                    ))}
-                  </ul>
-                )}
-                {single && (
-                  <span class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700">
-                    {copy.viewSubject}
-                    <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
-                  </span>
-                )}
-              </div>
-            </CardTag>
-          </li>
-          );
-        })}
+                </CardTag>
+              </li>
+            );
+          })
+        }
       </ul>
     </section>
 
-    <section class="mt-20 overflow-hidden rounded-2xl bg-stone-900 px-6 py-10 text-white sm:px-10 sm:py-12" data-reveal>
+    <section
+      class="mt-20 overflow-hidden rounded-2xl bg-stone-900 px-6 py-10 text-white sm:px-10 sm:py-12"
+      data-reveal
+    >
       <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400">{copy.contactLabel}</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400">
+            {copy.contactLabel}
+          </p>
           <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">{copy.contactTitle}</h2>
           <p class="mt-3 max-w-xl text-sm leading-relaxed text-stone-300">{copy.contactBody}</p>
         </div>
         <div class="flex shrink-0 flex-wrap gap-3">
-          <a href={l('/admissions', locale)} class="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-500">
+          <a
+            href={l('/admissions', locale)}
+            class="rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+          >
             {copy.admissionsLink}
           </a>
-          <a href={`mailto:${contact.email}`} class="rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-emerald-400 hover:text-emerald-300">
+          <a
+            href={`mailto:${contact.email}`}
+            class="rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-emerald-400 hover:text-emerald-300"
+          >
             {copy.emailLink}
           </a>
         </div>

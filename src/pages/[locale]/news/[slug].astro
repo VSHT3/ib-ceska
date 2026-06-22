@@ -9,7 +9,7 @@ import type { Locale } from '../../../i18n/dictionaries';
 export async function getStaticPaths() {
   const slugs = await reader.collections.news.list();
   return (['en', 'sk'] as const).flatMap((locale) =>
-    slugs.map((slug) => ({ params: { locale, slug } }))
+    slugs.map((slug) => ({ params: { locale, slug } })),
   );
 }
 
@@ -58,23 +58,31 @@ const dateLabel = article.date
   <div class="mx-auto max-w-3xl px-4 py-12">
     <a
       href={l('/news', locale)}
-      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors"
     >
-      <span aria-hidden="true">&larr;</span> {dict.detail.backNews}
+      <span aria-hidden="true">&larr;</span>
+      {dict.detail.backNews}
     </a>
 
     <article class="rich-text mt-6" data-reveal>
-      {hasContent(bodyHtml) ? (
-        <Fragment set:html={bodyHtml} />
-      ) : (
-        <p class="text-stone-400">{dict.detail.comingSoon}</p>
-      )}
+      {
+        hasContent(bodyHtml) ? (
+          <Fragment set:html={bodyHtml} />
+        ) : (
+          <p class="text-stone-400 dark:text-stone-500">{dict.detail.comingSoon}</p>
+        )
+      }
     </article>
 
-    {article.author && (
-      <p class="mt-8 pt-6 border-t border-stone-200 text-sm text-stone-400" data-reveal>
-        {article.author}
-      </p>
-    )}
+    {
+      article.author && (
+        <p
+          class="mt-8 pt-6 border-t border-stone-200 dark:border-stone-800 text-sm text-stone-400 dark:text-stone-500"
+          data-reveal
+        >
+          {article.author}
+        </p>
+      )
+    }
   </div>
 </Layout>

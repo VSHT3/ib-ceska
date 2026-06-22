@@ -16,12 +16,29 @@ const locales: { code: Locale; label: string }[] = [
 ];
 ---
 
-<div class="flex items-center rounded-full border border-stone-200 bg-stone-100 p-0.5 text-xs font-semibold tracking-wide" role="group" aria-label="Language">
-  {locales.map(({ code, label }) =>
-    code === locale ? (
-      <span aria-current="true" class="rounded-full bg-white px-2.5 py-1 text-emerald-700 shadow-sm">{label}</span>
-    ) : (
-      <a href={pathFor(code)} data-lang-switch class="rounded-full px-2.5 py-1 text-stone-500 transition-colors hover:text-emerald-700">{label}</a>
+<div
+  class="flex items-center rounded-full border border-stone-200 dark:border-stone-800 bg-stone-100 dark:bg-stone-800 p-0.5 text-xs font-semibold tracking-wide"
+  role="group"
+  aria-label="Language"
+>
+  {
+    locales.map(({ code, label }) =>
+      code === locale ? (
+        <span
+          aria-current="true"
+          class="rounded-full bg-white dark:bg-stone-900 px-2.5 py-1 text-emerald-700 dark:text-emerald-300 shadow-sm"
+        >
+          {label}
+        </span>
+      ) : (
+        <a
+          href={pathFor(code)}
+          data-lang-switch
+          class="rounded-full px-2.5 py-1 text-stone-500 dark:text-stone-400 transition-colors hover:text-emerald-700 dark:hover:text-emerald-300"
+        >
+          {label}
+        </a>
+      ),
     )
-  )}
+  }
 </div>

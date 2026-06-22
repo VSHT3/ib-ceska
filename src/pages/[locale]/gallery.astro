@@ -6,10 +6,7 @@ import { t } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
 export function getStaticPaths() {
-  return [
-    { params: { locale: 'en' } },
-    { params: { locale: 'sk' } },
-  ];
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
 }
 
 const locale = (Astro.params.locale ?? 'en') as Locale;
@@ -17,12 +14,20 @@ const dict = t(locale);
 
 // Captions are bilingual; logo asset is intentionally excluded.
 const photos = [
-  { img: school.daffodilDay, en: 'Daffodil Day 2026, CAS fundraising project', sk: 'Deň narcisov 2026, projekt CAS' },
+  {
+    img: school.daffodilDay,
+    en: 'Daffodil Day 2026, CAS fundraising project',
+    sk: 'Deň narcisov 2026, projekt CAS',
+  },
   { img: school.classroom, en: 'In the classroom', sk: 'V triede' },
   { img: school.studentsReading, en: 'Reading in the library', sk: 'Čítanie v knižnici' },
   { img: school.projectPresentation, en: 'Presenting project work', sk: 'Prezentácia projektov' },
   { img: school.volunteering, en: 'Service in the community', sk: 'Dobrovoľníctvo v komunite' },
-  { img: school.hallwayLibrary, en: 'Hallways and shared spaces', sk: 'Chodby a spoločné priestory' },
+  {
+    img: school.hallwayLibrary,
+    en: 'Hallways and shared spaces',
+    sk: 'Chodby a spoločné priestory',
+  },
   { img: school.studentsFun, en: 'Between lessons', sk: 'Medzi hodinami' },
   { img: school.entranceBanner, en: 'The school entrance', sk: 'Vchod do školy' },
   { img: school.studentsSelfie, en: 'With our teachers', sk: 'S našimi učiteľmi' },
@@ -33,50 +38,75 @@ const caption = (p: (typeof photos)[number]) => (locale === 'sk' ? p.sk : p.en);
 // Generate a large (lightbox) variant of each image so the overlay shows a
 // crisp full view rather than the small masonry thumbnail.
 const fullImages = await Promise.all(
-  photos.map((p) => getImage({ src: p.img, width: 1600, format: 'webp' }))
+  photos.map((p) => getImage({ src: p.img, width: 1600, format: 'webp' })),
 );
 ---
 
-<Layout title={dict.gallery.title} description={dict.gallery.subtitle} locale={locale} pageSchemaType="CollectionPage">
+<Layout
+  title={dict.gallery.title}
+  description={dict.gallery.subtitle}
+  locale={locale}
+  pageSchemaType="CollectionPage"
+>
   <!-- Editorial hero -->
-  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
-    <span class="absolute -right-8 -bottom-16 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none" aria-hidden="true">＋</span>
+  <section
+    class="relative overflow-hidden border-b border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-stone-900"
+  >
+    <span
+      class="absolute -right-8 -bottom-16 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none"
+      aria-hidden="true">＋</span
+    >
     <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
-      <span class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700">{dict.gallery.label}</span>
-      <h1 class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight" style="--rise-delay: 80ms">{dict.gallery.title}</h1>
-      <p class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed" style="--rise-delay: 160ms">{dict.gallery.subtitle}</p>
+      <span
+        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700 dark:text-emerald-300"
+        >{dict.gallery.label}</span
+      >
+      <h1
+        class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight"
+        style="--rise-delay: 80ms"
+      >
+        {dict.gallery.title}
+      </h1>
+      <p
+        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 dark:text-stone-400 leading-relaxed"
+        style="--rise-delay: 160ms"
+      >
+        {dict.gallery.subtitle}
+      </p>
     </div>
   </section>
 
   <!-- Masonry -->
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
     <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-      {photos.map((p, i) => (
-        <button
-          type="button"
-          data-lightbox
-          data-index={i}
-          data-full={fullImages[i].src}
-          data-caption={caption(p)}
-          aria-label={caption(p)}
-          class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-2xl bg-stone-100 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-          data-reveal
-          style={`--reveal-delay: ${Math.min(i, 5) * 60}ms`}
-        >
-          <Image
-            src={p.img}
-            alt={caption(p)}
-            class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-            widths={[320, 480, 768]}
-            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-            loading={i < 3 ? 'eager' : 'lazy'}
-          />
-          <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 p-4 text-left text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-            {caption(p)}
-          </figcaption>
-        </button>
-      ))}
+      {
+        photos.map((p, i) => (
+          <button
+            type="button"
+            data-lightbox
+            data-index={i}
+            data-full={fullImages[i].src}
+            data-caption={caption(p)}
+            aria-label={caption(p)}
+            class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+            data-reveal
+            style={`--reveal-delay: ${Math.min(i, 5) * 60}ms`}
+          >
+            <Image
+              src={p.img}
+              alt={caption(p)}
+              class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              widths={[320, 480, 768]}
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+              loading={i < 3 ? 'eager' : 'lazy'}
+            />
+            <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/70 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-1 p-4 text-left text-sm font-medium text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+              {caption(p)}
+            </figcaption>
+          </button>
+        ))
+      }
     </div>
   </div>
 
@@ -88,17 +118,43 @@ const fullImages = await Promise.all(
     aria-modal="true"
     aria-label={dict.gallery.title}
   >
-    <button type="button" data-lb-close aria-label={dict.gallery.close} class="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18" /></svg>
+    <button
+      type="button"
+      data-lb-close
+      aria-label={dict.gallery.close}
+      class="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        ><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"></path></svg
+      >
     </button>
-    <button type="button" data-lb-prev aria-label={dict.gallery.prev} class="absolute left-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6">
-      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+    <button
+      type="button"
+      data-lb-prev
+      aria-label={dict.gallery.prev}
+      class="absolute left-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+    >
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        ><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg
+      >
     </button>
-    <button type="button" data-lb-next aria-label={dict.gallery.next} class="absolute right-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6">
-      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+    <button
+      type="button"
+      data-lb-next
+      aria-label={dict.gallery.next}
+      class="absolute right-2 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+    >
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        ><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg
+      >
     </button>
     <figure class="flex max-h-full max-w-5xl flex-col items-center">
-      <img data-lb-img src="" alt="" class="max-h-[80vh] w-auto max-w-full rounded-lg object-contain shadow-2xl" />
+      <img
+        data-lb-img
+        src=""
+        alt=""
+        class="max-h-[80vh] w-auto max-w-full rounded-lg object-contain shadow-2xl"
+      />
       <figcaption data-lb-caption class="mt-4 text-center text-sm text-stone-200"></figcaption>
     </figure>
   </div>

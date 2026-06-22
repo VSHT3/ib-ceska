@@ -1,8 +1,8 @@
-@import "tailwindcss";
-@import "@fontsource-variable/inter";
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
 
 @theme {
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
   /* Official IB corporate brand colours (IB brand guidelines / digital toolkit).
      The site's own palette stays emerald-led; these are available as accents
@@ -192,5 +192,46 @@ html.js [data-reveal].revealed {
   .ken-burns,
   .marquee-track {
     animation: none;
+  }
+}
+
+/* ---------- Dark mode (prefers-color-scheme) ---------- */
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: #0c0a09; /* stone-950 */
+  }
+
+  .rich-text {
+    color: var(--color-stone-300);
+  }
+  .rich-text h2,
+  .rich-text h3 {
+    color: var(--color-stone-100);
+  }
+  .rich-text li::marker {
+    color: var(--color-emerald-500);
+  }
+  .rich-text a {
+    color: var(--color-emerald-400);
+  }
+  .rich-text a:hover {
+    color: var(--color-emerald-300);
+  }
+  .rich-text blockquote {
+    color: var(--color-stone-400);
+  }
+  .rich-text strong {
+    color: var(--color-stone-100);
+  }
+  .rich-text hr {
+    border-color: var(--color-stone-800);
+  }
+  .rich-text th,
+  .rich-text td {
+    border-color: var(--color-stone-800);
+  }
+  .rich-text th {
+    background: var(--color-stone-800);
+    color: var(--color-stone-100);
   }
 }

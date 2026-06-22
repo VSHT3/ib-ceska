@@ -9,7 +9,7 @@ import type { Locale } from '../../../i18n/dictionaries';
 export async function getStaticPaths() {
   const slugs = await reader.collections.tok.list();
   return (['en', 'sk'] as const).flatMap((locale) =>
-    slugs.map((slug) => ({ params: { locale, slug } }))
+    slugs.map((slug) => ({ params: { locale, slug } })),
   );
 }
 
@@ -48,30 +48,37 @@ const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
   <div class="mx-auto max-w-3xl px-4 py-12">
     <a
       href={l('/tok', locale)}
-      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors"
     >
-      <span aria-hidden="true">&larr;</span> {dict.detail.backTok}
+      <span aria-hidden="true">&larr;</span>
+      {dict.detail.backTok}
     </a>
 
     <div class="mt-6 flex items-center gap-3 text-sm" data-reveal>
-      <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-semibold">{material.theme}</span>
-      {material.date && (
-        <time class="text-stone-400">
-          {new Date(material.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </time>
-      )}
+      <span class="text-xs bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full font-semibold"
+        >{material.theme}</span
+      >
+      {
+        material.date && (
+          <time class="text-stone-400 dark:text-stone-500">
+            {new Date(material.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+        )
+      }
     </div>
 
     <article class="rich-text mt-6" data-reveal>
-      {hasContent(bodyHtml) ? (
-        <Fragment set:html={bodyHtml} />
-      ) : (
-        <p class="text-stone-400">{dict.detail.comingSoon}</p>
-      )}
+      {
+        hasContent(bodyHtml) ? (
+          <Fragment set:html={bodyHtml} />
+        ) : (
+          <p class="text-stone-400 dark:text-stone-500">{dict.detail.comingSoon}</p>
+        )
+      }
     </article>
   </div>
 </Layout>

@@ -9,7 +9,7 @@ import type { Locale } from '../../../i18n/dictionaries';
 export async function getStaticPaths() {
   const slugs = await reader.collections.cas.list();
   return (['en', 'sk'] as const).flatMap((locale) =>
-    slugs.map((slug) => ({ params: { locale, slug } }))
+    slugs.map((slug) => ({ params: { locale, slug } })),
   );
 }
 
@@ -27,7 +27,9 @@ const strandStyles: Record<string, string> = {
 };
 // Keep canonical C→A→S order regardless of how it was stored.
 const strandOrder = ['Creativity', 'Activity', 'Service'];
-const activityStrands = strandOrder.filter((s) => (activity.strands as readonly string[]).includes(s));
+const activityStrands = strandOrder.filter((s) =>
+  (activity.strands as readonly string[]).includes(s),
+);
 const strandsLabel = activityStrands.join(' · ');
 
 const title = pick(locale, activity.sk.title, activity.title);
@@ -58,57 +60,87 @@ const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
   <div class="mx-auto max-w-5xl px-4 py-12">
     <a
       href={l('/cas', locale)}
-      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 dark:text-emerald-300 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors"
     >
-      <span aria-hidden="true">&larr;</span> {dict.detail.backCas}
+      <span aria-hidden="true">&larr;</span>
+      {dict.detail.backCas}
     </a>
 
     <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_280px]">
       <article class="rich-text min-w-0" data-reveal>
-        {hasContent(bodyHtml) ? (
-          <Fragment set:html={bodyHtml} />
-        ) : (
-          <p class="text-stone-400">{dict.detail.comingSoon}</p>
-        )}
+        {
+          hasContent(bodyHtml) ? (
+            <Fragment set:html={bodyHtml} />
+          ) : (
+            <p class="text-stone-400 dark:text-stone-500">{dict.detail.comingSoon}</p>
+          )
+        }
       </article>
 
       <aside class="lg:order-last order-first" data-reveal>
-        <div class="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 lg:sticky lg:top-24">
+        <div
+          class="rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-5 space-y-4 lg:sticky lg:top-24"
+        >
           <div>
-            <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">{dict.detail.strand}</p>
+            <p
+              class="text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500"
+            >
+              {dict.detail.strand}
+            </p>
             <div class="mt-1.5 flex flex-wrap gap-1.5">
-              {activityStrands.map((s) => (
-                <span class:list={['inline-block text-xs px-2.5 py-1 rounded-full font-semibold', strandStyles[s] ?? 'bg-stone-100 text-stone-700']}>
-                  {s}
-                </span>
-              ))}
+              {
+                activityStrands.map((s) => (
+                  <span
+                    class:list={[
+                      'inline-block text-xs px-2.5 py-1 rounded-full font-semibold',
+                      strandStyles[s] ??
+                        'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300',
+                    ]}
+                  >
+                    {s}
+                  </span>
+                ))
+              }
             </div>
           </div>
-          {activity.date && (
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">Date</p>
-              <time class="text-sm font-medium text-stone-800 mt-1 block">
-                {new Date(activity.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-            </div>
-          )}
-          {activity.learningOutcomes.length > 0 && (
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-2">{dict.detail.learningOutcomes}</p>
-              <ul class="space-y-1.5">
-                {activity.learningOutcomes.map((lo) => (
-                  <li class="text-sm text-stone-700 flex gap-2">
-                    <span class="text-emerald-600 mt-0.5" aria-hidden="true">✓</span>
-                    {lo}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {
+            activity.date && (
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500">
+                  Date
+                </p>
+                <time class="text-sm font-medium text-stone-800 dark:text-stone-200 mt-1 block">
+                  {new Date(activity.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+              </div>
+            )
+          }
+          {
+            activity.learningOutcomes.length > 0 && (
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500 mb-2">
+                  {dict.detail.learningOutcomes}
+                </p>
+                <ul class="space-y-1.5">
+                  {activity.learningOutcomes.map((lo) => (
+                    <li class="text-sm text-stone-700 dark:text-stone-300 flex gap-2">
+                      <span
+                        class="text-emerald-600 dark:text-emerald-400 mt-0.5"
+                        aria-hidden="true"
+                      >
+                        ✓
+                      </span>
+                      {lo}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
         </div>
       </aside>
     </div>
