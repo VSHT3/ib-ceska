@@ -436,36 +436,6 @@ const dict = {
         'Physical and health education',
         'Design',
       ],
-      contextsLabel: 'Global contexts',
-      contextsTitle: 'Six lenses for every unit',
-      contextsIntro:
-        'Every MYP unit is planned around a global context, giving learning a reason and a real audience.',
-      contexts: [
-        {
-          title: 'Identities and relationships',
-          desc: 'Who am I? Identity, wellbeing, and human relationships.',
-        },
-        {
-          title: 'Personal and cultural expression',
-          desc: 'How do we express ourselves? Art, creativity, and culture.',
-        },
-        {
-          title: 'Orientations in space and time',
-          desc: 'Where and when? Scale, continuity, and change.',
-        },
-        {
-          title: 'Scientific and technical innovation',
-          desc: 'How do we shape the world? Principles, materials, and systems.',
-        },
-        {
-          title: 'Globalization and sustainability',
-          desc: 'How do we share the planet? Markets, resources, and impact.',
-        },
-        {
-          title: 'Fairness and development',
-          desc: 'What is just? Rights, governance, and equity.',
-        },
-      ],
       atlLabel: 'Approaches to learning',
       atlTitle: 'Five skill families, taught on purpose',
       atlIntro:
@@ -491,37 +461,6 @@ const dict = {
           title: 'Research',
           desc: 'Forming questions, finding sources, and using evidence responsibly.',
         },
-      ],
-      subjectGroups: [
-        {
-          title: 'Language and literature',
-          desc: "Reading, writing, and critical study of the student's best language.",
-        },
-        {
-          title: 'Language acquisition',
-          desc: 'A second language taught for real communication and cultural insight.',
-        },
-        {
-          title: 'Individuals and societies',
-          desc: 'History, geography, and economics, and how human societies are organised.',
-        },
-        {
-          title: 'Sciences',
-          desc: 'Biology, chemistry, and physics through inquiry and experiment.',
-        },
-        {
-          title: 'Mathematics',
-          desc: 'Number, pattern, and problem solving, with extended and standard tracks.',
-        },
-        {
-          title: 'Arts',
-          desc: 'Visual art, music, or drama as a way to explore and express ideas.',
-        },
-        {
-          title: 'Physical and health education',
-          desc: 'Movement, fitness, and informed choices about wellbeing.',
-        },
-        { title: 'Design', desc: 'Solving practical problems through a structured design cycle.' },
       ],
       personalProjectTitle: 'The Personal Project',
       personalProjectBody:
@@ -1055,27 +994,6 @@ const dict = {
         'Telesná a zdravotná výchova',
         'Dizajn',
       ],
-      contextsLabel: 'Globálne kontexty',
-      contextsTitle: 'Šesť ohnísk pre každú jednotku',
-      contextsIntro:
-        'Každá jednotka MYP je naplánovaná okolo globálneho kontextu, ktorý dáva učeniu dôvod a skutočné publikum.',
-      contexts: [
-        { title: 'Identity a vzťahy', desc: 'Kto som? Identita, pohoda a ľudské vzťahy.' },
-        {
-          title: 'Osobné a kultúrne vyjadrenie',
-          desc: 'Ako sa vyjadrujeme? Umenie, tvorivosť a kultúra.',
-        },
-        { title: 'Orientácia v priestore a čase', desc: 'Kde a kedy? Mierka, kontinuita a zmena.' },
-        {
-          title: 'Vedecká a technická inovácia',
-          desc: 'Ako formujeme svet? Princípy, materiály a systémy.',
-        },
-        {
-          title: 'Globalizácia a udržateľnosť',
-          desc: 'Ako sa delíme o planétu? Trhy, zdroje a vplyv.',
-        },
-        { title: 'Spravodlivosť a rozvoj', desc: 'Čo je spravodlivé? Práva, vládnutie a rovnosť.' },
-      ],
       atlLabel: 'Prístupy k učeniu',
       atlTitle: 'Päť rodín zručností, vyučované zámerne',
       atlIntro:
@@ -1091,40 +1009,6 @@ const dict = {
         {
           title: 'Výskum',
           desc: 'Kladenie otázok, hľadanie zdrojov a zodpovedné používanie dôkazov.',
-        },
-      ],
-      subjectGroups: [
-        {
-          title: 'Jazyk a literatúra',
-          desc: 'Čítanie, písanie a kritické štúdium najlepšieho jazyka študenta.',
-        },
-        {
-          title: 'Osvojovanie jazyka',
-          desc: 'Druhý jazyk vyučovaný pre skutočnú komunikáciu a kultúrne porozumenie.',
-        },
-        {
-          title: 'Jednotlivci a spoločnosti',
-          desc: 'Dejiny, geografia a ekonómia, a ako sú organizované ľudské spoločnosti.',
-        },
-        {
-          title: 'Prírodné vedy',
-          desc: 'Biológia, chémia a fyzika prostredníctvom bádania a experimentu.',
-        },
-        {
-          title: 'Matematika',
-          desc: 'Čísla, vzory a riešenie problémov, s rozšírenou a štandardnou úrovňou.',
-        },
-        {
-          title: 'Umenie',
-          desc: 'Výtvarné umenie, hudba alebo dráma ako spôsob skúmania a vyjadrovania nápadov.',
-        },
-        {
-          title: 'Telesná a zdravotná výchova',
-          desc: 'Pohyb, kondícia a informované voľby o pohode.',
-        },
-        {
-          title: 'Dizajn',
-          desc: 'Riešenie praktických problémov prostredníctvom štruktúrovaného cyklu dizajnu.',
         },
       ],
       personalProjectTitle: 'Osobný projekt',

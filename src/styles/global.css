@@ -133,8 +133,7 @@ html.js [data-reveal].revealed {
   animation-delay: var(--rise-delay, 0ms);
 }
 
-/* Hero background image eases in (opacity) while slowly zooming (ken-burns).
-   Both animations run on one element via a single shorthand list. */
+/* ---------- Hero image fade-in (opacity entrance for background images) ---------- */
 @keyframes hero-fade {
   from {
     opacity: 0;
@@ -142,6 +141,10 @@ html.js [data-reveal].revealed {
   to {
     opacity: 0.5;
   }
+}
+
+.hero-fade {
+  animation: hero-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ---------- Slow Ken Burns zoom on hero imagery ---------- */
@@ -155,9 +158,7 @@ html.js [data-reveal].revealed {
 }
 
 .ken-burns {
-  animation:
-    hero-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) both,
-    ken-burns 18s ease-in-out infinite alternate;
+  animation: ken-burns 18s ease-in-out infinite alternate;
 }
 
 /* ---------- Photo marquee ---------- */
@@ -178,22 +179,6 @@ html.js [data-reveal].revealed {
   animation-play-state: paused;
 }
 
-/* ---------- Panel content flash (interactive selectors) ---------- */
-@keyframes ctx-flash {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.ctx-flash {
-  animation: ctx-flash 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 /* ---------- Reduced motion: settle everything instantly ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -206,8 +191,8 @@ html.js [data-reveal].revealed {
   }
   .hero-rise,
   .ken-burns,
-  .marquee-track,
-  .ctx-flash {
+  .hero-fade,
+  .marquee-track {
     animation: none;
   }
 }

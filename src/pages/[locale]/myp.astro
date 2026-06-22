@@ -25,7 +25,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     provider: { '@id': new URL('/#school', Astro.site).href },
   }}
 >
-  <!-- Hero: asymmetric split, entrance + ken-burns -->
+  <!-- Hero: edge-to-edge split, entrance + ken-burns (no opacity tint) -->
   <section class="grid items-stretch lg:grid-cols-2">
     <div class="flex items-center bg-amber-800 px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
       <div class="max-w-xl">
@@ -75,22 +75,18 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     </div>
   </section>
 
-  <!-- Intro: asymmetric editorial, offset right column -->
-  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
+  <!-- Intro: full-bleed editorial, left-weighted 7/5 split -->
+  <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
     <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
-      <div class="lg:col-span-5" data-reveal>
-        <span
-          class="block text-7xl font-extrabold leading-none tracking-tighter text-amber-200 select-none sm:text-8xl"
-          >01</span
-        >
-        <p class="mt-4 text-xs font-semibold uppercase tracking-widest text-amber-700">
+      <div class="lg:col-span-7" data-reveal>
+        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
           {p.shortTitle}
         </p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl lg:text-6xl">
           {p.introTitle}
         </h2>
       </div>
-      <div class="lg:col-span-6 lg:col-start-7 lg:pt-24" data-reveal style="--reveal-delay: 100ms">
+      <div class="lg:col-span-4 lg:col-start-9 lg:pt-6" data-reveal style="--reveal-delay: 100ms">
         <p class="text-lg leading-relaxed text-stone-600">{p.introBody}</p>
         <a
           href={p.officialUrl}
@@ -104,183 +100,81 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     </div>
   </section>
 
-  <!-- Global contexts: interactive chip selector -->
-  <section class="border-y border-stone-200 bg-stone-50/60">
-    <div class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
-      <div class="grid gap-8 lg:grid-cols-12 lg:gap-12" data-reveal>
-        <div class="lg:col-span-4">
+  <!-- Approaches to learning: full-bleed amber band, accordion -->
+  <section class="bg-amber-50 border-y border-amber-100">
+    <div class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-5" data-reveal>
           <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
-            {p.contextsLabel}
+            {p.atlLabel}
           </p>
-          <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.contextsTitle}</h2>
-        </div>
-        <div class="lg:col-span-7 lg:col-start-6">
-          <p class="text-lg leading-relaxed text-stone-600">{p.contextsIntro}</p>
-        </div>
-      </div>
-
-      <div
-        class="mt-10 flex flex-wrap gap-2"
-        data-ctx-chips
-        role="tablist"
-        aria-label={p.contextsLabel}
-      >
-        {
-          p.contexts.map((c, i) => (
-            <button
-              type="button"
-              data-ctx={i}
-              data-desc={c.desc}
-              role="tab"
-              aria-selected={i === 0 ? 'true' : 'false'}
-              class:list={[
-                'rounded-full border px-4 py-2 text-sm font-semibold transition-colors',
-                i === 0
-                  ? 'border-amber-700 bg-amber-100 text-amber-800'
-                  : 'border-stone-300 bg-white text-stone-600 hover:border-amber-400 hover:text-amber-700',
-              ]}
-            >
-              {c.title}
-            </button>
-          ))
-        }
-      </div>
-
-      <div
-        class="mt-6 overflow-hidden rounded-2xl border border-stone-200 bg-white p-6 sm:p-8"
-        data-ctx-panel
-      >
-        <p class="text-xl font-bold tracking-tight text-stone-900" data-ctx-title>
-          {p.contexts[0].title}
-        </p>
-        <p class="mt-2 text-lg leading-relaxed text-stone-600" data-ctx-desc>
-          {p.contexts[0].desc}
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Approaches to learning: interactive accordion -->
-  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
-    <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
-      <div class="lg:col-span-4" data-reveal>
-        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
-          {p.atlLabel}
-        </p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.atlTitle}</h2>
-        <p class="mt-5 leading-relaxed text-stone-600">{p.atlIntro}</p>
-      </div>
-
-      <div class="lg:col-span-7 lg:col-start-6" data-atl data-reveal style="--reveal-delay: 100ms">
-        {
-          p.atl.map((a, i) => (
-            <div class="border-b border-stone-300">
-              <button
-                type="button"
-                data-atl-trigger={i}
-                aria-expanded={i === 0 ? 'true' : 'false'}
-                aria-controls={`atl-panel-${i}`}
-                class="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-amber-700"
-              >
-                <span class="flex items-baseline gap-4">
-                  <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
-                  <span class="text-lg">{a.title}</span>
-                </span>
-                <svg
-                  class="h-5 w-5 shrink-0 text-amber-700 transition-transform duration-300 data-[open]:rotate-45"
-                  data-atl-icon
-                  data-open={i === 0 ? '' : undefined}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path stroke-linecap="round" d="M12 5v14M5 12h14" />
-                </svg>
-              </button>
-              <div
-                id={`atl-panel-${i}`}
-                data-atl-panel={i}
-                class:list={[
-                  'grid transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
-                  i === 0 ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
-                ]}
-              >
-                <div class="overflow-hidden">
-                  <p class="pb-5 pr-8 leading-relaxed text-stone-600">{a.desc}</p>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Eight subject groups: interactive master-detail explorer -->
-  <section class="border-y border-stone-200 bg-stone-50/60">
-    <div class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
-      <div data-reveal class="max-w-2xl">
-        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
-          {p.curriculumLabel}
-        </p>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.curriculumTitle}</h2>
-        <p class="mt-4 leading-relaxed text-stone-600">{p.curriculumBody}</p>
-      </div>
-
-      <div class="mt-10 grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:gap-12" data-sg data-reveal>
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {
-            p.subjectGroups.map((g, i) => (
-              <button
-                type="button"
-                data-sg-btn={i}
-                data-desc={g.desc}
-                data-index={pad(i)}
-                data-title={g.title}
-                aria-pressed={i === 0 ? 'true' : 'false'}
-                class:list={[
-                  'rounded-xl border p-4 text-left transition-all',
-                  i === 0
-                    ? 'border-amber-600 bg-amber-50 shadow-sm'
-                    : 'border-stone-200 bg-white hover:border-amber-300 hover:bg-amber-50/50',
-                ]}
-              >
-                <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
-                <span class="mt-1 block font-semibold text-stone-900">{g.title}</span>
-              </button>
-            ))
-          }
+          <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            {p.atlTitle}
+          </h2>
+          <p class="mt-5 leading-relaxed text-stone-600">{p.atlIntro}</p>
         </div>
 
         <div
-          class="relative overflow-hidden rounded-2xl bg-amber-800 p-7 text-white sm:p-9 lg:sticky lg:top-24"
-          data-sg-panel
+          class="lg:col-span-6 lg:col-start-7"
+          data-atl
+          data-reveal
+          style="--reveal-delay: 100ms"
         >
-          <span
-            class="pointer-events-none absolute -right-4 -top-6 text-[8rem] font-extrabold leading-none text-white/10 select-none"
-            data-sg-index
-          >
-            {pad(0)}
-          </span>
-          <p class="relative text-2xl font-bold tracking-tight" data-sg-title>
-            {p.subjectGroups[0].title}
-          </p>
-          <p class="relative mt-3 leading-relaxed text-white/80" data-sg-desc>
-            {p.subjectGroups[0].desc}
-          </p>
+          {
+            p.atl.map((a, i) => (
+              <div class="border-b border-amber-200">
+                <button
+                  type="button"
+                  data-atl-trigger={i}
+                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  aria-controls={`atl-panel-${i}`}
+                  class="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-amber-700"
+                >
+                  <span class="flex items-baseline gap-4">
+                    <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
+                    <span class="text-lg">{a.title}</span>
+                  </span>
+                  <svg
+                    class="h-5 w-5 shrink-0 text-amber-700 transition-transform duration-300 data-[open]:rotate-45"
+                    data-atl-icon
+                    data-open={i === 0 ? '' : undefined}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+                  </svg>
+                </button>
+                <div
+                  id={`atl-panel-${i}`}
+                  data-atl-panel={i}
+                  class:list={[
+                    'grid transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                    i === 0 ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+                  ]}
+                >
+                  <div class="overflow-hidden">
+                    <p class="pb-5 pr-8 leading-relaxed text-stone-600">{a.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Beyond lessons: Personal Project + Service -->
-  <section class="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28">
-    <div data-reveal class="max-w-2xl">
+  <!-- Beyond lessons: Personal Project + Service as full-bleed two-panel -->
+  <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+    <div data-reveal class="lg:max-w-3xl">
       <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
         {p.featureLabel}
       </p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.featureTitle}</h2>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+        {p.featureTitle}
+      </h2>
       <p class="mt-4 leading-relaxed text-stone-600">{p.featureBody}</p>
     </div>
 
@@ -327,9 +221,9 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     {p.note && <p class="mt-10 max-w-3xl text-xs leading-relaxed text-stone-500">{p.note}</p>}
   </section>
 
-  <!-- Admissions band -->
+  <!-- Admissions band: full-bleed -->
   <section class="bg-amber-800 text-white" data-reveal>
-    <div class="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
+    <div class="px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
       <div class="grid gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{p.admissionsTitle}</h2>
@@ -347,39 +241,6 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
 
   <script>
     function initMyp() {
-      // ---- Global contexts: chip selector -> panel ----
-      const chips = document.querySelectorAll<HTMLButtonElement>('[data-ctx]');
-      const ctxTitle = document.querySelector<HTMLElement>('[data-ctx-title]');
-      const ctxDesc = document.querySelector<HTMLElement>('[data-ctx-desc]');
-      const ctxPanel = document.querySelector<HTMLElement>('[data-ctx-panel]');
-      if (chips.length && ctxTitle && ctxDesc) {
-        const selectCtx = (i: number) => {
-          chips.forEach((b, j) => {
-            const active = j === i;
-            b.setAttribute('aria-selected', String(active));
-            b.classList.toggle('border-amber-700', active);
-            b.classList.toggle('bg-amber-100', active);
-            b.classList.toggle('text-amber-800', active);
-            b.classList.toggle('border-stone-300', !active);
-            b.classList.toggle('bg-white', !active);
-            b.classList.toggle('text-stone-600', !active);
-          });
-          const btn = chips[i];
-          ctxTitle.textContent = (btn.textContent || '').trim();
-          ctxDesc.textContent = btn.dataset.desc || '';
-          if (ctxPanel) {
-            ctxPanel.classList.remove('ctx-flash');
-            void ctxPanel.offsetWidth;
-            ctxPanel.classList.add('ctx-flash');
-          }
-        };
-        chips.forEach((b, i) => {
-          b.addEventListener('click', () => selectCtx(i));
-          b.addEventListener('mouseenter', () => selectCtx(i));
-          b.addEventListener('focus', () => selectCtx(i));
-        });
-      }
-
       // ---- ATL accordion ----
       const atlTriggers = document.querySelectorAll<HTMLButtonElement>('[data-atl-trigger]');
       atlTriggers.forEach((btn) => {
@@ -395,40 +256,6 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
           if (icon) icon.toggleAttribute('data-open', !open);
         });
       });
-
-      // ---- Subject groups: master -> detail ----
-      const sgBtns = document.querySelectorAll<HTMLButtonElement>('[data-sg-btn]');
-      const sgIndex = document.querySelector<HTMLElement>('[data-sg-index]');
-      const sgTitle = document.querySelector<HTMLElement>('[data-sg-title]');
-      const sgDesc = document.querySelector<HTMLElement>('[data-sg-desc]');
-      const sgPanel = document.querySelector<HTMLElement>('[data-sg-panel]');
-      if (sgBtns.length && sgTitle && sgDesc) {
-        const selectSg = (i: number) => {
-          sgBtns.forEach((b, j) => {
-            const active = j === i;
-            b.setAttribute('aria-pressed', String(active));
-            b.classList.toggle('border-amber-600', active);
-            b.classList.toggle('bg-amber-50', active);
-            b.classList.toggle('shadow-sm', active);
-            b.classList.toggle('border-stone-200', !active);
-            b.classList.toggle('bg-white', !active);
-          });
-          const btn = sgBtns[i];
-          if (sgIndex) sgIndex.textContent = btn.dataset.index || '';
-          sgTitle.textContent = btn.dataset.title || '';
-          sgDesc.textContent = btn.dataset.desc || '';
-          if (sgPanel) {
-            sgPanel.classList.remove('ctx-flash');
-            void sgPanel.offsetWidth;
-            sgPanel.classList.add('ctx-flash');
-          }
-        };
-        sgBtns.forEach((b, i) => {
-          b.addEventListener('click', () => selectSg(i));
-          b.addEventListener('mouseenter', () => selectSg(i));
-          b.addEventListener('focus', () => selectSg(i));
-        });
-      }
     }
 
     document.addEventListener('astro:page-load', initMyp);
