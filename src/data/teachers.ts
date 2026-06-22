@@ -62,10 +62,10 @@ export const teachers: Teacher[] = [
   {
     name: 'Simona Latková',
     image: simonaLatkova,
-    leadership: true,
+    leadership: false,
     areas: {
-      en: ['English Language'],
-      sk: ['Anglický jazyk'],
+      en: ['English A: Language and Literature'],
+      sk: ['Anglický jazyk a literatúra A'],
     },
     responsibilities: {
       en: ['Extended Essay Coordinator'],
@@ -132,7 +132,7 @@ export const teachers: Teacher[] = [
     name: 'Miroslava Hrušková',
     image: miroslavaHruskova,
     leadership: false,
-    areas: { en: [], sk: [] },
+    areas: { en: ['Chemistry'], sk: ['Chémia'] },
     responsibilities: {
       en: ['Head of Sciences Department'],
       sk: ['Vedúca prírodovedného oddelenia'],

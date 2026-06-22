@@ -36,8 +36,11 @@ Tasks the AI must complete. Checked = done.
 - [x] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
 - [x] Gallery page (photos now in `src/assets/school/`)
 - [x] Admissions/contact page with bilingual application guidance and direct school contact
-- [x] Dark mode support (respects `prefers-color-scheme`) — Tailwind 4 media `dark:` variant across all 22 .astro files + `global.css` (`.rich-text` dark overrides, stone-950 page bg). No JS toggle; solid accent pills stay light for contrast.
+- [x] Dark mode — reverted. Light mode only, single theme. All `dark:` variants stripped site-wide.
 - [x] Loading/empty states for empty collections
+- [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed.
+- [x] Search nav link hidden — page kept at `/search`, link removed from nav/footer.
+- [x] Teacher data corrected — Latková: English A Lang & Lit, not leadership; Hrušková: Chemistry added.
 
 ## Security & access
 

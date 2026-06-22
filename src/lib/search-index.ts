@@ -83,7 +83,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
     });
   }
 
-  // Events have no detail page — every result links to the events listing.
+  // Events are merged into the news feed — link there.
   for (const { entry } of events) {
     const title = pick(locale, entry.sk.title, entry.title);
     const description = pick(locale, entry.sk.description, entry.description);
@@ -91,7 +91,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       title,
       description,
       type: 'Event',
-      href: l('/events', locale),
+      href: l('/news', locale),
       locale,
       body: `${title} ${description}`,
     });

@@ -34,7 +34,6 @@ export const GET: APIRoute = async () => {
     '/tok',
     '/ee',
     '/news',
-    '/events',
     '/gallery',
     '/build-your-diploma',
     '/testimonials',
