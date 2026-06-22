@@ -75,7 +75,8 @@ keystatic.config.ts     # CMS config — collections, fields, storage
 
 - Colors: `emerald-700` primary, `stone-50`/`stone-200`/`stone-600`/`stone-900` neutrals
 - Tailwind utility classes only — no custom CSS unless unavoidable
-- Nav sticky, container `max-w-5xl`
+- Nav sticky.
+- **Layout — avoid the sterile, AI-generated look.** Do NOT wrap every page in the same narrow `max-w-5xl` centered column (~60% of the viewport on a laptop, big dead margins). It makes pages feel templated and lifeless. Instead vary width and rhythm per page: lean wider (`max-w-6xl`/`max-w-7xl`) for primary content, use full-bleed sections, asymmetric/editorial grids, and offset elements so no two pages share the identical centered band. Width is a design choice per section, not one global container.
 
 ## Commits
 
