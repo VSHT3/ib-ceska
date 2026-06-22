@@ -1,0 +1,13 @@
+# Build & generated output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Static assets (do not format)
+public/
+
+# Keystatic-managed content — never format
+*.mdoc
+src/content/
