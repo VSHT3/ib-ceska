@@ -77,8 +77,8 @@ export const teachers: Teacher[] = [
     image: luciaHoracikova,
     leadership: false,
     areas: {
-      en: ['Slovak Language'],
-      sk: ['Slovenský jazyk'],
+      en: ['Slovak A: Language and Literature'],
+      sk: ['Slovenský jazyk a literatúra A'],
     },
     responsibilities: { en: [], sk: [] },
   },
@@ -87,8 +87,8 @@ export const teachers: Teacher[] = [
     image: janaSismisova,
     leadership: false,
     areas: {
-      en: ['English Language'],
-      sk: ['Anglický jazyk'],
+      en: ['English B'],
+      sk: ['Anglický jazyk B'],
     },
     responsibilities: {
       en: ['Head of Languages Department'],
