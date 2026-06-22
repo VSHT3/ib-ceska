@@ -63,7 +63,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
 >
   <!-- Hero -->
   <section
-    class="relative overflow-hidden border-b border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-stone-900"
+    class="relative overflow-hidden border-b border-stone-200/80 bg-white"
   >
     <span
       class="absolute -right-8 -bottom-20 text-[13rem] sm:text-[20rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none"
@@ -71,7 +71,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
     >
     <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
       <span
-        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700 dark:text-emerald-300"
+        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700"
         >{b.label}</span
       >
       <h1
@@ -81,21 +81,21 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         {b.title}
       </h1>
       <p
-        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 dark:text-stone-400 leading-relaxed"
+        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed"
         style="--rise-delay: 160ms"
       >
         {b.subtitle}
       </p>
       <div
-        class="hero-rise mt-8 max-w-2xl rounded-2xl border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 p-5"
+        class="hero-rise mt-8 max-w-2xl rounded-2xl border border-stone-200 bg-stone-50 p-5"
         style="--rise-delay: 240ms"
       >
         <p
-          class="text-xs font-semibold uppercase tracking-widest text-stone-500 dark:text-stone-400"
+          class="text-xs font-semibold uppercase tracking-widest text-stone-500"
         >
           {b.ruleHeading}
         </p>
-        <ul class="mt-3 space-y-1.5 text-sm text-stone-600 dark:text-stone-400">
+        <ul class="mt-3 space-y-1.5 text-sm text-stone-600">
           {
             b.rules.map((r) => (
               <li class="flex gap-2.5">
@@ -117,22 +117,22 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       {
         coreGroups.map((g) => (
           <fieldset
-            class="border-t-2 border-stone-900 dark:border-stone-600 pt-4"
+            class="border-t-2 border-stone-900 pt-4"
             data-group={g.key}
             data-reveal
           >
             <legend class="flex items-baseline gap-3">
-              <span class="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-300">
+              <span class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
                 {g.label.split(':')[0]}
               </span>
               <span class="text-lg font-bold tracking-tight">{shortLabel(g.label)}</span>
             </legend>
             {g.subjects.length === 0 ? (
-              <p class="mt-3 text-sm text-stone-400 dark:text-stone-500">{b.noSubjectsInGroup}</p>
+              <p class="mt-3 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
             ) : (
               <div class="mt-4 grid gap-3 sm:grid-cols-2">
                 {g.subjects.map((s) => (
-                  <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
+                  <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
                     <div class="min-w-0">
                       <input
                         type="radio"
@@ -143,7 +143,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                         data-offered={s.offered}
                         class="peer sr-only"
                       />
-                      <span class="block font-semibold text-stone-900 dark:text-stone-100 peer-checked:text-emerald-800 dark:peer-checked:text-emerald-200">
+                      <span class="block font-semibold text-stone-900 peer-checked:text-emerald-800">
                         {s.title}
                       </span>
                       <span class="mt-2 inline-flex gap-1.5" data-level-group={`group-${g.key}`}>
@@ -151,7 +151,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                           <button
                             type="button"
                             data-level={lv}
-                            class="rounded-full border border-stone-200 dark:border-stone-800 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 dark:text-stone-400 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
+                            class="rounded-full border border-stone-200 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
                           >
                             {lv}
                           </button>
@@ -159,7 +159,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                       </span>
                     </div>
                     <span
-                      class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 dark:border-stone-700 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
+                      class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
                       aria-hidden="true"
                     />
                   </label>
@@ -172,25 +172,25 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
 
       <!-- Sixth subject (elective) -->
       <fieldset
-        class="border-t-2 border-stone-900 dark:border-stone-600 pt-4"
+        class="border-t-2 border-stone-900 pt-4"
         data-group="6"
         data-reveal
       >
         <legend class="flex items-baseline gap-3">
           <span
-            class="text-xs font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-300"
+            class="text-xs font-semibold uppercase tracking-widest text-emerald-700"
             >{dict.subjects.group6.split(':')[0]} / +</span
           >
           <span class="text-lg font-bold tracking-tight">{shortLabel(dict.subjects.group6)}</span>
         </legend>
-        <p class="mt-2 text-sm text-stone-500 dark:text-stone-400">{b.group6Note}</p>
+        <p class="mt-2 text-sm text-stone-500">{b.group6Note}</p>
         {
           electiveSubjects.length === 0 ? (
-            <p class="mt-3 text-sm text-stone-400 dark:text-stone-500">{b.noSubjectsInGroup}</p>
+            <p class="mt-3 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
           ) : (
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
               {electiveSubjects.map((s) => (
-                <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
+                <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
                   <div class="min-w-0">
                     <input
                       type="radio"
@@ -202,10 +202,10 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                       data-offered={s.offered}
                       class="peer sr-only"
                     />
-                    <span class="block font-semibold text-stone-900 dark:text-stone-100 peer-checked:text-emerald-800 dark:peer-checked:text-emerald-200">
+                    <span class="block font-semibold text-stone-900 peer-checked:text-emerald-800">
                       {s.title}
                     </span>
-                    <span class="mt-1 block text-[11px] text-stone-400 dark:text-stone-500">
+                    <span class="mt-1 block text-[11px] text-stone-400">
                       {shortLabel(
                         coreGroups.find((g) => g.key === s.group)?.label ?? dict.subjects.group6,
                       )}
@@ -215,7 +215,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                         <button
                           type="button"
                           data-level={lv}
-                          class="rounded-full border border-stone-200 dark:border-stone-800 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 dark:text-stone-400 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
+                          class="rounded-full border border-stone-200 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
                         >
                           {lv}
                         </button>
@@ -223,7 +223,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                     </span>
                   </div>
                   <span
-                    class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 dark:border-stone-700 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
+                    class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
                     aria-hidden="true"
                   />
                 </label>
@@ -237,31 +237,31 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
     <!-- Summary panel -->
     <aside class="mt-12 lg:mt-0 lg:sticky lg:top-28">
       <div
-        class="rounded-3xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 p-6 shadow-sm"
+        class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm"
       >
         <h2 class="text-lg font-bold tracking-tight">{b.summaryTitle}</h2>
 
         <div class="mt-5 grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-xl bg-stone-50 dark:bg-stone-950 py-3">
-            <p id="count-total" class="text-2xl font-extrabold text-stone-900 dark:text-stone-100">
+          <div class="rounded-xl bg-stone-50 py-3">
+            <p id="count-total" class="text-2xl font-extrabold text-stone-900">
               0
             </p>
-            <p class="mt-0.5 text-[11px] text-stone-500 dark:text-stone-400">{b.totalLabel}</p>
+            <p class="mt-0.5 text-[11px] text-stone-500">{b.totalLabel}</p>
           </div>
-          <div class="rounded-xl bg-emerald-50 dark:bg-emerald-900/40 py-3">
-            <p id="count-hl" class="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300">
+          <div class="rounded-xl bg-emerald-50 py-3">
+            <p id="count-hl" class="text-2xl font-extrabold text-emerald-700">
               0
             </p>
             <p class="mt-0.5 text-[11px] text-emerald-700/70">{b.hlCount}</p>
           </div>
-          <div class="rounded-xl bg-sky-50 dark:bg-sky-900/40 py-3">
-            <p id="count-sl" class="text-2xl font-extrabold text-sky-700 dark:text-sky-300">0</p>
+          <div class="rounded-xl bg-sky-50 py-3">
+            <p id="count-sl" class="text-2xl font-extrabold text-sky-700">0</p>
             <p class="mt-0.5 text-[11px] text-sky-700/70">{b.slCount}</p>
           </div>
         </div>
 
         <ol id="summary-list" class="mt-5 space-y-2 text-sm"></ol>
-        <p id="summary-empty" class="mt-5 text-sm text-stone-400 dark:text-stone-500">
+        <p id="summary-empty" class="mt-5 text-sm text-stone-400">
           {b.summaryEmpty}
         </p>
 
@@ -275,18 +275,18 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         <button
           type="button"
           id="builder-reset"
-          class="mt-5 w-full rounded-full border border-stone-200 dark:border-stone-800 py-2.5 text-sm font-semibold text-stone-600 dark:text-stone-400 transition-colors hover:border-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
+          class="mt-5 w-full rounded-full border border-stone-200 py-2.5 text-sm font-semibold text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
         >
           {b.reset}
         </button>
 
-        <div class="mt-6 border-t border-stone-200 dark:border-stone-800 pt-5">
+        <div class="mt-6 border-t border-stone-200 pt-5">
           <p
-            class="text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-stone-500"
+            class="text-xs font-semibold uppercase tracking-widest text-stone-400"
           >
             {b.coreLabel}
           </p>
-          <p class="mt-2 text-sm text-stone-500 dark:text-stone-400 leading-relaxed">
+          <p class="mt-2 text-sm text-stone-500 leading-relaxed">
             {b.coreNote}
           </p>
         </div>
@@ -349,9 +349,9 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
 
           const li = document.createElement('li');
           li.className =
-            'flex items-center justify-between gap-2 rounded-lg bg-stone-50 dark:bg-stone-950 px-3 py-2';
+            'flex items-center justify-between gap-2 rounded-lg bg-stone-50 px-3 py-2';
           const name = document.createElement('span');
-          name.className = 'truncate text-stone-700 dark:text-stone-300';
+          name.className = 'truncate text-stone-700';
           name.textContent = title;
           const badge = document.createElement('span');
           badge.className =
@@ -372,13 +372,9 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         status.classList.add('hidden');
         status.classList.remove(
           'bg-emerald-50',
-          'dark:bg-emerald-900/40',
           'text-emerald-800',
-          'dark:text-emerald-200',
           'bg-amber-50',
-          'dark:bg-amber-900/40',
           'text-amber-800',
-          'dark:text-amber-200',
         );
         if (total === 0) return;
 
@@ -386,27 +382,21 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
           status.textContent = strings.errSix;
           status.classList.add(
             'bg-amber-50',
-            'dark:bg-amber-900/40',
             'text-amber-800',
-            'dark:text-amber-200',
           );
           status.classList.remove('hidden');
         } else if (hl < 3 || hl > 4) {
           status.textContent = strings.errHlRange;
           status.classList.add(
             'bg-amber-50',
-            'dark:bg-amber-900/40',
             'text-amber-800',
-            'dark:text-amber-200',
           );
           status.classList.remove('hidden');
         } else {
           status.textContent = strings.validComplete;
           status.classList.add(
             'bg-emerald-50',
-            'dark:bg-emerald-900/40',
             'text-emerald-800',
-            'dark:text-emerald-200',
           );
           status.classList.remove('hidden');
         }

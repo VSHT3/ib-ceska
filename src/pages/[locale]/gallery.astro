@@ -50,7 +50,7 @@ const fullImages = await Promise.all(
 >
   <!-- Editorial hero -->
   <section
-    class="relative overflow-hidden border-b border-stone-200/80 dark:border-stone-800/80 bg-white dark:bg-stone-900"
+    class="relative overflow-hidden border-b border-stone-200/80 bg-white"
   >
     <span
       class="absolute -right-8 -bottom-16 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none"
@@ -58,7 +58,7 @@ const fullImages = await Promise.all(
     >
     <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
       <span
-        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700 dark:text-emerald-300"
+        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700"
         >{dict.gallery.label}</span
       >
       <h1
@@ -68,7 +68,7 @@ const fullImages = await Promise.all(
         {dict.gallery.title}
       </h1>
       <p
-        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 dark:text-stone-400 leading-relaxed"
+        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed"
         style="--rise-delay: 160ms"
       >
         {dict.gallery.subtitle}
@@ -88,7 +88,7 @@ const fullImages = await Promise.all(
             data-full={fullImages[i].src}
             data-caption={caption(p)}
             aria-label={caption(p)}
-            class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+            class="group relative mb-4 block w-full break-inside-avoid cursor-zoom-in overflow-hidden rounded-2xl bg-stone-100 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
             data-reveal
             style={`--reveal-delay: ${Math.min(i, 5) * 60}ms`}
           >
