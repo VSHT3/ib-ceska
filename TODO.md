@@ -79,3 +79,8 @@ Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz
 - [x] FAQ accordion for admissions
 - [ ] Instagram/social feed embed
 - [ ] Downloadable school calendar (ICS)
+- [ ] to which countries and schools our students get?
+- [ ] our average Diplomma points
+- [ ] highest diplomma points
+- [ ] opportunities and stuff
+- [ ] self taught languages (like mother tongue), is also possible
