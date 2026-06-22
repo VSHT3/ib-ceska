@@ -50,12 +50,7 @@ const newsLink = { href: l('/news', locale), label: dict.nav.news };
 const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
 const testimonialsLink = { href: l('/testimonials', locale), label: dict.nav.testimonials };
 const teachersLink = { href: l('/teachers', locale), label: dict.nav.teachers };
-const secondaryLinks = [
-  newsLink,
-  galleryLink,
-  testimonialsLink,
-  teachersLink,
-];
+const secondaryLinks = [newsLink, galleryLink, testimonialsLink, teachersLink];
 const admissionsHref = l('/admissions', locale);
 
 // Footer link groups (label + href only)
@@ -229,9 +224,7 @@ const jsonLd = JSON.stringify({
       document.documentElement.classList.add('js');
     </script>
   </head>
-  <body
-    class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased"
-  >
+  <body class="min-h-screen bg-stone-50 text-stone-900 font-sans antialiased">
     <header
       class="border-b border-stone-200/60 bg-white/70 backdrop-blur-xl backdrop-saturate-150 shadow-sm shadow-stone-900/5 sticky top-0 z-50"
     >
@@ -299,24 +292,18 @@ const jsonLd = JSON.stringify({
                       aria-current={isActive(href) ? 'page' : undefined}
                       class:list={[
                         'block rounded-xl px-3.5 py-2.5 transition-colors',
-                        isActive(href)
-                          ? 'bg-emerald-50'
-                          : 'hover:bg-stone-100',
+                        isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
                       ]}
                     >
                       <span
                         class:list={[
                           'block font-semibold',
-                          isActive(href)
-                            ? 'text-emerald-700'
-                            : 'text-stone-800',
+                          isActive(href) ? 'text-emerald-700' : 'text-stone-800',
                         ]}
                       >
                         {label}
                       </span>
-                      <span class="block text-xs text-stone-500 mt-0.5">
-                        {desc}
-                      </span>
+                      <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
                     </a>
                   ))
                 }
@@ -374,24 +361,18 @@ const jsonLd = JSON.stringify({
                       aria-current={isActive(href) ? 'page' : undefined}
                       class:list={[
                         'block rounded-xl px-3.5 py-2.5 transition-colors',
-                        isActive(href)
-                          ? 'bg-emerald-50'
-                          : 'hover:bg-stone-100',
+                        isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
                       ]}
                     >
                       <span
                         class:list={[
                           'block font-semibold',
-                          isActive(href)
-                            ? 'text-emerald-700'
-                            : 'text-stone-800',
+                          isActive(href) ? 'text-emerald-700' : 'text-stone-800',
                         ]}
                       >
                         {label}
                       </span>
-                      <span class="block text-xs text-stone-500 mt-0.5">
-                        {desc}
-                      </span>
+                      <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
                     </a>
                   ))
                 }
@@ -495,9 +476,7 @@ const jsonLd = JSON.stringify({
                   ]}
                 >
                   {label}
-                  <span class="block text-xs font-normal text-stone-500">
-                    {desc}
-                  </span>
+                  <span class="block text-xs font-normal text-stone-500">{desc}</span>
                 </a>
               </li>
             ))
@@ -522,9 +501,7 @@ const jsonLd = JSON.stringify({
                   ]}
                 >
                   {label}
-                  <span class="block text-xs font-normal text-stone-500">
-                    {desc}
-                  </span>
+                  <span class="block text-xs font-normal text-stone-500">{desc}</span>
                 </a>
               </li>
             ))
@@ -565,7 +542,7 @@ const jsonLd = JSON.stringify({
       <slot />
     </main>
 
-    <footer class="mt-24 bg-stone-900 text-stone-300">
+    <footer class="bg-stone-900 text-stone-300">
       <div class="h-1 w-full bg-gradient-to-r from-ib-blue via-emerald-600 to-ib-blue-light"></div>
       <div class="mx-auto max-w-6xl px-6 py-16 grid gap-12 lg:grid-cols-[1.6fr_1fr_1fr_1.1fr]">
         <!-- Brand -->
@@ -637,7 +614,8 @@ const jsonLd = JSON.stringify({
             }
             <li>
               <a href="/rss.xml" class="text-stone-400 hover:text-emerald-400 transition-colors"
-                >RSS</a>
+                >RSS</a
+              >
             </li>
           </ul>
         </div>
@@ -651,12 +629,14 @@ const jsonLd = JSON.stringify({
             <li>
               <a
                 href={`mailto:${contact.email}`}
-                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a>
+                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a
+              >
             </li>
             <li>
               <a
                 href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a>
+                class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a
+              >
             </li>
             <li class="text-stone-400 leading-relaxed">{contact.address}</li>
           </ul>
