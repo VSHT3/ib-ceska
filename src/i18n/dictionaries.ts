@@ -399,13 +399,32 @@ const dict = {
       title: 'Middle Years Programme',
       shortTitle: 'MYP',
       subtitle:
-        'A connected, inquiry-led programme that helps students build strong learning habits before the Diploma Programme.',
+        'An international curriculum for 14 to 16 year olds that teaches your child to think, research, and communicate before the Diploma Programme.',
       age: 'Ages 14–16 at Česká',
       duration: 'Final MYP years',
       label: 'Middle Years Programme',
-      introTitle: 'Learn how subjects connect',
-      introBody:
-        'The MYP organises learning across eight subject groups and asks students to use knowledge in context. At Česká, it provides a bridge between earlier secondary education and the demands of the Diploma Programme.',
+      whatIsLabel: 'What is MYP?',
+      whatIsTitle: 'A curriculum that teaches your child to think, not just memorize',
+      whatIsBody:
+        'The Middle Years Programme is the IB framework for students aged 14 to 16. Instead of memorising facts for exams, your child investigates real questions, connects ideas across subjects, and builds the skills they will need for university and work. At Česká, the MYP covers the final two years before the Diploma Programme.',
+      whatIsPoints: [
+        {
+          title: 'Eight subjects, connected',
+          body: 'Your child studies language, humanities, sciences, maths, arts, and design. Teachers plan units together so a history lesson on industrialisation can link to a science lesson on energy.',
+        },
+        {
+          title: 'Real questions, not textbook chapters',
+          body: 'Every unit starts with a question that matters. How do we share the planet? What is fair? Your child uses what they learn to answer it, not just reproduce it.',
+        },
+        {
+          title: 'Skills are taught, not assumed',
+          body: 'Thinking, communication, research, self-management, and collaboration are built into every lesson. Your child learns how to learn, not just what to know.',
+        },
+        {
+          title: 'A personal project, not just exams',
+          body: 'In the final year, your child chooses, plans, and completes a project of their own. It could be a short film, a prototype, a community event. They document the process and reflect on what they learned.',
+        },
+      ],
       principlesLabel: 'How learning works',
       principlesTitle: 'Knowledge matters more when students can use it',
       principles: [
@@ -464,14 +483,14 @@ const dict = {
       ],
       personalProjectTitle: 'The Personal Project',
       personalProjectBody:
-        'In the final MYP year each student completes an extended project of their own choice, documenting a process of inquiry, planning, and reflection.',
+        'In the final MYP year, your child chooses a topic they care about and completes an extended project. It could be a short film, a working prototype, a community event, a piece of writing. They plan the work, carry it out, and reflect on the process. For many students, this is the first time they take full ownership of a long-term piece of work.',
       serviceTitle: 'Service as action',
       serviceBody:
-        'Students take part in sustained service that turns what they learn into responsibility for their community.',
+        'Your child takes part in sustained service to the school or wider community. Not a one-off charity drive, but ongoing engagement with a real need. They reflect on what they did and what it taught them.',
       featureLabel: 'Beyond lessons',
-      featureTitle: 'A long-term project and service in action',
+      featureTitle: 'A personal project and real community service',
       featureBody:
-        'MYP students apply their skills through sustained independent work and meaningful action in their community.',
+        'MYP is not just classroom work. Your child will complete a self-chosen project and take part in sustained service, both of which build independence and responsibility.',
       links: [
         {
           label: 'Explore subjects',
@@ -493,6 +512,10 @@ const dict = {
       officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
       officialLink: 'Read the official MYP curriculum',
       exploreLink: 'Explore',
+      afterMypLabel: 'After MYP',
+      afterMypTitle: 'The MYP flows into the Diploma Programme',
+      afterMypBody:
+        'The Diploma Programme (ages 16 to 19) is the direct path to university entrance worldwide. The habits your child builds in MYP (independent research, time management, connecting ideas across subjects) are exactly what the DP demands. Moving from MYP to DP at Česká means staying in the same school with teachers who already know your child.',
       admissionsTitle: 'Is the MYP the right next step?',
       admissionsBody:
         'Contact the school for current entry requirements, dates, and programme details.',
@@ -957,13 +980,32 @@ const dict = {
       title: 'Middle Years Programme',
       shortTitle: 'MYP',
       subtitle:
-        'Prepojený program založený na bádaní, ktorý pripravuje študentov na nároky Diploma Programme.',
+        'Medzinárodný kurz pre 14- až 16-ročných, ktorý učí dieťa myslieť, bádať a komunikovať pred Diploma Programme.',
       age: 'Vek 14–16 rokov na Českej',
       duration: 'Záverečné roky MYP',
       label: 'Middle Years Programme',
-      introTitle: 'Spoznajte, ako predmety súvisia',
-      introBody:
-        'MYP organizuje učenie v ôsmich predmetových skupinách a vedie študentov k používaniu poznatkov v kontexte. Na Českej tvorí most medzi skorším stredoškolským vzdelávaním a nárokmi Diploma Programme.',
+      whatIsLabel: 'Čo je MYP?',
+      whatIsTitle: 'Kurikulum, ktoré učí dieťa myslieť, nielen memorovať',
+      whatIsBody:
+        'Middle Years Programme je rámec IB pre študentov vo veku 14 až 16 rokov. Namiesto memorovania faktov pre skúšky vaše dieťa skúma skutočné otázky, prepája myšlienky naprieč predmetmi a buduje zručnosti, ktoré bude potrebovať na univerzite aj v živote. Na Českej pokrýva MYP posledné dva roky pred Diploma Programme.',
+      whatIsPoints: [
+        {
+          title: 'Osem predmetov, prepojených',
+          body: 'Vaše dieťa študuje jazyk, spoločenské vedy, prírodné vedy, matematiku, umenie a dizajn. Učitelia plánujú jednotky spoločne, takže hodina dejepis o priemyselnej revolúcii môže nadväzovať na hodinu fyziky o energii.',
+        },
+        {
+          title: 'Skutočné otázky, nie kapitoly z učebnice',
+          body: 'Každá jednotka začína otázkou, na ktorej záleží. Ako sa delíme o planétu? Čo je spravodlivé? Vaše dieťa použije to, čo sa naučilo, aby na ňu odpovedalo, nielen to opísalo.',
+        },
+        {
+          title: 'Zručnosti sa učia, nepredpokladajú',
+          body: 'Myseľ, komunikácia, výskum, sebariadenie a spolupráca sú zabudované do každej hodiny. Vaše dieťa sa učí, ako sa učiť, nielen čo vedieť.',
+        },
+        {
+          title: 'Osobný projekt, nielen skúšky',
+          body: 'V záverečnom roku si vaše dieťa zvolí, naplánuje a dokončí vlastný projekt. Môže to byť krátky film, funkčný prototyp, komunitná akcia. Dokumentuje proces a zamýšľa sa nad tým, čo sa naučilo.',
+        },
+      ],
       principlesLabel: 'Ako funguje učenie',
       principlesTitle: 'Poznatky majú väčšiu hodnotu, keď ich študenti vedia použiť',
       principles: [
@@ -1013,14 +1055,14 @@ const dict = {
       ],
       personalProjectTitle: 'Osobný projekt',
       personalProjectBody:
-        'V záverečnom roku MYP každý študent dokončí rozšírený projekt podľa vlastného výberu a dokumentuje proces bádania, plánovania a reflexie.',
+        'V záverečnom roku MYP si vaše dieťa zvolí tému, na ktorej mu záleží, a dokončí rozšírený projekt. Môže to byť krátky film, funkčný prototyp, komunitná akcia, rozsiahlejší text. Naplánuje prácu, zrealizuje ju a zamýšľa sa nad procesom. Pre mnohých študentov je to prvýkrát, kedy preberú plnú zodpovednosť za dlhodobú prácu.',
       serviceTitle: 'Služba ako čin',
       serviceBody:
-        'Študenti sa zapájajú do dlhodobej služby, ktorá premení učenie na zodpovednosť za komunitu.',
+        'Vaše dieťa sa zapojí do dlhodobej služby škole alebo širšej komunite. Nie jednorazovej zbierky, ale prebiehajúceho angažovania sa v skutočnej potrebe. Zamýšľa sa nad tým, čo urobilo a čo ho to naučilo.',
       featureLabel: 'Mimo vyučovania',
-      featureTitle: 'Dlhodobý projekt a služba v praxi',
+      featureTitle: 'Osobný projekt a skutočná komunitná služba',
       featureBody:
-        'Študenti MYP používajú svoje zručnosti v dlhodobej samostatnej práci a zmysluplnej činnosti pre komunitu.',
+        'MYP nie je len práca v triede. Vaše dieťa dokončí samostatne zvolený projekt a zúčastní sa dlhodobej služby, pričom obe budujú samostatnosť a zodpovednosť.',
       links: [
         {
           label: 'Preskúmať predmety',
@@ -1042,6 +1084,10 @@ const dict = {
       officialUrl: 'https://www.ibo.org/programmes/middle-years-programme/curriculum/',
       officialLink: 'Prečítať oficiálne kurikulum MYP',
       exploreLink: 'Preskúmať',
+      afterMypLabel: 'Po MYP',
+      afterMypTitle: 'MYP plynule prechádza do Diploma Programme',
+      afterMypBody:
+        'Diploma Programme (vek 16 až 19) je priama cesta k univerzitnému štúdiu po celom svete. Návyky, ktoré vaše dieťa buduje v MYP (samostatný výskum, time management, prepájanie myšlienok naprieč predmetmi), sú presne to, čo DP vyžaduje. Prechod z MYP na DP na Českej znamená zostať v tej istej škole s učiteľmi, ktorí vaše dieťa už poznajú.',
       admissionsTitle: 'Je MYP správny ďalší krok?',
       admissionsBody:
         'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
