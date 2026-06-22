@@ -17,7 +17,7 @@ export interface SearchItem {
 /**
  * Build a flat, locale-resolved search index across every Keystatic
  * collection. Runs at build time inside page frontmatter; the result is
- * serialized to JSON and filtered client-side — no runtime reader calls.
+ * serialized to JSON and filtered client-side - no runtime reader calls.
  */
 export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
   const [subjects, news, cas, tok, events, testimonials] = await Promise.all([
@@ -83,7 +83,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
     });
   }
 
-  // Events are merged into the news feed — link there.
+  // Events are merged into the news feed - link there.
   for (const { entry } of events) {
     const title = pick(locale, entry.sk.title, entry.title);
     const description = pick(locale, entry.sk.description, entry.description);
@@ -97,7 +97,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
     });
   }
 
-  // Testimonials have no detail page — link to the listing. Searchable on name + role + quote.
+  // Testimonials have no detail page - link to the listing. Searchable on name + role + quote.
   for (const { entry } of testimonials) {
     const name = entry.name;
     const role = pick(locale, entry.sk.role, entry.role);

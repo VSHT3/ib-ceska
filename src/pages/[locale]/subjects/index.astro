@@ -29,7 +29,7 @@ const groups = groupDefs
     ...g,
     id: `group-${g.key}`,
     ghost: g.key === 'core' ? 'C' : `0${g.key}`,
-    // strip the "Group N: " / "Skupina N: " prefix — the ghost numeral already says it
+    // strip the "Group N: " / "Skupina N: " prefix - the ghost numeral already says it
     shortLabel: g.label.replace(/^[^:]+:\s*/, ''),
     subjects: allSubjects
       .filter((s) => s.entry.group === g.key)

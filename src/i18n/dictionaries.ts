@@ -43,7 +43,7 @@ const dict = {
       ibo: 'International Baccalaureate',
       admissions: 'Admissions',
       mission:
-        'An international education in the heart of Bratislava — preparing students to think critically, act with care, and grow into the world.',
+        'An international education in the heart of Bratislava - preparing students to think critically, act with care, and grow into the world.',
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
       resourcesGroup: 'Resources',
@@ -197,12 +197,12 @@ const dict = {
       onThisPage: 'Subject groups',
       catalogueLabel: 'Course catalogue',
       enrolmentNote:
-        'Subjects run each year only if enough students choose them, so the exact offering — and the levels available — can vary from year to year. Ask the school to confirm current options.',
+        'Subjects run each year only if enough students choose them, so the exact offering - and the levels available - can vary from year to year. Ask the school to confirm current options.',
     },
     builder: {
       title: 'Build Your Diploma',
       subtitle:
-        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool — the school confirms the subjects actually on offer each year.',
+        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool - the school confirms the subjects actually on offer each year.',
       label: 'Plan your studies',
       pickHl: 'HL',
       pickSl: 'SL',
@@ -210,7 +210,7 @@ const dict = {
       slCount: 'Standard Level',
       totalLabel: 'Subjects chosen',
       group6Note:
-        'For your sixth subject, pick from The Arts — or take a second subject from groups 1–4.',
+        'For your sixth subject, pick from The Arts - or take a second subject from groups 1–4.',
       coreLabel: 'The core',
       coreNote: 'Every diploma also includes Theory of Knowledge, the Extended Essay, and CAS.',
       summaryTitle: 'Your diploma',
@@ -236,9 +236,9 @@ const dict = {
       strandActivity: 'Activity',
       strandService: 'Service',
       creativityDesc:
-        'Arts and creative thinking — original work that students imagine, design, and carry out.',
+        'Arts and creative thinking - original work that students imagine, design, and carry out.',
       activityDesc:
-        'Physical effort as part of a healthy lifestyle — sport, movement, and challenge.',
+        'Physical effort as part of a healthy lifestyle - sport, movement, and challenge.',
       serviceDesc: 'Unpaid, voluntary work with a real benefit for the community.',
       filterAll: 'All strands',
       journalHeading: 'Activity journal',
@@ -301,7 +301,7 @@ const dict = {
     },
     testimonials: {
       title: 'Student voices',
-      subtitle: 'What studying the IB at Česká is really like — in our students’ own words.',
+      subtitle: 'What studying the IB at Česká is really like - in our students’ own words.',
       label: 'Voices',
       none: 'Testimonials are coming soon.',
       homeLabel: 'Student voices',
@@ -381,7 +381,7 @@ const dict = {
         },
         {
           q: 'Do I need to speak Slovak?',
-          a: 'The Diploma Programme at Česká is taught in English. Slovak is helpful for daily life but is not required to apply — tell us your preferred language and the team will work with you.',
+          a: 'The Diploma Programme at Česká is taught in English. Slovak is helpful for daily life but is not required to apply - tell us your preferred language and the team will work with you.',
         },
         {
           q: 'Can I transfer from another school mid-programme?',
@@ -572,7 +572,7 @@ const dict = {
       ibo: 'International Baccalaureate',
       admissions: 'Prijímacie konanie',
       mission:
-        'Medzinárodné vzdelávanie v srdci Bratislavy — pripravujeme študentov kriticky myslieť, konať s ohľaduplnosťou a rásť do sveta.',
+        'Medzinárodné vzdelávanie v srdci Bratislavy - pripravujeme študentov kriticky myslieť, konať s ohľaduplnosťou a rásť do sveta.',
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
       resourcesGroup: 'Zdroje',
@@ -681,7 +681,7 @@ const dict = {
       daffodilLabel: 'CAS v praxi',
       daffodilHeading: 'Deň narcisov 2026: ďakujeme za vašu podporu',
       daffodilBody1:
-        'V rámci svojho CAS projektu dvaja IB študenti viedli organizáciu účasti našej školy na Dni narcisov, celoslovenskej zbierke Ligy proti rakovine. Postarali sa o všetky časti projektu — komunikáciu s organizáciou, koordináciu dobrovoľníkov, propagáciu podujatia aj samotnú zbierku v škole i v miestnej komunite.',
+        'V rámci svojho CAS projektu dvaja IB študenti viedli organizáciu účasti našej školy na Dni narcisov, celoslovenskej zbierke Ligy proti rakovine. Postarali sa o všetky časti projektu - komunikáciu s organizáciou, koordináciu dobrovoľníkov, propagáciu podujatia aj samotnú zbierku v škole i v miestnej komunite.',
       daffodilBody2:
         'Spolu s ďalšími IB študentmi a dobrovoľníkmi pomohli vyzbierať 1 637,36 € na podporu Ligy proti rakovine. Tento príspevok pomôže financovať služby a programy, ktoré poskytujú pomoc onkologickým pacientom a ich rodinám na celom Slovensku.',
       daffodilBody3:
@@ -724,19 +724,19 @@ const dict = {
       onThisPage: 'Predmetové skupiny',
       catalogueLabel: 'Katalóg kurzov',
       enrolmentNote:
-        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka — aj dostupné úrovne — sa môže rok od roka líšiť. Aktuálne možnosti si overte u školy.',
+        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka - aj dostupné úrovne - sa môže rok od roka líšiť. Aktuálne možnosti si overte u školy.',
     },
     builder: {
       title: 'Zostavte si diplom',
       subtitle:
-        'Vyberte si jeden predmet z každej skupiny a uvidíte, ako by mohol vyzerať váš IB diplom. Je to plánovací nástroj — škola každý rok potvrdzuje skutočne ponúkané predmety.',
+        'Vyberte si jeden predmet z každej skupiny a uvidíte, ako by mohol vyzerať váš IB diplom. Je to plánovací nástroj - škola každý rok potvrdzuje skutočne ponúkané predmety.',
       label: 'Naplánujte si štúdium',
       pickHl: 'HL',
       pickSl: 'SL',
       hlCount: 'Higher Level',
       slCount: 'Standard Level',
       totalLabel: 'Vybraté predmety',
-      group6Note: 'Ako šiesty predmet si vyberte z Umenia — alebo druhý predmet zo skupín 1–4.',
+      group6Note: 'Ako šiesty predmet si vyberte z Umenia - alebo druhý predmet zo skupín 1–4.',
       coreLabel: 'Jadro programu',
       coreNote: 'Každý diplom zahŕňa aj Theory of Knowledge, Extended Essay a CAS.',
       summaryTitle: 'Váš diplom',
@@ -762,8 +762,8 @@ const dict = {
       strandActivity: 'Aktivita',
       strandService: 'Služba',
       creativityDesc:
-        'Umenie a tvorivé myslenie — originálna práca, ktorú študenti vymyslia, navrhnú a zrealizujú.',
-      activityDesc: 'Fyzická aktivita ako súčasť zdravého životného štýlu — šport, pohyb a výzvy.',
+        'Umenie a tvorivé myslenie - originálna práca, ktorú študenti vymyslia, navrhnú a zrealizujú.',
+      activityDesc: 'Fyzická aktivita ako súčasť zdravého životného štýlu - šport, pohyb a výzvy.',
       serviceDesc: 'Dobrovoľnícka práca so skutočným prínosom pre komunitu.',
       filterAll: 'Všetky oblasti',
       journalHeading: 'Denník aktivít',
@@ -827,7 +827,7 @@ const dict = {
     },
     testimonials: {
       title: 'Hlasy študentov',
-      subtitle: 'Aké je naozaj štúdium IB na Českej — slovami našich študentov.',
+      subtitle: 'Aké je naozaj štúdium IB na Českej - slovami našich študentov.',
       label: 'Hlasy',
       none: 'Referencie čoskoro pribudnú.',
       homeLabel: 'Hlasy študentov',
@@ -905,7 +905,7 @@ const dict = {
         },
         {
           q: 'Musím vedieť po slovensky?',
-          a: 'Diploma Programme na Českej prebieha v angličtine. Slovenčina pomáha v bežnom živote, ale na prihlásenie sa nevyžaduje — uveďte preferovaný jazyk a tím sa vám prispôsobí.',
+          a: 'Diploma Programme na Českej prebieha v angličtine. Slovenčina pomáha v bežnom živote, ale na prihlásenie sa nevyžaduje - uveďte preferovaný jazyk a tím sa vám prispôsobí.',
         },
         {
           q: 'Môžem prestúpiť z inej školy počas programu?',
