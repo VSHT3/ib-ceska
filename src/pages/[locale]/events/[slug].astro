@@ -1,0 +1,114 @@
+---
+import { reader, pick } from '../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../lib/markdoc';
+import Layout from '../../../layouts/Layout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import { t, l } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.events.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } })),
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+
+const event = await reader.collections.events.read(slug);
+if (!event) return Astro.redirect(l('/news', locale));
+
+const title = pick(locale, event.sk.title, event.title);
+const description = pick(locale, event.sk.description, event.description);
+
+const enHtml = await renderMarkdoc(event.content);
+const skHtml = await renderMarkdoc(event.sk.body);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+
+const loc = locale === 'sk' ? 'sk-SK' : 'en-GB';
+const dateLabel = event.date
+  ? new Date(event.date).toLocaleDateString(loc, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : undefined;
+
+const endDateLabel = event.endDate
+  ? new Date(event.endDate).toLocaleDateString(loc, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : undefined;
+---
+
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  ogType="article"
+  publishedTime={event.date}
+  pageSchemaType="Event"
+  pageSchema={{
+    name: title,
+    startDate: event.date,
+    endDate: event.endDate ?? undefined,
+    location: event.location ? { '@type': 'Place', name: event.location } : undefined,
+  }}
+>
+  <PageHeader title={title} subtitle={description} label={dateLabel} />
+
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <a
+      href={l('/news', locale)}
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span>
+      {dict.detail.backEvents}
+    </a>
+
+    <div
+      class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-stone-500"
+      data-reveal
+    >
+      {
+        event.endDate && endDateLabel && (
+          <p>
+            <span class="font-semibold text-stone-700">{dateLabel}</span>
+            <span class="mx-1.5 text-stone-300">&ndash;</span>
+            <span class="font-semibold text-stone-700">{endDateLabel}</span>
+          </p>
+        )
+      }
+      {
+        event.time && (
+          <p>
+            <span class="text-stone-400">{locale === 'sk' ? 'Čas' : 'Time'}:</span>
+            <span class="ml-1 font-medium text-stone-700">{event.time}</span>
+          </p>
+        )
+      }
+      {
+        event.location && (
+          <p>
+            <span class="text-stone-400">{locale === 'sk' ? 'Miesto' : 'Location'}:</span>
+            <span class="ml-1 font-medium text-stone-700">{event.location}</span>
+          </p>
+        )
+      }
+    </div>
+
+    <article class="rich-text mt-8" data-reveal>
+      {
+        hasContent(bodyHtml) ? (
+          <Fragment set:html={bodyHtml} />
+        ) : (
+          <p class="text-stone-400">{dict.detail.comingSoon}</p>
+        )
+      }
+    </article>
+  </div>
+</Layout>

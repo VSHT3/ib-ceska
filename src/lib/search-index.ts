@@ -83,15 +83,15 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
     });
   }
 
-  // Events are merged into the news feed - link there.
-  for (const { entry } of events) {
+  // Events have their own detail page under /events/[slug].
+  for (const { slug, entry } of events) {
     const title = pick(locale, entry.sk.title, entry.title);
     const description = pick(locale, entry.sk.description, entry.description);
     items.push({
       title,
       description,
       type: 'Event',
-      href: l('/news', locale),
+      href: l(`/events/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
     });

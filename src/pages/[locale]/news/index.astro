@@ -46,7 +46,9 @@ const eventItems: FeedItem[] = (await reader.collections.events.all()).map((e) =
   slug: e.slug,
   date: e.entry.date,
   title: pick(locale, e.entry.sk.title, e.entry.title),
-  description: e.entry.description ? pick(locale, e.entry.sk.description, e.entry.description) : null,
+  description: e.entry.description
+    ? pick(locale, e.entry.sk.description, e.entry.description)
+    : null,
   time: e.entry.time,
   location: e.entry.location,
 }));
@@ -55,10 +57,8 @@ const feed = [...newsItems, ...eventItems].sort(
   (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime(),
 );
 
-const featured = feed.find((f) => f.type === 'article') as
-  | Extract<FeedItem, { type: 'article' }>
-  | undefined;
-const rest = featured ? feed.filter((f) => f !== featured) : feed;
+const featured = feed[0];
+const rest = feed.slice(1);
 
 const fmtDate = (date: string | null) =>
   date
@@ -103,7 +103,11 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
 
         {featured && (
           <a
-            href={`/${locale}/news/${featured.slug}`}
+            href={
+              featured.type === 'event'
+                ? `/${locale}/events/${featured.slug}`
+                : `/${locale}/news/${featured.slug}`
+            }
             class="group block border-b border-stone-200 py-10 sm:py-14"
             data-reveal
           >
@@ -117,24 +121,23 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
               </span>
               <div class="min-w-0">
                 {featured.date && (
-                  <time class="block text-sm text-stone-400 mb-3">
-                    {fmtDate(featured.date)}
-                  </time>
+                  <time class="block text-sm text-stone-400 mb-3">{fmtDate(featured.date)}</time>
                 )}
                 <h2 class="text-3xl sm:text-5xl font-bold tracking-tight leading-[1.05] text-stone-900 group-hover:text-emerald-700 transition-colors">
                   {featured.title}
                 </h2>
-                {featured.excerpt && (
-                  <p class="mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed">
-                    {featured.excerpt}
-                  </p>
-                )}
+                <p class="mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed">
+                  {featured.type === 'event' ? featured.description : featured.excerpt}
+                </p>
                 <div class="mt-6 flex items-center gap-4">
-                  {featured.author && (
+                  {featured.type === 'article' && featured.author && (
                     <span class="text-sm text-stone-400">{featured.author}</span>
                   )}
+                  {featured.type === 'event' && featured.location && (
+                    <span class="text-sm text-stone-400">{featured.location}</span>
+                  )}
                   <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700">
-                    {dict.news.readMore}
+                    {featured.type === 'event' ? dict.news.readEvent : dict.news.readMore}
                     <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">
                       →
                     </span>
@@ -153,7 +156,7 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
             <ol>
               {rest.map((item, i) => {
                 const year = yearOf(item.date);
-                const prevDate = i === 0 ? featured?.date ?? null : rest[i - 1].date;
+                const prevDate = i === 0 ? (featured?.date ?? null) : rest[i - 1].date;
                 const prevYear = yearOf(prevDate);
                 const showYear = year !== null && year !== prevYear;
                 return (
@@ -198,8 +201,11 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
                         </span>
                       </a>
                     ) : (
-                      <div class="group grid grid-cols-[1fr_auto] sm:grid-cols-[7rem_1fr_auto] items-baseline gap-x-4 sm:gap-x-8 gap-y-1 border-b border-stone-200 py-6">
-                        <time class="hidden sm:block text-sm text-stone-400 tabular-nums">
+                      <a
+                        href={`/${locale}/events/${item.slug}`}
+                        class="group grid grid-cols-[1fr_auto] sm:grid-cols-[7rem_1fr_auto] items-baseline gap-x-4 sm:gap-x-8 gap-y-1 border-b border-stone-200 py-6"
+                      >
+                        <time class="hidden sm:block text-sm text-stone-400 tabular-nums group-hover:text-emerald-600 transition-colors">
                           {fmtShort(item.date)}
                         </time>
                         <div class="min-w-0">
@@ -207,11 +213,9 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
                             <span class="inline-block rounded bg-emerald-50 px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-emerald-700">
                               {dict.news.eventBadge}
                             </span>
-                            {item.time && (
-                              <span class="text-xs text-stone-400">{item.time}</span>
-                            )}
+                            {item.time && <span class="text-xs text-stone-400">{item.time}</span>}
                           </div>
-                          <h3 class="mt-1 text-xl sm:text-2xl font-semibold tracking-tight text-stone-900">
+                          <h3 class="mt-1 text-xl sm:text-2xl font-semibold tracking-tight text-stone-900 group-hover:text-emerald-700 transition-colors">
                             {item.title}
                           </h3>
                           {item.description && (
@@ -226,10 +230,13 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
                             {item.date && <time>{fmtDate(item.date)}</time>}
                           </div>
                         </div>
-                        <span class="text-stone-300" aria-hidden="true">
-                          ◷
+                        <span
+                          class="text-emerald-700 font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                          aria-hidden="true"
+                        >
+                          →
                         </span>
-                      </div>
+                      </a>
                     )}
                   </li>
                 );
