@@ -98,7 +98,7 @@ Implemented and shipped.
 - [x] MYP candidate-school disclaimer + correct programme ages (14–16 / 16–19)
 - [x] School photography from the old Framer site (`public/images/school/`)
 - [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
-- [x] Dark mode (`prefers-color-scheme: dark`) — Tailwind 4 media variant across all pages, components, layout, and `global.css`; stone-950 page bg, stone-900 surfaces, emerald-300 accents; solid accent pills stay light for contrast
+- [x] Light mode only — single theme, no dark mode (reverted)
 
 ## Sample content
 
@@ -106,7 +106,8 @@ Implemented and shipped.
 - [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
-- [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections (27 items), client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts, nav + footer link, sitemap entry
+- [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections, client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
+- [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed; events Keystatic collection retained.
 
 ## Deployment
 
