@@ -4,6 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import { t, l } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 import { school } from '../../assets/school';
+import DocumentList from '../../components/DocumentList.astro';
+import { mypDocuments } from '../../data/documents';
 
 export function getStaticPaths() {
   return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
@@ -253,6 +255,20 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
           {t(locale).dp.title} →
         </a>
       </div>
+    </div>
+  </section>
+
+  <!-- MYP documents: short info + official IB parent pack -->
+  <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+    <div data-reveal class="max-w-2xl">
+      <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+        {p.documentsLabel}
+      </p>
+      <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.documentsTitle}</h2>
+      <p class="mt-5 leading-relaxed text-stone-600">{p.documentsIntro}</p>
+    </div>
+    <div class="mt-10" data-reveal style="--reveal-delay: 100ms">
+      <DocumentList items={mypDocuments} locale={locale} tone="amber" />
     </div>
   </section>
 

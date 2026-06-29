@@ -394,6 +394,21 @@ const dict = {
           a: 'As a private school, Česká charges tuition. The school will share current fees and any available support during your first conversation.',
         },
       ],
+      documentsLabel: 'Documents & forms',
+      documentsTitle: 'Admissions documents',
+      documentsIntro:
+        'Download the official admissions announcements, application forms, and process details. Always confirm current dates with the IB team before applying.',
+      documentsDpLabel: 'Diploma Programme',
+      documentsMypLabel: 'Middle Years Programme',
+      feesLabel: 'School fees',
+      feesTitle: 'DP tuition & costs',
+      feesIntro:
+        'Annual costs for the Diploma Programme at Česká. Fees are set by the school and may change between years — confirm the current schedule with the IB team.',
+      feesDp1: 'DP1',
+      feesDp2: 'DP2',
+      feesItem: 'Item',
+      feesNote:
+        'School fees are payable in three instalments. The entry fee applies only to students coming from outside Česká. Final IB exam fees are billed in DP2.',
     },
     myp: {
       title: 'Middle Years Programme',
@@ -520,6 +535,10 @@ const dict = {
       admissionsBody:
         'Contact the school for current entry requirements, dates, and programme details.',
       admissionsLink: 'View admissions',
+      documentsLabel: 'Documents',
+      documentsTitle: 'MYP guides for parents',
+      documentsIntro:
+        'A short overview of MYP at Česká and the official IB parent pack. For admissions forms, see the admissions page.',
     },
     dp: {
       title: 'Diploma Programme',
@@ -975,6 +994,21 @@ const dict = {
           a: 'Ako súkromná škola Česká vyberá školné. Aktuálnu výšku školného a možnú podporu vám škola poskytne počas prvého rozhovoru.',
         },
       ],
+      documentsLabel: 'Dokumenty a formuláre',
+      documentsTitle: 'Dokumenty k prijímaniu',
+      documentsIntro:
+        'Stiahnite si oficiálne oznamy o prijímacom konaní, prihlášky a podrobnosti procesu. Aktuálne termíny vždy priebežne overujte s IB tímom pred podaním prihlášky.',
+      documentsDpLabel: 'Diploma Programme',
+      documentsMypLabel: 'Middle Years Programme',
+      feesLabel: 'Školné',
+      feesTitle: 'Školné a náklady DP',
+      feesIntro:
+        'Ročné náklady na Diploma Programme na Českej. Poplatky určuje škola a môžu sa medzi rokmi meniť — aktuálny rozpis overte s IB tímom.',
+      feesDp1: 'DP1',
+      feesDp2: 'DP2',
+      feesItem: 'Položka',
+      feesNote:
+        'Školné sa platí v troch splátkach. Zápisné sa vzťahuje len na študentov prichádzajúcich z iných škôl. Poplatky za záverečné IB skúšky saúčtujú v DP2.',
     },
     myp: {
       title: 'Middle Years Programme',
@@ -1092,6 +1126,10 @@ const dict = {
       admissionsBody:
         'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
       admissionsLink: 'Prijímacie konanie',
+      documentsLabel: 'Dokumenty',
+      documentsTitle: 'Sprievodcovia MYP pre rodičov',
+      documentsIntro:
+        'Krátky prehľad MYP na Českej a oficiálne vydanie IB pre rodičov. Prihlášky nájdete na stránke prijímacieho konania.',
     },
     dp: {
       title: 'Diploma Programme',

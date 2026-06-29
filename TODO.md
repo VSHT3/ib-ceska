@@ -58,6 +58,7 @@ Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz
 - [ ] Verify Keystatic login + Save still work on the new origin
 - [ ] (Optional) keep or remove the old sslip.io domain in Coolify; if removed, the temp callback URL can come off the GitHub App
 - [ ] No code change needed — `astro.config.mjs` `site` is already `https://ib.gymnaziumceska.sk`; `keystatic.config.ts` repo is `VSHT3/ib-ceska` (origin-independent)
+- [ ] have real professional email for website
 
 ## DX
 
@@ -71,6 +72,48 @@ Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz
 - [x] Search across all collections — `/[locale]/search` page with build-time index (all 6 Keystatic collections, 27 items), client-side vanilla-JS filtering, bilingual, nav + footer link, sitemap entry.
 - [ ] Tag/category filtering for CAS entries
 - [ ] PDF upload support for EE resources
+
+## IB site IA — coordinator's requested section structure
+
+Source: IB coordinator's proposed site map (top-level sections → sub-items). Core ask: **"Základné IB dokumenty by mali byť na stránke ľahko nájditeľné"** — basic IB documents must be easy to find _on the site_. This is a whole-site information-architecture proposal, NOT a spec for the `/dp` page.
+
+### DONE — admissions & MYP documents hosted and wired
+
+The coordinator supplied the real PDFs (the old site had none — see below). 7 PDFs now live in `public/documents/` and are linked from the site:
+
+- `/admissions` — **School fees** rendered as an HTML table (reconstructed from the school's fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: DP Admissions Announcement, DP Application Form, Prihláška na prijímacie konanie, Informácie o prijímacom konaní (DP group); MYP Admissions Announcement (MYP group). Each link shows a language badge (EN/SK).
+- `/myp` — **MYP guides for parents** section: MYP at Česká (short info, SK), MYP Parent Pack (official IB, EN).
+- Manifest: `src/data/documents.ts` (`admissionsDocuments`, `mypDocuments`, `dpFees`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
+- Skipped per coordinator: `program comparison` (content already covered on the site). Fees PDF not hosted — rendered as HTML instead, per coordinator.
+
+Section → current coverage:
+
+1. **What is IBDP?** — `/dp` exists (explainer + core-element links) but does NOT surface: IBO Mission Statement ❌, School Mission Statement ❌, IB Learner Profile ❌
+2. **Subjects & DP Core** — Subjects `/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
+3. **School Policies** — Admissions ❌ (referenced but not supplied) / Assessment ❌ / Language ❌ / Academic Integrity ❌ / Inclusion ❌ (no policies page or collection at all)
+4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ (announcement + informácie PDFs) / Application Form ✅ (DP form + Prihláška PDFs) / School Fees ✅ (HTML table) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form) / Handbook for parents ❌ (not supplied) / Admissions Policy ❌ (referenced by announcements but not supplied — see HUMANTODO)
+5. **Activities/Events** — `/news` merged feed ✅
+6. **Gallery** — `/gallery` ✅
+7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ / Non-teaching staff ❌ / Organizational Chart ❌
+8. **University Admission** — ❌ no page (where graduates go: countries/universities, entry requirements, outcomes)
+9. **Contacts** — footer only ❌ no dedicated page
+
+Gaps to build (per-page, not crammed onto `/dp`) once approved:
+
+- [ ] **Policies page** — index for the 5 IB policies; links to the actual policy documents (documents themselves are a human item — see HUMANTODO)
+- [ ] **University Admission page** — general structure; destination-university list + outcome stats are human items
+- [ ] **Contacts page** — dedicated page (school contact data already in `i18n/dictionaries.ts`)
+- [x] **Admissions docs & fees** — Entrance Exams info, Application Form (DP + Prihláška), School Fees (HTML table) wired into `/admissions`; MYP docs wired into `/myp` ✅ 2026-06-29
+- [ ] **Admissions gaps still pending** — Subject Choice Form + Parent Handbook (not yet supplied — see HUMANTODO)
+- [ ] **Staff gaps** — add Non-teaching staff + Organizational Chart to `/teachers` (content is a human item)
+- [ ] **Mission & Learner Profile** — surface IBO Mission Statement (public IB text) + IB Learner Profile (public IB framework); school's own mission statement is a human item
+- [ ] **Nav wiring** — make the new + existing sections reachable from the main nav so the 9 sections are findable from anywhere; don't bury them on `/dp`
+
+Scope rule: no empty/"coming soon" stubs shipped as finished — a page is built only when its content exists or is a human item the school will supply imminently.
+
+### Old-site `/documents` is a placeholder mockup — NOT a source of real files
+
+Investigated `https://ib.gymnaziumceska.sk/documents` (Framer SPA). All 13 document cards (MYP FAQs, Application Form, Admissions Policy, School fees, Course Selection, Prihláška, Pravidlá prijímania, Voľba predmetov, etc.) render a "View" button whose `fileURL` prop points to the **same** pdf.js demo PDF (`raw.githubusercontent.com/mozilla/pdf.js/.../compressed.tracemonkey-pldi-09.pdf` — a 2009 TraceMonkey JIT paper). No real school documents are hosted on the old site. Confirms the coordinator's note that her list was "len ako inšpiráciu" (inspiration only). The actual PDFs must come from the school (see HUMANTODO). Do not attempt to "download from the old site" — there is nothing real there to fetch.
 
 ## Ideas (unprioritized)
 
