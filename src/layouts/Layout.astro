@@ -687,6 +687,31 @@ const jsonLd = JSON.stringify({
           revealEls.forEach((el) => io.observe(el));
         }
 
+        // Hero parallax: background lags scroll for depth
+        const w = window as unknown as { __heroParallax?: () => void };
+        if (w.__heroParallax) {
+          window.removeEventListener('scroll', w.__heroParallax);
+          w.__heroParallax = undefined;
+        }
+        const heroBg = document.querySelector<HTMLElement>('[data-parallax]');
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (heroBg && !reduceMotion) {
+          let ticking = false;
+          const apply = () => {
+            heroBg.style.transform = `translate3d(0, ${window.scrollY * 0.3}px, 0)`;
+            ticking = false;
+          };
+          const onScroll = () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(apply);
+            }
+          };
+          w.__heroParallax = onScroll;
+          window.addEventListener('scroll', onScroll, { passive: true });
+          apply();
+        }
+
         // Language switch keeps scroll position (ClientRouter scrolls to top by default)
         document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
           a.addEventListener('click', () => {

@@ -195,4 +195,7 @@ html.js [data-reveal].revealed {
   .marquee-track {
     animation: none;
   }
+  .hero-parallax {
+    transform: none !important;
+  }
 }

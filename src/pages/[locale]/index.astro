@@ -99,16 +99,21 @@ const exploreCards = [
 
 <Layout title={dict.site.title} description={dict.home.heroSub} locale={locale}>
   <!-- Hero (full-bleed, full-height, left-aligned editorial) -->
-  <section class="relative flex min-h-[85vh] items-center overflow-hidden bg-stone-900 text-white">
-    <Image
-      src={school.schoolBuilding}
-      alt=""
-      class="hero-fade ken-burns absolute inset-0 h-full w-full object-cover opacity-50"
-      widths={[768, 1280, 1920]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
+  <section class="relative flex min-h-screen items-center overflow-hidden bg-stone-900 text-white">
+    <div
+      class="hero-parallax absolute inset-x-0 -top-[30%] h-[160%] will-change-transform"
+      data-parallax
+    >
+      <Image
+        src={school.schoolBuilding}
+        alt=""
+        class="hero-fade ken-burns absolute inset-0 h-full w-full object-cover opacity-50"
+        widths={[768, 1280, 1920]}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
     <div
       class="absolute inset-0 bg-linear-to-r from-emerald-950/95 via-emerald-900/70 to-emerald-950/30"
     >
