@@ -27,7 +27,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     provider: { '@id': new URL('/#school', Astro.site).href },
   }}
 >
-  <!-- Hero: edge-to-edge split, entrance + ken-burns (no opacity tint) -->
+  <!-- Hero: edge-to-edge split, entrance + scroll parallax on the photo -->
   <section class="grid items-stretch lg:grid-cols-2">
     <div class="flex items-center bg-amber-800 px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
       <div class="max-w-xl">
@@ -65,15 +65,20 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
       </div>
     </div>
     <div class="relative min-h-[20rem] overflow-hidden lg:min-h-[34rem]">
-      <Image
-        src={school.studentsReading}
-        alt="Students reading together at Česká"
-        class="ken-burns absolute inset-0 h-full w-full object-cover"
-        widths={[768, 1024, 1280]}
-        sizes="(min-width: 1024px) 50vw, 100vw"
-        loading="eager"
-        fetchpriority="high"
-      />
+      <div
+        class="hero-parallax absolute inset-x-0 -top-[25%] h-[150%] will-change-transform"
+        data-parallax
+      >
+        <Image
+          src={school.studentsReading}
+          alt="Students reading together at Česká"
+          class="absolute inset-0 h-full w-full object-cover"
+          widths={[768, 1024, 1280]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
     </div>
   </section>
 
