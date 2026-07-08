@@ -45,9 +45,7 @@ const groups = groupDefs
   pageSchemaType="CollectionPage"
 >
   <!-- Editorial split hero -->
-  <section
-    class="relative overflow-hidden border-b border-stone-200/80 bg-white"
-  >
+  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
     <div
       class="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-20 items-center"
     >
@@ -107,9 +105,7 @@ const groups = groupDefs
     <!-- Sticky group rail (desktop) -->
     <aside class="hidden lg:block">
       <nav class="sticky top-28" aria-label={dict.subjects.onThisPage}>
-        <p
-          class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-4"
-        >
+        <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-4">
           {dict.subjects.onThisPage}
         </p>
         <ul class="space-y-1 border-l border-stone-200">
@@ -168,14 +164,16 @@ const groups = groupDefs
                         <h3 class="text-xl sm:text-2xl font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
                           {pick(locale, s.entry.sk.title, s.entry.title)}
                         </h3>
-                        {s.entry.level && (
-                          <span class:list={[
-                            'text-xs font-bold tracking-wide px-2.5 py-1 rounded-full shrink-0',
-                            s.entry.level === 'HL'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-sky-100 text-sky-800',
-                          ]}>
-                            {s.entry.level}
+                        {s.entry.offeredLevels && (
+                          <span
+                            class:list={[
+                              'text-xs font-bold tracking-wide px-2.5 py-1 rounded-full shrink-0',
+                              s.entry.offeredLevels === 'SL'
+                                ? 'bg-sky-100 text-sky-800'
+                                : 'bg-emerald-100 text-emerald-800',
+                            ]}
+                          >
+                            {s.entry.offeredLevels === 'both' ? 'HL & SL' : s.entry.offeredLevels}
                           </span>
                         )}
                       </div>

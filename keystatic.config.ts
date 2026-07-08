@@ -1,4 +1,4 @@
-import { config, fields, collection } from '@keystatic/core';
+import { collection, config, fields } from '@keystatic/core';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -11,13 +11,16 @@ const slovakFields = (opts: { description?: string; excerpt?: boolean; body?: st
       ...(opts.description
         ? { description: fields.text({ label: `${opts.description} (Slovak)`, multiline: true }) }
         : {}),
-      ...(opts.excerpt ? { excerpt: fields.text({ label: 'Excerpt (Slovak)', multiline: true }) } : {}),
+      ...(opts.excerpt
+        ? { excerpt: fields.text({ label: 'Excerpt (Slovak)', multiline: true }) }
+        : {}),
       ...(opts.body ? { body: fields.markdoc.inline({ label: `${opts.body} (Slovak)` }) } : {}),
     },
     {
       label: 'Slovak translation',
-      description: 'Optional — visitors see the English version where a Slovak field is left empty.',
-    }
+      description:
+        'Optional — visitors see the English version where a Slovak field is left empty.',
+    },
   );
 
 export default config({
@@ -48,17 +51,10 @@ export default config({
           ],
           defaultValue: '1',
         }),
-        level: fields.select({
-          label: 'Level',
-          options: [
-            { label: 'HL', value: 'HL' },
-            { label: 'SL', value: 'SL' },
-          ],
-          defaultValue: 'HL',
-        }),
         offeredLevels: fields.select({
-          label: 'Offered at',
-          description: 'Levels a student can choose for this subject in the diploma builder.',
+          label: 'Level',
+          description:
+            'Which levels this subject is offered at. Shown as a badge and used in the diploma builder.',
           options: [
             { label: 'HL & SL', value: 'both' },
             { label: 'HL only', value: 'HL' },
@@ -70,7 +66,12 @@ export default config({
         teacher: fields.text({ label: 'Teacher' }),
         order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
         sk: slovakFields({ description: 'Description', body: 'Syllabus Details' }),
-        content: fields.markdoc({ label: 'Syllabus Details', options: { image: { directory: 'public/images/subjects', publicPath: '/images/subjects' } } }),
+        content: fields.markdoc({
+          label: 'Syllabus Details',
+          options: {
+            image: { directory: 'public/images/subjects', publicPath: '/images/subjects' },
+          },
+        }),
       },
     }),
     news: collection({
@@ -84,7 +85,10 @@ export default config({
         excerpt: fields.text({ label: 'Excerpt', multiline: true }),
         author: fields.text({ label: 'Author' }),
         sk: slovakFields({ excerpt: true, body: 'Article Body' }),
-        content: fields.markdoc({ label: 'Article Body', options: { image: { directory: 'public/images/news', publicPath: '/images/news' } } }),
+        content: fields.markdoc({
+          label: 'Article Body',
+          options: { image: { directory: 'public/images/news', publicPath: '/images/news' } },
+        }),
       },
     }),
     cas: collection({
@@ -106,12 +110,15 @@ export default config({
           defaultValue: ['Creativity'],
         }),
         description: fields.text({ label: 'Description', multiline: true }),
-        learningOutcomes: fields.array(
-          fields.text({ label: 'Learning Outcome' }),
-          { label: 'Learning Outcomes', itemLabel: (props) => props.value ?? 'LO' }
-        ),
+        learningOutcomes: fields.array(fields.text({ label: 'Learning Outcome' }), {
+          label: 'Learning Outcomes',
+          itemLabel: (props) => props.value ?? 'LO',
+        }),
         sk: slovakFields({ description: 'Description', body: 'Reflection' }),
-        content: fields.markdoc({ label: 'Reflection', options: { image: { directory: 'public/images/cas', publicPath: '/images/cas' } } }),
+        content: fields.markdoc({
+          label: 'Reflection',
+          options: { image: { directory: 'public/images/cas', publicPath: '/images/cas' } },
+        }),
       },
     }),
     tok: collection({
@@ -130,7 +137,10 @@ export default config({
             { label: 'Knowledge & Language', value: 'Knowledge & Language' },
             { label: 'Knowledge & Politics', value: 'Knowledge & Politics' },
             { label: 'Knowledge & Religion', value: 'Knowledge & Religion' },
-            { label: 'Knowledge & Indigenous Societies', value: 'Knowledge & Indigenous Societies' },
+            {
+              label: 'Knowledge & Indigenous Societies',
+              value: 'Knowledge & Indigenous Societies',
+            },
             { label: 'Ethics', value: 'Ethics' },
             { label: 'Natural Sciences', value: 'Natural Sciences' },
             { label: 'Human Sciences', value: 'Human Sciences' },
@@ -142,7 +152,10 @@ export default config({
         }),
         description: fields.text({ label: 'Summary', multiline: true }),
         sk: slovakFields({ description: 'Summary', body: 'Full Essay' }),
-        content: fields.markdoc({ label: 'Full Essay', options: { image: { directory: 'public/images/tok', publicPath: '/images/tok' } } }),
+        content: fields.markdoc({
+          label: 'Full Essay',
+          options: { image: { directory: 'public/images/tok', publicPath: '/images/tok' } },
+        }),
       },
     }),
     events: collection({
@@ -158,7 +171,10 @@ export default config({
         location: fields.text({ label: 'Location' }),
         description: fields.text({ label: 'Description', multiline: true }),
         sk: slovakFields({ description: 'Description', body: 'Details' }),
-        content: fields.markdoc({ label: 'Details', options: { image: { directory: 'public/images/events', publicPath: '/images/events' } } }),
+        content: fields.markdoc({
+          label: 'Details',
+          options: { image: { directory: 'public/images/events', publicPath: '/images/events' } },
+        }),
       },
     }),
     testimonials: collection({
@@ -167,7 +183,10 @@ export default config({
       path: 'src/content/testimonials/*',
       schema: {
         name: fields.slug({ name: { label: 'Student / alumnus name' } }),
-        role: fields.text({ label: 'Role', description: 'e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE"' }),
+        role: fields.text({
+          label: 'Role',
+          description: 'e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE"',
+        }),
         gradYear: fields.integer({ label: 'Graduation year (optional)' }),
         photo: fields.image({
           label: 'Photo (optional)',
@@ -184,8 +203,9 @@ export default config({
           },
           {
             label: 'Slovak translation',
-            description: 'Optional — visitors see the English version where a Slovak field is left empty.',
-          }
+            description:
+              'Optional — visitors see the English version where a Slovak field is left empty.',
+          },
         ),
         quote: fields.text({ label: 'Quote', multiline: true }),
       },
