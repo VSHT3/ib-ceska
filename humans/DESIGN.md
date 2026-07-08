@@ -6,32 +6,32 @@ The site aims for a **modern, confident, IB-professional** feel: a full-photo he
 
 ## Motion & interactivity
 
-| Effect            | Where                          | How it works                                              |
-| ----------------- | ------------------------------ | --------------------------------------------------------- |
-| Page transitions  | All navigation                 | Astro `<ClientRouter />` view transitions                 |
-| Hero entrance     | Homepage + page headers        | `.hero-rise` CSS keyframe, staggered via `--rise-delay`   |
-| Ken Burns zoom    | Homepage hero photo            | `.ken-burns` slow alternate scale animation               |
-| Scroll reveal     | Sections/cards site-wide       | `data-reveal` + IntersectionObserver adds `.revealed`     |
-| Count-up stats    | Homepage stats band            | `data-count` + IntersectionObserver, eased rAF counter    |
-| Photo marquee     | Homepage gallery               | `.marquee-track` infinite CSS scroll, pauses on hover     |
-| Card hover        | All cards                      | border tint + shadow + `-translate-y` lift                |
+| Effect           | Where                    | How it works                                            |
+| ---------------- | ------------------------ | ------------------------------------------------------- |
+| Page transitions | All navigation           | Astro `<ClientRouter />` view transitions               |
+| Hero entrance    | Homepage + page headers  | `.hero-rise` CSS keyframe, staggered via `--rise-delay` |
+| Ken Burns zoom   | Homepage hero photo      | `.ken-burns` slow alternate scale animation             |
+| Scroll reveal    | Sections/cards site-wide | `data-reveal` + IntersectionObserver adds `.revealed`   |
+| Count-up stats   | Homepage stats band      | `data-count` + IntersectionObserver, eased rAF counter  |
+| Photo marquee    | Homepage gallery         | `.marquee-track` infinite CSS scroll, pauses on hover   |
+| Card hover       | All cards                | border tint + shadow + `-translate-y` lift              |
 
 Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users without JavaScript see all content immediately. The reveal/counter/menu scripts re-initialise on `astro:page-load`, so they keep working after view-transition navigations.
 
 ## Colors
 
-| Token             | Tailwind class      | Usage                          |
-| ----------------- | ------------------- | ------------------------------ |
-| Primary           | `emerald-700`       | Links, brand, call-to-action   |
-| Primary light     | `emerald-100/300/800` | Badges, hover borders         |
-| Background        | `stone-50`          | Page background                |
-| Card background   | `white`             | Cards, content panels          |
-| Text              | `stone-900`         | Body text                      |
-| Text muted        | `stone-600`         | Descriptions, secondary text   |
-| Text subtle       | `stone-400/500`     | Dates, metadata, footer        |
-| Border            | `stone-200`         | Card borders, separators       |
-| Amber accent      | `amber-100/800`     | TOK theme badges               |
-| IB brand blue     | `ib-blue` (#004587) | Official IB accent (footer bar) |
+| Token               | Tailwind class            | Usage                           |
+| ------------------- | ------------------------- | ------------------------------- |
+| Primary             | `emerald-700`             | Links, brand, call-to-action    |
+| Primary light       | `emerald-100/300/800`     | Badges, hover borders           |
+| Background          | `stone-50`                | Page background                 |
+| Card background     | `white`                   | Cards, content panels           |
+| Text                | `stone-900`               | Body text                       |
+| Text muted          | `stone-600`               | Descriptions, secondary text    |
+| Text subtle         | `stone-400/500`           | Dates, metadata, footer         |
+| Border              | `stone-200`               | Card borders, separators        |
+| Amber accent        | `amber-100/800`           | TOK theme badges                |
+| IB brand blue       | `ib-blue` (#004587)       | Official IB accent (footer bar) |
 | IB brand blue light | `ib-blue-light` (#2FB4E9) | Official IB accent (footer bar) |
 
 ## Typography
@@ -43,13 +43,17 @@ Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users w
 
 ## Layout
 
-| Element    | Width       | Notes                                    |
-| ---------- | ----------- | ---------------------------------------- |
-| Container  | `max-w-5xl` | 1024px max, centered, 16px padding       |
-| Nav        | full-width  | Sticky, blurred glass; Home link, Programmes + IB Core dropdowns, Apply CTA |
-| Grid cards | 1-3 columns | Responsive: 1 col mobile, 2 sm, 3 lg     |
+| Element    | Width       | Notes                                                                                                                                                  |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Container  | `max-w-5xl` | 1024px max, centered, 16px padding                                                                                                                     |
+| Nav        | full-width  | Sticky, blurred glass; Home link, Programmes + IB Core dropdowns, Apply CTA                                                                            |
+| Grid cards | 1-3 columns | Responsive: 1 col mobile, 2 sm, 3 lg                                                                                                                   |
 | Footer     | full-width  | Dark (`stone-900`), IB-accent top bar, brand/mission column (school + IB marks) + grouped link columns (Programme / School life / Contact) + Apply CTA |
-| Hero bands | full-width  | Homepage photo hero + gradient `PageHeader` on subpages |
+| Hero bands | full-width  | Homepage photo hero + gradient `PageHeader` on subpages                                                                                                |
+
+### Root locale splash (`src/pages/index.astro`)
+
+`/` is a standalone HTML document (no `Layout.astro`, so no Tailwind) that redirects to `/en/` or `/sk/` based on the visitor's browser language. Because it can flash briefly on a slow first paint, it renders a branded splash (the "IB Gymnázium Česká" wordmark, an emerald spinner, and English/Slovensky pill links) instead of a bare white page. Styling is **inline `<style>` by necessity** (Tailwind isn't loaded here); this is the one sanctioned exception to the Tailwind-only rule. Redirect is instant (JS `location.replace` plus a `<meta refresh="0">` fallback) and the spinner respects `prefers-reduced-motion`.
 
 ## Styling rules
 
@@ -61,6 +65,7 @@ Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users w
 ## Components
 
 Keep components reusable and small. Each `.astro` component should do one thing:
+
 - `Layout.astro` — page shell (head, nav with mobile menu, dark footer, page scripts)
 - `PageHeader.astro` — gradient hero band for subpages (title, subtitle, label)
 - `LanguageSwitcher.astro` — EN/SK pill toggle that preserves the current path

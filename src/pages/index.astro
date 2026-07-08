@@ -6,19 +6,94 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>IB Gymnázium Česká</title>
     <meta name="robots" content="noindex" />
-    <meta http-equiv="refresh" content="1; url=/en/" />
+    <meta http-equiv="refresh" content="0; url=/en/" />
     <script>
-      const preferred = (navigator.languages ?? [navigator.language])
-        .some((lang) => lang?.toLowerCase().startsWith('sk') || lang?.toLowerCase().startsWith('cs'))
+      const preferred = (navigator.languages ?? [navigator.language]).some(
+        (lang) => lang?.toLowerCase().startsWith('sk') || lang?.toLowerCase().startsWith('cs'),
+      )
         ? 'sk'
         : 'en';
       location.replace(`/${preferred}/`);
     </script>
     <link rel="canonical" href="https://ib.gymnaziumceska.sk/en/" />
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.75rem;
+        background: #fafaf9;
+        color: #1c1917;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .spinner {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 9999px;
+        border: 3px solid #d6d3d1;
+        border-top-color: #047857;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .brand {
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: #292524;
+      }
+      .brand span {
+        color: #047857;
+      }
+      .links {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 0.875rem;
+      }
+      .links a {
+        color: #57534e;
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        border-radius: 9999px;
+        border: 1px solid #e7e5e4;
+        transition: all 0.15s;
+      }
+      .links a:hover {
+        color: #047857;
+        border-color: #047857;
+        background: #ecfdf5;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .spinner {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    <p><a href="/en/">English</a> · <a href="/sk/">Slovensky</a></p>
+    <div class="brand">IB <span>Gymnázium Česká</span></div>
+    <div class="spinner" aria-hidden="true"></div>
+    <p class="links"><a href="/en/">English</a><a href="/sk/">Slovensky</a></p>
   </body>
 </html>
