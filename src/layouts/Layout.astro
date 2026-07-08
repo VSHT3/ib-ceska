@@ -696,9 +696,10 @@ const jsonLd = JSON.stringify({
         const heroBg = document.querySelector<HTMLElement>('[data-parallax]');
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (heroBg && !reduceMotion) {
+          const factor = Number(heroBg.dataset.parallax) || 0.3;
           let ticking = false;
           const apply = () => {
-            heroBg.style.transform = `translate3d(0, ${window.scrollY * 0.3}px, 0)`;
+            heroBg.style.transform = `translate3d(0, ${window.scrollY * factor}px, 0)`;
             ticking = false;
           };
           const onScroll = () => {
