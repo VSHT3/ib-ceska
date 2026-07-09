@@ -26,10 +26,10 @@ const strands = [
     label: dict.cas.strandCreativity,
     desc: dict.cas.creativityDesc,
     block:
-      'border-amber-200 bg-amber-50 hover:border-amber-400 data-[active]:ring-2 data-[active]:ring-amber-500 data-[active]:border-amber-400',
-    letterColor: 'text-amber-500',
-    chip: 'bg-amber-100 text-amber-800',
-    dot: 'bg-amber-500',
+      'border-myp-200 bg-myp-50 hover:border-myp-400 data-[active]:ring-2 data-[active]:ring-myp-500 data-[active]:border-myp-400',
+    letterColor: 'text-myp-500',
+    chip: 'bg-myp-100 text-myp-800',
+    dot: 'bg-myp-500',
   },
   {
     key: 'Activity',
@@ -145,12 +145,8 @@ const fmtDate = (date: string | null) =>
                 {countOf(strand.key)}
               </span>
             </div>
-            <h2 class="mt-4 text-lg font-bold text-stone-900">
-              {strand.label}
-            </h2>
-            <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">
-              {strand.desc}
-            </p>
+            <h2 class="mt-4 text-lg font-bold text-stone-900">{strand.label}</h2>
+            <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">{strand.desc}</p>
           </button>
         ))
       }

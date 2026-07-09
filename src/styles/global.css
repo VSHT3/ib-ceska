@@ -8,8 +8,33 @@
      The site's own palette stays emerald-led; these are available as accents
      where the IB identity should read through (e.g. IB-branded callouts).
      IB blue: Pantone 2186 C · light blue: Pantone 298 C. */
-  --color-ib-blue: #004587;
   --color-ib-blue-light: #2fb4e9;
+
+  /* Programme brand colours.
+     MYP is a warm red-orange; DP is a cyan. These replace the old amber (MYP)
+     and emerald (DP programme) accents used across the programme pages and the
+     tone-driven components (ProgrammeOverview / PageHeader / DocumentList). */
+  --color-myp-50: #fdf0ec;
+  --color-myp-100: #fbd9cf;
+  --color-myp-200: #f6b3a1;
+  --color-myp-300: #f08a6e;
+  --color-myp-400: #ea6541;
+  --color-myp-500: #e75c2d;
+  --color-myp-600: #e94e1f;
+  --color-myp-700: #c73d14;
+  --color-myp-800: #a73210;
+  --color-myp-900: #872710;
+
+  --color-dp-50: #e6f8fb;
+  --color-dp-100: #c9eef5;
+  --color-dp-200: #99e0ec;
+  --color-dp-300: #5fcbe3;
+  --color-dp-400: #2bbadd;
+  --color-dp-500: #0bb7d8;
+  --color-dp-600: #00b1d1;
+  --color-dp-700: #0090ab;
+  --color-dp-800: #02748a;
+  --color-dp-900: #075c6e;
 }
 
 html {

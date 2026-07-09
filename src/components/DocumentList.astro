@@ -5,13 +5,13 @@ import type { Locale } from '../i18n/dictionaries';
 interface Props {
   items: DocItem[];
   locale: Locale;
-  tone?: 'emerald' | 'amber';
+  tone?: 'dp' | 'myp';
 }
 
-const { items, locale, tone = 'emerald' } = Astro.props;
-const accent = tone === 'amber' ? 'text-amber-700' : 'text-emerald-700';
-const accentHover = tone === 'amber' ? 'hover:text-amber-800' : 'hover:text-emerald-800';
-const badge = tone === 'amber' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800';
+const { items, locale, tone = 'dp' } = Astro.props;
+const accent = tone === 'myp' ? 'text-myp-700' : 'text-dp-700';
+const accentHover = tone === 'myp' ? 'hover:text-myp-800' : 'hover:text-dp-800';
+const badge = tone === 'myp' ? 'bg-myp-100 text-myp-800' : 'bg-dp-100 text-dp-800';
 ---
 
 <ul class="grid gap-3 sm:grid-cols-2">

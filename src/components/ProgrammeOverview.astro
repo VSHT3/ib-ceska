@@ -48,20 +48,19 @@ interface Programme {
 interface Props {
   locale: Locale;
   programme: Programme;
-  tone: 'amber' | 'emerald';
+  tone: 'myp' | 'dp';
   image: ImageMetadata;
   imageAlt: string;
   logo?: string;
 }
 
 const { locale, programme, tone, image, imageAlt, logo } = Astro.props;
-const isMyp = tone === 'amber';
-const accentText = isMyp ? 'text-amber-700' : 'text-emerald-700';
-const accentSoft = isMyp ? 'bg-amber-50' : 'bg-emerald-50';
-const accentDark = isMyp ? 'bg-amber-800' : 'bg-emerald-800';
-const accentButton = isMyp
-  ? 'bg-amber-600 hover:bg-amber-700'
-  : 'bg-emerald-600 hover:bg-emerald-700';
+const isMyp = tone === 'myp';
+const accentText = isMyp ? 'text-myp-700' : 'text-dp-700';
+const accentTextHover = isMyp ? 'group-hover:text-myp-700' : 'group-hover:text-dp-700';
+const accentSoft = isMyp ? 'bg-myp-50' : 'bg-dp-50';
+const accentDark = isMyp ? 'bg-myp-800' : 'bg-dp-800';
+const accentButton = isMyp ? 'bg-myp-600 hover:bg-myp-700' : 'bg-dp-600 hover:bg-dp-700';
 ---
 
 <Layout
@@ -222,7 +221,7 @@ const accentButton = isMyp
               data-reveal
               style={`--reveal-delay: ${i * 80}ms`}
             >
-              <h3 class="font-semibold group-hover:text-emerald-700 transition-colors">
+              <h3 class:list={['font-semibold transition-colors', accentTextHover]}>
                 {item.label}
               </h3>
               <p class="mt-2 text-sm text-stone-500 leading-relaxed">{item.body}</p>

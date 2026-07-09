@@ -29,7 +29,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
 >
   <!-- Hero: edge-to-edge split, entrance + scroll parallax on the photo -->
   <section class="grid items-stretch lg:grid-cols-2">
-    <div class="flex items-center bg-amber-800 px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+    <div class="flex items-center bg-myp-800 px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
       <div class="max-w-xl">
         <img
           src="/ib-myp-logo.png"
@@ -67,7 +67,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
     <div class="relative min-h-[20rem] overflow-hidden lg:min-h-[34rem]">
       <div
         class="hero-parallax absolute inset-x-0 -top-[40%] h-[180%] will-change-transform"
-        data-parallax="0.6"
+        data-parallax="0.45"
       >
         <Image
           src={school.studentsReading}
@@ -86,7 +86,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
   <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
     <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div class="lg:col-span-7" data-reveal>
-        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+        <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">
           {p.whatIsLabel}
         </p>
         <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl lg:text-6xl">
@@ -99,7 +99,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
           href={p.officialUrl}
           target="_blank"
           rel="noopener"
-          class="mt-7 inline-flex text-sm font-semibold text-amber-700 hover:underline"
+          class="mt-7 inline-flex text-sm font-semibold text-myp-700 hover:underline"
         >
           {p.officialLink} ↗
         </a>
@@ -110,7 +110,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
       {
         p.whatIsPoints.map((point, i) => (
           <div data-reveal style={`--reveal-delay: ${i * 80}ms`}>
-            <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
+            <span class="text-xs font-semibold text-myp-700">{pad(i)}</span>
             <h3 class="mt-2 text-lg font-bold tracking-tight">{point.title}</h3>
             <p class="mt-2 text-sm leading-relaxed text-stone-600">{point.body}</p>
           </div>
@@ -120,11 +120,11 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
   </section>
 
   <!-- Approaches to learning: full-bleed amber band, accordion -->
-  <section class="bg-amber-50 border-y-2 border-amber-900/15">
+  <section class="bg-myp-50 border-y-2 border-myp-900/15">
     <div class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
       <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <div class="lg:col-span-5" data-reveal>
-          <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+          <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">
             {p.atlLabel}
           </p>
           <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
@@ -141,20 +141,20 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
         >
           {
             p.atl.map((a, i) => (
-              <div class="border-b border-amber-200">
+              <div class="border-b border-myp-200">
                 <button
                   type="button"
                   data-atl-trigger={i}
                   aria-expanded={i === 0 ? 'true' : 'false'}
                   aria-controls={`atl-panel-${i}`}
-                  class="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-amber-700"
+                  class="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-myp-700"
                 >
                   <span class="flex items-baseline gap-4">
-                    <span class="text-xs font-semibold text-amber-700">{pad(i)}</span>
+                    <span class="text-xs font-semibold text-myp-700">{pad(i)}</span>
                     <span class="text-lg">{a.title}</span>
                   </span>
                   <svg
-                    class="h-5 w-5 shrink-0 text-amber-700 transition-transform duration-300 data-[open]:rotate-45"
+                    class="h-5 w-5 shrink-0 text-myp-700 transition-transform duration-300 data-[open]:rotate-45"
                     data-atl-icon
                     data-open={i === 0 ? '' : undefined}
                     viewBox="0 0 24 24"
@@ -188,7 +188,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
   <!-- Beyond lessons: Personal Project + Service as full-bleed two-panel -->
   <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
     <div data-reveal class="lg:max-w-3xl">
-      <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+      <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">
         {p.featureLabel}
       </p>
       <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
@@ -202,7 +202,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
         class="group relative overflow-hidden rounded-3xl border border-stone-200 bg-white p-8 transition-all hover:-translate-y-1 hover:shadow-lg sm:p-10"
         data-reveal
       >
-        <span class="text-5xl font-extrabold leading-none text-amber-200 select-none">01</span>
+        <span class="text-5xl font-extrabold leading-none text-myp-200 select-none">01</span>
         <h3 class="mt-4 text-2xl font-bold tracking-tight">{p.personalProjectTitle}</h3>
         <p class="mt-3 leading-relaxed text-stone-600">{p.personalProjectBody}</p>
       </div>
@@ -211,7 +211,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
         data-reveal
         style="--reveal-delay: 100ms"
       >
-        <span class="text-5xl font-extrabold leading-none text-amber-200 select-none">02</span>
+        <span class="text-5xl font-extrabold leading-none text-myp-200 select-none">02</span>
         <h3 class="mt-4 text-2xl font-bold tracking-tight">{p.serviceTitle}</h3>
         <p class="mt-3 leading-relaxed text-stone-600">{p.serviceBody}</p>
       </div>
@@ -225,11 +225,11 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
             href={item.href.startsWith('/') ? l(item.href, locale) : item.href}
             class="group border-t border-stone-300 py-6"
           >
-            <h3 class="font-semibold text-stone-900 transition-colors group-hover:text-amber-700">
+            <h3 class="font-semibold text-stone-900 transition-colors group-hover:text-myp-700">
               {item.label}
             </h3>
             <p class="mt-2 text-sm leading-relaxed text-stone-500">{item.body}</p>
-            <span class="mt-4 block text-sm font-semibold text-amber-700 transition-transform group-hover:translate-x-1">
+            <span class="mt-4 block text-sm font-semibold text-myp-700 transition-transform group-hover:translate-x-1">
               {p.exploreLink} →
             </span>
           </a>
@@ -244,7 +244,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
   <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28" data-reveal>
     <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
       <div class="lg:col-span-5">
-        <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+        <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">
           {p.afterMypLabel}
         </p>
         <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -255,7 +255,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
         <p class="text-lg leading-relaxed text-stone-600">{p.afterMypBody}</p>
         <a
           href={l('/dp', locale)}
-          class="mt-7 inline-flex text-sm font-semibold text-amber-700 hover:underline"
+          class="mt-7 inline-flex text-sm font-semibold text-myp-700 hover:underline"
         >
           {t(locale).dp.title} →
         </a>
@@ -266,19 +266,19 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
   <!-- MYP documents: short info + official IB parent pack -->
   <section class="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
     <div data-reveal class="max-w-2xl">
-      <p class="text-xs font-semibold uppercase tracking-widest text-amber-700">
+      <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">
         {p.documentsLabel}
       </p>
       <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">{p.documentsTitle}</h2>
       <p class="mt-5 leading-relaxed text-stone-600">{p.documentsIntro}</p>
     </div>
     <div class="mt-10" data-reveal style="--reveal-delay: 100ms">
-      <DocumentList items={mypDocuments} locale={locale} tone="amber" />
+      <DocumentList items={mypDocuments} locale={locale} tone="myp" />
     </div>
   </section>
 
   <!-- Admissions band: full-bleed -->
-  <section class="bg-amber-800 text-white" data-reveal>
+  <section class="bg-myp-800 text-white" data-reveal>
     <div class="px-6 py-16 sm:px-10 sm:py-20 lg:px-16">
       <div class="grid gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
@@ -287,7 +287,7 @@ const pad = (n: number) => String(n + 1).padStart(2, '0');
         </div>
         <a
           href={l('/admissions', locale)}
-          class="rounded-full bg-amber-600 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-amber-700"
+          class="rounded-full bg-myp-600 px-6 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-myp-700"
         >
           {p.admissionsLink}
         </a>
