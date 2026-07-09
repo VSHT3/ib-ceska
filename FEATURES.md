@@ -34,7 +34,7 @@ Implemented and shipped.
 ## Pages (routes + detail pages + admin)
 
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
-- [x] `/subjects` — grouped listing by IB group (1–6), cards link to detail
+- [x] `/subjects` — DP-branded course catalogue: dark DP hero with dotted-leader table-of-contents index, outlined ghost numerals, scroll-spy rail with builder mini-card, grouped listing by IB group (1–6 + core), builder CTA band
 - [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
 - [x] `/cas` — strand-based listing (Creativity, Activity, Service); activities can span multiple strands and appear under each filter
 - [x] `/cas/[slug]` — CAS detail with reflection + multi-strand badges + learning-outcome sidebar

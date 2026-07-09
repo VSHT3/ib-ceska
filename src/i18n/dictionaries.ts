@@ -842,7 +842,7 @@ const dict = {
       dpLink: 'Ako funguje DP',
       slotEmpty: 'Zatiaľ nevybraté',
       hlMeter: 'Predmety na Higher Level',
-      hlTarget: '3 sú minimum a odporúčaný počet, povolený je aj 4',
+      hlTarget: '3 sú odporúčaný a minimálny počet, povolené sú aj 4',
     },
     cas: {
       title: 'CAS',

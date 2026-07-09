@@ -124,13 +124,14 @@ const hexNumbers = [
         </p>
         <p class="hero-rise mt-7 max-w-xl text-sm text-dp-100/70" style="--rise-delay: 240ms">
           {b.dpNote}
-          <a
-            href={l('/dp', locale)}
-            class="ml-1 font-semibold text-white underline decoration-dp-300/60 underline-offset-4 transition-colors hover:decoration-white"
-          >
-            {b.dpLink} →
-          </a>
         </p>
+        <a
+          href={l('/dp', locale)}
+          class="hero-rise mt-2 inline-block text-sm font-semibold text-white underline decoration-dp-300/60 underline-offset-4 transition-colors hover:decoration-white"
+          style="--rise-delay: 280ms"
+        >
+          {b.dpLink} →
+        </a>
       </div>
 
       <!-- The DP programme model: six groups around the core -->

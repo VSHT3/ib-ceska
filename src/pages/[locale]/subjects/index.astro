@@ -1,9 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import { reader, pick } from '../../../lib/keystatic';
 import Layout from '../../../layouts/Layout.astro';
-import { school } from '../../../assets/school';
-import { t } from '../../../i18n/dictionaries';
+import { t, l } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
 export function getStaticPaths() {
@@ -44,68 +42,100 @@ const groups = groupDefs
   locale={locale}
   pageSchemaType="CollectionPage"
 >
-  <!-- Editorial split hero -->
-  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
+  <!-- Hero: full-bleed DP brand band with a table-of-contents index -->
+  <section class="relative overflow-hidden bg-dp-900 text-white">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-48 -left-40 h-[36rem] w-[36rem] rounded-full bg-dp-500/20 blur-3xl">
+      </div>
+      <div
+        class="absolute -bottom-56 -right-24 h-[32rem] w-[32rem] rounded-full bg-dp-400/10 blur-3xl"
+      >
+      </div>
+    </div>
+
     <div
-      class="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-20 items-center"
+      class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20"
     >
       <div>
-        <span
-          class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700"
-          >{dict.subjects.catalogueLabel}</span
-        >
+        <div class="hero-rise flex flex-wrap items-center gap-3">
+          <img
+            src="/ib-dp-logo.png"
+            alt="IB Diploma Programme logo"
+            class="h-10 w-auto rounded-lg bg-white p-1.5 sm:h-11"
+            width="640"
+            height="256"
+          />
+          <p class="text-xs font-semibold uppercase tracking-widest text-dp-200">
+            {dict.dp.label} · {dict.subjects.catalogueLabel}
+          </p>
+        </div>
         <h1
-          class="hero-rise mt-3 text-5xl sm:text-7xl font-bold tracking-tight"
+          class="hero-rise mt-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
           style="--rise-delay: 80ms"
         >
           {dict.subjects.title}
         </h1>
         <p
-          class="hero-rise mt-6 max-w-2xl text-xl text-stone-600 leading-relaxed"
+          class="hero-rise mt-5 max-w-xl text-lg leading-relaxed text-dp-100/85"
           style="--rise-delay: 160ms"
         >
           {dict.subjects.subtitle}
         </p>
         <p
-          class="hero-rise mt-4 max-w-xl flex gap-2.5 rounded-lg border border-myp-200 bg-myp-50 px-4 py-3 text-sm text-myp-900 leading-relaxed"
-          style="--rise-delay: 200ms"
+          class="hero-rise mt-7 flex max-w-xl gap-2.5 rounded-xl border border-amber-300/25 bg-amber-400/10 px-4 py-3 text-sm leading-relaxed text-amber-100"
+          style="--rise-delay: 240ms"
         >
-          <span aria-hidden="true">ℹ️</span>
+          <svg
+            class="mt-0.5 h-4 w-4 shrink-0 text-amber-300"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-9.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.25 7.5h1.5V12h-1.5V7.5Z"
+            ></path>
+          </svg>
           <span>{dict.subjects.enrolmentNote}</span>
         </p>
-        <div class="hero-rise mt-8 flex flex-wrap gap-2" style="--rise-delay: 240ms">
+      </div>
+
+      <!-- Contents index -->
+      <nav class="hero-rise" style="--rise-delay: 200ms" aria-label={dict.subjects.onThisPage}>
+        <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300">
+          {dict.subjects.onThisPage}
+        </p>
+        <ol class="mt-3">
           {
             groups.map((g) => (
-              <a
-                href={`#${g.id}`}
-                class="rounded-full border border-stone-200 bg-stone-50 px-3.5 py-1.5 text-xs font-semibold text-stone-600 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50 transition-colors"
-              >
-                {g.ghost === 'C' ? 'Core' : g.ghost} · {g.shortLabel}
-              </a>
+              <li>
+                <a
+                  href={`#${g.id}`}
+                  class="group flex items-baseline gap-3 border-b border-white/10 py-3 text-sm transition-colors hover:border-dp-300/50"
+                >
+                  <span class="w-7 shrink-0 font-extrabold text-dp-300">{g.ghost}</span>
+                  <span class="truncate font-medium text-dp-50 transition-colors group-hover:text-white">
+                    {g.shortLabel}
+                  </span>
+                  <span
+                    class="mx-1 flex-1 border-b border-dotted border-white/20"
+                    aria-hidden="true"
+                  />
+                  <span class="shrink-0 text-xs font-bold text-dp-200/70">{g.subjects.length}</span>
+                </a>
+              </li>
             ))
           }
-        </div>
-      </div>
-      <div class="relative hidden lg:block hero-rise" style="--rise-delay: 200ms">
-        <div class="absolute -top-4 -right-4 w-full h-full rounded-3xl bg-emerald-100"></div>
-        <Image
-          src={school.classroom}
-          alt="A lesson in progress at Česká"
-          class="relative rounded-3xl object-cover h-80 w-full shadow-lg"
-          widths={[480, 768]}
-          sizes="(min-width: 1024px) 40vw, 100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
+        </ol>
+      </nav>
     </div>
   </section>
 
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-14 lg:grid lg:grid-cols-[260px_1fr] lg:gap-16">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:grid lg:grid-cols-[260px_1fr] lg:gap-16">
     <!-- Sticky group rail (desktop) -->
     <aside class="hidden lg:block">
       <nav class="sticky top-28" aria-label={dict.subjects.onThisPage}>
-        <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 mb-4">
+        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-400">
           {dict.subjects.onThisPage}
         </p>
         <ul class="space-y-1 border-l border-stone-200">
@@ -115,10 +145,10 @@ const groups = groupDefs
                 <a
                   href={`#${g.id}`}
                   data-spy-link={g.id}
-                  class="group flex items-baseline justify-between gap-2 -ml-px border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-emerald-700 data-[active]:border-emerald-600 data-[active]:text-emerald-700]:text-emerald-300 data-[active]:font-semibold"
+                  class="group -ml-px flex items-baseline justify-between gap-2 border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-dp-700 data-[active]:border-dp-600 data-[active]:font-semibold data-[active]:text-dp-700"
                 >
                   <span class="truncate">{g.shortLabel}</span>
-                  <span class="text-xs text-stone-300 group-data-[active]:text-emerald-400">
+                  <span class="text-xs text-stone-300 group-data-[active]:text-dp-400">
                     {g.subjects.length}
                   </span>
                 </a>
@@ -126,6 +156,20 @@ const groups = groupDefs
             ))
           }
         </ul>
+        <a
+          href={l('/build-your-diploma', locale)}
+          class="group mt-8 block rounded-2xl bg-dp-900 p-5 text-white ring-1 ring-white/10 transition-transform hover:-translate-y-0.5"
+        >
+          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-dp-300">
+            {dict.dp.shortTitle}
+          </p>
+          <p class="mt-1.5 text-sm font-semibold leading-snug">{dict.dp.builderTitle}</p>
+          <span
+            class="mt-3 inline-block text-sm font-semibold text-dp-200 transition-transform group-hover:translate-x-1"
+          >
+            {dict.nav.builder} →
+          </span>
+        </a>
       </nav>
     </aside>
 
@@ -133,19 +177,19 @@ const groups = groupDefs
     <div class="min-w-0">
       {
         groups.map((group) => (
-          <section id={group.id} class="scroll-mt-28 mb-20" data-spy-section data-reveal>
+          <section id={group.id} class="mb-20 scroll-mt-28" data-spy-section data-reveal>
             <header class="relative flex items-end gap-4 border-b-2 border-stone-900 pb-3">
               <span
-                class="text-7xl sm:text-8xl font-extrabold leading-none tracking-tighter text-stone-200 select-none"
+                class="ghost-numeral select-none text-7xl font-extrabold leading-none tracking-tighter sm:text-8xl"
                 aria-hidden="true"
               >
                 {group.ghost}
               </span>
               <div class="pb-1.5">
-                <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+                <p class="text-xs font-semibold uppercase tracking-widest text-dp-700">
                   {group.label.split(':')[0]}
                 </p>
-                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-stone-900">
+                <h2 class="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
                   {group.shortLabel}
                 </h2>
               </div>
@@ -155,19 +199,19 @@ const groups = groupDefs
                 <li>
                   <a
                     href={`/${locale}/subjects/${s.slug}`}
-                    class="group grid grid-cols-[1fr_auto] items-center gap-4 border-b border-stone-200 py-6 sm:py-7 transition-colors hover:bg-emerald-50/40 sm:px-4 sm:-mx-4 rounded-lg"
+                    class="group grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg border-b border-stone-200 py-6 transition-colors hover:bg-dp-50/50 sm:-mx-4 sm:px-4 sm:py-7"
                     data-reveal
                     style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}
                   >
                     <div class="min-w-0">
                       <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                        <h3 class="text-xl sm:text-2xl font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
+                        <h3 class="text-xl font-semibold text-stone-900 transition-colors group-hover:text-dp-800 sm:text-2xl">
                           {pick(locale, s.entry.sk.title, s.entry.title)}
                         </h3>
                         {s.entry.offeredLevels && (
                           <span
                             class:list={[
-                              'text-xs font-bold tracking-wide px-2.5 py-1 rounded-full shrink-0',
+                              'shrink-0 rounded-full px-2.5 py-1 text-xs font-bold tracking-wide',
                               s.entry.offeredLevels === 'SL'
                                 ? 'bg-sky-100 text-sky-800'
                                 : 'bg-emerald-100 text-emerald-800',
@@ -177,7 +221,7 @@ const groups = groupDefs
                           </span>
                         )}
                       </div>
-                      <p class="mt-2 text-base sm:text-lg text-stone-600 leading-relaxed max-w-3xl">
+                      <p class="mt-2 max-w-3xl text-base leading-relaxed text-stone-600 sm:text-lg">
                         {pick(locale, s.entry.sk.description, s.entry.description)}
                       </p>
                       {s.entry.teacher && (
@@ -187,7 +231,7 @@ const groups = groupDefs
                       )}
                     </div>
                     <span
-                      class="text-emerald-700 text-xl font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                      class="-translate-x-1 text-xl font-semibold text-dp-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
                       aria-hidden="true"
                     >
                       →
@@ -201,6 +245,42 @@ const groups = groupDefs
       }
     </div>
   </div>
+
+  <!-- Builder cross-link: combine these subjects into a diploma -->
+  <section class="bg-dp-900 text-white" data-reveal>
+    <div class="relative mx-auto max-w-7xl overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
+      <svg
+        viewBox="0 0 400 400"
+        class="pointer-events-none absolute -right-12 -bottom-32 h-80 w-80 text-white/10"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <polygon points="200,30 347,115 347,285 200,370 53,285 53,115"></polygon>
+        <line x1="200" y1="200" x2="200" y2="30"></line>
+        <line x1="200" y1="200" x2="347" y2="115"></line>
+        <line x1="200" y1="200" x2="347" y2="285"></line>
+        <line x1="200" y1="200" x2="200" y2="370"></line>
+        <line x1="200" y1="200" x2="53" y2="285"></line>
+        <line x1="200" y1="200" x2="53" y2="115"></line>
+        <circle cx="200" cy="200" r="60"></circle>
+      </svg>
+      <p class="text-xs font-semibold uppercase tracking-widest text-dp-300">
+        {dict.dp.shortTitle}
+      </p>
+      <h2 class="mt-2 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
+        {dict.dp.builderTitle}
+      </h2>
+      <p class="mt-3 max-w-xl leading-relaxed text-white/75">{dict.dp.builderBody}</p>
+      <a
+        href={l('/build-your-diploma', locale)}
+        class="group mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-transform hover:translate-x-1"
+      >
+        {dict.dp.builderCta} →
+      </a>
+    </div>
+  </section>
 
   <script>
     function initSubjectsSpy() {
@@ -228,4 +308,16 @@ const groups = groupDefs
 
     document.addEventListener('astro:page-load', initSubjectsSpy);
   </script>
+
+  <style>
+    .ghost-numeral {
+      color: var(--color-dp-100);
+    }
+    @supports (-webkit-text-stroke: 1px black) {
+      .ghost-numeral {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--color-dp-200);
+      }
+    }
+  </style>
 </Layout>
