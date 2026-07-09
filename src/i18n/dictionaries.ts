@@ -198,12 +198,12 @@ const dict = {
       onThisPage: 'Subject groups',
       catalogueLabel: 'Course catalogue',
       enrolmentNote:
-        'Subjects run each year only if enough students choose them, so the exact offering - and the levels available - can vary from year to year. Ask the school to confirm current options.',
+        'Subjects run each year only if enough students choose them, so the exact offering and the levels available can vary from year to year. Ask the school to confirm current options.',
     },
     builder: {
       title: 'Build Your Diploma',
       subtitle:
-        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool - the school confirms the subjects actually on offer each year.',
+        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool, the school confirms the subjects actually on offer each year.',
       label: 'Plan your studies',
       pickHl: 'HL',
       pickSl: 'SL',
@@ -810,7 +810,7 @@ const dict = {
       onThisPage: 'Predmetové skupiny',
       catalogueLabel: 'Katalóg kurzov',
       enrolmentNote:
-        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka - aj dostupné úrovne - sa môže rok od roka líšiť. Aktuálne možnosti si overte u školy.',
+        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka a dostupné úrovne sa môžu rok od roka líšiť. Aktuálne možnosti si overte u školy.',
     },
     builder: {
       title: 'Zostavte si diplom',
