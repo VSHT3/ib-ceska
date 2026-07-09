@@ -45,7 +45,7 @@ Implemented and shipped.
 - [x] `/news/[slug]` — news article detail
 - [x] `/events` — calendar page, auto-split into upcoming/past
 - [x] `/gallery` — bilingual masonry photo gallery with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
-- [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation
+- [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation, anime.js micro-interactions (spring-in summary rows, counting tallies, duplicate-subject lockout with shake, valid-combination celebration), reduced-motion safe
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
 - [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits

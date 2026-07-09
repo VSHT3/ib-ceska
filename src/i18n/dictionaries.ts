@@ -221,7 +221,7 @@ const dict = {
       rules: [
         'One subject from each of groups 1–5.',
         'A sixth from group 6, or a second from groups 1–4.',
-        'Three or four subjects at Higher Level (HL), the rest at Standard Level (SL).',
+        'Three or four subjects at Higher Level (HL), the rest at Standard Level (SL). Most students take three HL.',
       ],
       validComplete: 'This is a valid diploma combination.',
       errSix: 'Choose six subjects in total.',
@@ -823,7 +823,7 @@ const dict = {
       rules: [
         'Jeden predmet z každej zo skupín 1–5.',
         'Šiesty zo skupiny 6, alebo druhý zo skupín 1–4.',
-        'Tri alebo štyri predmety na Higher Level (HL), zvyšok na Standard Level (SL).',
+        'Tri alebo štyri predmety na Higher Level (HL), zvyšok na Standard Level (SL). Väčšina študentov si volí tri HL.',
       ],
       validComplete: 'Toto je platná kombinácia predmetov.',
       errSix: 'Vyberte spolu šesť predmetov.',

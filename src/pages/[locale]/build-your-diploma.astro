@@ -124,7 +124,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
             ) : (
               <div class="mt-4 grid gap-3 sm:grid-cols-2">
                 {g.subjects.map((s) => (
-                  <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
+                  <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500 data-[taken]:cursor-not-allowed data-[taken]:hover:border-stone-200">
                     <div class="min-w-0">
                       <input
                         type="radio"
@@ -158,6 +158,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                     <span
                       class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
                       aria-hidden="true"
+                      data-dot
                     />
                   </label>
                 ))}
@@ -182,7 +183,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
           ) : (
             <div class="mt-4 grid gap-3 sm:grid-cols-2">
               {electiveSubjects.map((s) => (
-                <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500">
+                <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500 data-[taken]:cursor-not-allowed data-[taken]:hover:border-stone-200">
                   <div class="min-w-0">
                     <input
                       type="radio"
@@ -217,6 +218,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                   <span
                     class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
                     aria-hidden="true"
+                    data-dot
                   />
                 </label>
               ))}
@@ -232,15 +234,15 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         <h2 class="text-lg font-bold tracking-tight">{b.summaryTitle}</h2>
 
         <div class="mt-5 grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-xl bg-stone-50 py-3">
+          <div class="rounded-xl bg-stone-50 py-3" data-count-tile>
             <p id="count-total" class="text-2xl font-extrabold text-stone-900">0</p>
             <p class="mt-0.5 text-[11px] text-stone-500">{b.totalLabel}</p>
           </div>
-          <div class="rounded-xl bg-emerald-50 py-3">
+          <div class="rounded-xl bg-emerald-50 py-3" data-count-tile>
             <p id="count-hl" class="text-2xl font-extrabold text-emerald-700">0</p>
             <p class="mt-0.5 text-[11px] text-emerald-700/70">{b.hlCount}</p>
           </div>
-          <div class="rounded-xl bg-sky-50 py-3">
+          <div class="rounded-xl bg-sky-50 py-3" data-count-tile>
             <p id="count-sl" class="text-2xl font-extrabold text-sky-700">0</p>
             <p class="mt-0.5 text-[11px] text-sky-700/70">{b.slCount}</p>
           </div>
@@ -280,42 +282,165 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
 
   <script
     is:inline
-    define:vars={{
-      strings: {
-        hl: b.hlCount,
-        sl: b.slCount,
-        validComplete: b.validComplete,
-        errSix: b.errSix,
-        errHlRange: b.errHlRange,
-      },
-    }}
-  >
+    type="application/json"
+    id="builder-strings"
+    set:html={JSON.stringify({
+      validComplete: b.validComplete,
+      errSix: b.errSix,
+      errHlRange: b.errHlRange,
+    }).replaceAll('<', '\\u003c')}
+  />
+
+  <script>
+    import { animate, createSpring, stagger, utils } from 'animejs';
+
     function initDiplomaBuilder() {
-      const form = document.getElementById('diploma-builder');
-      const list = document.getElementById('summary-list');
-      const empty = document.getElementById('summary-empty');
-      const status = document.getElementById('builder-status');
-      const elTotal = document.getElementById('count-total');
-      const elHl = document.getElementById('count-hl');
-      const elSl = document.getElementById('count-sl');
-      const reset = document.getElementById('builder-reset');
-      if (!form || !list) return;
+      const $ = (id: string) => document.getElementById(id);
+      const formEl = $('diploma-builder');
+      const listEl = $('summary-list');
+      const emptyEl = $('summary-empty');
+      const statusEl = $('builder-status');
+      const totalEl = $('count-total');
+      const hlEl = $('count-hl');
+      const slEl = $('count-sl');
+      const reset = $('builder-reset');
+      const stringsEl = $('builder-strings');
+      if (!formEl || !listEl || !emptyEl || !statusEl || !totalEl || !hlEl || !slEl || !stringsEl)
+        return;
+      // rebind: narrowed consts survive into the closures below
+      const form = formEl;
+      const list = listEl;
+      const empty = emptyEl;
+      const status = statusEl;
+      const elTotal = totalEl;
+      const elHl = hlEl;
+      const elSl = slEl;
+
+      const strings = JSON.parse(stringsEl.textContent ?? '{}') as Record<string, string>;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const pop = () => createSpring({ stiffness: 260, damping: 13 });
 
       // level chosen per radio input slug; defaults to first available
-      const levelFor = new Map();
+      const levelFor = new Map<string, string>();
+      const counters = { total: { v: 0 }, hl: { v: 0 }, sl: { v: 0 } };
+      let prevSlugs = new Set<string>();
+      let lastStatusKey = '';
+      let prevHl = 0;
 
-      const radios = () => Array.from(form.querySelectorAll('input[type=radio]'));
+      const radios = () => Array.from(form.querySelectorAll<HTMLInputElement>('input[type=radio]'));
       const checked = () => radios().filter((r) => r.checked);
+      const levelOf = (input: HTMLInputElement) =>
+        levelFor.get(input.value) || (input.dataset.offered === 'SL' ? 'SL' : 'HL');
 
-      function setLevelButtons(label) {
+      function shake(el: Element) {
+        if (reduced) return;
+        utils.remove(el);
+        animate(el, { x: [-7, 6, -4, 2, 0], duration: 400, ease: 'outQuad' });
+      }
+
+      // Counter ticks: number counts to the new value while the digit pops
+      function tick(el: HTMLElement, state: { v: number }, next: number) {
+        if (state.v === next) return;
+        if (reduced) {
+          state.v = next;
+          el.textContent = String(next);
+          return;
+        }
+        utils.remove(state);
+        animate(state, {
+          v: next,
+          duration: 450,
+          ease: 'outQuad',
+          onUpdate: () => {
+            el.textContent = String(Math.round(state.v));
+          },
+        });
+        utils.remove(el);
+        animate(el, { scale: [1, 1.16, 1], duration: 350, ease: 'outQuad' });
+      }
+
+      function setLevelButtons(label: HTMLLabelElement) {
         const wrap = label.querySelector('[data-level-group]');
-        if (!wrap) return;
-        const input = label.querySelector('input[type=radio]');
-        const chosen = levelFor.get(input.value) || (input.dataset.offered === 'SL' ? 'SL' : 'HL');
+        const input = label.querySelector<HTMLInputElement>('input[type=radio]');
+        if (!wrap || !input) return;
+        const chosen = levelOf(input);
         levelFor.set(input.value, chosen);
-        wrap.querySelectorAll('button[data-level]').forEach((btn) => {
+        wrap.querySelectorAll<HTMLButtonElement>('button[data-level]').forEach((btn) => {
           btn.toggleAttribute('data-on', btn.dataset.level === chosen);
         });
+      }
+
+      // A subject picked anywhere greys out its duplicate card in other groups
+      function syncTaken() {
+        const selected = new Map<string, HTMLInputElement>();
+        checked().forEach((r) => selected.set(r.value, r));
+        radios().forEach((r) => {
+          const dup = selected.get(r.value);
+          const taken = !!dup && dup !== r && !r.checked;
+          const label = r.closest('label');
+          if (!label || label.hasAttribute('data-taken') === taken) return;
+          label.toggleAttribute('data-taken', taken);
+          r.disabled = taken;
+          if (reduced) {
+            label.style.opacity = taken ? '0.45' : '1';
+          } else {
+            utils.remove(label);
+            animate(label, {
+              opacity: taken ? 0.45 : 1,
+              scale: taken ? 0.98 : 1,
+              duration: 300,
+              ease: 'outQuad',
+            });
+          }
+        });
+      }
+
+      function updateStatus(total: number, hl: number) {
+        status.classList.remove('bg-emerald-50', 'text-emerald-800', 'bg-myp-50', 'text-myp-800');
+        if (total === 0) {
+          status.classList.add('hidden');
+          lastStatusKey = '';
+          return;
+        }
+        let kind: 'ok' | 'error' = 'ok';
+        let text = strings.validComplete;
+        if (total !== 6) {
+          kind = 'error';
+          text = strings.errSix;
+        } else if (hl < 3 || hl > 4) {
+          kind = 'error';
+          text = strings.errHlRange;
+        }
+        status.textContent = text ?? '';
+        status.classList.add(
+          ...(kind === 'ok'
+            ? ['bg-emerald-50', 'text-emerald-800']
+            : ['bg-myp-50', 'text-myp-800']),
+        );
+        status.classList.remove('hidden');
+        const key = `${kind}:${text}`;
+        if (key === lastStatusKey) return;
+        lastStatusKey = key;
+        if (reduced) return;
+        if (kind === 'error') {
+          shake(status);
+        } else {
+          // valid diploma: status springs in, counter tiles cascade
+          utils.remove(status);
+          animate(status, {
+            scale: [0.94, 1],
+            y: [8, 0],
+            opacity: [0, 1],
+            duration: 550,
+            ease: pop(),
+          });
+          animate('[data-count-tile]', {
+            scale: [1, 1.1, 1],
+            duration: 450,
+            delay: stagger(70),
+            ease: 'outQuad',
+          });
+        }
       }
 
       function render() {
@@ -323,15 +448,18 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         list.innerHTML = '';
         let hl = 0;
         let sl = 0;
+        const current = new Set<string>();
 
         sel.forEach((input) => {
           const label = input.closest('label');
-          const title = label.querySelector('span').textContent;
-          const level = levelFor.get(input.value) || (input.dataset.offered === 'SL' ? 'SL' : 'HL');
+          const title = label?.querySelector('span')?.textContent?.trim() ?? '';
+          const level = levelOf(input);
           if (level === 'HL') hl++;
           else sl++;
+          current.add(input.value);
 
           const li = document.createElement('li');
+          li.dataset.slug = input.value;
           li.className = 'flex items-center justify-between gap-2 rounded-lg bg-stone-50 px-3 py-2';
           const name = document.createElement('span');
           name.className = 'truncate text-stone-700';
@@ -346,53 +474,102 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         });
 
         const total = sel.length;
-        elTotal.textContent = String(total);
-        elHl.textContent = String(hl);
-        elSl.textContent = String(sl);
+        tick(elTotal, counters.total, total);
+        tick(elHl, counters.hl, hl);
+        tick(elSl, counters.sl, sl);
         empty.classList.toggle('hidden', total > 0);
 
-        // Validation
-        status.classList.add('hidden');
-        status.classList.remove('bg-emerald-50', 'text-emerald-800', 'bg-myp-50', 'text-myp-800');
-        if (total === 0) return;
-
-        if (total !== 6) {
-          status.textContent = strings.errSix;
-          status.classList.add('bg-myp-50', 'text-myp-800');
-          status.classList.remove('hidden');
-        } else if (hl < 3 || hl > 4) {
-          status.textContent = strings.errHlRange;
-          status.classList.add('bg-myp-50', 'text-myp-800');
-          status.classList.remove('hidden');
-        } else {
-          status.textContent = strings.validComplete;
-          status.classList.add('bg-emerald-50', 'text-emerald-800');
-          status.classList.remove('hidden');
+        // spring in rows that weren't in the summary before
+        if (!reduced) {
+          const fresh = Array.from(list.querySelectorAll<HTMLElement>('li')).filter(
+            (li) => !prevSlugs.has(li.dataset.slug ?? ''),
+          );
+          if (fresh.length) {
+            animate(fresh, {
+              opacity: [0, 1],
+              x: [14, 0],
+              duration: 500,
+              delay: stagger(45),
+              ease: pop(),
+            });
+          }
         }
+        prevSlugs = current;
+
+        // climbing past 4 HL nudges the HL tile
+        if (hl > 4 && prevHl <= 4) {
+          const tile = elHl.closest('[data-count-tile]');
+          if (tile) shake(tile);
+        }
+        prevHl = hl;
+
+        syncTaken();
+        updateStatus(total, hl);
       }
 
       // Initialise level button states
       form.querySelectorAll('label').forEach(setLevelButtons);
 
       form.addEventListener('change', (e) => {
-        if (e.target.matches('input[type=radio]')) render();
+        const input = e.target;
+        if (!(input instanceof HTMLInputElement) || input.type !== 'radio') return;
+        if (!reduced) {
+          const dot = input.closest('label')?.querySelector('[data-dot]');
+          if (dot) {
+            utils.remove(dot);
+            animate(dot, { scale: [0.4, 1], duration: 500, ease: pop() });
+          }
+        }
+        render();
       });
 
-      // Level chip clicks (inside labels) must not toggle the radio
       form.addEventListener('click', (e) => {
-        const btn = e.target.closest('button[data-level]');
+        const target = e.target as Element;
+
+        // duplicate of an already-picked subject: refuse with a shake
+        const takenLabel = target.closest('label[data-taken]');
+        if (takenLabel) {
+          e.preventDefault();
+          shake(takenLabel);
+          return;
+        }
+
+        // Level chip clicks (inside labels) must not toggle the radio
+        const btn = target.closest<HTMLButtonElement>('button[data-level]');
         if (!btn) return;
         e.preventDefault();
         const label = btn.closest('label');
-        const input = label.querySelector('input[type=radio]');
-        levelFor.set(input.value, btn.dataset.level);
+        const input = label?.querySelector<HTMLInputElement>('input[type=radio]');
+        if (!label || !input) return;
+        levelFor.set(input.value, btn.dataset.level ?? 'HL');
         setLevelButtons(label);
+        if (!reduced) {
+          utils.remove(btn);
+          animate(btn, { scale: [1, 1.25, 1], duration: 300, ease: 'outQuad' });
+        }
         if (input.checked) render();
       });
 
       reset?.addEventListener('click', () => {
-        radios().forEach((r) => (r.checked = false));
-        render();
+        const clear = () => {
+          radios().forEach((r) => {
+            r.checked = false;
+          });
+          render();
+        };
+        const items = Array.from(list.querySelectorAll('li'));
+        if (reduced || items.length === 0) {
+          clear();
+          return;
+        }
+        animate(items, {
+          opacity: 0,
+          x: -12,
+          duration: 200,
+          delay: stagger(28),
+          ease: 'inQuad',
+          onComplete: clear,
+        });
       });
 
       render();
