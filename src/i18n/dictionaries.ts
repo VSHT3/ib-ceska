@@ -227,6 +227,11 @@ const dict = {
       errSix: 'Choose six subjects in total.',
       errHlRange: 'Choose three or four subjects at Higher Level.',
       noSubjectsInGroup: 'No subjects listed for this group yet.',
+      dpNote: 'This planner is for the two-year Diploma Programme, the stage that follows MYP.',
+      dpLink: 'How the DP works',
+      slotEmpty: 'Not chosen yet',
+      hlMeter: 'Higher Level subjects',
+      hlTarget: 'Aim for 3 or 4',
     },
     cas: {
       title: 'CAS',
@@ -608,6 +613,10 @@ const dict = {
       admissionsBody:
         'Ask the school about current subject availability, combinations, entry requirements, and dates.',
       admissionsLink: 'View admissions',
+      builderTitle: 'Design your own diploma',
+      builderBody:
+        'Choose six subjects and levels in our interactive planner to see how your DP could take shape.',
+      builderCta: 'Open the diploma builder',
     },
   },
   sk: {
@@ -829,6 +838,11 @@ const dict = {
       errSix: 'Vyberte spolu šesť predmetov.',
       errHlRange: 'Vyberte tri alebo štyri predmety na Higher Level.',
       noSubjectsInGroup: 'Pre túto skupinu zatiaľ nie sú uvedené žiadne predmety.',
+      dpNote: 'Tento plánovač je pre dvojročný Diploma Programme, stupeň nadväzujúci na MYP.',
+      dpLink: 'Ako funguje DP',
+      slotEmpty: 'Zatiaľ nevybraté',
+      hlMeter: 'Predmety na Higher Level',
+      hlTarget: 'Cieľom sú 3 alebo 4',
     },
     cas: {
       title: 'CAS',
@@ -1199,6 +1213,10 @@ const dict = {
       admissionsBody:
         'Opýtajte sa školy na aktuálnu ponuku predmetov, kombinácie, vstupné požiadavky a termíny.',
       admissionsLink: 'Prijímacie konanie',
+      builderTitle: 'Navrhnite si vlastný diplom',
+      builderBody:
+        'V interaktívnom plánovači si vyberte šesť predmetov a úrovne a uvidíte, ako by mohol vyzerať váš diplom.',
+      builderCta: 'Otvoriť plánovač diplomu',
     },
   },
 };

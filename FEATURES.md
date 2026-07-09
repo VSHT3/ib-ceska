@@ -45,7 +45,7 @@ Implemented and shipped.
 - [x] `/news/[slug]` — news article detail
 - [x] `/events` — calendar page, auto-split into upcoming/past
 - [x] `/gallery` — bilingual masonry photo gallery with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
-- [x] `/build-your-diploma` — interactive subject-combination planner with live IB-rule validation, anime.js micro-interactions (spring-in summary rows, counting tallies, duplicate-subject lockout with shake, valid-combination celebration), reduced-motion safe
+- [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
 - [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits

@@ -1,7 +1,7 @@
 ---
 import { reader, pick } from '../../lib/keystatic';
 import Layout from '../../layouts/Layout.astro';
-import { t } from '../../i18n/dictionaries';
+import { t, l } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
 
 export function getStaticPaths() {
@@ -52,6 +52,28 @@ const electiveSubjects = [
 
 const shortLabel = (label: string) => label.replace(/^[^:]+:\s*/, '');
 const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 'SL'] : [offered]);
+
+const cardClass =
+  'group relative flex cursor-pointer items-start justify-between gap-3 rounded-xl border border-stone-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-dp-400 hover:shadow-lg hover:shadow-dp-900/10 has-[:checked]:border-dp-600 has-[:checked]:bg-dp-50/60 has-[:checked]:ring-1 has-[:checked]:ring-dp-600 data-[taken]:cursor-not-allowed data-[taken]:hover:translate-y-0 data-[taken]:hover:border-stone-200 data-[taken]:hover:shadow-none';
+
+// DP hexagon geometry (viewBox 400×400, centre 200,200, R 170)
+const hexPoints = '200,30 347,115 347,285 200,370 53,285 53,115';
+const hexVertices = [
+  [200, 30],
+  [347, 115],
+  [347, 285],
+  [200, 370],
+  [53, 285],
+  [53, 115],
+];
+const hexNumbers = [
+  [255, 105],
+  [310, 200],
+  [255, 295],
+  [145, 295],
+  [90, 200],
+  [145, 105],
+];
 ---
 
 <Layout
@@ -61,70 +83,177 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
   pageSchemaType="WebApplication"
   pageSchema={{ applicationCategory: 'EducationalApplication', browserRequirements: 'JavaScript' }}
 >
-  <!-- Hero -->
-  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
-    <span
-      class="absolute -right-8 -bottom-20 text-[13rem] sm:text-[20rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none"
-      aria-hidden="true">IB</span
-    >
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
-      <span
-        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700"
-        >{b.label}</span
-      >
-      <h1
-        class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight"
-        style="--rise-delay: 80ms"
-      >
-        {b.title}
-      </h1>
-      <p
-        class="hero-rise mt-5 max-w-2xl text-lg text-stone-600 leading-relaxed"
-        style="--rise-delay: 160ms"
-      >
-        {b.subtitle}
-      </p>
+  <!-- Hero: full-bleed DP brand band with programme hexagon -->
+  <section class="relative overflow-hidden bg-dp-900 text-white">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-48 -left-40 h-[36rem] w-[36rem] rounded-full bg-dp-500/20 blur-3xl">
+      </div>
       <div
-        class="hero-rise mt-8 max-w-2xl rounded-2xl border border-stone-200 bg-stone-50 p-5"
-        style="--rise-delay: 240ms"
+        class="absolute -bottom-56 -right-24 h-[32rem] w-[32rem] rounded-full bg-dp-400/10 blur-3xl"
       >
-        <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">
-          {b.ruleHeading}
+      </div>
+    </div>
+
+    <div
+      class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16"
+    >
+      <div>
+        <div class="hero-rise flex flex-wrap items-center gap-3">
+          <img
+            src="/ib-dp-logo.png"
+            alt="IB Diploma Programme logo"
+            class="h-10 w-auto rounded-lg bg-white p-1.5 sm:h-11"
+            width="640"
+            height="256"
+          />
+          <p class="text-xs font-semibold uppercase tracking-widest text-dp-200">
+            {dict.dp.label} · {dict.dp.age}
+          </p>
+        </div>
+        <h1
+          class="hero-rise mt-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
+          style="--rise-delay: 80ms"
+        >
+          {b.title}
+        </h1>
+        <p
+          class="hero-rise mt-5 max-w-xl text-lg leading-relaxed text-dp-100/85"
+          style="--rise-delay: 160ms"
+        >
+          {b.subtitle}
         </p>
-        <ul class="mt-3 space-y-1.5 text-sm text-stone-600">
+        <p class="hero-rise mt-7 max-w-xl text-sm text-dp-100/70" style="--rise-delay: 240ms">
+          {b.dpNote}
+          <a
+            href={l('/dp', locale)}
+            class="ml-1 font-semibold text-white underline decoration-dp-300/60 underline-offset-4 transition-colors hover:decoration-white"
+          >
+            {b.dpLink} →
+          </a>
+        </p>
+      </div>
+
+      <!-- The DP programme model: six groups around the core -->
+      <div class="hero-fade hidden lg:block" aria-hidden="true">
+        <svg viewBox="0 0 400 400" class="hex-figure mx-auto w-full max-w-[26rem]">
+          <circle
+            cx="200"
+            cy="200"
+            r="194"
+            fill="none"
+            stroke="#99e0ec"
+            stroke-opacity="0.25"
+            stroke-dasharray="2 10"
+            class="hex-orbit"></circle>
           {
-            b.rules.map((r) => (
-              <li class="flex gap-2.5">
-                <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-emerald-500" />
-                {r}
-              </li>
+            hexVertices.map((v, i) => (
+              <polygon
+                points={`200,200 ${v[0]},${v[1]} ${hexVertices[(i + 1) % 6]![0]},${hexVertices[(i + 1) % 6]![1]}`}
+                fill="#2bbadd"
+                fill-opacity={i % 2 === 0 ? '0.05' : '0.11'}
+              />
             ))
           }
-        </ul>
+          <polygon
+            points={hexPoints}
+            fill="none"
+            stroke="#5fcbe3"
+            stroke-opacity="0.5"
+            stroke-width="1.5"></polygon>
+          {
+            hexVertices.map((v) => (
+              <line x1="200" y1="200" x2={v[0]} y2={v[1]} stroke="#5fcbe3" stroke-opacity="0.3" />
+            ))
+          }
+          {
+            hexNumbers.map((p, i) => (
+              <text
+                x={p[0]}
+                y={p[1]}
+                text-anchor="middle"
+                dominant-baseline="middle"
+                font-size="26"
+                font-weight="700"
+                fill="#c9eef5"
+                fill-opacity="0.9"
+              >
+                {i + 1}
+              </text>
+            ))
+          }
+          <circle
+            cx="200"
+            cy="200"
+            r="62"
+            fill="#02748a"
+            fill-opacity="0.65"
+            stroke="#5fcbe3"
+            stroke-opacity="0.55"></circle>
+          <text x="200" y="194" text-anchor="middle" font-size="30" font-weight="800" fill="#ffffff"
+            >DP</text
+          >
+          <text x="200" y="220" text-anchor="middle" font-size="13" font-weight="600" fill="#c9eef5"
+            >TOK · EE · CAS</text
+          >
+        </svg>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="relative border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-4 pt-7 pb-8 sm:px-6">
+        <p
+          class="hero-rise text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300"
+          style="--rise-delay: 300ms"
+        >
+          {b.ruleHeading}
+        </p>
+        <div class="mt-4 grid gap-5 sm:grid-cols-3 sm:gap-10">
+          {
+            b.rules.map((r, i) => (
+              <div class="hero-rise flex gap-3" style={`--rise-delay: ${360 + i * 90}ms`}>
+                <span class="text-sm font-extrabold text-dp-300">0{i + 1}</span>
+                <p class="text-sm leading-relaxed text-dp-100/80">{r}</p>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
   </section>
 
   <div
-    class="mx-auto max-w-6xl px-4 sm:px-6 py-12 lg:grid lg:grid-cols-[1fr_320px] lg:gap-12 lg:items-start"
+    class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-14"
   >
     <!-- Picker -->
-    <form id="diploma-builder" class="min-w-0 space-y-10">
+    <form id="diploma-builder" class="min-w-0 space-y-14">
       {
         coreGroups.map((g) => (
-          <fieldset class="border-t-2 border-stone-900 pt-4" data-group={g.key} data-reveal>
-            <legend class="flex items-baseline gap-3">
-              <span class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          <fieldset
+            class="relative border-t-2 border-stone-900 pt-5 sm:pl-28"
+            data-group={g.key}
+            data-reveal
+          >
+            <span
+              class="group-numeral absolute left-0 top-4 hidden select-none sm:block"
+              aria-hidden="true"
+            >
+              {g.key}
+            </span>
+            <legend class="float-left w-full">
+              <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-dp-700">
                 {g.label.split(':')[0]}
               </span>
-              <span class="text-lg font-bold tracking-tight">{shortLabel(g.label)}</span>
+              <span class="mt-1 block text-2xl font-bold tracking-tight">
+                {shortLabel(g.label)}
+              </span>
             </legend>
             {g.subjects.length === 0 ? (
-              <p class="mt-3 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
+              <p class="clear-both pt-4 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
             ) : (
-              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              <div class="clear-both grid gap-3 pt-5 sm:grid-cols-2">
                 {g.subjects.map((s) => (
-                  <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500 data-[taken]:cursor-not-allowed data-[taken]:hover:border-stone-200">
+                  <label class={cardClass}>
                     <div class="min-w-0">
                       <input
                         type="radio"
@@ -133,9 +262,10 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                         data-slug={s.slug}
                         data-group={g.key}
                         data-offered={s.offered}
+                        data-title={s.title}
                         class="peer sr-only"
                       />
-                      <span class="block font-semibold text-stone-900 peer-checked:text-emerald-800">
+                      <span class="block font-semibold text-stone-900 peer-checked:text-dp-900">
                         {s.title}
                       </span>
                       <span class="mt-2 inline-flex gap-1.5" data-level-group={`group-${g.key}`}>
@@ -156,10 +286,22 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                       </span>
                     </div>
                     <span
-                      class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
+                      class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 border-stone-300 transition-colors group-has-[:checked]:border-dp-600 group-has-[:checked]:bg-dp-600"
                       aria-hidden="true"
                       data-dot
-                    />
+                    >
+                      <svg
+                        class="h-3 w-3 text-white opacity-0 transition-opacity group-has-[:checked]:opacity-100"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M2.5 6.5 5 9l4.5-6" />
+                      </svg>
+                    </span>
                   </label>
                 ))}
               </div>
@@ -169,21 +311,33 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       }
 
       <!-- Sixth subject (elective) -->
-      <fieldset class="border-t-2 border-stone-900 pt-4" data-group="6" data-reveal>
-        <legend class="flex items-baseline gap-3">
-          <span class="text-xs font-semibold uppercase tracking-widest text-emerald-700"
+      <fieldset
+        class="relative border-t-2 border-stone-900 pt-5 sm:pl-28"
+        data-group="6"
+        data-reveal
+      >
+        <span
+          class="group-numeral absolute left-0 top-4 hidden select-none sm:block"
+          aria-hidden="true"
+        >
+          6
+        </span>
+        <legend class="float-left w-full">
+          <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-dp-700"
             >{dict.subjects.group6.split(':')[0]} / +</span
           >
-          <span class="text-lg font-bold tracking-tight">{shortLabel(dict.subjects.group6)}</span>
+          <span class="mt-1 block text-2xl font-bold tracking-tight"
+            >{shortLabel(dict.subjects.group6)}</span
+          >
         </legend>
-        <p class="mt-2 text-sm text-stone-500">{b.group6Note}</p>
+        <p class="clear-both pt-2 text-sm text-stone-500">{b.group6Note}</p>
         {
           electiveSubjects.length === 0 ? (
-            <p class="mt-3 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
+            <p class="pt-4 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
           ) : (
-            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <div class="grid gap-3 pt-5 sm:grid-cols-2">
               {electiveSubjects.map((s) => (
-                <label class="group relative flex cursor-pointer items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 transition-all hover:border-emerald-300 has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/50 has-[:checked]:ring-1 has-[:checked]:ring-emerald-500 data-[taken]:cursor-not-allowed data-[taken]:hover:border-stone-200">
+                <label class={cardClass}>
                   <div class="min-w-0">
                     <input
                       type="radio"
@@ -193,9 +347,10 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                       data-group="6"
                       data-source-group={s.group}
                       data-offered={s.offered}
+                      data-title={s.title}
                       class="peer sr-only"
                     />
-                    <span class="block font-semibold text-stone-900 peer-checked:text-emerald-800">
+                    <span class="block font-semibold text-stone-900 peer-checked:text-dp-900">
                       {s.title}
                     </span>
                     <span class="mt-1 block text-[11px] text-stone-400">
@@ -208,7 +363,12 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                         <button
                           type="button"
                           data-level={lv}
-                          class="rounded-full border border-stone-200 px-2.5 py-0.5 text-[11px] font-bold text-stone-500 transition-colors hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white"
+                          class:list={[
+                            'rounded-full border px-2.5 py-0.5 text-xs font-bold transition-colors',
+                            lv === 'HL'
+                              ? 'border-emerald-200 text-emerald-700 hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white'
+                              : 'border-sky-200 text-sky-700 hover:border-sky-400 data-[on]:border-sky-600 data-[on]:bg-sky-600 data-[on]:text-white',
+                          ]}
                         >
                           {lv}
                         </button>
@@ -216,10 +376,22 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
                     </span>
                   </div>
                   <span
-                    class="mt-0.5 h-5 w-5 shrink-0 rounded-full border-2 border-stone-300 transition-colors peer-checked:border-emerald-600 peer-checked:bg-emerald-600"
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 border-stone-300 transition-colors group-has-[:checked]:border-dp-600 group-has-[:checked]:bg-dp-600"
                     aria-hidden="true"
                     data-dot
-                  />
+                  >
+                    <svg
+                      class="h-3 w-3 text-white opacity-0 transition-opacity group-has-[:checked]:opacity-100"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M2.5 6.5 5 9l4.5-6" />
+                    </svg>
+                  </span>
                 </label>
               ))}
             </div>
@@ -228,56 +400,129 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       </fieldset>
     </form>
 
-    <!-- Summary panel -->
-    <aside class="mt-12 lg:mt-0 lg:sticky lg:top-28">
-      <div class="rounded-3xl border border-stone-200 bg-white p-6 shadow-sm">
-        <h2 class="text-lg font-bold tracking-tight">{b.summaryTitle}</h2>
-
-        <div class="mt-5 grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-xl bg-stone-50 py-3" data-count-tile>
-            <p id="count-total" class="text-2xl font-extrabold text-stone-900">0</p>
-            <p class="mt-0.5 text-[11px] text-stone-500">{b.totalLabel}</p>
-          </div>
-          <div class="rounded-xl bg-emerald-50 py-3" data-count-tile>
-            <p id="count-hl" class="text-2xl font-extrabold text-emerald-700">0</p>
-            <p class="mt-0.5 text-[11px] text-emerald-700/70">{b.hlCount}</p>
-          </div>
-          <div class="rounded-xl bg-sky-50 py-3" data-count-tile>
-            <p id="count-sl" class="text-2xl font-extrabold text-sky-700">0</p>
-            <p class="mt-0.5 text-[11px] text-sky-700/70">{b.slCount}</p>
-          </div>
+    <!-- Summary: dark diploma card with six fixed slots -->
+    <aside id="diploma-summary" class="mt-14 scroll-mt-24 lg:sticky lg:top-24 lg:mt-0">
+      <div
+        class="relative overflow-hidden rounded-2xl bg-dp-900 text-white shadow-2xl ring-1 ring-white/10"
+      >
+        <div
+          class="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-dp-500/25 blur-3xl"
+          aria-hidden="true"
+        >
         </div>
+        <div class="relative p-6 sm:p-7">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300">
+                {dict.dp.label}
+              </p>
+              <h2 class="mt-1 text-xl font-bold tracking-tight">{b.summaryTitle}</h2>
+            </div>
+            <span
+              class="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-dp-300/40 bg-white/5"
+            >
+              <span class="text-sm font-extrabold leading-none">
+                <span id="count-total">0</span><span class="font-semibold text-white/40">/6</span>
+              </span>
+            </span>
+          </div>
 
-        <ol id="summary-list" class="mt-5 space-y-2 text-sm"></ol>
-        <p id="summary-empty" class="mt-5 text-sm text-stone-400">
-          {b.summaryEmpty}
-        </p>
-
-        <p
-          id="builder-status"
-          class="mt-5 hidden rounded-xl px-4 py-3 text-sm font-medium"
-          role="status"
-        >
-        </p>
-
-        <button
-          type="button"
-          id="builder-reset"
-          class="mt-5 w-full rounded-full border border-stone-200 py-2.5 text-sm font-semibold text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
-        >
-          {b.reset}
-        </button>
-
-        <div class="mt-6 border-t border-stone-200 pt-5">
-          <p class="text-xs font-semibold uppercase tracking-widest text-stone-400">
-            {b.coreLabel}
+          <p id="summary-empty" class="mt-4 text-xs leading-relaxed text-white/40">
+            {b.summaryEmpty}
           </p>
-          <p class="mt-2 text-sm text-stone-500 leading-relaxed">
-            {b.coreNote}
+
+          <ol class="mt-5">
+            {
+              ['1', '2', '3', '4', '5', '6'].map((k) => (
+                <li data-slot={k} class="flex items-center gap-3 border-b border-white/10 py-2.5">
+                  <span class="w-6 shrink-0 text-[11px] font-bold text-dp-300/80">0{k}</span>
+                  <span data-slot-name class="flex-1 truncate text-sm text-white/30">
+                    {b.slotEmpty}
+                  </span>
+                  <span data-slot-level class="hidden" />
+                </li>
+              ))
+            }
+          </ol>
+
+          <div class="mt-6">
+            <div class="flex items-baseline justify-between gap-3">
+              <p class="text-[11px] font-bold uppercase tracking-widest text-dp-300">
+                {b.hlMeter}
+              </p>
+              <p class="text-xs text-white/60">
+                <span id="count-hl" class="font-bold text-emerald-300">0</span> HL ·
+                <span id="count-sl" class="font-bold text-sky-300">0</span> SL
+              </p>
+            </div>
+            <div class="mt-2.5 grid grid-cols-6 gap-1" data-hl-track>
+              {
+                [0, 1, 2, 3, 4, 5].map((i) => (
+                  <span
+                    data-hl-seg
+                    class:list={[
+                      'h-1.5 rounded-full bg-white/10 transition-colors',
+                      (i === 2 || i === 3) && 'ring-1 ring-inset ring-dp-300/50',
+                    ]}
+                  />
+                ))
+              }
+            </div>
+            <p class="mt-1.5 text-[10px] text-white/40">{b.hlTarget}</p>
+          </div>
+
+          <p
+            id="builder-status"
+            class="mt-5 hidden rounded-xl px-4 py-3 text-sm font-medium"
+            role="status"
+          >
           </p>
+
+          <button
+            type="button"
+            id="builder-reset"
+            class="mt-5 w-full rounded-full border border-white/15 py-2.5 text-sm font-semibold text-white/80 transition-colors hover:border-white/40 hover:text-white"
+          >
+            {b.reset}
+          </button>
+
+          <div class="mt-6 border-t border-dashed border-white/15 pt-5">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-dp-300">
+              {b.coreLabel}
+            </p>
+            <div class="mt-2.5 flex gap-2">
+              {
+                ['TOK', 'EE', 'CAS'].map((c) => (
+                  <span class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-bold text-dp-100">
+                    {c}
+                  </span>
+                ))
+              }
+            </div>
+            <p class="mt-3 text-xs leading-relaxed text-white/50">{b.coreNote}</p>
+          </div>
         </div>
       </div>
     </aside>
+  </div>
+
+  <!-- Mobile progress bar (summary is below the form on small screens) -->
+  <div
+    id="mobile-bar"
+    class="fixed inset-x-3 bottom-3 z-40 hidden items-center justify-between gap-3 rounded-2xl bg-dp-900/95 px-4 py-3 text-white shadow-2xl ring-1 ring-white/10 backdrop-blur lg:hidden!"
+  >
+    <p class="text-sm">
+      <span id="mcount" class="font-extrabold">0</span><span class="text-white/50">/6</span>
+      <span class="mx-1 text-white/30">·</span>
+      <span id="mhl" class="font-extrabold">0</span>
+      <span class="text-white/50">HL</span>
+    </p>
+    <a
+      href="#diploma-summary"
+      class="rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-dp-900"
+    >
+      {b.summaryTitle} ↓
+    </a>
   </div>
 
   <script
@@ -288,6 +533,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       validComplete: b.validComplete,
       errSix: b.errSix,
       errHlRange: b.errHlRange,
+      slotEmpty: b.slotEmpty,
     }).replaceAll('<', '\\u003c')}
   />
 
@@ -297,24 +543,27 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
     function initDiplomaBuilder() {
       const $ = (id: string) => document.getElementById(id);
       const formEl = $('diploma-builder');
-      const listEl = $('summary-list');
-      const emptyEl = $('summary-empty');
       const statusEl = $('builder-status');
       const totalEl = $('count-total');
       const hlEl = $('count-hl');
       const slEl = $('count-sl');
+      const emptyEl = $('summary-empty');
       const reset = $('builder-reset');
       const stringsEl = $('builder-strings');
-      if (!formEl || !listEl || !emptyEl || !statusEl || !totalEl || !hlEl || !slEl || !stringsEl)
-        return;
+      const mobileBar = $('mobile-bar');
+      const mTotal = $('mcount');
+      const mHl = $('mhl');
+      if (!formEl || !statusEl || !totalEl || !hlEl || !slEl || !emptyEl || !stringsEl) return;
       // rebind: narrowed consts survive into the closures below
       const form = formEl;
-      const list = listEl;
-      const empty = emptyEl;
       const status = statusEl;
+      const empty = emptyEl;
       const elTotal = totalEl;
       const elHl = hlEl;
       const elSl = slEl;
+
+      const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-slot]'));
+      const segs = Array.from(document.querySelectorAll<HTMLElement>('[data-hl-seg]'));
 
       const strings = JSON.parse(stringsEl.textContent ?? '{}') as Record<string, string>;
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -323,7 +572,6 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       // level chosen per radio input slug; defaults to first available
       const levelFor = new Map<string, string>();
       const counters = { total: { v: 0 }, hl: { v: 0 }, sl: { v: 0 } };
-      let prevSlugs = new Set<string>();
       let lastStatusKey = '';
       let prevHl = 0;
 
@@ -396,7 +644,12 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       }
 
       function updateStatus(total: number, hl: number) {
-        status.classList.remove('bg-emerald-50', 'text-emerald-800', 'bg-myp-50', 'text-myp-800');
+        status.classList.remove(
+          'bg-emerald-400/15',
+          'text-emerald-200',
+          'bg-amber-400/15',
+          'text-amber-200',
+        );
         if (total === 0) {
           status.classList.add('hidden');
           lastStatusKey = '';
@@ -414,8 +667,8 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         status.textContent = text ?? '';
         status.classList.add(
           ...(kind === 'ok'
-            ? ['bg-emerald-50', 'text-emerald-800']
-            : ['bg-myp-50', 'text-myp-800']),
+            ? ['bg-emerald-400/15', 'text-emerald-200']
+            : ['bg-amber-400/15', 'text-amber-200']),
         );
         status.classList.remove('hidden');
         const key = `${kind}:${text}`;
@@ -425,7 +678,7 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
         if (kind === 'error') {
           shake(status);
         } else {
-          // valid diploma: status springs in, counter tiles cascade
+          // valid diploma: status springs in, slots cascade
           utils.remove(status);
           animate(status, {
             scale: [0.94, 1],
@@ -434,72 +687,82 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
             duration: 550,
             ease: pop(),
           });
-          animate('[data-count-tile]', {
-            scale: [1, 1.1, 1],
-            duration: 450,
-            delay: stagger(70),
+          animate('[data-slot]', {
+            x: [0, 6, 0],
+            duration: 400,
+            delay: stagger(50),
             ease: 'outQuad',
           });
         }
       }
 
+      const SEG_ZONE = ' ring-1 ring-inset ring-dp-300/50';
+      function renderMeter(hl: number) {
+        segs.forEach((seg, i) => {
+          const active = i < hl;
+          seg.className =
+            'h-1.5 rounded-full transition-colors' +
+            (active ? (i < 4 ? ' bg-emerald-400' : ' bg-amber-400') : ' bg-white/10') +
+            (i === 2 || i === 3 ? SEG_ZONE : '');
+        });
+      }
+
       function render() {
         const sel = checked();
-        list.innerHTML = '';
         let hl = 0;
         let sl = 0;
-        const current = new Set<string>();
+        const byGroup = new Map<string, HTMLInputElement>();
+        sel.forEach((r) => byGroup.set(r.dataset.group ?? '', r));
 
-        sel.forEach((input) => {
-          const label = input.closest('label');
-          const title = label?.querySelector('span')?.textContent?.trim() ?? '';
-          const level = levelOf(input);
-          if (level === 'HL') hl++;
-          else sl++;
-          current.add(input.value);
-
-          const li = document.createElement('li');
-          li.dataset.slug = input.value;
-          li.className = 'flex items-center justify-between gap-2 rounded-lg bg-stone-50 px-3 py-2';
-          const name = document.createElement('span');
-          name.className = 'truncate text-stone-700';
-          name.textContent = title;
-          const badge = document.createElement('span');
-          badge.className =
-            'shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold ' +
-            (level === 'HL' ? 'bg-emerald-100 text-emerald-800' : 'bg-sky-100 text-sky-800');
-          badge.textContent = level;
-          li.append(name, badge);
-          list.append(li);
+        slots.forEach((slot) => {
+          const input = byGroup.get(slot.dataset.slot ?? '');
+          const nameEl = slot.querySelector<HTMLElement>('[data-slot-name]');
+          const lvlEl = slot.querySelector<HTMLElement>('[data-slot-level]');
+          if (!nameEl || !lvlEl) return;
+          if (input) {
+            const level = levelOf(input);
+            if (level === 'HL') hl++;
+            else sl++;
+            const key = `${input.value}:${level}`;
+            if (slot.dataset.filled === key) return;
+            slot.dataset.filled = key;
+            nameEl.textContent = input.dataset.title ?? '';
+            nameEl.className = 'flex-1 truncate text-sm font-medium text-white';
+            lvlEl.textContent = level;
+            lvlEl.className =
+              'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ' +
+              (level === 'HL' ? 'bg-emerald-400 text-emerald-950' : 'bg-sky-400 text-sky-950');
+            if (!reduced) {
+              utils.remove(slot);
+              animate(slot, { x: [10, 0], opacity: [0.3, 1], duration: 450, ease: pop() });
+            }
+          } else if (slot.dataset.filled) {
+            delete slot.dataset.filled;
+            nameEl.textContent = strings.slotEmpty ?? '';
+            nameEl.className = 'flex-1 truncate text-sm text-white/30';
+            lvlEl.textContent = '';
+            lvlEl.className = 'hidden';
+          }
         });
 
         const total = sel.length;
         tick(elTotal, counters.total, total);
         tick(elHl, counters.hl, hl);
         tick(elSl, counters.sl, sl);
+        renderMeter(hl);
         empty.classList.toggle('hidden', total > 0);
 
-        // spring in rows that weren't in the summary before
-        if (!reduced) {
-          const fresh = Array.from(list.querySelectorAll<HTMLElement>('li')).filter(
-            (li) => !prevSlugs.has(li.dataset.slug ?? ''),
-          );
-          if (fresh.length) {
-            animate(fresh, {
-              opacity: [0, 1],
-              x: [14, 0],
-              duration: 500,
-              delay: stagger(45),
-              ease: pop(),
-            });
-          }
+        if (mTotal) mTotal.textContent = String(total);
+        if (mHl) mHl.textContent = String(hl);
+        if (mobileBar) {
+          mobileBar.classList.toggle('hidden', total === 0);
+          mobileBar.classList.toggle('flex', total > 0);
         }
-        prevSlugs = current;
 
-        // climbing past 4 HL nudges the HL tile
+        // climbing past 4 HL nudges the meter
         if (hl > 4 && prevHl <= 4) {
-          const tile = elHl.closest('[data-count-tile]');
-          if (tile) shake(tile);
+          const track = document.querySelector('[data-hl-track]');
+          if (track) shake(track);
         }
         prevHl = hl;
 
@@ -551,25 +814,19 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
       });
 
       reset?.addEventListener('click', () => {
-        const clear = () => {
-          radios().forEach((r) => {
-            r.checked = false;
-          });
-          render();
-        };
-        const items = Array.from(list.querySelectorAll('li'));
-        if (reduced || items.length === 0) {
-          clear();
-          return;
-        }
-        animate(items, {
-          opacity: 0,
-          x: -12,
-          duration: 200,
-          delay: stagger(28),
-          ease: 'inQuad',
-          onComplete: clear,
+        radios().forEach((r) => {
+          r.checked = false;
         });
+        render();
+        if (!reduced && slots.length) {
+          animate(slots, {
+            opacity: [0, 1],
+            x: [-8, 0],
+            duration: 350,
+            delay: stagger(35),
+            ease: 'outQuad',
+          });
+        }
       });
 
       render();
@@ -577,4 +834,44 @@ const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 
 
     document.addEventListener('astro:page-load', initDiplomaBuilder);
   </script>
+
+  <style>
+    .group-numeral {
+      font-size: 4.5rem;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--color-dp-100);
+    }
+    @supports (-webkit-text-stroke: 1px black) {
+      .group-numeral {
+        color: transparent;
+        -webkit-text-stroke: 2px var(--color-dp-200);
+      }
+    }
+    @keyframes orbit-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .hex-orbit {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: orbit-spin 80s linear infinite;
+    }
+    @keyframes hex-float {
+      to {
+        transform: translateY(-10px);
+      }
+    }
+    .hex-figure {
+      animation: hex-float 7s ease-in-out infinite alternate;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hex-orbit,
+      .hex-figure {
+        animation: none;
+      }
+    }
+  </style>
 </Layout>

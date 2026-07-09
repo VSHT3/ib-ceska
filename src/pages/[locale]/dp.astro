@@ -9,13 +9,20 @@ export function getStaticPaths() {
 }
 
 const locale = (Astro.params.locale ?? 'en') as Locale;
+const dp = t(locale).dp;
 ---
 
 <ProgrammeOverview
   locale={locale}
-  programme={t(locale).dp}
+  programme={dp}
   tone="dp"
   image={school.projectPresentation}
   imageAlt="Students presenting project work at Česká"
   logo="/ib-dp-logo.png"
+  promo={{
+    title: dp.builderTitle,
+    body: dp.builderBody,
+    cta: dp.builderCta,
+    href: '/build-your-diploma',
+  }}
 />
