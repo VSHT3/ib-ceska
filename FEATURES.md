@@ -44,7 +44,7 @@ Implemented and shipped.
 - [x] `/news` — newspaper-style gazette: folio line (school · Bratislava · RSS chip), nameplate masthead with double rule, featured story with column rule, chronological feed with outlined year markers
 - [x] `/news/[slug]` — editorial article page: badge + date kicker, headline, standfirst, byline, double rule, print-style drop cap on the opening paragraph
 - [x] `/events` — calendar page, auto-split into upcoming/past
-- [x] `/gallery` — bilingual masonry photo gallery with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
+- [x] `/gallery` — bilingual mosaic photo gallery: measured row-span grid masonry (left-to-right order, aspect-true tiles, double-width feature tiles for the widest photos, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
 - [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
