@@ -41,8 +41,8 @@ Implemented and shipped.
 - [x] `/tok` — essay/material listing with theme badges
 - [x] `/tok/[slug]` — TOK detail with full rendered essay
 - [x] `/ee` — Extended Essay timeline and resources
-- [x] `/news` — masthead feed with featured-latest + archive
-- [x] `/news/[slug]` — news article detail
+- [x] `/news` — newspaper-style gazette: folio line (school · Bratislava · RSS chip), nameplate masthead with double rule, featured story with column rule, chronological feed with outlined year markers
+- [x] `/news/[slug]` — editorial article page: badge + date kicker, headline, standfirst, byline, double rule, print-style drop cap on the opening paragraph
 - [x] `/events` — calendar page, auto-split into upcoming/past
 - [x] `/gallery` — bilingual masonry photo gallery with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
