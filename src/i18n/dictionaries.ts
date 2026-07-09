@@ -231,7 +231,7 @@ const dict = {
       dpLink: 'How the DP works',
       slotEmpty: 'Not chosen yet',
       hlMeter: 'Higher Level subjects',
-      hlTarget: 'Aim for 3 or 4',
+      hlTarget: '3 is the minimum and recommended, a 4th is allowed too',
     },
     cas: {
       title: 'CAS',
@@ -842,7 +842,7 @@ const dict = {
       dpLink: 'Ako funguje DP',
       slotEmpty: 'Zatiaľ nevybraté',
       hlMeter: 'Predmety na Higher Level',
-      hlTarget: 'Cieľom sú 3 alebo 4',
+      hlTarget: '3 sú minimum a odporúčaný počet, povolený je aj 4',
     },
     cas: {
       title: 'CAS',
