@@ -22,6 +22,10 @@ Tasks the AI must complete. Checked = done.
 - [x] Student testimonials — `/testimonials` page + homepage featured strip (Keystatic collection; sample entries seeded, real ones await consent)
 - [x] Teachers list page (verified current IB roster, published portraits, roles, and subjects)
 
+## Important
+
+- [ ] Leadership in @team should be centered and bit bigger than the rest.
+
 ## i18n
 
 - [ ] Slovak translations for sample content (fill `sk` fields via /keystatic)
