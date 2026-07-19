@@ -25,6 +25,7 @@ Tasks the AI must complete. Checked = done.
 ## Important
 
 - [ ] Leadership in @team should be centered and bit bigger than the rest.
+- [ ] twitter OG image something (the site "preview" on whatsapp and stuff)
 
 ## i18n
 
