@@ -68,16 +68,11 @@ const peopleSchemas = withPhoto.map((teacher) => ({
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
     <section>
       <div data-reveal>
-        <p
-          class="text-xs font-semibold uppercase tracking-widest text-emerald-700"
-        >
+        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
           {copy.leadershipLabel}
         </p>
         <div class="mt-2 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <h2 class="max-w-2xl text-3xl font-bold tracking-tight">{copy.leadershipTitle}</h2>
-          <p class="max-w-md text-sm leading-relaxed text-stone-500">
-            {copy.intro}
-          </p>
         </div>
       </div>
 
@@ -106,9 +101,7 @@ const peopleSchemas = withPhoto.map((teacher) => ({
                   <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
                   <ul class="mt-3 space-y-1.5">
                     {roleOf(teacher).map((role) => (
-                      <li class="text-sm leading-snug text-stone-600">
-                        {role}
-                      </li>
+                      <li class="text-sm leading-snug text-stone-600">{role}</li>
                     ))}
                   </ul>
                 </div>
@@ -121,9 +114,7 @@ const peopleSchemas = withPhoto.map((teacher) => ({
 
     <section class="mt-20 sm:mt-24">
       <div data-reveal>
-        <p
-          class="text-xs font-semibold uppercase tracking-widest text-emerald-700"
-        >
+        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
           {copy.facultyLabel}
         </p>
         <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight">{copy.facultyTitle}</h2>
@@ -184,9 +175,7 @@ const peopleSchemas = withPhoto.map((teacher) => ({
                     {teacher.responsibilities[locale].length > 0 && (
                       <ul class="mt-3 space-y-1.5">
                         {teacher.responsibilities[locale].map((role) => (
-                          <li class="text-sm leading-snug text-stone-500">
-                            {role}
-                          </li>
+                          <li class="text-sm leading-snug text-stone-500">{role}</li>
                         ))}
                       </ul>
                     )}

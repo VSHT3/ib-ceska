@@ -320,7 +320,6 @@ const dict = {
       title: 'Meet the IB team',
       subtitle: 'Programme leaders, subject teachers, coordinators, and student support at Česká.',
       label: 'People behind the programme',
-      intro: 'The current IB team and responsibilities published by Súkromné Gymnázium Česká.',
       leadershipLabel: 'Programme leadership',
       leadershipTitle: 'Guiding the programme and its students',
       facultyLabel: 'Teaching and support',
