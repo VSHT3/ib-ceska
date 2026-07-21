@@ -23,7 +23,7 @@ type Choice = {
 
 const subjectsOf = (group: string): Choice[] =>
   allSubjects
-    .filter((s) => s.entry.group === group)
+    .filter((s) => s.entry.group === group || s.entry.secondaryGroup === group)
     .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0))
     .map((s) => ({
       slug: s.slug,
@@ -42,13 +42,15 @@ const coreGroups = [
   { key: '5', label: dict.subjects.group5 },
 ].map((g) => ({ ...g, subjects: subjectsOf(g.key) }));
 
+// An interdisciplinary subject (e.g. ESS) can surface in two groups, so the
+// elective pool is de-duplicated by slug.
 const electiveSubjects = [
   ...subjectsOf('6'),
   ...subjectsOf('1'),
   ...subjectsOf('2'),
   ...subjectsOf('3'),
   ...subjectsOf('4'),
-];
+].filter((s, i, arr) => arr.findIndex((o) => o.slug === s.slug) === i);
 
 const shortLabel = (label: string) => label.replace(/^[^:]+:\s*/, '');
 const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['HL', 'SL'] : [offered]);

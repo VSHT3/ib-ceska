@@ -51,6 +51,21 @@ export default config({
           ],
           defaultValue: '1',
         }),
+        secondaryGroup: fields.select({
+          label: 'Secondary IB Group (optional)',
+          description:
+            'For interdisciplinary subjects offered in a second group (e.g. ESS counts for Group 3 or Group 4). Leave as None for most subjects.',
+          options: [
+            { label: 'None', value: 'none' },
+            { label: 'Group 1 — Language & Literature', value: '1' },
+            { label: 'Group 2 — Language Acquisition', value: '2' },
+            { label: 'Group 3 — Individuals & Societies', value: '3' },
+            { label: 'Group 4 — Sciences', value: '4' },
+            { label: 'Group 5 — Mathematics', value: '5' },
+            { label: 'Group 6 — The Arts', value: '6' },
+          ],
+          defaultValue: 'none',
+        }),
         offeredLevels: fields.select({
           label: 'Level',
           description:

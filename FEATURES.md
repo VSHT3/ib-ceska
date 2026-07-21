@@ -24,7 +24,7 @@ Implemented and shipped.
 
 ## Content (6 collections)
 
-- [x] `subjects` — title, group (1-6/core), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
+- [x] `subjects` — title, group (1-6/core), optional secondaryGroup (interdisciplinary subjects surface in two groups), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
 - [x] `cas` — title, date, strands (multi-select: Creativity/Activity/Service), description, learning outcomes, reflection body
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
@@ -102,7 +102,7 @@ Implemented and shipped.
 
 ## Sample content
 
-- [x] 9 subjects across all 6 IB groups — each with a full rendered syllabus body (overview, assessment table, IA detail)
+- [x] 12 subjects across all 6 IB groups (incl. German B, Slovak A: Literature, Language A: Literature SSST SL, and ESS shown under both Group 3 & Group 4) — each with a full rendered syllabus body (overview, assessment table, IA detail)
 - [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies

@@ -30,7 +30,7 @@ const groups = groupDefs
     // strip the "Group N: " / "Skupina N: " prefix - the ghost numeral already says it
     shortLabel: g.label.replace(/^[^:]+:\s*/, ''),
     subjects: allSubjects
-      .filter((s) => s.entry.group === g.key)
+      .filter((s) => s.entry.group === g.key || s.entry.secondaryGroup === g.key)
       .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0)),
   }))
   .filter((g) => g.subjects.length > 0);

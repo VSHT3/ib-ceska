@@ -33,6 +33,13 @@ const groupLabels: Record<string, string> = {
 const title = pick(locale, subject.sk.title, subject.title);
 const description = pick(locale, subject.sk.description, subject.description);
 
+const secondaryGroup =
+  subject.secondaryGroup && subject.secondaryGroup !== 'none' ? subject.secondaryGroup : null;
+const groupLabel = groupLabels[subject.group];
+const groupLabelFull = secondaryGroup
+  ? `${groupLabel} / ${groupLabels[secondaryGroup]}`
+  : groupLabel;
+
 const enHtml = await renderMarkdoc(subject.content);
 const skHtml = await renderMarkdoc(subject.sk.body);
 const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
@@ -46,7 +53,9 @@ const courseSchema = {
   inLanguage: locale,
   educationalLevel:
     subject.offeredLevels === 'both' ? ['Higher Level', 'Standard Level'] : subject.offeredLevels,
-  about: groupLabels[subject.group],
+  about: secondaryGroup
+    ? [groupLabels[subject.group], groupLabels[secondaryGroup]]
+    : groupLabels[subject.group],
   provider: { '@id': new URL('/#school', Astro.site).href },
 };
 ---
@@ -59,7 +68,7 @@ const courseSchema = {
   pageSchema={{ mainEntity: { '@id': courseId } }}
   structuredData={courseSchema}
 >
-  <PageHeader title={title} subtitle={description} label={groupLabels[subject.group]} />
+  <PageHeader title={title} subtitle={description} label={groupLabelFull} />
 
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14">
     <a
@@ -88,7 +97,7 @@ const courseSchema = {
               {dict.detail.group}
             </p>
             <p class="text-sm font-medium text-stone-800 mt-1">
-              {groupLabels[subject.group]}
+              {groupLabelFull}
             </p>
           </div>
           {
