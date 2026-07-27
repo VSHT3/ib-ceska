@@ -285,13 +285,15 @@ html.js [data-reveal].revealed {
   animation-delay: var(--rise-delay, 0ms);
 }
 
-/* ---------- Hero image fade-in (opacity entrance for background images) ---------- */
+/* ---------- Hero image fade-in (opacity entrance for background images) ----------
+   The end value has to match the opacity utility on the image: `both` fill means this
+   keyframe wins after it runs, so changing the class alone would have no effect. */
 @keyframes hero-fade {
   from {
     opacity: 0;
   }
   to {
-    opacity: 0.5;
+    opacity: 0.65;
   }
 }
 

@@ -80,7 +80,13 @@ const dict = {
     },
     home: {
       badge: 'MYP & DP at Česká',
-      hero: 'Study the International Baccalaureate at Česká',
+      /** Rendered as one sentence, in three parts so the middle can be set in the IB's
+          own blue. Split rather than string-matched because Slovak inflects the tail:
+          "at Česká" becomes "na Českej". The accent itself is a proper noun and is
+          identical in both locales. */
+      hero: 'Study the',
+      heroAccent: 'International Baccalaureate',
+      heroTail: 'at Česká',
       heroSub:
         'Build strong subject knowledge, ask better questions, and take on work that reaches beyond the classroom.',
       ctaPrimary: 'Explore subjects',
@@ -829,7 +835,9 @@ const dict = {
     },
     home: {
       badge: 'MYP a DP na Českej',
-      hero: 'Študujte International Baccalaureate na Českej',
+      hero: 'Študujte',
+      heroAccent: 'International Baccalaureate',
+      heroTail: 'na Českej',
       heroSub:
         'Získajte pevné vedomosti, pýtajte sa lepšie otázky a pracujte na projektoch, ktoré presahujú vyučovanie.',
       ctaPrimary: 'Preskúmať predmety',
