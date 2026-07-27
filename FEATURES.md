@@ -85,9 +85,9 @@ Implemented and shipped.
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
 - [x] Official IB logos: IB sphere mark (`/ib-logo.svg`) in footer + What-is-IB; DP/MYP banner logos (`/ib-dp-logo.png`, `/ib-myp-logo.png`) on `/dp` `/myp` headers + homepage programme cards
-- [x] Inter Variable font (self-hosted via `@fontsource-variable/inter`)
+- [x] Source Serif 4 + Source Sans 3 superfamily, self-hosted, latin + latin-ext only (hand-declared `@font-face`, 284 KB shipped vs 1.1 MB from a wholesale import). Serif on `h1`/`h2`/`h3`/`blockquote`, sans for UI, labels and data
 - [x] Tailwind-only CSS (animation utilities live in `global.css`)
-- [x] Full-photo homepage hero with Ken Burns zoom + staggered fade-in entrance, CTAs
+- [x] Full-photo homepage hero with a slow one-shot settle + staggered fade-in entrance, CTAs
 - [x] Count-up stats band, scroll-reveal sections, photo marquee gallery
 - [x] Astro view transitions (`<ClientRouter />`) for smooth navigation
 - [x] Mobile hamburger menu + active nav link states
@@ -96,10 +96,10 @@ Implemented and shipped.
 - [x] School-seal favicon set (ico, 192/512 PNG, apple-touch) + PWA manifest
 - [x] Language switch preserves scroll position
 - [x] Overscroll background matches design (no white flash)
-- [x] `PageHeader` gradient hero band on all subpages; EE visual timeline
+- [x] `PageHeader` editorial masthead on all subpages (light band, asymmetric title/standfirst, tone-tinted keyline); EE visual timeline
 - [x] MYP candidate-school disclaimer + correct programme ages (14–16 / 16–19)
 - [x] School photography from the old Framer site (`public/images/school/`)
-- [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
+- [x] Accessibility: WCAG AA contrast verified across all pages in both locales, one global `:focus-visible` outline, `prefers-reduced-motion` honoured, content visible without JS
 - [x] Light mode only — single theme, no dark mode (reverted)
 - [x] Editorial layout pass on interior pages (mission, admissions, TOK, CAS, policies, teachers, testimonials, EE, search): wide `max-w-7xl` shells with measure-constrained text, asymmetric 12-col/fractional grids, sticky heading rails, ghost-numeral hairline rows, full-bleed dark/neutral bands; recomposed `PageHeader` (hairline eyebrow, larger display title)
 

@@ -57,11 +57,11 @@ interface Props {
 
 const { locale, programme, tone, image, imageAlt, logo, promo } = Astro.props;
 const isMyp = tone === 'myp';
-const accentText = isMyp ? 'text-myp-700' : 'text-dp-700';
-const accentTextHover = isMyp ? 'group-hover:text-myp-700' : 'group-hover:text-dp-700';
+const accentText = isMyp ? 'text-myp-700' : 'text-dp-800';
+const accentTextHover = isMyp ? 'group-hover:text-myp-700' : 'group-hover:text-dp-800';
 const accentSoft = isMyp ? 'bg-myp-50' : 'bg-dp-50';
 const accentDark = isMyp ? 'bg-myp-800' : 'bg-dp-800';
-const accentButton = isMyp ? 'bg-myp-600 hover:bg-myp-700' : 'bg-dp-600 hover:bg-dp-700';
+const accentButton = isMyp ? 'bg-myp-700 hover:bg-myp-800' : 'bg-dp-800 hover:bg-dp-900';
 ---
 
 <Layout
@@ -95,13 +95,13 @@ const accentButton = isMyp ? 'bg-myp-600 hover:bg-myp-700' : 'bg-dp-600 hover:bg
             />
           )
         }
-        <p class="text-xs font-semibold uppercase tracking-widest text-white/70">
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/90">
           {programme.label}
         </p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
           {programme.title}
         </h1>
-        <p class="mt-5 text-lg leading-relaxed text-white/80">{programme.subtitle}</p>
+        <p class="mt-5 text-lg leading-relaxed text-white/90">{programme.subtitle}</p>
         <div class="mt-8 flex flex-wrap gap-3 text-sm font-semibold">
           <span class="rounded-full border border-white/25 bg-white/10 px-4 py-2"
             >{programme.age}</span
@@ -272,13 +272,13 @@ const accentButton = isMyp ? 'bg-myp-600 hover:bg-myp-700' : 'bg-dp-600 hover:bg
               <line x1="200" y1="200" x2="53" y2="115" />
               <circle cx="200" cy="200" r="60" />
             </svg>
-            <p class="text-xs font-semibold uppercase tracking-widest text-white/60">
+            <p class="text-xs font-semibold uppercase tracking-widest text-white/90">
               {programme.shortTitle}
             </p>
             <h2 class="mt-2 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
               {promo.title}
             </h2>
-            <p class="mt-3 max-w-xl leading-relaxed text-white/75">{promo.body}</p>
+            <p class="mt-3 max-w-xl leading-relaxed text-white/90">{promo.body}</p>
             <span class="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition-transform group-hover:translate-x-1">
               {promo.cta} →
             </span>
@@ -294,7 +294,7 @@ const accentButton = isMyp ? 'bg-myp-600 hover:bg-myp-700' : 'bg-dp-600 hover:bg
       <div class="grid gap-7 sm:grid-cols-[1fr_auto] sm:items-end">
         <div>
           <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{programme.admissionsTitle}</h2>
-          <p class="mt-3 max-w-2xl leading-relaxed text-white/75">{programme.admissionsBody}</p>
+          <p class="mt-3 max-w-2xl leading-relaxed text-white/90">{programme.admissionsBody}</p>
         </div>
         <a
           href={l('/admissions', locale)}

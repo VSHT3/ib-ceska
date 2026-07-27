@@ -9,9 +9,9 @@ interface Props {
 }
 
 const { items, locale, tone = 'dp' } = Astro.props;
-const accent = tone === 'myp' ? 'text-myp-700' : 'text-dp-700';
-const accentHover = tone === 'myp' ? 'hover:text-myp-800' : 'hover:text-dp-800';
-const badge = tone === 'myp' ? 'bg-myp-100 text-myp-800' : 'bg-dp-100 text-dp-800';
+const accent = tone === 'myp' ? 'text-myp-700' : 'text-dp-800';
+const accentHover = tone === 'myp' ? 'hover:text-myp-800' : 'hover:text-dp-900';
+const badge = tone === 'myp' ? 'bg-myp-100 text-myp-900' : 'bg-dp-100 text-dp-900';
 ---
 
 <ul class:list={['grid gap-3', items.length > 1 && 'sm:grid-cols-2']}>

@@ -92,7 +92,7 @@ const endDateLabel = event.endDate
       {
         event.time && (
           <p>
-            <span class="text-stone-400">{locale === 'sk' ? 'Čas' : 'Time'}:</span>
+            <span class="text-stone-500">{locale === 'sk' ? 'Čas' : 'Time'}:</span>
             <span class="ml-1 font-medium text-stone-700">{event.time}</span>
           </p>
         )
@@ -100,7 +100,7 @@ const endDateLabel = event.endDate
       {
         event.location && (
           <p>
-            <span class="text-stone-400">{locale === 'sk' ? 'Miesto' : 'Location'}:</span>
+            <span class="text-stone-500">{locale === 'sk' ? 'Miesto' : 'Location'}:</span>
             <span class="ml-1 font-medium text-stone-700">{event.location}</span>
           </p>
         )
@@ -112,7 +112,7 @@ const endDateLabel = event.endDate
         hasContent(bodyHtml) ? (
           <Fragment set:html={bodyHtml} />
         ) : (
-          <p class="text-stone-400">{dict.detail.comingSoon}</p>
+          <p class="text-stone-500">{dict.detail.comingSoon}</p>
         )
       }
     </article>

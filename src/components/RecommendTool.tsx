@@ -182,7 +182,7 @@ export default function RecommendTool() {
       <div className="space-y-1.5">
         {ranked.map(({ key, score }, i) => (
           <div key={key} className="flex items-center gap-2.5 text-sm">
-            <span className="text-stone-400 text-xs font-bold w-4">{i + 1}</span>
+            <span className="text-stone-500 text-xs font-bold w-4">{i + 1}</span>
             <span
               className="w-2.5 h-2.5 rounded-full shrink-0"
               style={{ background: products[key].color }}
