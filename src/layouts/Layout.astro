@@ -219,6 +219,16 @@ const jsonLd = JSON.stringify({
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content="Súkromné Gymnázium Česká in Bratislava" />
     <script is:inline type="application/ld+json" set:html={jsonLd} />
+    {
+      import.meta.env.PROD && (
+        <script
+          is:inline
+          defer
+          src="https://analytics.morumori.com/script.js"
+          data-website-id="3338cf3b-af17-494e-930c-33de48aaf146"
+        />
+      )
+    }
     <ClientRouter />
     <script is:inline>
       document.documentElement.classList.add('js');
@@ -406,6 +416,8 @@ const jsonLd = JSON.stringify({
               href={admissionsHref}
               aria-current={isActive(admissionsHref) ? 'page' : undefined}
               class="ml-1 rounded-full bg-emerald-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-800"
+              data-umami-event="cta-primary"
+              data-umami-event-target="admissions"
             >
               {dict.nav.apply}
             </a>
@@ -530,6 +542,8 @@ const jsonLd = JSON.stringify({
               href={admissionsHref}
               aria-current={isActive(admissionsHref) ? 'page' : undefined}
               class="block rounded-lg bg-emerald-700 px-3 py-2.5 text-center font-semibold text-white transition-colors hover:bg-emerald-800"
+              data-umami-event="cta-primary"
+              data-umami-event-target="admissions"
             >
               {dict.nav.apply}
             </a>
@@ -629,12 +643,14 @@ const jsonLd = JSON.stringify({
             <li>
               <a
                 href={`mailto:${contact.email}`}
+                data-umami-event="mail-click"
                 class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.email}</a
               >
             </li>
             <li>
               <a
                 href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                data-umami-event="tel-click"
                 class="text-stone-400 hover:text-emerald-400 transition-colors">{contact.phone}</a
               >
             </li>

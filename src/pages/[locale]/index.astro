@@ -581,6 +581,7 @@ const exploreCards = [
         </a>
         <a
           href={`tel:${contact.phone.replace(/\s/g, '')}`}
+          data-umami-event="tel-click"
           class="rounded-full border border-white/30 bg-white/10 px-7 py-3 font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-105 active:scale-100"
         >
           {dict.home.ctaCall} · {contact.phone}

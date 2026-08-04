@@ -220,6 +220,7 @@ const peopleSchemas = withPhoto.map((teacher) => ({
           </a>
           <a
             href={`mailto:${contact.email}`}
+            data-umami-event="mail-click"
             class="rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-emerald-400 hover:text-emerald-300"
           >
             {copy.emailLink}
