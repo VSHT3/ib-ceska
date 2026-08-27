@@ -15,6 +15,7 @@ import stanislavKuznetsov from '../assets/teachers/stanislav-kuznetsov.jpg';
 import svetlanaVeselova from '../assets/teachers/svetlana-veselova.jpeg';
 
 // Verified against the school's published IB roster on 15 June 2026.
+// Role titles updated per the IB DP coordinator on 2026-07-21.
 type LocalizedList = {
   en: string[];
   sk: string[];
@@ -55,8 +56,8 @@ export const teachers: Teacher[] = [
     leadership: true,
     areas: { en: [], sk: [] },
     responsibilities: {
-      en: ['Head of MYP', 'IB DP Coordinator'],
-      sk: ['Vedúca MYP', 'Koordinátorka IB DP'],
+      en: ['Head of MYP', 'IB DP Coordinator', 'ATL Coordinator'],
+      sk: ['Vedúca MYP', 'Koordinátorka IB DP', 'Koordinátorka ATL'],
     },
   },
   {
@@ -68,8 +69,8 @@ export const teachers: Teacher[] = [
       sk: ['Anglický jazyk a literatúra A'],
     },
     responsibilities: {
-      en: ['Extended Essay Coordinator'],
-      sk: ['Koordinátorka Extended Essay'],
+      en: ['Extended Essay Coordinator', 'DP1 Homeroom Teacher'],
+      sk: ['Koordinátorka Extended Essay', 'Triedna učiteľka DP1'],
     },
   },
   {
@@ -77,8 +78,8 @@ export const teachers: Teacher[] = [
     image: luciaHoracikova,
     leadership: false,
     areas: {
-      en: ['Slovak A: Language and Literature'],
-      sk: ['Slovenský jazyk a literatúra A'],
+      en: ['Slovak A: Literature'],
+      sk: ['Slovenská literatúra A'],
     },
     responsibilities: { en: [], sk: [] },
   },
@@ -124,8 +125,8 @@ export const teachers: Teacher[] = [
       sk: ['Psychológia', 'Biológia'],
     },
     responsibilities: {
-      en: ['Head of Humanities Department', 'University Counselor'],
-      sk: ['Vedúci humanitného oddelenia', 'Univerzitný poradca'],
+      en: ['Head of Humanities Department', 'University and Career Counsellor'],
+      sk: ['Vedúci humanitného oddelenia', 'Univerzitný a kariérny poradca'],
     },
   },
   {
@@ -157,8 +158,8 @@ export const teachers: Teacher[] = [
       sk: ['Geografia', 'Environmentálne systémy a spoločnosti'],
     },
     responsibilities: {
-      en: ['IB Partnerships and Relations Coordinator'],
-      sk: ['Koordinátorka IB partnerstiev a vzťahov'],
+      en: ['International Mindedness and Partnerships Coordinator'],
+      sk: ['Koordinátorka medzinárodného zmýšľania a partnerstiev'],
     },
   },
   {
@@ -179,7 +180,10 @@ export const teachers: Teacher[] = [
       en: ['Mathematics'],
       sk: ['Matematika'],
     },
-    responsibilities: { en: [], sk: [] },
+    responsibilities: {
+      en: ['Head of Mathematics'],
+      sk: ['Vedúci oddelenia matematiky'],
+    },
   },
   {
     name: 'Ján Gonda',
@@ -189,7 +193,10 @@ export const teachers: Teacher[] = [
       en: ['Theory of Knowledge'],
       sk: ['Teória poznania'],
     },
-    responsibilities: { en: [], sk: [] },
+    responsibilities: {
+      en: ['TOK Coordinator'],
+      sk: ['Koordinátor TOK'],
+    },
   },
   {
     name: 'Brooks Guetschow',
