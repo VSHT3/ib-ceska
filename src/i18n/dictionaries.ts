@@ -11,9 +11,9 @@ const dict = {
       home: 'Home',
       programmes: 'Programmes',
       myp: 'MYP',
-      mypDesc: 'Middle Years Programme · ages 14–16',
+      mypDesc: 'Middle Years Programme · ages 14-16',
       dp: 'DP',
-      dpDesc: 'Diploma Programme · ages 16–19',
+      dpDesc: 'Diploma Programme · ages 16-19',
       builder: 'Build your diploma',
       builderDesc: 'Plan a subject combination',
       subjects: 'Subjects',
@@ -29,6 +29,13 @@ const dict = {
       gallery: 'Gallery',
       testimonials: 'Testimonials',
       teachers: 'Team',
+      teachersDesc: 'Coordinators, teachers, and student support',
+      testimonialsDesc: 'Student voices from the programme',
+      about: 'School',
+      mission: 'Mission and vision',
+      missionDesc: 'Who we are and what we work towards',
+      policies: 'Policies and guides',
+      policiesDesc: 'IB policies, core handbooks, parent handbook',
       apply: 'Apply',
       menu: 'Menu',
       search: 'Search',
@@ -49,7 +56,7 @@ const dict = {
       resourcesGroup: 'Resources',
       visitCta: 'Apply now',
       candidateNote:
-        'Súkromné gymnázium Česká is a Candidate School* for the MYP and is pursuing authorization as an IB World School. *Only schools authorized by the IB Organization can offer its programmes.',
+        'Súkromné gymnázium Česká is an IB World School authorized to offer the Diploma Programme, and a Candidate School* for the Middle Years Programme. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted.',
     },
     detail: {
       backSubjects: 'All subjects',
@@ -249,6 +256,11 @@ const dict = {
       filterAll: 'All strands',
       journalHeading: 'Activity journal',
       filterHint: 'Filter by strand',
+      handbookLabel: 'Handbook',
+      handbookTitle: 'CAS Handbook',
+      handbookIntro:
+        'The school handbook sets out the strands, deadlines, reflection requirements, and the seven CAS learning outcomes students work towards.',
+      handbookMore: 'All policies and guides',
     },
     tok: {
       title: 'Theory of Knowledge',
@@ -258,6 +270,57 @@ const dict = {
       noMaterials: 'No materials yet.',
       heroQuote: 'How do we know what we claim to know?',
       heroQuoteLabel: 'The central question',
+      handbookLabel: 'Handbook',
+      handbookTitle: 'TOK Handbook',
+      handbookIntro:
+        'The school handbook explains how the course is taught and what is expected in the TOK exhibition and the TOK essay.',
+      handbookMore: 'All policies and guides',
+    },
+    mission: {
+      title: 'Mission and vision',
+      label: 'Our IB identity',
+      subtitle:
+        'What the International Baccalaureate works towards, what our school commits to, and where we are heading.',
+      ibTitle: 'IB mission statement',
+      ibBody1:
+        'The International Baccalaureate aims to develop inquiring, knowledgeable and caring young people who help to create a better and more peaceful world through intercultural understanding and respect.',
+      ibBody2:
+        'To this end, the organization works with schools, governments and international organizations to develop challenging programmes of international education and rigorous assessment.',
+      ibBody3:
+        'These programmes encourage students across the world to become active, compassionate and lifelong learners who understand that other people, with their differences, can also be right.',
+      ibSource: 'International Baccalaureate Organization',
+      schoolTitle: 'School mission statement',
+      schoolBody1:
+        'Our school strives to consistently prepare highly educated young citizens for our ever-changing multicultural society, ready to play an active role in shaping a promising future.',
+      schoolBody2:
+        'We carefully balance a positive atmosphere with challenging goals, an international curriculum and rigorous assessment, inspiring students to create a brighter future through diligence and lifelong learning.',
+      visionTitle: 'School vision statement',
+      visionBody: 'Rooted in Slovakia, open to the world, contributing locally and globally.',
+      authTitle: 'An authorized IB World School',
+      authBody:
+        'Súkromné gymnázium Česká has been authorized to offer the IB Diploma Programme since July 2022. The school is also a Candidate School for the Middle Years Programme.',
+      authDocLabel: 'Certificate',
+      policiesCta: 'Read our IB policies',
+    },
+    policies: {
+      title: 'Policies and guides',
+      label: 'Documents',
+      subtitle:
+        'The IB policies that govern the programme, the handbooks for each core element, and the parent handbook.',
+      policiesTitle: 'School policies',
+      policiesIntro:
+        'These five policies are written by the school within the IB Programme Standards and Practices, and are reviewed regularly. They apply to every student in the programme.',
+      guidesTitle: 'Core handbooks',
+      guidesIntro:
+        'Practical guides for the three core elements. The Extended Essay guide is in preparation and will be added here.',
+      parentsTitle: 'For parents',
+      parentsIntro:
+        'A single overview of the programme and the policies that affect families most, in English and Slovak.',
+      admissionsTitle: 'Looking for application forms?',
+      admissionsBody:
+        'Entrance exam information, application forms, and the fee schedule are on the admissions page.',
+      admissionsCta: 'Go to admissions',
+      missionCta: 'Mission and vision',
     },
     ee: {
       title: 'Extended Essay',
@@ -624,9 +687,9 @@ const dict = {
       home: 'Domov',
       programmes: 'Programy',
       myp: 'MYP',
-      mypDesc: 'Middle Years Programme · vek 14–16',
+      mypDesc: 'Middle Years Programme · vek 14-16',
       dp: 'DP',
-      dpDesc: 'Diploma Programme · vek 16–19',
+      dpDesc: 'Diploma Programme · vek 16-19',
       builder: 'Zostavte si diplom',
       builderDesc: 'Naplánujte si kombináciu predmetov',
       subjects: 'Predmety',
@@ -642,6 +705,13 @@ const dict = {
       gallery: 'Galéria',
       testimonials: 'Referencie',
       teachers: 'Tím',
+      teachersDesc: 'Koordinátori, učitelia a podpora študentov',
+      testimonialsDesc: 'Hlasy študentov z programu',
+      about: 'Škola',
+      mission: 'Misia a vízia',
+      missionDesc: 'Kto sme a k čomu smerujeme',
+      policies: 'Politiky a príručky',
+      policiesDesc: 'IB politiky, príručky core predmetov, príručka pre rodičov',
       apply: 'Prihlásiť sa',
       menu: 'Menu',
       search: 'Hľadať',
@@ -662,7 +732,7 @@ const dict = {
       resourcesGroup: 'Zdroje',
       visitCta: 'Prihlásiť sa',
       candidateNote:
-        'Súkromné gymnázium Česká je kandidátskou školou* pre MYP a uchádza sa o autorizáciu ako IB World School. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou.',
+        'Súkromné gymnázium Česká je IB World School s autorizáciou ponúkať diplomový program a kandidátskou školou* pre Middle Years Programme. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje, že autorizácia bude udelená.',
     },
     detail: {
       backSubjects: 'Všetky predmety',
@@ -858,6 +928,11 @@ const dict = {
       filterAll: 'Všetky oblasti',
       journalHeading: 'Denník aktivít',
       filterHint: 'Filtrovať podľa oblasti',
+      handbookLabel: 'Príručka',
+      handbookTitle: 'Príručka CAS',
+      handbookIntro:
+        'Školská príručka stanovuje oblasti, termíny, požiadavky na reflexiu a sedem vzdelávacích výstupov CAS, ku ktorým študenti smerujú.',
+      handbookMore: 'Všetky politiky a príručky',
     },
     tok: {
       title: 'Teória Poznania',
@@ -867,6 +942,57 @@ const dict = {
       noMaterials: 'Zatiaľ žiadne materiály.',
       heroQuote: 'Ako vieme to, čo tvrdíme, že vieme?',
       heroQuoteLabel: 'Ústredná otázka',
+      handbookLabel: 'Príručka',
+      handbookTitle: 'Príručka TOK',
+      handbookIntro:
+        'Školská príručka vysvetľuje, ako sa kurz vyučuje a čo sa očakáva v TOK výstave a TOK eseji.',
+      handbookMore: 'Všetky politiky a príručky',
+    },
+    mission: {
+      title: 'Misia a vízia',
+      label: 'Naša IB identita',
+      subtitle:
+        'K čomu smeruje International Baccalaureate, k čomu sa zaväzuje naša škola a kam mieri.',
+      ibTitle: 'Misia IB',
+      ibBody1:
+        'International Baccalaureate si kladie za cieľ rozvíjať zvedavých, vzdelaných a empatických mladých ľudí, ktorí pomáhajú vytvárať lepší a pokojnejší svet prostredníctvom medzikultúrneho porozumenia a rešpektu.',
+      ibBody2:
+        'S týmto cieľom organizácia spolupracuje so školami, vládami a medzinárodnými organizáciami na tvorbe náročných programov medzinárodného vzdelávania a dôsledného hodnotenia.',
+      ibBody3:
+        'Tieto programy povzbudzujú študentov po celom svete, aby sa stali aktívnymi, súcitnými a celoživotnými učiacimi sa ľuďmi, ktorí rozumejú tomu, že aj iní ľudia s odlišnými názormi môžu mať pravdu.',
+      ibSource: 'International Baccalaureate Organization',
+      schoolTitle: 'Misia školy',
+      schoolBody1:
+        'Naša škola sa snaží dôsledne pripravovať vysoko vzdelaných mladých občanov pre našu neustále sa meniacu multikultúrnu spoločnosť, pripravených aktívne sa podieľať na formovaní nadejnej budúcnosti.',
+      schoolBody2:
+        'Starostlivo vyvažujeme pozitívnu atmosféru s náročnými cieľmi, medzinárodným kurikulom a dôsledným hodnotením, čím inšpirujeme študentov vytvárať lepšiu budúcnosť pracovitosťou a celoživotným učením.',
+      visionTitle: 'Vízia školy',
+      visionBody: 'Zakorenení na Slovensku, otvorení svetu, prínosní lokálne aj globálne.',
+      authTitle: 'Autorizovaná IB World School',
+      authBody:
+        'Súkromné gymnázium Česká má od júla 2022 autorizáciu ponúkať IB diplomový program. Škola je zároveň kandidátskou školou pre Middle Years Programme.',
+      authDocLabel: 'Certifikát',
+      policiesCta: 'Prečítajte si naše IB politiky',
+    },
+    policies: {
+      title: 'Politiky a príručky',
+      label: 'Dokumenty',
+      subtitle:
+        'IB politiky, ktorými sa program riadi, príručky ku core predmetom a príručka pre rodičov.',
+      policiesTitle: 'Školské politiky',
+      policiesIntro:
+        'Týchto päť politík píše škola v rámci IB Programme Standards and Practices a pravidelne ich aktualizuje. Platia pre každého študenta programu.',
+      guidesTitle: 'Príručky ku core predmetom',
+      guidesIntro:
+        'Praktické príručky k trom core predmetom. Príručka k rozšírenej eseji sa pripravuje a doplníme ju sem.',
+      parentsTitle: 'Pre rodičov',
+      parentsIntro:
+        'Jeden prehľad programu a politík, ktoré sa najviac dotýkajú rodín, v angličtine a slovenčine.',
+      admissionsTitle: 'Hľadáte prihlášky?',
+      admissionsBody:
+        'Informácie o prijímacích skúškach, prihlášky a prehľad školských poplatkov nájdete na stránke prijímacieho konania.',
+      admissionsCta: 'Prejsť na prijímacie konanie',
+      missionCta: 'Misia a vízia',
     },
     ee: {
       title: 'Rozšírená Esej',

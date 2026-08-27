@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import DocumentList from '../../components/DocumentList.astro';
+import { t, l } from '../../i18n/dictionaries';
+import type { Locale } from '../../i18n/dictionaries';
+import { guideDocuments, parentDocuments, policyDocuments } from '../../data/documents';
+
+export function getStaticPaths() {
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+const policies = dict.policies;
+
+const groups = [
+  { title: policies.policiesTitle, intro: policies.policiesIntro, items: policyDocuments },
+  { title: policies.guidesTitle, intro: policies.guidesIntro, items: guideDocuments },
+  { title: policies.parentsTitle, intro: policies.parentsIntro, items: parentDocuments },
+];
+---
+
+<Layout
+  title={policies.title}
+  description={policies.subtitle}
+  locale={locale}
+  pageSchemaType="CollectionPage"
+>
+  <PageHeader title={policies.title} subtitle={policies.subtitle} label={policies.label} />
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
+    {
+      groups.map((group, index) => (
+        <section class:list={[index > 0 && 'mt-20 sm:mt-24']} data-reveal>
+          <div class="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-14 items-start">
+            <div class="lg:sticky lg:top-28">
+              <h2 class="text-2xl font-bold tracking-tight text-stone-900">{group.title}</h2>
+              <p class="mt-4 text-sm text-stone-600 leading-relaxed">{group.intro}</p>
+            </div>
+            <DocumentList items={group.items} locale={locale} tone="dp" />
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="mt-20 sm:mt-24 border-t border-stone-200 pt-12" data-reveal>
+      <div class="grid gap-6 sm:grid-cols-[1.4fr_0.6fr] sm:items-end">
+        <div>
+          <h2 class="text-xl font-bold tracking-tight text-stone-900">
+            {policies.admissionsTitle}
+          </h2>
+          <p class="mt-3 max-w-xl text-stone-600 leading-relaxed">{policies.admissionsBody}</p>
+        </div>
+        <div class="flex flex-col gap-3 sm:items-end">
+          <a
+            href={l('/admissions', locale)}
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-800"
+          >
+            {policies.admissionsCta}
+          </a>
+          <a
+            href={l('/mission', locale)}
+            class="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+          >
+            {policies.missionCta}
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5"
+              >→</span
+            >
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
