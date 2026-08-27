@@ -95,6 +95,113 @@ export const mypDocuments: DocItem[] = [
   },
 ];
 
+/**
+ * The five IB school policies, shown on `/policies`.
+ * Supplied by the IB DP coordinator (2026-07-25).
+ */
+export const policyDocuments: DocItem[] = [
+  {
+    file: 'admissions-policy.pdf',
+    title: 'Admissions Policy',
+    lang: 'EN',
+    note: {
+      en: 'Entrance exams, interviews, and how places on the Diploma Programme are offered.',
+      sk: 'Prijímacie skúšky, pohovory a spôsob prideľovania miest v diplomovom programe.',
+    },
+  },
+  {
+    file: 'assessment-policy.pdf',
+    title: 'Assessment Policy',
+    lang: 'EN',
+    note: {
+      en: 'Internal assessment, predicted grades, and how progress is reported to families.',
+      sk: 'Interné hodnotenie, predikované známky a spôsob informovania rodín o pokroku.',
+    },
+  },
+  {
+    file: 'academic-integrity-policy.pdf',
+    title: 'Academic Integrity Policy',
+    lang: 'EN',
+    note: {
+      en: 'Authentic work, referencing, malpractice, and guidance on the use of AI tools.',
+      sk: 'Originálna práca, citovanie, nekalé praktiky a pokyny k používaniu nástrojov AI.',
+    },
+  },
+  {
+    file: 'language-policy.pdf',
+    title: 'Language Policy',
+    lang: 'EN',
+    note: {
+      en: 'Language of instruction, mother-tongue provision, and school-supported self-taught courses.',
+      sk: 'Jazyk vyučovania, podpora materinského jazyka a kurzy so samostatným štúdiom pod vedením školy.',
+    },
+  },
+  {
+    file: 'inclusion-policy.pdf',
+    title: 'Inclusion Policy',
+    lang: 'EN',
+    note: {
+      en: 'Support for diverse learning needs, including IB inclusive access arrangements.',
+      sk: 'Podpora rôznych vzdelávacích potrieb vrátane inkluzívnych opatrení IB.',
+    },
+  },
+];
+
+/** DP core handbooks, shown on `/policies` and on the matching core pages. */
+export const guideDocuments: DocItem[] = [
+  {
+    file: 'cas-handbook.pdf',
+    title: 'CAS Handbook',
+    lang: 'EN',
+    note: {
+      en: 'Strands, timelines, reflection, and the seven CAS learning outcomes.',
+      sk: 'Oblasti, termíny, reflexia a sedem vzdelávacích výstupov CAS.',
+    },
+  },
+  {
+    file: 'tok-handbook.pdf',
+    title: 'TOK Handbook',
+    lang: 'EN',
+    note: {
+      en: 'Course outline with guidance on the TOK exhibition and the TOK essay.',
+      sk: 'Prehľad kurzu s pokynmi k TOK výstave a TOK eseji.',
+    },
+  },
+];
+
+/** Parent-facing handbooks, shown on `/policies`. */
+export const parentDocuments: DocItem[] = [
+  {
+    file: 'ib-dp-parent-handbook.pdf',
+    title: 'IB DP Parent Handbook',
+    lang: 'EN',
+    note: {
+      en: 'Overview of the Diploma Programme and the school policies that matter most to families.',
+      sk: 'Prehľad diplomového programu a školských politík, ktoré sú pre rodiny najdôležitejšie.',
+    },
+  },
+  {
+    file: 'ib-dp-prirucka-pre-rodicov.pdf',
+    title: 'Príručka IB DP pre rodičov',
+    lang: 'SK',
+    note: {
+      en: 'Slovak version of the parent handbook.',
+      sk: 'Slovenská verzia príručky pre rodičov.',
+    },
+  },
+];
+
+/** IB certificate of authorization for the Diploma Programme, shown on `/mission`. */
+export const authorizationDocument: DocItem = {
+  file: 'ib-dp-authorization-certificate.pdf',
+  title: 'Certificate of Authorization',
+  lang: 'EN',
+  note: {
+    en: 'IB certificate authorizing the school to offer the Diploma Programme, signed July 2022.',
+    sk: 'Certifikát IB, ktorý škole umožňuje ponúkať diplomový program, podpísaný v júli 2022.',
+  },
+};
+
 /** DP school fees, rendered as an HTML table on `/admissions`. */
 export interface FeeRow {
   item: { en: string; sk: string };

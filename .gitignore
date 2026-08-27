@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # local Claude Code settings (personal, not shared)
 .claude/settings.local.json
+
+# Teams chat export used as a work source: contains account credentials
+teams-ib-web-chat/

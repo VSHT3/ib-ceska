@@ -14,7 +14,7 @@ const accentHover = tone === 'myp' ? 'hover:text-myp-800' : 'hover:text-dp-800';
 const badge = tone === 'myp' ? 'bg-myp-100 text-myp-800' : 'bg-dp-100 text-dp-800';
 ---
 
-<ul class="grid gap-3 sm:grid-cols-2">
+<ul class:list={['grid gap-3', items.length > 1 && 'sm:grid-cols-2']}>
   {
     items.map((doc) => (
       <li>
