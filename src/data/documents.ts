@@ -229,7 +229,7 @@ export const dpFees: FeeRow[] = [
   {
     item: { en: 'Entry fee (external students)', sk: 'Zápisné pre študentov z iných škôl' },
     dp1: '300 €',
-    dp2: '—',
+    dp2: '-',
   },
   {
     item: { en: 'Class fund', sk: 'Triedny fond' },
@@ -242,7 +242,7 @@ export const dpFees: FeeRow[] = [
   },
   {
     item: { en: 'IB Final Exams', sk: 'IB záverečné skúšky' },
-    dp1: '—',
+    dp1: '-',
     dp2: '89 € × 6 = 534 €',
   },
 ];

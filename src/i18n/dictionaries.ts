@@ -105,7 +105,7 @@ const dict = {
       programmesLabel: 'Programmes',
       programmesHeading: 'Choose the right stage',
       mypTitle: 'Middle Years Programme (MYP)',
-      mypAges: '14–16 years',
+      mypAges: '14-16 years',
       mypDesc:
         'The MYP builds a strong academic foundation while encouraging students to make practical connections between their studies and the real world.',
       mypItem1: '8 subject groups with interdisciplinary learning',
@@ -115,7 +115,7 @@ const dict = {
       mypNote:
         'Súkromné gymnázium Česká is a Candidate School* for the MYP and is pursuing authorization as an IB World School. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted. Learn more at www.ibo.org.',
       dpTitle: 'Diploma Programme (DP)',
-      dpAges: '16–19 years',
+      dpAges: '16-19 years',
       dpDesc:
         'The DP is a two-year, academically challenging programme that leads to a qualification respected by universities worldwide.',
       dpItem1: '6 subject groups at Higher or Standard Level',
@@ -218,7 +218,7 @@ const dict = {
       slCount: 'Standard Level',
       totalLabel: 'Subjects chosen',
       group6Note:
-        'For your sixth subject, pick from The Arts - or take a second subject from groups 1–4.',
+        'For your sixth subject, pick from The Arts - or take a second subject from groups 1-4.',
       coreLabel: 'The core',
       coreNote: 'Every diploma also includes Theory of Knowledge, the Extended Essay, and CAS.',
       summaryTitle: 'Your diploma',
@@ -226,8 +226,8 @@ const dict = {
       reset: 'Start over',
       ruleHeading: 'How it works',
       rules: [
-        'One subject from each of groups 1–5.',
-        'A sixth from group 6, or a second from groups 1–4.',
+        'One subject from each of groups 1-5.',
+        'A sixth from group 6, or a second from groups 1-4.',
         'Three or four subjects at Higher Level (HL), the rest at Standard Level (SL). Most students take three HL.',
       ],
       validComplete: 'This is a valid diploma combination.',
@@ -408,11 +408,11 @@ const dict = {
       programmesLabel: 'Choose a programme',
       programmesTitle: 'Where would you enter?',
       mypTitle: 'Middle Years Programme',
-      mypAges: 'Ages 14–16 at Česká',
+      mypAges: 'Ages 14-16 at Česká',
       mypBody:
         'For students building the academic habits and interdisciplinary thinking needed before the Diploma Programme.',
       dpTitle: 'Diploma Programme',
-      dpAges: 'Ages 16–19',
+      dpAges: 'Ages 16-19',
       dpBody:
         'For students ready for a focused two-year programme with six subjects, TOK, CAS, and the Extended Essay.',
       stepsLabel: 'Application process',
@@ -470,7 +470,7 @@ const dict = {
       feesLabel: 'School fees',
       feesTitle: 'DP tuition & costs',
       feesIntro:
-        'Annual costs for the Diploma Programme at Česká. Fees are set by the school and may change between years — confirm the current schedule with the IB team.',
+        'Annual costs for the Diploma Programme at Česká. Fees are set by the school and may change between years. Confirm the current schedule with the IB team.',
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Item',
@@ -482,7 +482,7 @@ const dict = {
       shortTitle: 'MYP',
       subtitle:
         'An international curriculum for 14 to 16 year olds that teaches your child to think, research, and communicate before the Diploma Programme.',
-      age: 'Ages 14–16 at Česká',
+      age: 'Ages 14-16 at Česká',
       duration: 'Final MYP years',
       label: 'Middle Years Programme',
       whatIsLabel: 'What is MYP?',
@@ -612,7 +612,7 @@ const dict = {
       shortTitle: 'DP',
       subtitle:
         'A focused two-year programme built from six subjects and a core of research, reflection, and action.',
-      age: 'Ages 16–19',
+      age: 'Ages 16-19',
       duration: 'Two years',
       label: 'Diploma Programme',
       introTitle: 'Build depth, range, and independence',
@@ -781,7 +781,7 @@ const dict = {
       programmesLabel: 'Programy',
       programmesHeading: 'Vyberte si správny stupeň',
       mypTitle: 'Middle Years Programme (MYP)',
-      mypAges: '14–16 rokov',
+      mypAges: '14-16 rokov',
       mypDesc:
         'MYP buduje silné akademické základy a podporuje prepájanie štúdia s reálnym svetom.',
       mypItem1: '8 predmetových skupín s medzipredmetovým učením',
@@ -791,7 +791,7 @@ const dict = {
       mypNote:
         'Súkromné gymnázium Česká je kandidátskou školou* pre MYP a uchádza sa o autorizáciu ako IB World School. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje udelenie autorizácie. Viac na www.ibo.org.',
       dpTitle: 'Diploma Programme (DP)',
-      dpAges: '16–19 rokov',
+      dpAges: '16-19 rokov',
       dpDesc:
         'DP je dvojročný, akademicky náročný program vedúci ku kvalifikácii uznávanej univerzitami po celom svete.',
       dpItem1: '6 predmetových skupín na vyššej alebo štandardnej úrovni',
@@ -891,7 +891,7 @@ const dict = {
       hlCount: 'Higher Level',
       slCount: 'Standard Level',
       totalLabel: 'Vybraté predmety',
-      group6Note: 'Ako šiesty predmet si vyberte z Umenia - alebo druhý predmet zo skupín 1–4.',
+      group6Note: 'Ako šiesty predmet si vyberte z Umenia - alebo druhý predmet zo skupín 1-4.',
       coreLabel: 'Jadro programu',
       coreNote: 'Každý diplom zahŕňa aj Theory of Knowledge, Extended Essay a CAS.',
       summaryTitle: 'Váš diplom',
@@ -899,8 +899,8 @@ const dict = {
       reset: 'Začať odznova',
       ruleHeading: 'Ako to funguje',
       rules: [
-        'Jeden predmet z každej zo skupín 1–5.',
-        'Šiesty zo skupiny 6, alebo druhý zo skupín 1–4.',
+        'Jeden predmet z každej zo skupín 1-5.',
+        'Šiesty zo skupiny 6, alebo druhý zo skupín 1-4.',
         'Tri alebo štyri predmety na Higher Level (HL), zvyšok na Standard Level (SL). Väčšina študentov si volí tri HL.',
       ],
       validComplete: 'Toto je platná kombinácia predmetov.',
@@ -1082,11 +1082,11 @@ const dict = {
       programmesLabel: 'Výber programu',
       programmesTitle: 'Do ktorého programu nastupujete?',
       mypTitle: 'Middle Years Programme',
-      mypAges: 'Vek 14–16 rokov na Českej',
+      mypAges: 'Vek 14-16 rokov na Českej',
       mypBody:
         'Pre študentov, ktorí si budujú akademické návyky a medzipredmetové myslenie pred Diploma Programme.',
       dpTitle: 'Diploma Programme',
-      dpAges: 'Vek 16–19 rokov',
+      dpAges: 'Vek 16-19 rokov',
       dpBody:
         'Pre študentov pripravených na intenzívny dvojročný program so šiestimi predmetmi, TOK, CAS a Extended Essay.',
       stepsLabel: 'Postup prihlásenia',
@@ -1142,7 +1142,7 @@ const dict = {
       feesLabel: 'Školné',
       feesTitle: 'Školné a náklady DP',
       feesIntro:
-        'Ročné náklady na Diploma Programme na Českej. Poplatky určuje škola a môžu sa medzi rokmi meniť — aktuálny rozpis overte s IB tímom.',
+        'Ročné náklady na Diploma Programme na Českej. Poplatky určuje škola a môžu sa medzi rokmi meniť. Aktuálny rozpis overte s IB tímom.',
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Položka',
@@ -1154,7 +1154,7 @@ const dict = {
       shortTitle: 'MYP',
       subtitle:
         'Medzinárodný kurz pre 14- až 16-ročných, ktorý učí dieťa myslieť, bádať a komunikovať pred Diploma Programme.',
-      age: 'Vek 14–16 rokov na Českej',
+      age: 'Vek 14-16 rokov na Českej',
       duration: 'Záverečné roky MYP',
       label: 'Middle Years Programme',
       whatIsLabel: 'Čo je MYP?',
@@ -1275,7 +1275,7 @@ const dict = {
       shortTitle: 'DP',
       subtitle:
         'Intenzívny dvojročný program postavený na šiestich predmetoch a jadre výskumu, reflexie a činnosti.',
-      age: 'Vek 16–19 rokov',
+      age: 'Vek 16-19 rokov',
       duration: 'Dva roky',
       label: 'Diploma Programme',
       introTitle: 'Budujte hĺbku, rozsah a samostatnosť',
