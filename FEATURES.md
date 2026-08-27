@@ -51,6 +51,8 @@ Implemented and shipped.
 - [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
+- [x] `/mission` — IB mission statement, school mission and vision, authorized-IB-World-School statement with the IB Certificate of Authorization (July 2022)
+- [x] `/policies` — "Policies and guides": the five IB school policies, CAS + TOK handbooks, parent handbook (EN + SK), cross-links to admissions and mission
 - [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
 - [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback
@@ -79,6 +81,7 @@ Implemented and shipped.
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
 - [x] Higher-resolution nav logo (`/logo.png`)
+- [x] Nav: `School` dropdown (Mission and vision, Team, Testimonials, Policies and guides) on desktop and mobile
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
@@ -108,6 +111,8 @@ Implemented and shipped.
 - [x] 2 news articles — with full article bodies
 - [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections, client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
 - [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed; events Keystatic collection retained.
+- [x] 14 school documents hosted in `public/documents/` and described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `authorizationDocument`, `admissionsDocuments`, `mypDocuments`)
+- [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
 
 ## Deployment
 

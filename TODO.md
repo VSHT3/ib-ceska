@@ -93,26 +93,28 @@ The coordinator supplied the real PDFs (the old site had none — see below). 7 
 
 Section → current coverage:
 
-1. **What is IBDP?** — `/dp` exists (explainer + core-element links) but does NOT surface: IBO Mission Statement ❌, School Mission Statement ❌, IB Learner Profile ❌
+1. **What is IBDP?** — `/dp` exists (explainer + core-element links); IBO Mission Statement ✅, School Mission + Vision ✅ (new `/mission` page, texts supplied 2026-08-27), IB Learner Profile ❌
 2. **Subjects & DP Core** — Subjects `/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
-3. **School Policies** — Admissions ❌ (referenced but not supplied) / Assessment ❌ / Language ❌ / Academic Integrity ❌ / Inclusion ❌ (no policies page or collection at all)
-4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ (announcement + informácie PDFs) / Application Form ✅ (DP form + Prihláška PDFs) / School Fees ✅ (HTML table) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form) / Handbook for parents ❌ (not supplied) / Admissions Policy ❌ (referenced by announcements but not supplied — see HUMANTODO)
+3. **School Policies** — all five supplied 2026-07-25 and published on `/policies` ✅ (Admissions, Assessment, Language, Academic Integrity, Inclusion)
+4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ / Application Form ✅ / School Fees ✅ (HTML table) / Handbook for parents ✅ (EN + SK on `/policies`) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form)
 5. **Activities/Events** — `/news` merged feed ✅
 6. **Gallery** — `/gallery` ✅
-7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ / Non-teaching staff ❌ / Organizational Chart ❌
+7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ (role titles updated per coordinator 2026-07-21) / Non-teaching staff ❌ / Organizational Chart ❌ (coordinator confirmed 2026-07-21 it is not required on the website; awaiting a decision on whether to render its structure natively on `/teachers`)
 8. **University Admission** — ❌ no page (where graduates go: countries/universities, entry requirements, outcomes)
 9. **Contacts** — footer only ❌ no dedicated page
 
 Gaps to build (per-page, not crammed onto `/dp`) once approved:
 
-- [ ] **Policies page** — index for the 5 IB policies; links to the actual policy documents (documents themselves are a human item — see HUMANTODO)
+- [x] **Policies page** — `/policies` ("Policies and guides"): five IB policies, CAS Handbook, TOK Handbook, parent handbook EN + SK, cross-link to `/admissions`. Manifest: `policyDocuments` / `guideDocuments` / `parentDocuments` in `src/data/documents.ts`
+- [x] **Mission & vision page** — `/mission`: IBO Mission Statement, School Mission, School Vision, authorized-IB-World-School statement + Certificate of Authorization PDF (July 2022)
 - [ ] **University Admission page** — general structure; destination-university list + outcome stats are human items
 - [ ] **Contacts page** — dedicated page (school contact data already in `i18n/dictionaries.ts`)
 - [x] **Admissions docs & fees** — Entrance Exams info, Application Form (DP + Prihláška), School Fees (HTML table) wired into `/admissions`; MYP docs wired into `/myp` ✅ 2026-06-29
-- [ ] **Admissions gaps still pending** — Subject Choice Form + Parent Handbook (not yet supplied — see HUMANTODO)
-- [ ] **Staff gaps** — add Non-teaching staff + Organizational Chart to `/teachers` (content is a human item)
-- [ ] **Mission & Learner Profile** — surface IBO Mission Statement (public IB text) + IB Learner Profile (public IB framework); school's own mission statement is a human item
-- [ ] **Nav wiring** — make the new + existing sections reachable from the main nav so the 9 sections are findable from anywhere; don't bury them on `/dp`
+- [ ] **Admissions gaps still pending** — Subject Choice Form (not yet supplied — see HUMANTODO)
+- [ ] **Staff gaps** — Non-teaching staff (content is a human item); Organizational Chart pending a decision (see above)
+- [ ] **IB Learner Profile** — surface the public IB Learner Profile framework (the mission statements are now live on `/mission`)
+- [x] **Nav wiring** — new `School` dropdown in the main nav (Mission and vision, Team, Testimonials, Policies and guides), footer "School life" group, and sitemap entries
+- [ ] **EE guide** — coordinator said Simona is still writing it (2026-07-23); slot it into `/policies` → Core handbooks when it arrives
 
 Scope rule: no empty/"coming soon" stubs shipped as finished — a page is built only when its content exists or is a human item the school will supply imminently.
 

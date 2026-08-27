@@ -24,15 +24,19 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 Per the coordinator's requested page structure (see root `TODO.md` → "IB site IA"). The site can link to these, but the actual documents/content are school/IB property the AI cannot write. **Note:** the old website's `/documents` page (`ib.gymnaziumceska.sk/documents`) is a Framer mockup — every "View" button points to the same pdf.js demo PDF, not a real file. So these must be supplied directly by the school, not pulled from the old site.
 
-- [ ] The five **IB School Policies** as documents (PDF or text): Admissions Policy, Assessment Policy, Language Policy, Academic Integrity Policy, Inclusion Policy. _(Note: the Admissions Policy is referenced by the DP/MYP admissions announcements as "Pravidlá prijímania" but was not in the supplied PDF set — still needed.)_
-- [ ] **Handbook for parents** (PDF) — not yet supplied
+- [x] ~~The five **IB School Policies**~~ — supplied 2026-07-25 and published on `/policies`: Admissions, Assessment, Academic Integrity, Language, Inclusion.
+- [x] ~~**Handbook for parents**~~ — supplied 2026-08-15 in English and Slovak; both on `/policies`.
+- [x] ~~**CAS Handbook** and **TOK Handbook**~~ — supplied 2026-07-23; on `/policies` and linked from `/cas` and `/tok`.
+- [ ] **EE Guide** — Simona was still writing it on 2026-07-23. Send it when ready; it slots straight into `/policies` → Core handbooks.
 - [x] ~~**School Fees**~~ — supplied; rendered as an HTML table on `/admissions` (DP1/DP2, bilingual). Replace the `dpFees` data in `src/data/documents.ts` if the schedule changes.
 - [x] ~~**Application Form**~~ — supplied: `dp-application-form.pdf` (EN) + `prihlaska-na-prijimacie-konanie.pdf` (SK), linked on `/admissions`. **Subject Choice Form still needed** — the supplied set had no subject-choice form (`/build-your-diploma` is a picker, not a downloadable form).
 - [x] ~~**Entrance Exams info**~~ — supplied: `dp-admissions-announcement.pdf`, `informacie-o-prijimacom-konani.pdf`, `myp-admissions-announcement.pdf` (dates, subjects, interview), linked on `/admissions`.
-- [ ] **School Mission Statement** (the school's own — the IBO Mission Statement is public and the AI can place it)
-- [ ] **Organizational Chart** — school leadership/pedagogical/non-teaching structure (names + reporting lines); current `/teachers` is pedagogical + leadership only
+- [x] ~~**School Mission Statement**~~ — supplied 2026-08-27 (`Our IB Identity.docx`) together with the school vision; both live on `/mission` beside the IB mission statement.
+- [ ] **Complaints or appeals procedure** — on the coordinator's own "essential public information" list (2026-07-21) but never supplied. Send it and it goes on `/policies`.
+- [ ] **Organizational Chart** — decision needed, not content. The chart we have is role-only (no names) and its visual language does not match the site. Confirmed on 2026-07-21 that the IB does not require it on the website. Options: (a) leave it off the site, (b) we redraw the same structure in the site's own styling as a section on `/teachers`. Tell us which.
 - [ ] **Non-teaching staff** to list on `/teachers` (if they should appear)
 - [ ] **University Admission** data: which countries/universities graduates go to, average + highest Diploma points, entry requirements — feeds the new University Admission page
+- [ ] **Print-quality prospectus PDF under 5 MB** — the 2026/27 prospectus is published as web pages in News. The supplied PDF is 38 MB, too large to host; send a compressed version if a download link is wanted.
 
 ## Content review
 
