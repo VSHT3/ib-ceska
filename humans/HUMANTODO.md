@@ -6,7 +6,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 - [x] ~~**Set up the production CMS login (developer task).**~~ Done — `IB Ceska CMS` GitHub App registered, the three `KEYSTATIC_*` env vars set in Coolify, site served over HTTPS, and login + Save verified on the temporary URL. Only people with write access to `VSHT3/ib-ceska` can edit. (When the real domain goes live, the App callback URL must be updated — see root `TODO.md` → "Domain switch".)
 - [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
-- [ ] Provide high-quality school logo (vector SVG preferred, minimum 500px wide) — current `logo.png` is low resolution; the nav and favicon currently use it
+- [x] ~~Provide high-quality school logo~~ — vectorized the school-site logo into `public/logo.svg` (full lockup) and `public/logo-mark.svg` (triangle mark); nav, footer, and all favicons now use crisp SVG-derived assets. A designer-supplied original vector would still be marginally better if one exists.
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
 - [x] ~~Provide real teacher names and titles for all IB subjects~~ — current IB roster and responsibilities were taken from the school’s published IB website on 15 June 2026
 - [ ] Confirm which subjects the school actually offers (current list is a template)
