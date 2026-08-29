@@ -1,7 +1,7 @@
 {
   "name": "ib-ceska",
   "type": "module",
-  "packageManager": "pnpm@11.3.0",
+  "packageManager": "pnpm@11.24.0",
   "version": "0.0.1",
   "engines": {
     "node": ">=22.12.0"

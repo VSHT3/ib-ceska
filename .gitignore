@@ -34,3 +34,7 @@ pnpm-debug.log*
 
 # Teams chat export used as a work source: contains account credentials
 teams-ib-web-chat/
+
+
+# Prose writing guide
+BANNED - *.md
