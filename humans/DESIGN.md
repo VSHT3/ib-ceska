@@ -43,13 +43,22 @@ Scroll-reveal hiding is gated on `html.js` (set by an inline script), so users w
 
 ## Layout
 
-| Element    | Width       | Notes                                                                                                                                                  |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Container  | `max-w-5xl` | 1024px max, centered, 16px padding                                                                                                                     |
-| Nav        | full-width  | Sticky, blurred glass; Home link, Programmes + IB Core dropdowns, Apply CTA                                                                            |
-| Grid cards | 1-3 columns | Responsive: 1 col mobile, 2 sm, 3 lg                                                                                                                   |
-| Footer     | full-width  | Dark (`stone-900`), IB-accent top bar, brand/mission column (school + IB marks) + grouped link columns (Programme / School life / Contact) + Apply CTA |
-| Hero bands | full-width  | Homepage photo hero + gradient `PageHeader` on subpages                                                                                                |
+| Element    | Width                     | Notes                                                                                                                                                  |
+| ---------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Shell      | `max-w-7xl px-6 lg:px-12` | Standard wide section container. Text is narrowed by _measure_ (`max-w-xl/2xl`, `max-w-[Nch]`), never by shrinking the whole container                 |
+| Nav        | full-width                | Sticky, blurred glass; Home link, Programmes + IB Core dropdowns, Apply CTA                                                                            |
+| Grid cards | 1-3 columns               | Responsive: 1 col mobile, 2 sm, 3 lg — used only for genuinely parallel items (documents, people)                                                      |
+| Footer     | full-width                | Dark (`stone-900`), IB-accent top bar, brand/mission column (school + IB marks) + grouped link columns (Programme / School life / Contact) + Apply CTA |
+| Hero bands | full-width                | Homepage photo hero + gradient `PageHeader` on subpages (wide shell, hairline eyebrow, up to `text-6xl` title)                                         |
+
+### Section layout grammar
+
+Interior pages avoid the "one centered column" look by rotating layout families per section:
+
+- **Asymmetric grids** — `lg:grid-cols-12` (text ~5 cols, media ~6 cols, flipped in alternate sections) or fractional splits like `lg:grid-cols-[0.52fr_1.48fr]` with a sticky left heading rail (`lg:sticky lg:top-24 self-start`).
+- **Hairline rows over card walls** — sequential/editorial lists use `border-t border-stone-200` + `divide-y` rows, often with oversized ghost numerals (`text-4xl font-extrabold text-stone-300`), instead of stacks of boxed cards.
+- **Full-bleed bands** — at least one section per page runs its background (`bg-stone-900`, `bg-stone-100 border-y`) edge-to-edge with content inside the shell; dark CTA/quote panels are bands, not rounded cards inside a column.
+- **Varied rhythm** — section padding around `py-20 sm:py-28`, varied per page; no two adjacent sections share the same layout family.
 
 ### Root locale splash (`src/pages/index.astro`)
 

@@ -84,11 +84,11 @@ const peopleSchemas = withPhoto.map((teacher) => ({
         {
           leadership.map((teacher, index) => (
             <li
-              class="grid gap-6 py-10 sm:grid-cols-[minmax(0,220px)_1fr] sm:gap-10 first:pt-0 lg:first:pt-2"
+              class="grid gap-6 py-10 sm:grid-cols-[minmax(0,220px)_1fr] sm:gap-x-10 sm:gap-y-3 lg:grid-cols-[minmax(0,220px)_1fr_1fr] first:pt-0 lg:first:pt-2"
               data-reveal
               style={`--reveal-delay: ${index * 70}ms`}
             >
-              <div class="group aspect-[4/5] max-w-[260px] overflow-hidden rounded-2xl bg-stone-100">
+              <div class="group aspect-[4/5] max-w-[260px] overflow-hidden rounded-2xl bg-stone-100 sm:row-span-2 lg:row-span-1">
                 {teacher.image ? (
                   <Image
                     src={teacher.image}
@@ -104,14 +104,14 @@ const peopleSchemas = withPhoto.map((teacher) => ({
                   </div>
                 )}
               </div>
-              <div class="max-w-xl">
+              <div>
                 <h3 class="text-xl font-bold tracking-tight sm:text-2xl">{teacher.name}</h3>
-                <ul class="mt-3 space-y-1.5">
-                  {roleOf(teacher).map((role) => (
-                    <li class="text-sm leading-relaxed text-stone-600">{role}</li>
-                  ))}
-                </ul>
               </div>
+              <ul class="space-y-1.5 sm:col-start-2 lg:col-start-3 lg:row-start-1 lg:border-l lg:border-stone-200 lg:pl-8">
+                {roleOf(teacher).map((role) => (
+                  <li class="text-sm leading-relaxed text-stone-600">{role}</li>
+                ))}
+              </ul>
             </li>
           ))
         }

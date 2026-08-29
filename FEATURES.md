@@ -102,6 +102,7 @@ Implemented and shipped.
 - [x] School photography from the old Framer site (`public/images/school/`)
 - [x] Accessibility: `prefers-reduced-motion` honoured, content visible without JS
 - [x] Light mode only — single theme, no dark mode (reverted)
+- [x] Editorial layout pass on interior pages (mission, admissions, TOK, CAS, policies, teachers, testimonials, EE, search): wide `max-w-7xl` shells with measure-constrained text, asymmetric 12-col/fractional grids, sticky heading rails, ghost-numeral hairline rows, full-bleed dark/neutral bands; recomposed `PageHeader` (hairline eyebrow, larger display title)
 
 ## Sample content
 
