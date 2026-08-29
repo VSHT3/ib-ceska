@@ -25,15 +25,21 @@ const mission = dict.mission;
 >
   <PageHeader title={mission.title} subtitle={mission.subtitle} label={mission.label} tone="dark" />
 
-  <!-- Authorization: the school's IB standing, evidenced by the IB certificate -->
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-16 sm:pt-20" data-reveal>
-    <div class="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 items-start">
-      <div>
+  <!-- Authorization: asymmetric split — text carries the width, document docks under a hairline -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28" data-reveal>
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
+      <div class="lg:col-span-7">
         <img src="/ib-dp-logo.png" alt="IB Diploma Programme" class="h-12 w-auto" />
-        <h2 class="mt-6 text-3xl font-bold tracking-tight text-stone-900">{mission.authTitle}</h2>
+        <h2 class="mt-6 text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+          {mission.authTitle}
+        </h2>
         <p class="mt-5 max-w-xl text-stone-600 leading-relaxed">{mission.authBody}</p>
       </div>
-      <div class="lg:pt-4">
+      <div
+        class="lg:col-span-4 lg:col-start-9 border-t border-stone-200 pt-6"
+        data-reveal
+        style="--reveal-delay: 120ms"
+      >
         <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">
           {mission.authDocLabel}
         </span>
@@ -44,47 +50,56 @@ const mission = dict.mission;
     </div>
   </section>
 
-  <!-- IB mission statement (official IBO text) -->
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-28" data-reveal>
-    <div class="grid gap-8 lg:grid-cols-[0.42fr_1.58fr] lg:gap-16">
-      <div>
-        <h2 class="text-sm font-bold uppercase tracking-widest text-stone-500">
-          {mission.ibTitle}
-        </h2>
-        <p class="mt-3 text-xs text-stone-500">{mission.ibSource}</p>
-      </div>
-      <div class="border-l-2 border-ib-blue pl-6 sm:pl-10">
-        <p class="text-xl sm:text-2xl font-medium leading-snug tracking-tight text-stone-900">
-          {mission.ibBody1}
-        </p>
-        <p class="mt-6 max-w-2xl text-stone-600 leading-relaxed">{mission.ibBody2}</p>
-        <p class="mt-4 max-w-2xl text-stone-600 leading-relaxed">{mission.ibBody3}</p>
+  <!-- IB mission statement (official IBO text): full-bleed dark band, big typographic treatment -->
+  <section class="bg-stone-900 text-white">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28" data-reveal>
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-3">
+          <h2
+            class="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-emerald-400"
+          >
+            <span class="h-px w-10 bg-current" aria-hidden="true"></span>
+            {mission.ibTitle}
+          </h2>
+          <p class="mt-3 text-xs text-stone-400">{mission.ibSource}</p>
+        </div>
+        <div class="lg:col-span-8 lg:col-start-5">
+          <p class="text-2xl sm:text-3xl font-medium leading-snug tracking-tight text-white">
+            {mission.ibBody1}
+          </p>
+          <p class="mt-8 max-w-2xl text-stone-300 leading-relaxed">{mission.ibBody2}</p>
+          <p class="mt-4 max-w-2xl text-stone-300 leading-relaxed">{mission.ibBody3}</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- School mission and vision, with school photography -->
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-20 sm:pt-28" data-reveal>
-    <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 items-start">
-      <div>
-        <h2 class="text-3xl font-bold tracking-tight text-stone-900">{mission.schoolTitle}</h2>
+  <!-- School mission: editorial split, photo takes the wider column -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28" data-reveal>
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-16 items-start">
+      <div class="overflow-hidden rounded-3xl lg:col-span-6">
+        <Image
+          src={school.schoolBuilding}
+          alt="Súkromné gymnázium Česká in Bratislava"
+          widths={[480, 720]}
+          sizes="(min-width: 1024px) 34rem, 100vw"
+          class="w-full aspect-[4/3] object-cover transition-transform duration-700 hover:scale-[1.03]"
+          loading="lazy"
+        />
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8 lg:pt-4">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+          {mission.schoolTitle}
+        </h2>
         <p class="mt-5 text-lg text-stone-700 leading-relaxed">{mission.schoolBody1}</p>
         <p class="mt-4 text-stone-600 leading-relaxed">{mission.schoolBody2}</p>
       </div>
-      <Image
-        src={school.schoolBuilding}
-        alt="Súkromné gymnázium Česká in Bratislava"
-        widths={[480, 720]}
-        sizes="(min-width: 1024px) 34rem, 100vw"
-        class="w-full rounded-3xl object-cover aspect-[4/3]"
-        loading="lazy"
-      />
     </div>
   </section>
 
-  <!-- Vision statement, held on its own so it reads as a commitment -->
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 pt-16 sm:pt-20" data-reveal>
-    <div class="rounded-3xl border border-stone-200 bg-stone-50 px-6 py-12 sm:px-12 sm:py-16">
+  <!-- Vision: open typographic statement under a hairline rule, with the policies CTA in its rhythm -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 pb-20 sm:pb-28" data-reveal>
+    <div class="border-t border-stone-200 pt-16 sm:pt-20">
       <h2 class="text-xs font-semibold uppercase tracking-widest text-emerald-700">
         {mission.visionTitle}
       </h2>
@@ -93,16 +108,15 @@ const mission = dict.mission;
       >
         {mission.visionBody}
       </p>
+      <a
+        href={l('/policies', locale)}
+        class="group mt-10 inline-flex items-center gap-2 text-base font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+        data-reveal
+        style="--reveal-delay: 120ms"
+      >
+        {mission.policiesCta}
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+      </a>
     </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24" data-reveal>
-    <a
-      href={l('/policies', locale)}
-      class="group inline-flex items-center gap-2 text-base font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
-    >
-      {mission.policiesCta}
-      <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
-    </a>
   </section>
 </Layout>

@@ -41,9 +41,30 @@ const steps = [
 >
   <PageHeader title={admissions.title} subtitle={admissions.subtitle} label={admissions.label} />
 
-  <div class="mx-auto max-w-5xl px-4 py-16 sm:py-20">
-    <section class="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16 items-start">
-      <div data-reveal>
+  <!-- Intro (edge-to-edge split: entrance photo bleeds left, text panel right) -->
+  <section class="grid items-stretch lg:grid-cols-2">
+    <div class="relative min-h-[22rem] lg:min-h-[34rem]" data-reveal>
+      <Image
+        src={school.entranceBanner}
+        alt="Entrance to Súkromné Gymnázium Česká"
+        class="absolute inset-0 h-full w-full object-cover"
+        widths={[768, 1024, 1280]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="lazy"
+      />
+      <div
+        class="absolute bottom-6 left-6 right-6 rounded-2xl bg-stone-900/90 px-5 py-4 text-sm text-stone-200 shadow-xl sm:left-auto sm:max-w-xs"
+      >
+        <p class="font-semibold text-white">{contact.address}</p>
+        <p class="mt-1 text-stone-400">{contact.email}</p>
+      </div>
+    </div>
+    <div
+      class="flex items-center bg-white px-6 py-16 sm:px-10 lg:px-16 lg:py-24"
+      data-reveal
+      style="--reveal-delay: 120ms"
+    >
+      <div class="max-w-xl">
         <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
           >{admissions.label}</span
         >
@@ -68,94 +89,95 @@ const steps = [
           </a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="relative" data-reveal style="--reveal-delay: 100ms">
-        <Image
-          src={school.entranceBanner}
-          alt="Entrance to Súkromné Gymnázium Česká"
-          class="h-72 sm:h-96 w-full rounded-3xl object-cover shadow-lg"
-          widths={[480, 768, 1024]}
-          sizes="(min-width: 1024px) 52vw, 100vw"
-          loading="lazy"
-        />
-        <div
-          class="absolute -bottom-5 left-5 right-5 rounded-2xl bg-stone-900 px-5 py-4 text-sm text-stone-200 shadow-xl sm:left-auto sm:max-w-xs"
-        >
-          <p class="font-semibold text-white">{contact.address}</p>
-          <p class="mt-1 text-stone-400">{contact.email}</p>
-        </div>
-      </div>
-    </section>
+  <!-- Programmes (contained card grid — the two tracks are genuinely parallel) -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 pt-16 pb-20 sm:pt-24 sm:pb-28">
+    <div class="max-w-2xl" data-reveal>
+      <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
+        >{admissions.programmesLabel}</span
+      >
+      <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
+        {admissions.programmesTitle}
+      </h2>
+    </div>
+    <div class="mt-12 grid gap-5 md:grid-cols-2">
+      <a
+        href={l('/myp', locale)}
+        class="block rounded-3xl bg-myp-50 p-7 sm:p-9 transition-transform hover:-translate-y-1"
+        data-reveal
+      >
+        <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">MYP</p>
+        <h3 class="mt-3 text-2xl font-semibold">{admissions.mypTitle}</h3>
+        <p class="mt-2 text-sm font-semibold text-myp-800">
+          {admissions.mypAges}
+        </p>
+        <p class="mt-5 text-stone-600 leading-relaxed">
+          {admissions.mypBody}
+        </p>
+      </a>
+      <a
+        href={l('/dp', locale)}
+        class="block rounded-3xl bg-emerald-800 p-7 text-white transition-transform hover:-translate-y-1 sm:p-9"
+        data-reveal
+        style="--reveal-delay: 100ms"
+      >
+        <p class="text-xs font-semibold uppercase tracking-widest text-emerald-200">DP</p>
+        <h3 class="mt-3 text-2xl font-semibold">{admissions.dpTitle}</h3>
+        <p class="mt-2 text-sm font-semibold text-emerald-200">{admissions.dpAges}</p>
+        <p class="mt-5 text-emerald-50/80 leading-relaxed">{admissions.dpBody}</p>
+      </a>
+    </div>
+  </section>
 
-    <section class="mt-28">
+  <!-- Steps (full-bleed light band, ghost-numeral hairline rows) -->
+  <section class="bg-stone-100 border-y border-stone-200/70">
+    <div
+      class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28 lg:grid lg:grid-cols-[0.52fr_1.48fr] lg:gap-16"
+    >
       <div data-reveal>
-        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
-          >{admissions.programmesLabel}</span
+        <span
+          class="flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-700"
         >
-        <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.programmesTitle}</h2>
+          <span class="h-px w-10 bg-current" aria-hidden="true"></span>
+          {admissions.stepsLabel}
+        </span>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">{admissions.stepsTitle}</h2>
       </div>
-      <div class="mt-8 grid gap-5 md:grid-cols-2">
-        <a
-          href={l('/myp', locale)}
-          class="block rounded-3xl bg-myp-50 p-7 sm:p-9 transition-transform hover:-translate-y-1"
-          data-reveal
-        >
-          <p class="text-xs font-semibold uppercase tracking-widest text-myp-700">MYP</p>
-          <h3 class="mt-3 text-2xl font-semibold">{admissions.mypTitle}</h3>
-          <p class="mt-2 text-sm font-semibold text-myp-800">
-            {admissions.mypAges}
-          </p>
-          <p class="mt-5 text-stone-600 leading-relaxed">
-            {admissions.mypBody}
-          </p>
-        </a>
-        <a
-          href={l('/dp', locale)}
-          class="block rounded-3xl bg-emerald-800 p-7 text-white transition-transform hover:-translate-y-1 sm:p-9"
-          data-reveal
-          style="--reveal-delay: 100ms"
-        >
-          <p class="text-xs font-semibold uppercase tracking-widest text-emerald-200">DP</p>
-          <h3 class="mt-3 text-2xl font-semibold">{admissions.dpTitle}</h3>
-          <p class="mt-2 text-sm font-semibold text-emerald-200">{admissions.dpAges}</p>
-          <p class="mt-5 text-emerald-50/80 leading-relaxed">{admissions.dpBody}</p>
-        </a>
-      </div>
-    </section>
-
-    <section class="mt-28 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-      <div data-reveal>
-        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
-          >{admissions.stepsLabel}</span
-        >
-        <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.stepsTitle}</h2>
-      </div>
-      <ol class="border-t border-stone-300">
+      <ol class="mt-12 border-t border-stone-300 lg:mt-0">
         {
           steps.map((step, i) => (
             <li
-              class="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-stone-300 py-7"
+              class="grid grid-cols-[3.5rem_1fr] items-start gap-4 border-b border-stone-300 py-8 sm:grid-cols-[4.5rem_1fr] sm:gap-6 sm:py-10"
               data-reveal
               style={`--reveal-delay: ${i * 80}ms`}
             >
-              <span class="text-xs font-semibold text-emerald-700 pt-1">{step.number}</span>
+              <span
+                class="select-none text-4xl font-extrabold leading-none tracking-tighter text-stone-300 sm:text-5xl"
+                aria-hidden="true"
+              >
+                {step.number}
+              </span>
               <div>
-                <h3 class="text-lg font-semibold">{step.title}</h3>
-                <p class="mt-2 text-sm text-stone-600 leading-relaxed">{step.body}</p>
+                <h3 class="text-lg font-semibold sm:text-xl">{step.title}</h3>
+                <p class="mt-2 text-sm text-stone-600 leading-relaxed sm:text-base">{step.body}</p>
               </div>
             </li>
           ))
         }
       </ol>
-    </section>
+    </div>
+  </section>
 
-    <section
-      class="mt-28 grid gap-6 rounded-3xl bg-stone-900 p-7 text-white sm:p-10 lg:grid-cols-2 lg:gap-14"
-      data-reveal
+  <!-- Prepare & direct contact (full-bleed dark band) -->
+  <section class="bg-stone-900 text-white">
+    <div
+      class="mx-auto grid max-w-7xl gap-10 px-6 py-20 sm:py-28 lg:grid-cols-2 lg:gap-20 lg:px-12"
     >
-      <div>
-        <h2 class="text-2xl font-semibold">{admissions.prepareTitle}</h2>
-        <ul class="mt-6 space-y-3 text-sm text-stone-300">
+      <div data-reveal>
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{admissions.prepareTitle}</h2>
+        <ul class="mt-8 space-y-4 text-sm text-stone-300">
           {
             admissions.prepareItems.map((item) => (
               <li class="flex gap-3">
@@ -166,9 +188,13 @@ const steps = [
           }
         </ul>
       </div>
-      <div class="border-t border-stone-700 pt-6 lg:border-l lg:border-t-0 lg:pl-14 lg:pt-0">
-        <h2 class="text-2xl font-semibold">{admissions.directTitle}</h2>
-        <p class="mt-4 text-stone-300 leading-relaxed">{admissions.directBody}</p>
+      <div
+        class="border-t border-stone-700 pt-10 lg:border-l lg:border-t-0 lg:pl-20 lg:pt-0"
+        data-reveal
+        style="--reveal-delay: 120ms"
+      >
+        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">{admissions.directTitle}</h2>
+        <p class="mt-4 max-w-xl text-stone-300 leading-relaxed">{admissions.directBody}</p>
         <div class="mt-6 space-y-2 text-sm">
           <p>
             <a
@@ -196,54 +222,64 @@ const steps = [
           </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="mt-28 grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-      <div data-reveal>
-        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
-          >{admissions.faqLabel}</span
-        >
-        <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.faqTitle}</h2>
-      </div>
-      <div class="border-t border-stone-200">
-        {
-          admissions.faqItems.map((item, i) => (
-            <details
-              class="group border-b border-stone-200"
-              data-reveal
-              style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}
-            >
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-emerald-700 [&::-webkit-details-marker]:hidden">
-                <span>{item.q}</span>
-                <svg
-                  class="h-5 w-5 shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-45 group-hover:text-emerald-600"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-              </summary>
-              <p class="pb-5 -mt-1 text-stone-600 leading-relaxed">{item.a}</p>
-            </details>
-          ))
-        }
-      </div>
-    </section>
+  <!-- FAQ (contained, sticky left heading rail) -->
+  <section
+    class="mx-auto max-w-7xl px-6 lg:px-12 py-24 sm:py-32 lg:grid lg:grid-cols-[0.52fr_1.48fr] lg:gap-16"
+  >
+    <div class="lg:sticky lg:top-24 self-start" data-reveal>
+      <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700"
+        >{admissions.faqLabel}</span
+      >
+      <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">{admissions.faqTitle}</h2>
+    </div>
+    <div class="mt-12 border-t border-stone-200 lg:mt-0">
+      {
+        admissions.faqItems.map((item, i) => (
+          <details
+            class="group border-b border-stone-200"
+            data-reveal
+            style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-semibold text-stone-900 transition-colors hover:text-emerald-700 [&::-webkit-details-marker]:hidden">
+              <span>{item.q}</span>
+              <svg
+                class="h-5 w-5 shrink-0 text-stone-400 transition-transform duration-200 group-open:rotate-45 group-hover:text-emerald-600"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            </summary>
+            <p class="pb-5 -mt-1 max-w-2xl text-stone-600 leading-relaxed">{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
 
-    <!-- School fees (HTML table, reconstructed from the school's fee schedule) -->
-    <section class="mt-28" data-reveal>
-      <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+  <!-- School fees (full-bleed light band; HTML table, reconstructed from the school's fee schedule) -->
+  <section class="bg-stone-100 border-y border-stone-200/70" data-reveal>
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
-          <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">
+          <span
+            class="flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-700"
+          >
+            <span class="h-px w-10 bg-current" aria-hidden="true"></span>
             {admissions.feesLabel}
           </span>
-          <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.feesTitle}</h2>
+          <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
+            {admissions.feesTitle}
+          </h2>
           <p class="mt-5 max-w-md text-stone-600 leading-relaxed">{admissions.feesIntro}</p>
         </div>
-        <div class="overflow-x-auto rounded-3xl border border-stone-200">
+        <div class="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
           <table class="w-full border-collapse text-sm">
             <thead>
               <tr class="bg-stone-50 text-left">
@@ -282,20 +318,24 @@ const steps = [
         </div>
       </div>
       <p class="mt-6 max-w-3xl text-xs leading-relaxed text-stone-500">{admissions.feesNote}</p>
-    </section>
+    </div>
+  </section>
 
-    <!-- Admissions documents & forms -->
-    <section class="mt-28" data-reveal>
-      <div class="max-w-2xl">
-        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">
-          {admissions.documentsLabel}
-        </span>
-        <h2 class="mt-2 text-3xl font-bold tracking-tight">{admissions.documentsTitle}</h2>
-        <p class="mt-5 text-stone-600 leading-relaxed">{admissions.documentsIntro}</p>
-      </div>
+  <!-- Admissions documents & forms (contained; the two groups are parallel) -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-24" data-reveal>
+    <div class="max-w-2xl">
+      <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">
+        {admissions.documentsLabel}
+      </span>
+      <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
+        {admissions.documentsTitle}
+      </h2>
+      <p class="mt-5 text-stone-600 leading-relaxed">{admissions.documentsIntro}</p>
+    </div>
+    <div class="mt-12 grid gap-12 lg:grid-cols-2">
       {
         admissionsDocuments.map((group) => (
-          <div class="mt-10">
+          <div>
             <h3 class="text-sm font-bold uppercase tracking-widest text-stone-500">
               {group.group === 'dp' ? admissions.documentsDpLabel : admissions.documentsMypLabel}
             </h3>
@@ -305,21 +345,25 @@ const steps = [
           </div>
         ))
       }
-      <div class="mt-10 rounded-3xl border border-stone-200 bg-stone-50 px-6 py-8">
+    </div>
+    <div
+      class="mt-16 border-t border-stone-200 pt-8 sm:flex sm:items-end sm:justify-between sm:gap-8"
+    >
+      <div class="max-w-2xl">
         <h3 class="text-lg font-bold tracking-tight text-stone-900">
           {dict.policies.title}
         </h3>
-        <p class="mt-2 max-w-2xl text-sm text-stone-600 leading-relaxed">
+        <p class="mt-2 text-sm text-stone-600 leading-relaxed">
           {dict.policies.subtitle}
         </p>
-        <a
-          href={l('/policies', locale)}
-          class="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
-        >
-          {dict.policies.label}
-          <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
-        </a>
       </div>
-    </section>
-  </div>
+      <a
+        href={l('/policies', locale)}
+        class="group mt-4 inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors sm:mt-0"
+      >
+        {dict.policies.label}
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+      </a>
+    </div>
+  </section>
 </Layout>

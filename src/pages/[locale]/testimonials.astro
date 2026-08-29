@@ -16,6 +16,24 @@ const all = await reader.collections.testimonials.all();
 const testimonials = all.sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0));
 
 const initial = (name: string) => name.trim().charAt(0).toUpperCase();
+
+const items = testimonials.map((s) => ({
+  name: s.entry.name,
+  role: pick(locale, s.entry.sk.role, s.entry.role ?? ''),
+  quote: pick(locale, s.entry.sk.quote, s.entry.quote ?? ''),
+  photo: s.entry.photo,
+}));
+
+// Longest quote becomes the full-bleed standout band (only when there is enough around it)
+const standoutIdx =
+  items.length >= 3
+    ? items.reduce((best, it, i) => (it.quote.length > items[best].quote.length ? i : best), 0)
+    : -1;
+const standout = standoutIdx >= 0 ? items[standoutIdx] : null;
+const rest = standout ? items.filter((_, i) => i !== standoutIdx) : items;
+const mid = Math.ceil(rest.length / 2);
+const firstRows = rest.slice(0, mid);
+const lastRows = rest.slice(mid);
 ---
 
 <Layout
@@ -25,20 +43,20 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
   pageSchemaType="CollectionPage"
 >
   <!-- Editorial hero -->
-  <section
-    class="relative overflow-hidden border-b border-stone-200/80 bg-white"
-  >
+  <section class="relative overflow-hidden border-b border-stone-200/80 bg-white">
     <span
       class="absolute -right-6 -bottom-20 text-[12rem] sm:text-[18rem] font-extrabold leading-none tracking-tighter text-stone-100 select-none"
       aria-hidden="true">“</span
     >
-    <div class="relative mx-auto max-w-5xl px-4 sm:px-6 py-14 sm:py-20">
+    <div class="relative mx-auto max-w-7xl px-6 lg:px-12 py-16 sm:py-24">
       <span
-        class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-700"
-        >{dict.testimonials.label}</span
+        class="hero-rise inline-flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-700"
+        ><span class="h-px w-10 bg-current" aria-hidden="true"></span>{
+          dict.testimonials.label
+        }</span
       >
       <h1
-        class="hero-rise mt-3 text-5xl sm:text-6xl font-bold tracking-tight"
+        class="hero-rise mt-3 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight"
         style="--rise-delay: 80ms"
       >
         {dict.testimonials.title}
@@ -52,33 +70,36 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
     </div>
   </section>
 
-  <div class="mx-auto max-w-5xl px-4 sm:px-6 py-14">
-    {
-      testimonials.length === 0 ? (
+  {
+    items.length === 0 ? (
+      <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20">
         <EmptyState message={dict.testimonials.none} />
-      ) : (
-        <ul class="grid gap-6 sm:grid-cols-2">
-          {testimonials.map((s, i) => {
-            const name = s.entry.name;
-            const role = pick(locale, s.entry.sk.role, s.entry.role ?? '');
-            const quote = pick(locale, s.entry.sk.quote, s.entry.quote ?? '');
-            return (
-              <li data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}>
-                <figure class="flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-6 sm:p-8 transition-all hover:border-emerald-300 hover:shadow-md">
+      </div>
+    ) : (
+      <>
+        <section class="bg-white">
+          <ul class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28 flex flex-col gap-20 sm:gap-24">
+            {firstRows.map((s, i) => (
+              <li
+                class="lg:grid lg:grid-cols-12 lg:gap-8"
+                data-reveal
+                style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}
+              >
+                <figure class:list={['lg:col-span-7', i % 2 === 1 && 'lg:col-start-6']}>
                   <span
-                    class="text-5xl leading-none text-emerald-200 font-serif"
+                    class="block text-5xl leading-none font-extrabold tracking-tighter text-stone-200 select-none"
                     aria-hidden="true"
                   >
-                    “
+                    {String(i + 1).padStart(2, '0')}
                   </span>
-                  <blockquote class="mt-1 flex-1 text-lg text-stone-700 leading-relaxed">
-                    {quote}
+                  <blockquote class="mt-4 text-xl sm:text-2xl leading-snug font-medium tracking-tight text-stone-800">
+                    “{s.quote}”
                   </blockquote>
-                  <figcaption class="mt-6 flex items-center gap-4 border-t border-stone-100 pt-5">
-                    {s.entry.photo ? (
+                  <figcaption class="mt-8 flex items-center gap-4 border-t border-stone-200 pt-4">
+                    {s.photo ? (
                       <img
-                        src={s.entry.photo}
-                        alt={name}
+                        src={s.photo}
+                        alt={s.name}
                         width="48"
                         height="48"
                         loading="lazy"
@@ -89,24 +110,115 @@ const initial = (name: string) => name.trim().charAt(0).toUpperCase();
                         class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-lg font-bold text-emerald-700"
                         aria-hidden="true"
                       >
-                        {initial(name)}
+                        {initial(s.name)}
                       </span>
                     )}
                     <div class="min-w-0">
-                      <p class="font-semibold text-stone-900 truncate">
-                        {name}
-                      </p>
-                      {role && (
-                        <p class="text-sm text-stone-500 truncate">{role}</p>
-                      )}
+                      <p class="font-semibold text-stone-900 truncate">{s.name}</p>
+                      {s.role && <p class="text-sm text-stone-500 truncate">{s.role}</p>}
                     </div>
                   </figcaption>
                 </figure>
               </li>
-            );
-          })}
-        </ul>
-      )
-    }
-  </div>
+            ))}
+          </ul>
+        </section>
+
+        {standout && (
+          <section class="relative overflow-hidden bg-stone-900 text-white">
+            <span
+              class="absolute -left-4 -top-16 text-[14rem] sm:text-[20rem] font-extrabold leading-none tracking-tighter text-white/5 select-none"
+              aria-hidden="true"
+            >
+              “
+            </span>
+            <figure
+              class="relative mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28 lg:grid lg:grid-cols-12"
+              data-reveal
+            >
+              <div class="lg:col-span-10">
+                <blockquote class="text-2xl sm:text-3xl lg:text-4xl leading-snug font-medium tracking-tight">
+                  “{standout.quote}”
+                </blockquote>
+                <figcaption class="mt-10 flex items-center gap-4 border-t border-white/15 pt-4">
+                  {standout.photo ? (
+                    <img
+                      src={standout.photo}
+                      alt={standout.name}
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      class="h-12 w-12 rounded-full object-cover"
+                    />
+                  ) : (
+                    <span
+                      class="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-lg font-bold text-emerald-300"
+                      aria-hidden="true"
+                    >
+                      {initial(standout.name)}
+                    </span>
+                  )}
+                  <div class="min-w-0">
+                    <p class="font-semibold truncate">{standout.name}</p>
+                    {standout.role && (
+                      <p class="text-sm text-stone-400 truncate">{standout.role}</p>
+                    )}
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+          </section>
+        )}
+
+        {lastRows.length > 0 && (
+          <section class="bg-white">
+            <ul class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28 flex flex-col gap-20 sm:gap-24">
+              {lastRows.map((s, i) => (
+                <li
+                  class="lg:grid lg:grid-cols-12 lg:gap-8"
+                  data-reveal
+                  style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}
+                >
+                  <figure class:list={['lg:col-span-7', (mid + i) % 2 === 1 && 'lg:col-start-6']}>
+                    <span
+                      class="block text-5xl leading-none font-extrabold tracking-tighter text-stone-200 select-none"
+                      aria-hidden="true"
+                    >
+                      {String(mid + i + 1).padStart(2, '0')}
+                    </span>
+                    <blockquote class="mt-4 text-xl sm:text-2xl leading-snug font-medium tracking-tight text-stone-800">
+                      “{s.quote}”
+                    </blockquote>
+                    <figcaption class="mt-8 flex items-center gap-4 border-t border-stone-200 pt-4">
+                      {s.photo ? (
+                        <img
+                          src={s.photo}
+                          alt={s.name}
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                          class="h-12 w-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span
+                          class="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-lg font-bold text-emerald-700"
+                          aria-hidden="true"
+                        >
+                          {initial(s.name)}
+                        </span>
+                      )}
+                      <div class="min-w-0">
+                        <p class="font-semibold text-stone-900 truncate">{s.name}</p>
+                        {s.role && <p class="text-sm text-stone-500 truncate">{s.role}</p>}
+                      </div>
+                    </figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </>
+    )
+  }
 </Layout>

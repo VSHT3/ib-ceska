@@ -31,7 +31,6 @@ const strands = [
       'border-myp-200 bg-myp-50 hover:border-myp-400 data-[active]:ring-2 data-[active]:ring-myp-500 data-[active]:border-myp-400',
     letterColor: 'text-myp-500',
     chip: 'bg-myp-100 text-myp-800',
-    dot: 'bg-myp-500',
   },
   {
     key: 'Activity',
@@ -42,7 +41,6 @@ const strands = [
       'border-sky-200 bg-sky-50 hover:border-sky-400 data-[active]:ring-2 data-[active]:ring-sky-500 data-[active]:border-sky-400',
     letterColor: 'text-sky-500',
     chip: 'bg-sky-100 text-sky-800',
-    dot: 'bg-sky-500',
   },
   {
     key: 'Service',
@@ -53,7 +51,6 @@ const strands = [
       'border-emerald-200 bg-emerald-50 hover:border-emerald-400 data-[active]:ring-2 data-[active]:ring-emerald-500 data-[active]:border-emerald-400',
     letterColor: 'text-emerald-600',
     chip: 'bg-emerald-100 text-emerald-800',
-    dot: 'bg-emerald-600',
   },
 ] as const;
 
@@ -84,7 +81,7 @@ const fmtDate = (date: string | null) =>
     <Image
       src={school.volunteering}
       alt=""
-      class="absolute inset-0 h-full w-full object-cover opacity-40"
+      class="ken-burns absolute inset-0 h-full w-full object-cover opacity-40"
       widths={[768, 1280, 1920]}
       sizes="100vw"
       loading="eager"
@@ -94,7 +91,7 @@ const fmtDate = (date: string | null) =>
       class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/50 to-stone-900/30"
     >
     </div>
-    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 pt-24 pb-14 sm:pt-32 sm:pb-16">
+    <div class="relative mx-auto max-w-7xl px-6 lg:px-12 pt-24 pb-14 sm:pt-32 sm:pb-16">
       <span
         class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300"
         >IB Core</span
@@ -114,8 +111,8 @@ const fmtDate = (date: string | null) =>
     </div>
   </section>
 
-  <div class="mx-auto max-w-6xl px-4 sm:px-6">
-    <!-- Strand blocks = interactive filters -->
+  <!-- Strand blocks = interactive filters, overlapping the hero -->
+  <div class="mx-auto max-w-7xl px-6 lg:px-12">
     <section
       class="-mt-10 relative z-10 grid sm:grid-cols-3 gap-4"
       aria-label={dict.cas.filterHint}
@@ -153,98 +150,119 @@ const fmtDate = (date: string | null) =>
         ))
       }
     </section>
+  </div>
 
-    <!-- Journal -->
-    <section class="py-14 max-w-3xl">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">{dict.cas.journalHeading}</h2>
+  <!-- Journal: sticky heading rail + hairline entry rows -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
+    <div class="grid gap-12 lg:grid-cols-[0.52fr_1.48fr] lg:gap-16 items-start">
+      <div class="lg:sticky lg:top-24 self-start" data-reveal>
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+          {dict.cas.journalHeading}
+        </h2>
+        <p class="mt-4 max-w-[40ch] text-sm text-stone-500 leading-relaxed">
+          {dict.cas.filterHint}
+        </p>
         <button
           type="button"
           data-strand-filter="all"
           data-active
           aria-pressed="true"
-          class="rounded-full border border-stone-200 bg-white px-4 py-1.5 text-xs font-semibold text-stone-600 transition-colors hover:border-emerald-300 hover:text-emerald-700 data-[active]:border-emerald-600 data-[active]:bg-emerald-700 data-[active]:text-white cursor-pointer"
+          class="mt-6 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-xs font-semibold text-stone-600 transition-colors hover:border-emerald-300 hover:text-emerald-700 data-[active]:border-emerald-600 data-[active]:bg-emerald-700 data-[active]:text-white cursor-pointer"
         >
           {dict.cas.filterAll}
         </button>
       </div>
 
-      {
-        sorted.length === 0 ? (
-          <EmptyState message={dict.cas.noActivities} />
-        ) : (
-          <ol class="relative border-l-2 border-stone-200 ml-2.5 space-y-8">
-            {sorted.map((a, i) => {
-              const itemStrands = strandsOf(a.entry);
-              const primary = itemStrands[0] ?? strands[0];
-              return (
-                <li
-                  class="relative pl-8"
-                  data-journal-item
-                  data-strands={itemStrands.map((s) => s.key).join(' ')}
-                  data-reveal
-                  style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}
-                >
-                  <span
-                    class:list={[
-                      'absolute -left-[7px] top-2 h-3 w-3 rounded-full ring-4 ring-stone-50',
-                      primary.dot,
-                    ]}
-                    aria-hidden="true"
-                  />
-                  <a
-                    href={`/${locale}/cas/${a.slug}`}
-                    class="group block rounded-2xl border border-stone-200 bg-white p-5 sm:p-6 transition-all hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5"
+      <div class="min-w-0">
+        {
+          sorted.length === 0 ? (
+            <EmptyState message={dict.cas.noActivities} />
+          ) : (
+            <ol class="border-t border-stone-200">
+              {sorted.map((a, i) => {
+                const itemStrands = strandsOf(a.entry);
+                const marks = itemStrands.length > 0 ? itemStrands : [strands[0]];
+                return (
+                  <li
+                    data-journal-item
+                    data-strands={itemStrands.map((s) => s.key).join(' ')}
+                    data-reveal
+                    style={`--reveal-delay: ${Math.min(i, 4) * 70}ms`}
                   >
-                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                      {a.entry.date && (
-                        <time class="text-xs font-medium text-stone-400">
-                          {fmtDate(a.entry.date)}
-                        </time>
-                      )}
-                      {itemStrands.map((s) => (
-                        <span
-                          class:list={['text-[11px] font-bold rounded-full px-2 py-0.5', s.chip]}
-                        >
-                          {s.label}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 class="mt-2 text-lg font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
-                      {pick(locale, a.entry.sk.title, a.entry.title)}
-                    </h3>
-                    <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">
-                      {pick(locale, a.entry.sk.description, a.entry.description)}
-                    </p>
-                    <span
-                      class="mt-3 inline-block text-sm font-semibold text-emerald-700 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
-                      aria-hidden="true"
+                    <a
+                      href={`/${locale}/cas/${a.slug}`}
+                      class="group grid grid-cols-[3rem_1fr] sm:grid-cols-[4.5rem_1fr] gap-4 sm:gap-6 items-start border-b border-stone-200 py-7 sm:py-9 sm:-mx-4 sm:px-4 transition-colors hover:bg-white"
                     >
-                      →
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ol>
-        )
-      }
-    </section>
+                      <span
+                        class="flex flex-col text-3xl sm:text-4xl font-extrabold leading-[0.95] tracking-tighter select-none"
+                        aria-hidden="true"
+                      >
+                        {marks.map((s) => (
+                          <span class={s.letterColor}>{s.letter}</span>
+                        ))}
+                      </span>
+                      <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                          {a.entry.date && (
+                            <time class="text-xs font-medium text-stone-400">
+                              {fmtDate(a.entry.date)}
+                            </time>
+                          )}
+                          {itemStrands.map((s) => (
+                            <span
+                              class:list={[
+                                'text-[11px] font-bold rounded-full px-2 py-0.5',
+                                s.chip,
+                              ]}
+                            >
+                              {s.label}
+                            </span>
+                          ))}
+                        </div>
+                        <h3 class="mt-2 text-lg sm:text-xl font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
+                          {pick(locale, a.entry.sk.title, a.entry.title)}
+                        </h3>
+                        <p class="mt-1.5 max-w-2xl text-sm text-stone-600 leading-relaxed">
+                          {pick(locale, a.entry.sk.description, a.entry.description)}
+                        </p>
+                        <span
+                          class="mt-3 inline-block text-sm font-semibold text-emerald-700 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                          aria-hidden="true"
+                        >
+                          →
+                        </span>
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ol>
+          )
+        }
+      </div>
+    </div>
+  </section>
 
-    <!-- CAS Handbook (school document supplied by the CAS coordinator) -->
-    <section class="border-t border-stone-200 py-14" data-reveal>
-      <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14 items-start">
-        <div>
-          <span class="text-xs font-semibold tracking-widest uppercase text-emerald-700">
+  <!-- CAS Handbook: full-bleed dark band (school document supplied by the CAS coordinator) -->
+  <section class="bg-stone-900 text-white">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28" data-reveal>
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16 items-start">
+        <div class="lg:col-span-5">
+          <span
+            class="flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-300"
+          >
+            <span class="h-px w-10 bg-current" aria-hidden="true"></span>
             {dict.cas.handbookLabel}
           </span>
-          <h2 class="mt-2 text-2xl font-bold tracking-tight text-stone-900">
+          <h2 class="mt-4 text-3xl sm:text-4xl font-bold tracking-tight">
             {dict.cas.handbookTitle}
           </h2>
-          <p class="mt-4 text-sm text-stone-600 leading-relaxed">{dict.cas.handbookIntro}</p>
+          <p class="mt-5 max-w-xl text-sm text-stone-300 leading-relaxed">
+            {dict.cas.handbookIntro}
+          </p>
           <a
             href={l('/policies', locale)}
-            class="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+            class="group mt-6 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
           >
             {dict.cas.handbookMore}
             <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5"
@@ -252,14 +270,16 @@ const fmtDate = (date: string | null) =>
             >
           </a>
         </div>
-        <DocumentList
-          items={guideDocuments.filter((doc) => doc.file === 'cas-handbook.pdf')}
-          locale={locale}
-          tone="dp"
-        />
+        <div class="lg:col-span-6 lg:col-start-7">
+          <DocumentList
+            items={guideDocuments.filter((doc) => doc.file === 'cas-handbook.pdf')}
+            locale={locale}
+            tone="dp"
+          />
+        </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
   <script>
     function initCasFilter() {
