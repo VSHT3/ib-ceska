@@ -25,18 +25,18 @@ Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymná
 ## Quick start
 
 ```bash
-npm install
-npm run dev        # → localhost:4321  (CMS admin at /keystatic/)
+pnpm install
+pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 ```
 
 ## Commands
 
-| Command            | Action                                          |
-| ------------------ | ----------------------------------------------- |
-| `npm run dev`      | Dev server at localhost:4321 (incl. `/keystatic/`) |
-| `npm run build`    | Hybrid build → `dist/client/` + `dist/server/`  |
-| `npm run preview`  | Preview the production build                    |
-| `npm run check`    | Type-check the project (`astro check`)          |
+| Command            | Action                                             |
+| ------------------ | -------------------------------------------------- |
+| `pnpm run dev`     | Dev server at localhost:4321 (incl. `/keystatic/`) |
+| `pnpm run build`   | Hybrid build → `dist/client/` + `dist/server/`     |
+| `pnpm run preview` | Preview the production build                       |
+| `pnpm run check`   | Type-check the project (`astro check`)             |
 
 ## Stack
 
@@ -68,7 +68,7 @@ Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files b
 
 - **URL:** `/keystatic/` at `http://localhost:4321/keystatic/` in dev, `https://ib.gymnaziumceska.sk/keystatic/` in production.
 - **Dev** (`kind: 'local'`): writes `.mdoc` files straight to disk, no login.
-- **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth**, so only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership *is* the access list.
+- **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth**, so only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership _is_ the access list.
 - ⚠️ Production OAuth is **not configured yet** (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` + a GitHub App are required). Until then the live CMS cannot save. See `humans/HUMANTODO.md`.
 
 ## Language policy
@@ -86,7 +86,7 @@ See [`humans/`](humans/) for onboarding, the content-editing guide, design decis
 Hosted on **Coolify** on a VPS. Coolify project `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via a GitHub App. **Pushing to `main` auto-deploys** (GitHub webhook triggers Coolify to pull, build, and redeploy). A Keystatic Save also commits to `main`, so content edits redeploy too.
 
 ```bash
-npm run build                 # → dist/client/ (static) + dist/server/ (Node)
+pnpm run build                 # → dist/client/ (static) + dist/server/ (Node)
 node dist/server/entry.mjs    # start command, port 4321
 ```
 

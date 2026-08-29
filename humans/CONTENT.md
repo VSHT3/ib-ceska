@@ -18,11 +18,11 @@ exception. A developer maintains them in `src/data/teachers.ts` and
 ## Production workflow (GitHub OAuth)
 
 When editing on the live site:
+
 - You log in with your **GitHub account** — only accounts with write access to the `VSHT3/ib-ceska` repository can save. This is how editor access is controlled (see `README.md` → "Who is allowed to edit").
 - Edits create commits directly to the repository
 - Coolify detects the push and automatically redeploys the site
 - Changes go live within seconds
-
 
 ### Getting an editor their own access (do this — don't share one login)
 
@@ -35,17 +35,20 @@ Each editor (teacher, coordinator) uses **their own free GitHub account**. Do **
 4. To remove access later: remove them from the repo collaborators list.
 
 Why own accounts, not a shared one:
+
 - Every save is committed as that person, so the history shows **who changed what**.
 - Access is revoked per-person without disrupting anyone else.
 - No one is handed a password that also carries repo-admin powers.
 
 Notes:
-- The repo is **public**, so anyone can *read* the source — that's fine (it's a school website and no secrets live in the repo; the production secrets are stored in Coolify, not GitHub). **Only collaborators can write/save.**
+
+- The repo is **public**, so anyone can _read_ the source — that's fine (it's a school website and no secrets live in the repo; the production secrets are stored in Coolify, not GitHub). **Only collaborators can write/save.**
 - GitHub places no limit on free collaborators (public or private), so add as many editors as needed.
 
 ## Local workflow
 
-When running `npm run dev` locally:
+When running `pnpm run dev` locally:
+
 - The admin panel is available at `http://localhost:4321/keystatic/`
 - Edits write directly to `.mdoc` files in `src/content/`
 - No GitHub auth required — changes stay local
@@ -58,17 +61,17 @@ Each entry represents one IB subject offering.
 
 **Fields:**
 
-| Field        | Type     | Required | Description                                          |
-| ------------ | -------- | -------- | ---------------------------------------------------- |
-| `title`      | slug     | yes      | Subject name — also used as the URL slug             |
-| `group`      | select   | yes      | IB group: 1 through 6, or Core                       |
-| `level`      | select   | no       | HL or SL — the level shown on the catalogue card     |
-| `offeredLevels`| select | no       | HL & SL / HL only / SL only — controls which levels the diploma builder lets a student pick (default: HL & SL) |
-| `description`| textarea | yes      | Brief course description                             |
-| `teacher`    | text     | no       | Teacher's name and title                             |
-| `order`      | number   | no       | Display order within the group (default: 0)          |
-| `sk`         | group    | no       | Slovak translation (title, description, syllabus)    |
-| `content`    | richtext | no       | Full syllabus details, assessment criteria, etc.     |
+| Field           | Type     | Required | Description                                                                                                    |
+| --------------- | -------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| `title`         | slug     | yes      | Subject name — also used as the URL slug                                                                       |
+| `group`         | select   | yes      | IB group: 1 through 6, or Core                                                                                 |
+| `level`         | select   | no       | HL or SL — the level shown on the catalogue card                                                               |
+| `offeredLevels` | select   | no       | HL & SL / HL only / SL only — controls which levels the diploma builder lets a student pick (default: HL & SL) |
+| `description`   | textarea | yes      | Brief course description                                                                                       |
+| `teacher`       | text     | no       | Teacher's name and title                                                                                       |
+| `order`         | number   | no       | Display order within the group (default: 0)                                                                    |
+| `sk`            | group    | no       | Slovak translation (title, description, syllabus)                                                              |
+| `content`       | richtext | no       | Full syllabus details, assessment criteria, etc.                                                               |
 
 ### CAS Activities (`src/content/cas/`)
 
@@ -76,15 +79,15 @@ Each entry is one CAS activity or project.
 
 **Fields:**
 
-| Field             | Type       | Required | Description                              |
-| ----------------- | ---------- | -------- | ---------------------------------------- |
-| `title`           | slug       | yes      | Activity name                            |
-| `date`            | date       | yes      | When it took place                       |
-| `strands`         | multi-select | yes    | One or more of Creativity, Activity, Service (an activity can span several) |
-| `description`     | textarea   | yes      | Summary of the activity                  |
-| `learningOutcomes`| list       | no       | IB learning outcomes addressed           |
-| `sk`              | group      | no       | Slovak translation (title, description, reflection) |
-| `content`         | richtext   | no       | Full reflection, evidence, photos        |
+| Field              | Type         | Required | Description                                                                 |
+| ------------------ | ------------ | -------- | --------------------------------------------------------------------------- |
+| `title`            | slug         | yes      | Activity name                                                               |
+| `date`             | date         | yes      | When it took place                                                          |
+| `strands`          | multi-select | yes      | One or more of Creativity, Activity, Service (an activity can span several) |
+| `description`      | textarea     | yes      | Summary of the activity                                                     |
+| `learningOutcomes` | list         | no       | IB learning outcomes addressed                                              |
+| `sk`               | group        | no       | Slovak translation (title, description, reflection)                         |
+| `content`          | richtext     | no       | Full reflection, evidence, photos                                           |
 
 ### TOK Materials (`src/content/tok/`)
 
@@ -92,14 +95,14 @@ Theory of Knowledge essays, themes, and discussion materials.
 
 **Fields:**
 
-| Field         | Type     | Required | Description                              |
-| ------------- | -------- | -------- | ---------------------------------------- |
-| `title`       | slug     | yes      | Essay or topic title                     |
-| `date`        | date     | yes      | Publication date                         |
-| `theme`       | select   | yes      | TOK theme (12 options)                   |
-| `description` | textarea | yes      | Summary of the essay or discussion       |
+| Field         | Type     | Required | Description                                |
+| ------------- | -------- | -------- | ------------------------------------------ |
+| `title`       | slug     | yes      | Essay or topic title                       |
+| `date`        | date     | yes      | Publication date                           |
+| `theme`       | select   | yes      | TOK theme (12 options)                     |
+| `description` | textarea | yes      | Summary of the essay or discussion         |
 | `sk`          | group    | no       | Slovak translation (title, summary, essay) |
-| `content`     | richtext | no       | Full essay text                          |
+| `content`     | richtext | no       | Full essay text                            |
 
 ### News (`src/content/news/`)
 
@@ -107,14 +110,14 @@ Announcements, exam schedules, and events.
 
 **Fields:**
 
-| Field     | Type     | Required | Description                     |
-| --------- | -------- | -------- | ------------------------------- |
-| `title`   | slug     | yes      | Headline                        |
-| `date`    | date     | yes      | Publication date                |
-| `excerpt` | textarea | no       | Short summary shown on listing  |
-| `author`  | text     | no       | Author attribution              |
+| Field     | Type     | Required | Description                               |
+| --------- | -------- | -------- | ----------------------------------------- |
+| `title`   | slug     | yes      | Headline                                  |
+| `date`    | date     | yes      | Publication date                          |
+| `excerpt` | textarea | no       | Short summary shown on listing            |
+| `author`  | text     | no       | Author attribution                        |
 | `sk`      | group    | no       | Slovak translation (title, excerpt, body) |
-| `content` | richtext | no       | Full article body               |
+| `content` | richtext | no       | Full article body                         |
 
 ### Events (`src/content/events/`)
 
@@ -124,16 +127,16 @@ today's date — no manual archiving needed.
 
 **Fields:**
 
-| Field         | Type     | Required | Description                                |
-| ------------- | -------- | -------- | ------------------------------------------ |
-| `title`       | slug     | yes      | Event name                                 |
-| `date`        | date     | yes      | Start date                                 |
-| `endDate`     | date     | no       | End date — only for multi-day events       |
-| `time`        | text     | no       | e.g. `17:00–19:30`; blank shows "All day"  |
-| `location`    | text     | no       | Where it happens                           |
-| `description` | textarea | no       | Short summary shown on the card            |
+| Field         | Type     | Required | Description                                      |
+| ------------- | -------- | -------- | ------------------------------------------------ |
+| `title`       | slug     | yes      | Event name                                       |
+| `date`        | date     | yes      | Start date                                       |
+| `endDate`     | date     | no       | End date — only for multi-day events             |
+| `time`        | text     | no       | e.g. `17:00–19:30`; blank shows "All day"        |
+| `location`    | text     | no       | Where it happens                                 |
+| `description` | textarea | no       | Short summary shown on the card                  |
 | `sk`          | group    | no       | Slovak translation (title, description, details) |
-| `content`     | richtext | no       | Full details                               |
+| `content`     | richtext | no       | Full details                                     |
 
 ### Testimonials (`src/content/testimonials/`)
 
@@ -146,16 +149,16 @@ Student and alumni voices shown on the `/testimonials` page, with the
 
 **Fields:**
 
-| Field      | Type     | Required | Description                                              |
-| ---------- | -------- | -------- | -------------------------------------------------------- |
-| `name`     | slug     | yes      | Student/alumnus name (or first name + initial for privacy) |
-| `role`     | text     | no       | e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE" |
-| `gradYear` | number   | no       | Graduation year                                          |
+| Field      | Type     | Required | Description                                                                 |
+| ---------- | -------- | -------- | --------------------------------------------------------------------------- |
+| `name`     | slug     | yes      | Student/alumnus name (or first name + initial for privacy)                  |
+| `role`     | text     | no       | e.g. "DP2 student" or "Alumna, Class of 2024 — now at LSE"                  |
+| `gradYear` | number   | no       | Graduation year                                                             |
 | `photo`    | image    | no       | Headshot — **only with written consent**; a coloured initial shows if empty |
-| `order`    | number   | no       | Display order (lower = first)                            |
-| `featured` | checkbox | no       | Show this one on the homepage strip                      |
-| `sk`       | group    | no       | Slovak translation (role, quote)                         |
-| `quote`    | textarea | yes      | The testimonial itself                                   |
+| `order`    | number   | no       | Display order (lower = first)                                               |
+| `featured` | checkbox | no       | Show this one on the homepage strip                                         |
+| `sk`       | group    | no       | Slovak translation (role, quote)                                            |
+| `quote`    | textarea | yes      | The testimonial itself                                                      |
 
 ## Language — English + Slovak
 
@@ -186,16 +189,16 @@ So: put the one-line summary in `description`/`excerpt`, and the full write-up (
 Content is stored as `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`. The CMS handles this automatically — manual editing is not recommended unless you know what you're doing.
 
 **Example `.mdoc` file:**
+
 ```yaml
 ---
 title: Mathematics Analysis and Approaches
-group: "5"
+group: '5'
 level: HL
 description: Calculus, statistics, probability, and algebra
 teacher: Lucia Horáčiková
 order: 1
 ---
-
 Full syllabus content here using rich text...
 ```
 
@@ -204,5 +207,5 @@ Full syllabus content here using rich text...
 If a field is missing from the editor:
 
 1. Update `keystatic.config.ts` — add the field to the schema
-2. Restart the dev server (`npm run dev`)
+2. Restart the dev server (`pnpm run dev`)
 3. The new field appears in the admin UI automatically

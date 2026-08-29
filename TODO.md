@@ -67,10 +67,10 @@ Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz
 
 ## DX
 
-- [x] Add `astro sync` to pre-build hook — `prebuild` script runs `astro sync` before every `npm run build`.
+- [x] Add `astro sync` to pre-build hook — `prebuild` script runs `astro sync` before every `pnpm run build`.
 - [x] Biome linter config — `biome.json` (linter only, formatter disabled to avoid clashing with Prettier; `noExplicitAny` off for Keystatic loose types).
 - [x] Prettier config for `.astro` and `.mdx` files — `.prettierrc` with `prettier-plugin-astro`; `.prettierignore` excludes `src/content/` (Keystatic-managed).
-- [x] Pre-commit hook (lint + typecheck) — husky + lint-staged: `prettier --write` + `biome check --write` on staged files, then `npm run check`.
+- [x] Pre-commit hook (lint + typecheck) — husky + lint-staged: `prettier --write` + `biome check --write` on staged files, then `pnpm run check`.
 
 ## Content features
 

@@ -12,9 +12,9 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 
 ### Two separate GitHub Apps — don't confuse them
 
-| App | Purpose | Where configured |
-| --- | ------- | ---------------- |
-| `v-s-h-t3` | Coolify ↔ GitHub: pulls the repo and fires the auto-deploy webhook | Coolify → Sources |
+| App                               | Purpose                                                               | Where configured         |
+| --------------------------------- | --------------------------------------------------------------------- | ------------------------ |
+| `v-s-h-t3`                        | Coolify ↔ GitHub: pulls the repo and fires the auto-deploy webhook    | Coolify → Sources        |
 | `IB Ceska CMS` (App ID `4043810`) | Keystatic CMS login: lets editors authenticate + commit content edits | github.com/settings/apps |
 
 The `IB Ceska CMS` app's **Callback URL** must match the live origin exactly:
@@ -34,24 +34,24 @@ You only trigger a deploy by hand for the very first deploy or to force a rebuil
 
 The site is Astro in **hybrid mode** (static pages + a Node server for `/keystatic/`), so it runs as a long-lived Node process — not a static file bundle.
 
-| Setting        | Value                          |
-| -------------- | ------------------------------ |
-| Build pack     | nixpacks (Node 22 auto-detected) |
-| Build command  | `npm run build`                |
-| Start command  | `node dist/server/entry.mjs`   |
-| Exposed port   | `4321`                         |
+| Setting       | Value                                                          |
+| ------------- | -------------------------------------------------------------- |
+| Build pack    | nixpacks (Node 22 auto-detected)                               |
+| Build command | `pnpm run build` (nixpacks detects pnpm from `pnpm-lock.yaml`) |
+| Start command | `node dist/server/entry.mjs`                                   |
+| Exposed port  | `4321`                                                         |
 
 ### Required environment variables
 
 All set in Coolify → app `IB Česká` → **Environment Variables** (runtime).
 
-| Key    | Value     | Why                                                                 |
-| ------ | --------- | ------------------------------------------------------------------- |
-| `HOST` | `0.0.0.0` | Astro's Node adapter binds `localhost` by default; inside a container that's unreachable. Must bind all interfaces or Coolify's proxy can't reach the app. |
-| `PORT` | `4321`    | Matches the exposed port the proxy routes to.                       |
-| `KEYSTATIC_GITHUB_CLIENT_ID` | (from the `IB Ceska CMS` GitHub App) | Keystatic GitHub OAuth — identifies the app at login. |
-| `KEYSTATIC_GITHUB_CLIENT_SECRET` | (generated on the GitHub App, shown once) | OAuth secret. Rotate by regenerating on GitHub + updating this var. |
-| `KEYSTATIC_SECRET` | random 32-byte hex (`openssl rand -hex 32`) | Signs the editor's login session cookie. Any random value; keep it stable. |
+| Key                              | Value                                       | Why                                                                                                                                                        |
+| -------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `HOST`                           | `0.0.0.0`                                   | Astro's Node adapter binds `localhost` by default; inside a container that's unreachable. Must bind all interfaces or Coolify's proxy can't reach the app. |
+| `PORT`                           | `4321`                                      | Matches the exposed port the proxy routes to.                                                                                                              |
+| `KEYSTATIC_GITHUB_CLIENT_ID`     | (from the `IB Ceska CMS` GitHub App)        | Keystatic GitHub OAuth — identifies the app at login.                                                                                                      |
+| `KEYSTATIC_GITHUB_CLIENT_SECRET` | (generated on the GitHub App, shown once)   | OAuth secret. Rotate by regenerating on GitHub + updating this var.                                                                                        |
+| `KEYSTATIC_SECRET`               | random 32-byte hex (`openssl rand -hex 32`) | Signs the editor's login session cookie. Any random value; keep it stable.                                                                                 |
 
 > **Three** Keystatic vars, not two — `KEYSTATIC_SECRET` is easy to miss. Without it the API throws "Missing required config … secret".
 
@@ -68,10 +68,10 @@ Login still works (that's server-side), and pages may half-render, but **opening
 
 ## Verified working
 
-| Route        | Result                                          |
-| ------------ | ----------------------------------------------- |
-| `/`          | 200 — language-detect redirect to `/en/`        |
-| `/en/`       | 200 — full homepage                             |
+| Route        | Result                                                                         |
+| ------------ | ------------------------------------------------------------------------------ |
+| `/`          | 200 — language-detect redirect to `/en/`                                       |
+| `/en/`       | 200 — full homepage                                                            |
 | `/keystatic` | 200 over HTTPS — login + **content Save commits to `main`** and auto-redeploys |
 
 After a successful Save the editor page reloads after a few seconds — that's the auto-redeploy completing; normal.

@@ -1,2 +1,2 @@
-npx lint-staged
-npm run check
+pnpm exec lint-staged
+pnpm run check

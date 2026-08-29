@@ -1,6 +1,7 @@
 {
   "name": "ib-ceska",
   "type": "module",
+  "packageManager": "pnpm@11.3.0",
   "version": "0.0.1",
   "engines": {
     "node": ">=22.12.0"
@@ -35,21 +36,20 @@
     "astro": "^6.4.6",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@biomejs/biome": "^2.5.0",
     "@types/node": "^25.9.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "playwright": "^1.60.0",
     "prettier": "^3.8.4",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3"
-  },
-  "allowScripts": {
-    "esbuild@0.27.7": true,
-    "sharp@0.34.5": true
   }
 }
