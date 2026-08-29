@@ -50,7 +50,7 @@ const dict = {
       ibo: 'International Baccalaureate',
       admissions: 'Admissions',
       mission:
-        'An international education in the heart of Bratislava - preparing students to think critically, act with care, and grow into the world.',
+        'An international education in Bratislava, preparing students to think critically and grow into the world.',
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
       resourcesGroup: 'Resources',
@@ -99,7 +99,7 @@ const dict = {
       whatIsIBLabel: 'What is the IB?',
       whatIsIB: 'A global standard for curious minds',
       whatIsIBBody1:
-        'The International Baccalaureate (IB) is a rigorous, internationally recognised educational framework taught in over 5,500 schools across 160 countries. At its heart is a commitment to developing inquiring, knowledgeable, and caring young people who are motivated to succeed.',
+        'The International Baccalaureate (IB) is a rigorous, internationally recognised curriculum taught in over 5,500 schools across 160 countries. It sets out to develop inquiring, knowledgeable, and caring young people who are motivated to succeed.',
       whatIsIBBody2:
         'At Súkromné Gymnázium Česká, the curriculum combines academic depth with independent research, reflection, and community engagement.',
       programmesLabel: 'Programmes',
@@ -486,25 +486,25 @@ const dict = {
       duration: 'Final MYP years',
       label: 'Middle Years Programme',
       whatIsLabel: 'What is MYP?',
-      whatIsTitle: 'A curriculum that teaches your child to think, not just memorize',
+      whatIsTitle: 'A curriculum that teaches your child how to think',
       whatIsBody:
-        'The Middle Years Programme is the IB framework for students aged 14 to 16. Instead of memorising facts for exams, your child investigates real questions, connects ideas across subjects, and builds the skills they will need for university and work. At Česká, the MYP covers the final two years before the Diploma Programme.',
+        'The Middle Years Programme is the IB programme for students aged 14 to 16. Instead of memorising facts for exams, your child investigates real questions, connects ideas across subjects, and builds the skills they will need for university and work. At Česká, the MYP covers the final two years before the Diploma Programme.',
       whatIsPoints: [
         {
           title: 'Eight subjects, connected',
           body: 'Your child studies language, humanities, sciences, maths, arts, and design. Teachers plan units together so a history lesson on industrialisation can link to a science lesson on energy.',
         },
         {
-          title: 'Real questions, not textbook chapters',
-          body: 'Every unit starts with a question that matters. How do we share the planet? What is fair? Your child uses what they learn to answer it, not just reproduce it.',
+          title: 'Built around real questions',
+          body: 'Every unit starts with a question that matters. How do we share the planet? What is fair? Your child uses what they learn to answer it.',
         },
         {
-          title: 'Skills are taught, not assumed',
-          body: 'Thinking, communication, research, self-management, and collaboration are built into every lesson. Your child learns how to learn, not just what to know.',
+          title: 'Skills are taught deliberately',
+          body: 'Thinking, communication, research, self-management, and collaboration are built into every lesson. Your child learns how to learn.',
         },
         {
-          title: 'A personal project, not just exams',
-          body: 'In the final year, your child chooses, plans, and completes a project of their own. It could be a short film, a prototype, a community event. They document the process and reflect on what they learned.',
+          title: 'A personal project of their own',
+          body: 'In the final year, your child chooses, plans, and completes an extended project. It could be a short film, a prototype, or a community event. They document the process and reflect on what they learned.',
         },
       ],
       principlesLabel: 'How learning works',
@@ -540,7 +540,7 @@ const dict = {
       atlLabel: 'Approaches to learning',
       atlTitle: 'Five skill families, taught on purpose',
       atlIntro:
-        'ATL skills are not a separate subject. They are woven into every unit so students learn how to learn.',
+        'ATL skills are woven into every unit rather than taught as a separate subject, so students learn how to learn.',
       atl: [
         {
           title: 'Thinking',
@@ -565,14 +565,14 @@ const dict = {
       ],
       personalProjectTitle: 'The Personal Project',
       personalProjectBody:
-        'In the final MYP year, your child chooses a topic they care about and completes an extended project. It could be a short film, a working prototype, a community event, a piece of writing. They plan the work, carry it out, and reflect on the process. For many students, this is the first time they take full ownership of a long-term piece of work.',
+        'In the final MYP year, your child chooses a topic they care about and completes an extended project. It could be a short film, a working prototype, a community event, or a piece of writing. They plan the work, carry it out, and reflect on the process. For many students, this is the first time they take full ownership of a long-term piece of work.',
       serviceTitle: 'Service as action',
       serviceBody:
-        'Your child takes part in sustained service to the school or wider community. Not a one-off charity drive, but ongoing engagement with a real need. They reflect on what they did and what it taught them.',
+        'Your child takes part in sustained service to the school or wider community. The commitment runs across the year and meets a real need. They reflect on what they did and what it taught them.',
       featureLabel: 'Beyond lessons',
       featureTitle: 'A personal project and real community service',
       featureBody:
-        'MYP is not just classroom work. Your child will complete a self-chosen project and take part in sustained service, both of which build independence and responsibility.',
+        'The MYP reaches beyond the classroom. Your child will complete a self-chosen project and take part in sustained service, both of which build independence and responsibility.',
       links: [
         {
           label: 'Explore subjects',
@@ -726,7 +726,7 @@ const dict = {
       ibo: 'International Baccalaureate',
       admissions: 'Prijímacie konanie',
       mission:
-        'Medzinárodné vzdelávanie v srdci Bratislavy - pripravujeme študentov kriticky myslieť, konať s ohľaduplnosťou a rásť do sveta.',
+        'Medzinárodné vzdelávanie v Bratislave - pripravujeme študentov kriticky myslieť a rásť do sveta.',
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
       resourcesGroup: 'Zdroje',
@@ -775,7 +775,7 @@ const dict = {
       whatIsIBLabel: 'Čo je IB?',
       whatIsIB: 'Globálny štandard pre zvedavé mysle',
       whatIsIBBody1:
-        'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací rámec vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
+        'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací program vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
       whatIsIBBody2:
         'Na Súkromnom Gymnáziu Česká kurikulum spája akademickú hĺbku so samostatným výskumom, reflexiou a komunitnou angažovanosťou.',
       programmesLabel: 'Programy',
@@ -1158,25 +1158,25 @@ const dict = {
       duration: 'Záverečné roky MYP',
       label: 'Middle Years Programme',
       whatIsLabel: 'Čo je MYP?',
-      whatIsTitle: 'Kurikulum, ktoré učí dieťa myslieť, nielen memorovať',
+      whatIsTitle: 'Kurikulum, ktoré učí dieťa, ako myslieť',
       whatIsBody:
-        'Middle Years Programme je rámec IB pre študentov vo veku 14 až 16 rokov. Namiesto memorovania faktov pre skúšky vaše dieťa skúma skutočné otázky, prepája myšlienky naprieč predmetmi a buduje zručnosti, ktoré bude potrebovať na univerzite aj v živote. Na Českej pokrýva MYP posledné dva roky pred Diploma Programme.',
+        'Middle Years Programme je program IB pre študentov vo veku 14 až 16 rokov. Namiesto memorovania faktov pre skúšky vaše dieťa skúma skutočné otázky, prepája myšlienky naprieč predmetmi a buduje zručnosti, ktoré bude potrebovať na univerzite aj v živote. Na Českej pokrýva MYP posledné dva roky pred Diploma Programme.',
       whatIsPoints: [
         {
           title: 'Osem predmetov, prepojených',
           body: 'Vaše dieťa študuje jazyk, spoločenské vedy, prírodné vedy, matematiku, umenie a dizajn. Učitelia plánujú jednotky spoločne, takže hodina dejepis o priemyselnej revolúcii môže nadväzovať na hodinu fyziky o energii.',
         },
         {
-          title: 'Skutočné otázky, nie kapitoly z učebnice',
-          body: 'Každá jednotka začína otázkou, na ktorej záleží. Ako sa delíme o planétu? Čo je spravodlivé? Vaše dieťa použije to, čo sa naučilo, aby na ňu odpovedalo, nielen to opísalo.',
+          title: 'Postavené na skutočných otázkach',
+          body: 'Každá jednotka začína otázkou, na ktorej záleží. Ako sa delíme o planétu? Čo je spravodlivé? Vaše dieťa použije to, čo sa naučilo, aby na ňu odpovedalo.',
         },
         {
-          title: 'Zručnosti sa učia, nepredpokladajú',
-          body: 'Myseľ, komunikácia, výskum, sebariadenie a spolupráca sú zabudované do každej hodiny. Vaše dieťa sa učí, ako sa učiť, nielen čo vedieť.',
+          title: 'Zručnosti sa vyučujú cielene',
+          body: 'Myseľ, komunikácia, výskum, sebariadenie a spolupráca sú zabudované do každej hodiny. Vaše dieťa sa učí, ako sa učiť.',
         },
         {
-          title: 'Osobný projekt, nielen skúšky',
-          body: 'V záverečnom roku si vaše dieťa zvolí, naplánuje a dokončí vlastný projekt. Môže to byť krátky film, funkčný prototyp, komunitná akcia. Dokumentuje proces a zamýšľa sa nad tým, čo sa naučilo.',
+          title: 'Vlastný osobný projekt',
+          body: 'V záverečnom roku si vaše dieťa zvolí, naplánuje a dokončí vlastný projekt. Môže to byť krátky film, funkčný prototyp alebo komunitná akcia. Dokumentuje proces a zamýšľa sa nad tým, čo sa naučilo.',
         },
       ],
       principlesLabel: 'Ako funguje učenie',
@@ -1212,7 +1212,7 @@ const dict = {
       atlLabel: 'Prístupy k učeniu',
       atlTitle: 'Päť rodín zručností, vyučované zámerne',
       atlIntro:
-        'Zručnosti ATL nie sú samostatný predmet. Prenikajú do každej jednotky, aby sa študenti naučili, ako sa učiť.',
+        'Zručnosti ATL prenikajú do každej jednotky namiesto samostatného predmetu, aby sa študenti naučili, ako sa učiť.',
       atl: [
         {
           title: 'Myseľ',
@@ -1228,14 +1228,14 @@ const dict = {
       ],
       personalProjectTitle: 'Osobný projekt',
       personalProjectBody:
-        'V záverečnom roku MYP si vaše dieťa zvolí tému, na ktorej mu záleží, a dokončí rozšírený projekt. Môže to byť krátky film, funkčný prototyp, komunitná akcia, rozsiahlejší text. Naplánuje prácu, zrealizuje ju a zamýšľa sa nad procesom. Pre mnohých študentov je to prvýkrát, kedy preberú plnú zodpovednosť za dlhodobú prácu.',
+        'V záverečnom roku MYP si vaše dieťa zvolí tému, na ktorej mu záleží, a dokončí rozšírený projekt. Môže to byť krátky film, funkčný prototyp, komunitná akcia alebo rozsiahlejší text. Naplánuje prácu, zrealizuje ju a zamýšľa sa nad procesom. Pre mnohých študentov je to prvýkrát, kedy preberú plnú zodpovednosť za dlhodobú prácu.',
       serviceTitle: 'Služba ako čin',
       serviceBody:
-        'Vaše dieťa sa zapojí do dlhodobej služby škole alebo širšej komunite. Nie jednorazovej zbierky, ale prebiehajúceho angažovania sa v skutočnej potrebe. Zamýšľa sa nad tým, čo urobilo a čo ho to naučilo.',
+        'Vaše dieťa sa zapojí do dlhodobej služby škole alebo širšej komunite. Záväzok trvá počas celého roka a odpovedá na skutočnú potrebu. Dieťa sa zamýšľa nad tým, čo urobilo a čo ho to naučilo.',
       featureLabel: 'Mimo vyučovania',
       featureTitle: 'Osobný projekt a skutočná komunitná služba',
       featureBody:
-        'MYP nie je len práca v triede. Vaše dieťa dokončí samostatne zvolený projekt a zúčastní sa dlhodobej služby, pričom obe budujú samostatnosť a zodpovednosť.',
+        'MYP siaha za hranice triedy. Vaše dieťa dokončí samostatne zvolený projekt a zúčastní sa dlhodobej služby, pričom obe budujú samostatnosť a zodpovednosť.',
       links: [
         {
           label: 'Preskúmať predmety',

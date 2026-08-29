@@ -32,8 +32,8 @@ const subjectsOf = (group: string): Choice[] =>
       offered: (s.entry.offeredLevels ?? 'both') as Choice['offered'],
     }));
 
-// Groups 1–5 are single-select. The sixth subject is an elective:
-// any group-6 subject, or a second from groups 1–4.
+// Groups 1-5 are single-select. The sixth subject is an elective:
+// any group-6 subject, or a second from groups 1-4.
 const coreGroups = [
   { key: '1', label: dict.subjects.group1 },
   { key: '2', label: dict.subjects.group2 },

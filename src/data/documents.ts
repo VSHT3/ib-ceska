@@ -1,6 +1,6 @@
 /**
  * Admissions & programme documents hosted at `/documents/<file>`.
- * Titles are the documents' own titles (proper nouns) — shown as-is,
+ * Titles are the documents' own titles (proper nouns), shown as-is,
  * with a language badge so visitors know which language a file is in.
  * Fees are rendered as HTML (see `dpFees`), not a PDF.
  */
