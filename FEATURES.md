@@ -80,7 +80,7 @@ Implemented and shipped.
 
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
-- [x] Vector school logo traced from the school's hi-res PNG: full lockup (`/logo.svg`) + triangle mark (`/logo-mark.svg`) used in nav (with text wordmark), footer, and regenerated favicons
+- [x] Vector school logo: triangle mark (`/logo-mark.svg`) traced from the school's hi-res banner, full lockup (`/logo.svg`) with PT Serif Bold text rendered as glyph paths; used in nav (with text wordmark), footer, schema.org logo, and regenerated favicons
 - [x] Nav: `School` dropdown (Mission and vision, Team, Testimonials, Policies and guides) on desktop and mobile
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
