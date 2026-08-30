@@ -4,7 +4,7 @@ Implemented and shipped.
 
 ## Project foundation
 
-- [x] Astro 6 hybrid mode (static prerender + Node adapter for CMS routes)
+- [x] Astro 7 hybrid mode (static prerender + Node adapter for CMS routes)
 - [x] Tailwind CSS 4 via `@tailwindcss/vite` plugin (CSS-first config)
 - [x] MDX integration (`@astrojs/mdx`)
 - [x] Strict TypeScript (`astro/tsconfigs/strict`)

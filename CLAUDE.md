@@ -26,7 +26,7 @@ Follow YAGNI, one-liner solutions.
 
 ## Stack
 
-- **Astro 6** — hybrid mode (static prerender + Node adapter for `/keystatic/` API routes)
+- **Astro 7** — hybrid mode (static prerender + Node adapter for `/keystatic/` API routes)
 - **Tailwind CSS 4** via `@tailwindcss/vite` plugin (CSS-first config, no `tailwind.config.*`)
 - **MDX** via `@astrojs/mdx` (for `.astro` page components with JSX)
 - **Keystatic CMS** via `@keystatic/astro` — admin UI at `/keystatic/`
@@ -120,3 +120,6 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - YAML values with colons (e.g. `LO1: text`) must be quoted in `.mdoc` frontmatter.
 - Keystatic CMS needs **secure origin** (HTTPS or localhost). On plain HTTP `crypto.subtle` undefined → "Unable to load collection" / `reading 'digest'` crash. Never deploy CMS on `http://` FQDN.
 - i18n uses `routing: 'manual'` + `src/middleware.ts`. Built-in `prefixDefaultLocale` 404s any path without locale prefix, killing Keystatic's injected `/keystatic` and `/api/keystatic` routes — middleware lets them bypass i18n. Don't switch back to built-in routing.
+- Astro 7 defaults `compressHTML` to `'jsx'`: whitespace between expressions on separate source lines is stripped, so `{a}\n{b}` renders `ab`. Put an explicit `{' '}` where a space must survive (see `src/layouts/Layout.astro` footer copyright).
+- `vite.build.cssTarget` is pinned in `astro.config.mjs`. Without it Vite 8 emits Tailwind's media range syntax (`@media (width>=40rem)`), which Safari <16.4 ignores — every responsive breakpoint would collapse to the mobile layout.
+- `@keystatic/astro` 6 reads `KEYSTATIC_*` via `getSecret()` from `astro:env/server`, i.e. from the **runtime** `process.env`, not baked in at build. Coolify env vars satisfy this; a build-time `.env` would not.

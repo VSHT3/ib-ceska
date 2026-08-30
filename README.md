@@ -40,7 +40,7 @@ pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 
 ## Stack
 
-- **Astro 6**: hybrid mode (static prerender + `@astrojs/node` adapter for CMS routes)
+- **Astro 7**: hybrid mode (static prerender + `@astrojs/node` adapter for CMS routes)
 - **Tailwind CSS 4**: utility-first, CSS-based config (no `tailwind.config.js`)
 - **Keystatic CMS**: visual editor + Reader API. Content stored as `.mdoc` files
 - **MDX** (`@astrojs/mdx`): for `.astro` components that use JSX
