@@ -42,7 +42,7 @@ New to this? Start with the step-by-step [`TUTORIAL.md`](TUTORIAL.md). Full fiel
 - On the **live site**, saving requires logging in with **GitHub**. Only people added as collaborators on the `VSHT3/ib-ceska` GitHub repository can save changes. GitHub repository membership _is_ the list of authorized editors.
 - **Each editor uses their own free GitHub account — never a shared login.** Every save is committed as that person (so the history shows who changed what), and access can be revoked per-person. Step-by-step in [`CONTENT.md`](CONTENT.md) → "Getting an editor their own access".
 - To give a new person edit access: add their GitHub account to the repository as a collaborator with Write access (a developer or the repo owner does this). To remove access: remove them from the repo.
-- The repo is **public** — anyone can _read_ the source, but only collaborators can _save_. That's fine: it's a school site, and production secrets live in the host (Coolify), not in the repo.
+- The repo is **public** — anyone can _read_ the source, but only collaborators can _save_. That's fine: it is a school site, and production secrets live in the host (currently Coolify; Cloudflare Worker secrets after cutover), not in the repo.
 - ⚠️ As of now the production login is **not finished being set up** — see "Critical — before launch" in [`HUMANTODO.md`](HUMANTODO.md). A developer must register a GitHub App and add two secret keys before the live CMS can save.
 - The admin page address (`/keystatic/`) is reachable by anyone, but **no one can change anything without a GitHub login that has repo access**. For extra peace of mind, a developer can also put the page behind a password at the server level (tracked in the root `TODO.md`).
 
@@ -62,7 +62,7 @@ The person who built this site is handing it off. If you are the new maintainer,
   2. Read the root `AGENTS.md` — it lists the stack, commands, and easy-to-trip-on gotchas (e.g. content files are `.mdoc` not `.mdx`; Tailwind 4 has no config file).
   3. Run `pnpm run check` before committing; it type-checks the whole project.
 - **Keep these docs alive.** When you ship something, move it from `TODO.md` to `FEATURES.md` and update the relevant `humans/` file. The next person will thank you.
-- **Access you must inherit:** the GitHub repo (owner/admin rights), the hosting account (Coolify on the VPS), the DNS for `ib.gymnaziumceska.sk`, and the production environment variables. These are **not** stored in this repository — make sure they are transferred to you or the school before the previous maintainer leaves.
+- **Access you must inherit:** the GitHub repo (owner/admin rights), the current Coolify/VPS host, the Cloudflare account prepared as its replacement, DNS for `ib.gymnaziumceska.sk`, and the production environment variables. These are **not** stored in this repository — make sure they are transferred to you or the school before the previous maintainer leaves.
 - **Outstanding work** is listed in [`HUMANTODO.md`](HUMANTODO.md) (needs the school) and the root `TODO.md` (developer tasks).
 
 ## When you need help

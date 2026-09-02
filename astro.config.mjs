@@ -1,14 +1,19 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import cloudflare from '@astrojs/cloudflare';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import node from '@astrojs/node';
 import keystatic from '@keystatic/astro';
 
+const isCloudflare = process.env.DEPLOY_TARGET === 'cloudflare';
+
 export default defineConfig({
   site: 'https://ib.gymnaziumceska.sk',
-  adapter: node({ mode: 'standalone' }),
+  // Keep the current Coolify deployment working until the Cloudflare preview,
+  // CMS login and custom domain have all been verified.
+  adapter: isCloudflare ? cloudflare({ imageService: 'compile' }) : node({ mode: 'standalone' }),
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'sk'],

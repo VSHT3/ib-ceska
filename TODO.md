@@ -53,16 +53,20 @@ Tasks the AI must complete. Checked = done.
 - [ ] Defence-in-depth: gate the `/keystatic/` route behind reverse-proxy basic-auth in Coolify (the admin UI is publicly reachable even though saves require GitHub auth)
 - [ ] Rotate the `IB Ceska CMS` client secret — the initial value was pasted into a chat during setup; regenerate on GitHub and update `KEYSTATIC_GITHUB_CLIENT_SECRET` in Coolify
 
-## Domain switch — when DNS for `ib.gymnaziumceska.sk` is available
+## Cloudflare Workers cutover and real domain
 
-Everything below is currently pinned to the temporary `https://jgnxdfbe0xrwuk0oz0i06hyg.87.106.7.54.sslip.io` URL. When the real domain is ready:
+The Worker-compatible build is ready; Coolify remains live until the preview and CMS are verified.
 
-- [ ] Point DNS: `A` record `ib.gymnaziumceska.sk` → VPS IP `87.106.7.54` (wait for propagation)
-- [ ] Coolify → app `IB Česká` → **Domains**: set FQDN to `https://ib.gymnaziumceska.sk` and redeploy (Traefik auto-requests a Let's Encrypt cert — must stay `https://`, the CMS needs a secure origin)
+- [ ] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, branch `main`
+- [ ] Set build command `pnpm run build:cloudflare` and deploy command `pnpm exec wrangler deploy`
+- [ ] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (values from the working Coolify deployment; do not put them in source control)
+- [ ] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on the `workers.dev` URL
+- [ ] Add `gymnaziumceska.sk` to Cloudflare DNS and reproduce every existing DNS record before changing nameservers. A Workers Custom Domain requires an active Cloudflare zone; an external-DNS CNAME to `workers.dev` is not sufficient.
+- [ ] Worker → Settings → Domains & Routes → Add Custom Domain → `ib.gymnaziumceska.sk`
 - [ ] `IB Ceska CMS` GitHub App → **Callback URL** → `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback` (and update Homepage URL)
 - [ ] Verify Keystatic login + Save still work on the new origin
-- [ ] (Optional) keep or remove the old sslip.io domain in Coolify; if removed, the temp callback URL can come off the GitHub App
-- [ ] No code change needed — `astro.config.mjs` `site` is already `https://ib.gymnaziumceska.sk`; `keystatic.config.ts` repo is `VSHT3/ib-ceska` (origin-independent)
+- [ ] Disable the Coolify auto-deploy only after the Worker is verified; retain the app temporarily as rollback
+- [ ] Remove the old sslip.io callback URL after the Cloudflare cutover is stable
 - [ ] have real professional email for website
 
 ## DX

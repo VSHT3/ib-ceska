@@ -31,16 +31,17 @@ pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 
 ## Commands
 
-| Command            | Action                                             |
-| ------------------ | -------------------------------------------------- |
-| `pnpm run dev`     | Dev server at localhost:4321 (incl. `/keystatic/`) |
-| `pnpm run build`   | Hybrid build → `dist/client/` + `dist/server/`     |
-| `pnpm run preview` | Preview the production build                       |
-| `pnpm run check`   | Type-check the project (`astro check`)             |
+| Command                       | Action                                             |
+| ----------------------------- | -------------------------------------------------- |
+| `pnpm run dev`                | Dev server at localhost:4321 (incl. `/keystatic/`) |
+| `pnpm run build`              | Coolify/Node production build                      |
+| `pnpm run build:cloudflare`   | Cloudflare Workers production build                |
+| `pnpm run preview:cloudflare` | Build and preview in the Workers runtime           |
+| `pnpm run check`              | Type-check the project (`astro check`)             |
 
 ## Stack
 
-- **Astro 7**: hybrid mode (static prerender + `@astrojs/node` adapter for CMS routes)
+- **Astro 7**: hybrid mode (static prerender + Node or Cloudflare runtime for CMS routes)
 - **Tailwind CSS 4**: utility-first, CSS-based config (no `tailwind.config.js`)
 - **Keystatic CMS**: visual editor + Reader API. Content stored as `.mdoc` files
 - **MDX** (`@astrojs/mdx`): for `.astro` components that use JSX
@@ -69,7 +70,7 @@ Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files b
 - **URL:** `/keystatic/` at `http://localhost:4321/keystatic/` in dev, `https://ib.gymnaziumceska.sk/keystatic/` in production.
 - **Dev** (`kind: 'local'`): writes `.mdoc` files straight to disk, no login.
 - **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth**, so only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership _is_ the access list.
-- ⚠️ Production OAuth is **not configured yet** (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` + a GitHub App are required). Until then the live CMS cannot save. See `humans/HUMANTODO.md`.
+- Production OAuth uses the `IB Ceska CMS` GitHub App and three host secrets. See [`humans/DEPLOY.md`](humans/DEPLOY.md).
 
 ## Language policy
 
@@ -83,14 +84,15 @@ See [`humans/`](humans/) for onboarding, the content-editing guide, design decis
 
 ## Deploy
 
-Hosted on **Coolify** on a VPS. Coolify project `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via a GitHub App. **Pushing to `main` auto-deploys** (GitHub webhook triggers Coolify to pull, build, and redeploy). A Keystatic Save also commits to `main`, so content edits redeploy too.
+The live site remains on **Coolify** while a Cloudflare Workers replacement is tested. The default build stays Node-compatible so pushing this preparation does not break Coolify.
 
 ```bash
-pnpm run build                 # → dist/client/ (static) + dist/server/ (Node)
-node dist/server/entry.mjs    # start command, port 4321
+pnpm run build                 # Coolify / Node
+pnpm run build:cloudflare      # Cloudflare Workers
+pnpm run preview:cloudflare    # local Workers-runtime preview
 ```
 
-Build pack is nixpacks (Node 22). Set `HOST=0.0.0.0` and `PORT=4321` so the Node adapter binds inside the container, and set `KEYSTATIC_GITHUB_CLIENT_ID` + `KEYSTATIC_GITHUB_CLIENT_SECRET` for the production CMS login. Full hosting/build/troubleshooting reference: [`humans/DEPLOY.md`](humans/DEPLOY.md). Target domain [ib.gymnaziumceska.sk](https://ib.gymnaziumceska.sk) (currently on a temporary `sslip.io` URL until DNS is pointed).
+Cloudflare setup uses Workers, not Pages: current `@astrojs/cloudflare` versions no longer support Pages SSR. Full dashboard, secrets, verification, DNS and rollback instructions are in [`humans/DEPLOY.md`](humans/DEPLOY.md).
 
 ## License
 

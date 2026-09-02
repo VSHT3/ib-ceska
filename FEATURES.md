@@ -122,6 +122,7 @@ Implemented and shipped.
 - [x] Auto-deploy on push to `main` (GitHub App webhook); first deploy verified (`/`, `/en/`, `/keystatic` all 200)
 - [x] Production Keystatic GitHub OAuth wired (`IB Ceska CMS` app + 3 `KEYSTATIC_*` env vars); login + content Save verified
 - [x] HTTPS via Let's Encrypt (required — Keystatic's `crypto.subtle` needs a secure origin)
+- [x] Cloudflare Workers deployment path prepared — dual adapter selection, Wrangler config, build/preview/deploy scripts, compile-time images and automatic KV-backed Astro sessions; Coolify remains the safe default until cutover
 
 ## DX & tooling
 

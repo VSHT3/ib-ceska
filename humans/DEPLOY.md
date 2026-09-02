@@ -8,7 +8,8 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 - **Coolify project:** `IB Česká` → environment `production` → app `IB Česká`.
 - **Source:** GitHub repo `VSHT3/ib-ceska`, branch `main`.
 - **Temporary URL (HTTPS):** https://jgnxdfbe0xrwuk0oz0i06hyg.87.106.7.54.sslip.io
-  (auto-generated `sslip.io` domain with a Let's Encrypt cert — swap to `ib.gymnaziumceska.sk` once DNS points at the VPS).
+  (auto-generated `sslip.io` domain with a Let's Encrypt cert).
+- **Prepared replacement:** Cloudflare Workers. It is not the live host until the preview and CMS checks below pass.
 
 ### Two separate GitHub Apps — don't confuse them
 
@@ -19,6 +20,61 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 
 The `IB Ceska CMS` app's **Callback URL** must match the live origin exactly:
 `https://jgnxdfbe0xrwuk0oz0i06hyg.87.106.7.54.sslip.io/api/keystatic/github/oauth/callback`
+
+## Prepared Cloudflare Workers deployment
+
+The repository supports both hosts during the migration:
+
+- `pnpm run build` uses the Node adapter and keeps the current Coolify deployment working.
+- `pnpm run build:cloudflare` uses the Cloudflare adapter, compile-time image optimization and KV-backed sessions.
+- `pnpm run preview:cloudflare` runs the built application in the local Workers runtime.
+- `pnpm run deploy:cloudflare` deploys manually after authenticating Wrangler.
+
+Current Astro 7 releases deploy server-rendered routes to **Workers with static assets**, not Cloudflare Pages. Do not create a Pages project or configure a Pages output directory. Both products appear under the same **Workers & Pages** dashboard heading.
+
+### Create the Worker from GitHub
+
+1. Cloudflare → **Workers & Pages** → **Create** → import `VSHT3/ib-ceska`.
+2. Select branch `main`.
+3. Set the build command to `pnpm run build:cloudflare`.
+4. Set the deploy command to `pnpm exec wrangler deploy`.
+5. Keep the Worker name `ib-ceska`, matching `wrangler.jsonc`.
+6. Add these as encrypted Worker secrets, not plain variables and never repository files:
+   - `KEYSTATIC_GITHUB_CLIENT_ID`
+   - `KEYSTATIC_GITHUB_CLIENT_SECRET`
+   - `KEYSTATIC_SECRET`
+7. Deploy and note the generated `https://ib-ceska.<account-subdomain>.workers.dev` URL.
+
+The Cloudflare adapter provisions an `ASSETS` binding for the static site and a `SESSION` KV binding for Astro sessions. No manual KV namespace is required by the repository configuration.
+
+### Verify before changing DNS
+
+Check all of the following on the `workers.dev` URL:
+
+| Check             | Expected result                                         |
+| ----------------- | ------------------------------------------------------- |
+| `/`               | 200 and language redirect behavior works                |
+| `/en/` and `/sk/` | Both localized homepages load with images and styles    |
+| `/keystatic`      | Admin interface loads over HTTPS                        |
+| GitHub login      | Returns to the same Worker origin                       |
+| Open a collection | Entries load without a Web Crypto error                 |
+| Save an edit      | A commit reaches `main` and triggers a new Worker build |
+
+Keep Coolify enabled until every check passes. Since the normal `pnpm run build` remains Node-based, the existing host is an immediate rollback path.
+
+### Cloudflare custom-domain prerequisite
+
+A Workers Custom Domain must belong to an **active Cloudflare DNS zone**. Pointing an external CNAME directly at `workers.dev` is not sufficient and will not provision correct routing or TLS.
+
+Before changing the nameservers for `gymnaziumceska.sk`:
+
+1. Add `gymnaziumceska.sk` as a website in Cloudflare.
+2. Copy and verify every existing DNS record, especially the school website and email records (`MX`, SPF, DKIM and DMARC).
+3. Ask the authorized school/domain administrator to replace the registrar nameservers with Cloudflare's assigned nameservers.
+4. Wait until Cloudflare reports the zone as active.
+5. Worker → **Settings** → **Domains & Routes** → **Add Custom Domain** → `ib.gymnaziumceska.sk`.
+
+Moving nameservers without first reproducing all records can interrupt the school's main website or email. DNS cutover therefore remains a human-controlled step.
 
 ## How updates go live (auto-deploy)
 
@@ -78,11 +134,13 @@ After a successful Save the editor page reloads after a few seconds — that's t
 
 ## Switching to the real domain
 
-When DNS for `ib.gymnaziumceska.sk` points at the VPS:
+After the Cloudflare Worker passes every preview check and the DNS zone is active:
 
-1. In Coolify → app `IB Česká` → **Domains**, set the FQDN to `https://ib.gymnaziumceska.sk`.
-2. Coolify requests a Let's Encrypt certificate automatically.
-3. Once the production CMS login is configured, the OAuth callback URL on the GitHub App must match the real domain.
+1. Add `ib.gymnaziumceska.sk` as the Worker's Custom Domain.
+2. Wait for Cloudflare to report the hostname and certificate as active.
+3. Change the `IB Ceska CMS` GitHub App callback to `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback`.
+4. Verify login and Save again on the real domain.
+5. Disable Coolify auto-deploy only after the Cloudflare deployment is stable.
 
 The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (used for canonical links and the sitemap).
 
@@ -95,12 +153,17 @@ The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (
 - **Save does nothing:** if not the HTTPS issue above, confirm the `IB Ceska CMS` app is installed on `VSHT3/ib-ceska` with **Contents: read/write** + **Pull requests: read/write** (changing permissions requires re-approving the install).
 - **Build fails:** check the deploy logs in Coolify. Node must be ≥ 22.12.0 (nixpacks uses 22).
 - **Push didn't deploy:** confirm the `v-s-h-t3` deploy app webhook is still installed on `VSHT3/ib-ceska` and the branch is `main`.
+- **Cloudflare build accidentally produces a Node build:** the build command must be `pnpm run build:cloudflare`, not `pnpm run build`.
+- **Cloudflare deploy says Pages or `ASSETS` is reserved:** a Pages project was created. Use a Worker; current Astro Cloudflare adapters no longer support Pages SSR.
+- **Cloudflare CMS reports missing config:** add all three `KEYSTATIC_*` values as Worker secrets. Build-time variables alone do not replace runtime secrets.
+- **Custom Domain cannot be added:** confirm `gymnaziumceska.sk` is an active zone in the same Cloudflare account.
 
 ## Succession — what to hand over
 
 These are **not** in the repo and must be transferred to the next maintainer or the school:
 
-- Coolify account / VPS server login.
+- Coolify account / VPS server login while it remains the live host or rollback.
+- Cloudflare account access for the Worker and DNS zone after cutover.
 - DNS control for `ib.gymnaziumceska.sk`.
 - Both GitHub Apps — `v-s-h-t3` (deploy) and `IB Ceska CMS` (CMS login, App ID `4043810`) — plus the three production `KEYSTATIC_*` env values.
 
