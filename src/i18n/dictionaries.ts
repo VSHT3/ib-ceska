@@ -50,8 +50,6 @@ const dict = {
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
       visitCta: 'Apply now',
-      candidateNote:
-        'Súkromné gymnázium Česká is an IB World School authorized to offer the Diploma Programme, and a Candidate School* for the Middle Years Programme. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted.',
     },
     detail: {
       backSubjects: 'All subjects',
@@ -798,8 +796,6 @@ const dict = {
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
       visitCta: 'Prihlásiť sa',
-      candidateNote:
-        'Súkromné gymnázium Česká je IB World School s autorizáciou ponúkať diplomový program a kandidátskou školou* pre Middle Years Programme. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje, že autorizácia bude udelená.',
     },
     detail: {
       backSubjects: 'Všetky predmety',

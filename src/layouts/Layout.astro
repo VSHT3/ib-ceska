@@ -654,17 +654,15 @@ const jsonLd = JSON.stringify({
     </main>
 
     <footer class="bg-stone-900 text-stone-300">
-      <div class="mx-auto max-w-7xl px-6 pt-16 pb-8 sm:pt-20 lg:px-12">
-        <!-- Closing line + primary actions -->
-        <div
-          class="flex flex-col gap-8 border-b border-white/10 pb-12 lg:flex-row lg:items-end lg:justify-between"
-        >
-          <div>
+      <div class="mx-auto max-w-[110rem] px-6 pt-16 pb-8 sm:pt-20 lg:px-12 xl:px-16">
+        <!-- Closing line + primary action -->
+        <div class="grid gap-8 border-b border-white/10 pb-12 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-9">
             <p class="text-xs font-semibold uppercase tracking-widest text-emerald-400">
               {dict.site.title} · Bratislava
             </p>
             <p
-              class="mt-3 max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
+              class="mt-3 text-4xl font-bold tracking-tighter leading-none text-white sm:text-5xl lg:text-6xl"
             >
               {dict.site.tagline}
             </p>
@@ -673,24 +671,25 @@ const jsonLd = JSON.stringify({
             href={admissionsHref}
             data-umami-event="cta-primary"
             data-umami-event-target="admissions"
-            class="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald-500"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-500 lg:col-span-3 lg:justify-self-end"
           >
             {dict.footer.visitCta}
             <span aria-hidden="true">→</span>
           </a>
         </div>
 
-        <!-- Directory -->
-        <div class="grid gap-12 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10">
-          <div class="max-w-sm sm:col-span-2 lg:col-span-1">
-            <div class="flex items-center gap-4">
+        <!-- Brand left, link groups right -->
+        <div class="grid gap-12 py-12 lg:grid-cols-12 lg:gap-10">
+          <div class="lg:col-span-5">
+            <div class="flex items-center gap-5">
               <img
                 src="/logo-mark.svg"
                 alt={dict.site.title}
-                class="h-14 w-auto rounded-lg bg-white p-1.5"
+                class="h-16 w-auto brightness-0 invert"
                 width="1330"
                 height="1260"
               />
+              <span class="h-10 w-px bg-white/15" aria-hidden="true"></span>
               <img
                 src="/ib-logo.svg"
                 alt="International Baccalaureate"
@@ -699,97 +698,97 @@ const jsonLd = JSON.stringify({
                 height="135"
               />
             </div>
-            <p class="mt-5 text-sm leading-relaxed text-stone-400">{dict.footer.mission}</p>
-            <ul class="mt-6 space-y-2 text-sm">
-              <li>
-                <a
-                  href="https://www.gymnaziumceska.sk"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-stone-300 transition-colors hover:text-emerald-400"
-                  >{dict.footer.school} ↗</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://www.ibo.org"
-                  target="_blank"
-                  rel="noopener"
-                  class="text-stone-300 transition-colors hover:text-emerald-400"
-                  >{dict.footer.ibo} ↗</a
-                >
-              </li>
-            </ul>
+            <p class="mt-6 max-w-sm text-sm leading-relaxed text-stone-400">
+              {dict.footer.mission}
+            </p>
+            <p class="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+              <a
+                href="https://www.gymnaziumceska.sk"
+                target="_blank"
+                rel="noopener"
+                class="text-stone-300 transition-colors hover:text-emerald-400"
+                >{dict.footer.school} ↗</a
+              >
+              <a
+                href="https://www.ibo.org"
+                target="_blank"
+                rel="noopener"
+                class="text-stone-300 transition-colors hover:text-emerald-400"
+                >{dict.footer.ibo} ↗</a
+              >
+            </p>
           </div>
 
-          <div>
-            <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
-              {dict.footer.programmeGroup}
-            </h3>
-            <ul class="space-y-2.5 text-sm">
-              {
-                footerProgramme.map(({ href, label }) => (
-                  <li>
-                    <a href={href} class="text-stone-400 transition-colors hover:text-emerald-400">
-                      {label}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
-              {dict.footer.schoolLifeGroup}
-            </h3>
-            <ul class="space-y-2.5 text-sm">
-              {
-                footerSchoolLife.map(({ href, label }) => (
-                  <li>
-                    <a href={href} class="text-stone-400 transition-colors hover:text-emerald-400">
-                      {label}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
-              {dict.footer.contact}
-            </h3>
-            <ul class="space-y-2.5 text-sm">
-              <li>
-                <a
-                  href={`tel:${contact.phone.replace(/\s/g, '')}`}
-                  data-umami-event="tel-click"
-                  class="text-stone-400 transition-colors hover:text-emerald-400">{contact.phone}</a
-                >
-              </li>
-              <li>
-                <a
-                  href={`mailto:${contact.email}`}
-                  data-umami-event="mail-click"
-                  class="text-stone-400 transition-colors hover:text-emerald-400">{contact.email}</a
-                >
-              </li>
-              <li class="leading-relaxed text-stone-400">{contact.address}</li>
-            </ul>
+          <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
+            <div>
+              <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                {dict.footer.programmeGroup}
+              </h3>
+              <ul class="space-y-2.5 text-sm">
+                {
+                  footerProgramme.map(({ href, label }) => (
+                    <li>
+                      <a
+                        href={href}
+                        class="text-stone-400 transition-colors hover:text-emerald-400"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div>
+              <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                {dict.footer.schoolLifeGroup}
+              </h3>
+              <ul class="space-y-2.5 text-sm">
+                {
+                  footerSchoolLife.map(({ href, label }) => (
+                    <li>
+                      <a
+                        href={href}
+                        class="text-stone-400 transition-colors hover:text-emerald-400"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                {dict.footer.contact}
+              </h3>
+              <ul class="space-y-2.5 text-sm">
+                <li>
+                  <a
+                    href={`tel:${contact.phone.replace(/\s/g, '')}`}
+                    data-umami-event="tel-click"
+                    class="text-stone-400 transition-colors hover:text-emerald-400"
+                    >{contact.phone}</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${contact.email}`}
+                    data-umami-event="mail-click"
+                    class="text-stone-400 transition-colors hover:text-emerald-400"
+                    >{contact.email}</a
+                  >
+                </li>
+                <li class="leading-relaxed text-stone-400">{contact.address}</li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <!-- Legal -->
-        <div
-          class="grid gap-4 border-t border-white/10 pt-6 text-xs text-stone-500 lg:grid-cols-[1fr_auto] lg:gap-12"
-        >
-          <p class="max-w-3xl leading-relaxed">{dict.footer.candidateNote}</p>
-          <p class="whitespace-nowrap">
-            &copy; {currentYear}{' '}
-            {dict.site.title}. {dict.footer.rights}
-          </p>
-        </div>
+        <p class="border-t border-white/10 pt-6 text-xs text-stone-500">
+          &copy; {currentYear}{' '}
+          {dict.site.title}. {dict.footer.rights}
+        </p>
       </div>
     </footer>
 
