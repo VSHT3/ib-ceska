@@ -91,7 +91,7 @@ const fmtDate = (date: string | null) =>
       class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-900/50 to-stone-900/30"
     >
     </div>
-    <div class="relative mx-auto max-w-7xl px-6 lg:px-12 pt-24 pb-14 sm:pt-32 sm:pb-16">
+    <div class="relative mx-auto max-w-7xl px-6 pt-24 pb-16 sm:pt-32 sm:pb-20 lg:px-12">
       <span
         class="hero-rise inline-block text-xs font-semibold tracking-widest uppercase text-emerald-300"
         >IB Core</span
@@ -112,9 +112,9 @@ const fmtDate = (date: string | null) =>
   </section>
 
   <!-- Strand blocks = interactive filters, overlapping the hero -->
-  <div class="mx-auto max-w-7xl px-6 lg:px-12">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
     <section
-      class="-mt-10 relative z-10 grid sm:grid-cols-3 gap-4"
+      class="relative z-10 -mt-9 grid gap-3 sm:-mt-11 sm:grid-cols-3 sm:gap-4"
       aria-label={dict.cas.filterHint}
     >
       {
@@ -124,7 +124,7 @@ const fmtDate = (date: string | null) =>
             data-strand-filter={strand.key}
             aria-pressed="false"
             class:list={[
-              'group rounded-3xl border p-6 text-left shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md data-[dimmed]:scale-[0.98] data-[dimmed]:opacity-40 data-[dimmed]:saturate-50 cursor-pointer',
+              'group flex min-h-44 cursor-pointer flex-col rounded-2xl border p-5 text-left shadow-sm transition-[transform,opacity,filter,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700 sm:min-h-52 sm:rounded-3xl sm:p-6 data-[active]:-translate-y-1 data-[active]:shadow-lg data-[dimmed]:scale-[0.97] data-[dimmed]:opacity-35 data-[dimmed]:grayscale data-[dimmed]:shadow-none data-[dimmed]:hover:opacity-60',
               strand.block,
             ]}
             data-reveal
@@ -144,8 +144,8 @@ const fmtDate = (date: string | null) =>
                 {countOf(strand.key)}
               </span>
             </div>
-            <h2 class="mt-4 text-lg font-bold text-stone-900">{strand.label}</h2>
-            <p class="mt-1.5 text-sm text-stone-600 leading-relaxed">{strand.desc}</p>
+            <h2 class="mt-auto pt-5 text-lg font-bold text-stone-900">{strand.label}</h2>
+            <p class="mt-1.5 text-sm leading-relaxed text-stone-600">{strand.desc}</p>
           </button>
         ))
       }
@@ -153,8 +153,10 @@ const fmtDate = (date: string | null) =>
   </div>
 
   <!-- Journal: sticky heading rail + hairline entry rows -->
-  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
-    <div class="grid gap-12 lg:grid-cols-[0.52fr_1.48fr] lg:gap-16 items-start">
+  <section class="mx-auto max-w-7xl px-6 py-20 sm:py-28 lg:px-12">
+    <div
+      class="grid items-start gap-10 lg:grid-cols-[minmax(14rem,0.48fr)_minmax(0,1.52fr)] lg:gap-20"
+    >
       <div class="lg:sticky lg:top-24 self-start" data-reveal>
         <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
           {dict.cas.journalHeading}
@@ -178,7 +180,7 @@ const fmtDate = (date: string | null) =>
           sorted.length === 0 ? (
             <EmptyState message={dict.cas.noActivities} />
           ) : (
-            <ol class="border-t border-stone-200">
+            <ol class="border-t border-stone-300">
               {sorted.map((a, i) => {
                 const itemStrands = strandsOf(a.entry);
                 const marks = itemStrands.length > 0 ? itemStrands : [strands[0]];
@@ -191,7 +193,7 @@ const fmtDate = (date: string | null) =>
                   >
                     <a
                       href={`/${locale}/cas/${a.slug}`}
-                      class="group grid grid-cols-[3rem_1fr] sm:grid-cols-[4.5rem_1fr] gap-4 sm:gap-6 items-start border-b border-stone-200 py-7 sm:py-9 sm:-mx-4 sm:px-4 transition-colors hover:bg-white"
+                      class="group grid grid-cols-[3rem_minmax(0,1fr)] items-start gap-4 border-b border-stone-200 py-7 transition-colors hover:bg-white sm:-mx-4 sm:grid-cols-[4.5rem_minmax(0,1fr)] sm:gap-6 sm:px-4 sm:py-9"
                     >
                       <span
                         class="flex flex-col text-3xl sm:text-4xl font-extrabold leading-[0.95] tracking-tighter select-none"
@@ -201,32 +203,34 @@ const fmtDate = (date: string | null) =>
                           <span class={s.letterColor}>{s.letter}</span>
                         ))}
                       </span>
-                      <div class="min-w-0">
-                        <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                          {a.entry.date && (
-                            <time class="text-xs font-medium text-stone-400">
-                              {fmtDate(a.entry.date)}
-                            </time>
-                          )}
-                          {itemStrands.map((s) => (
-                            <span
-                              class:list={[
-                                'text-[11px] font-bold rounded-full px-2 py-0.5',
-                                s.chip,
-                              ]}
-                            >
-                              {s.label}
-                            </span>
-                          ))}
+                      <div class="grid min-w-0 grid-cols-[minmax(0,1fr)_1.5rem] gap-3">
+                        <div class="min-w-0">
+                          <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                            {a.entry.date && (
+                              <time class="text-xs font-medium text-stone-400">
+                                {fmtDate(a.entry.date)}
+                              </time>
+                            )}
+                            {itemStrands.map((s) => (
+                              <span
+                                class:list={[
+                                  'text-[11px] font-bold rounded-full px-2 py-0.5',
+                                  s.chip,
+                                ]}
+                              >
+                                {s.label}
+                              </span>
+                            ))}
+                          </div>
+                          <h3 class="mt-2 text-lg font-semibold text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-xl">
+                            {pick(locale, a.entry.sk.title, a.entry.title)}
+                          </h3>
+                          <p class="mt-1.5 max-w-2xl text-sm leading-relaxed text-stone-600">
+                            {pick(locale, a.entry.sk.description, a.entry.description)}
+                          </p>
                         </div>
-                        <h3 class="mt-2 text-lg sm:text-xl font-semibold text-stone-900 group-hover:text-emerald-700 transition-colors">
-                          {pick(locale, a.entry.sk.title, a.entry.title)}
-                        </h3>
-                        <p class="mt-1.5 max-w-2xl text-sm text-stone-600 leading-relaxed">
-                          {pick(locale, a.entry.sk.description, a.entry.description)}
-                        </p>
                         <span
-                          class="mt-3 inline-block text-sm font-semibold text-emerald-700 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all"
+                          class="mt-7 text-xl font-medium text-stone-300 transition-all group-hover:translate-x-1 group-hover:text-emerald-700"
                           aria-hidden="true"
                         >
                           →
