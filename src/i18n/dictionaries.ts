@@ -275,11 +275,11 @@ const dict = {
       courseLabel: 'The course',
       courseTitle: 'One core theme, two optional themes, five areas of knowledge',
       courseIntro:
-        'TOK runs alongside the six subjects for both years of the diploma. It is taught for at least 100 hours and assessed twice: once in school, once by IB examiners.',
+        'TOK runs alongside the six subjects for both years of the diploma, with at least 100 teaching hours. One part of the assessment is marked in school and the other by IB examiners.',
       coreLabel: 'Core theme',
       coreTheme: 'Knowledge and the knower',
       coreBody:
-        'How each of us builds, tests, and trusts what we know, and what it means to be a knower in a community of others.',
+        'What it means to know something, and how far personal knowledge can be trusted once other people are involved.',
       optionalLabel: 'Optional themes',
       optionalNote: 'Two are studied',
       optionalThemes: [
@@ -297,15 +297,15 @@ const dict = {
       exhibitionTitle: 'TOK exhibition',
       exhibitionShare: 'of the grade',
       exhibitionBody:
-        'Three objects and a commentary of up to 950 words answering one of 35 prompts set by the IB. Marked in school, moderated by the IB.',
+        'Students choose three objects and write a commentary of up to 950 words on one of 35 IB prompts. Teachers mark it and the IB moderates the marks.',
       essayTitle: 'TOK essay',
       essayShare: 'of the grade',
       essayBody:
-        'Up to 1,600 words on one of six prescribed titles the IB releases for each session. Marked by IB examiners.',
+        'An essay of up to 1,600 words on one of six titles the IB prescribes for each session, marked by IB examiners.',
       pointsValue: '3',
       pointsLabel: 'core points with the Extended Essay',
       hoursValue: '100',
-      hoursLabel: 'teaching hours across two years',
+      hoursLabel: 'teaching hours over two years',
       handbookLabel: 'Handbook',
       handbookTitle: 'TOK Handbook',
       handbookIntro:
@@ -380,24 +380,24 @@ const dict = {
       whatBody1:
         'Students take a subject they are studying, narrow it to a single research question, and answer it in an essay of up to 4,000 words. The IB assesses the essay externally and reports a grade from A to E.',
       whatBody2:
-        'Together with Theory of Knowledge, the Extended Essay earns up to three additional points towards the diploma. The two are the only parts of the programme where an E is a failing condition.',
+        'Together with Theory of Knowledge, the Extended Essay earns up to three additional points towards the diploma. An E in either one means the diploma is not awarded.',
       supervisorLabel: 'Supervisor',
-      supervisorTitle: 'A teacher, not a co-author',
+      supervisorTitle: 'Guidance from a subject teacher',
       supervisorBody:
-        'Every student is paired with a teacher of the chosen subject. The supervisor gives three to five hours of guidance across the process, reads one complete draft and comments on it once, then signs off the final version.',
+        'Every student is paired with a teacher of the chosen subject. The supervisor gives three to five hours of guidance across the process, reads one complete draft, comments on it once, and signs off the final version.',
       reflectionLabel: 'Reflection',
       reflectionTitle: 'Three conversations with your supervisor',
       reflectionIntro:
         'The three sessions are written up on the Reflections on Planning and Progress Form (RPPF), which is submitted with the essay and assessed alongside it.',
       reflection1Title: 'First session',
       reflection1Body:
-        'Early on: the topic, the initial research question, and how the research will be approached.',
+        'Early on, the student and supervisor settle the topic, the initial research question, and how the research will be approached.',
       reflection2Title: 'Interim session',
       reflection2Body:
-        'Midway: what the research has produced so far and whether the question still holds.',
+        'Midway through, they review what the research has produced and whether the question still holds.',
       reflection3Title: 'Viva voce',
       reflection3Body:
-        'After submission: a short interview on what was learned and how the essay came together.',
+        'After submission, the supervisor interviews the student briefly on what was learned and how the essay came together.',
       journeyLabel: 'The journey',
       journeyTitle: 'From first idea to viva voce',
       journeyIntro:
@@ -1024,11 +1024,11 @@ const dict = {
       courseLabel: 'Kurz',
       courseTitle: 'Jedna ústredná téma, dve voliteľné témy, päť oblastí poznania',
       courseIntro:
-        'TOK prebieha popri šiestich predmetoch počas oboch rokov diplomu. Vyučuje sa najmenej 100 hodín a hodnotí sa dvakrát: raz v škole, raz examinátormi IB.',
+        'TOK prebieha popri šiestich predmetoch počas oboch rokov diplomu, v rozsahu najmenej 100 vyučovacích hodín. Jednu časť hodnotenia známkuje škola a druhú examinátori IB.',
       coreLabel: 'Ústredná téma',
       coreTheme: 'Poznanie a poznávajúci',
       coreBody:
-        'Ako každý z nás buduje, overuje a dôveruje tomu, čo vie, a čo znamená byť poznávajúcim v spoločenstve ostatných.',
+        'Čo znamená niečo vedieť a nakoľko sa dá vlastnému poznaniu dôverovať, keď do neho vstupujú iní ľudia.',
       optionalLabel: 'Voliteľné témy',
       optionalNote: 'Študujú sa dve',
       optionalThemes: [
@@ -1046,15 +1046,15 @@ const dict = {
       exhibitionTitle: 'TOK výstava',
       exhibitionShare: 'známky',
       exhibitionBody:
-        'Tri objekty a komentár do 950 slov, ktorý odpovedá na jednu z 35 otázok zadaných IB. Hodnotí sa v škole, moderuje IB.',
+        'Študent vyberie tri objekty a napíše k nim komentár do 950 slov na jednu z 35 otázok IB. Hodnotí učiteľ, známky moderuje IB.',
       essayTitle: 'TOK esej',
       essayShare: 'známky',
       essayBody:
-        'Do 1 600 slov na jeden zo šiestich predpísaných titulov, ktoré IB zverejňuje pre každý termín. Hodnotia examinátori IB.',
+        'Esej v rozsahu do 1 600 slov na jeden zo šiestich titulov, ktoré IB predpisuje pre každý termín. Hodnotia ju examinátori IB.',
       pointsValue: '3',
       pointsLabel: 'body core spolu s rozšírenou esejou',
       hoursValue: '100',
-      hoursLabel: 'vyučovacích hodín počas dvoch rokov',
+      hoursLabel: 'vyučovacích hodín za dva roky',
       handbookLabel: 'Príručka',
       handbookTitle: 'Príručka TOK',
       handbookIntro:
@@ -1129,23 +1129,23 @@ const dict = {
       whatBody1:
         'Študent si vezme predmet, ktorý študuje, zúži ho na jednu výskumnú otázku a odpovie na ňu esejou v rozsahu do 4 000 slov. Esej hodnotí IB externe a udeľuje známku od A po E.',
       whatBody2:
-        'Spolu s Teóriou poznania prináša rozšírená esej až tri body navyše k diplomu. Sú to jediné dve časti programu, v ktorých známka E znamená nesplnenie podmienok diplomu.',
+        'Spolu s Teóriou poznania prináša rozšírená esej až tri body navyše k diplomu. Známka E z ktorejkoľvek z nich znamená, že diplom nebude udelený.',
       supervisorLabel: 'Školiteľ',
-      supervisorTitle: 'Učiteľ, nie spoluautor',
+      supervisorTitle: 'Vedenie od učiteľa predmetu',
       supervisorBody:
-        'Každý študent má školiteľa spomedzi učiteľov zvoleného predmetu. Školiteľ venuje procesu tri až päť hodín konzultácií, prečíta jeden kompletný koncept a raz ho okomentuje, a napokon potvrdí finálnu verziu.',
+        'Každý študent má školiteľa spomedzi učiteľov zvoleného predmetu. Školiteľ venuje práci tri až päť hodín konzultácií, jeden kompletný koncept prečíta a raz okomentuje a finálnu verziu potvrdí.',
       reflectionLabel: 'Reflexia',
       reflectionTitle: 'Tri rozhovory so školiteľom',
       reflectionIntro:
         'Tri stretnutia sa zapisujú do formulára Reflections on Planning and Progress Form (RPPF), ktorý sa odovzdáva spolu s esejou a hodnotí sa s ňou.',
       reflection1Title: 'Prvé stretnutie',
-      reflection1Body:
-        'Na začiatku: téma, prvotná výskumná otázka a plán, ako k výskumu pristúpiť.',
+      reflection1Body: 'Na začiatku sa dohodne téma, prvotná výskumná otázka a plán výskumu.',
       reflection2Title: 'Priebežné stretnutie',
-      reflection2Body: 'V polovici: čo výskum zatiaľ priniesol a či otázka stále obstojí.',
+      reflection2Body:
+        'V polovici práce sa preberá, čo výskum zatiaľ priniesol a či otázka stále obstojí.',
       reflection3Title: 'Viva voce',
       reflection3Body:
-        'Po odovzdaní: krátky rozhovor o tom, čo sa študent naučil a ako esej vznikala.',
+        'Po odovzdaní eseje sa školiteľ v krátkom rozhovore pýta, čo sa študent naučil a ako práca vznikala.',
       journeyLabel: 'Cesta',
       journeyTitle: 'Od prvého nápadu po viva voce',
       journeyIntro:

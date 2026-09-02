@@ -84,7 +84,7 @@ When DNS for `ib.gymnaziumceska.sk` points at the VPS:
 2. Coolify requests a Let's Encrypt certificate automatically.
 3. Once the production CMS login is configured, the OAuth callback URL on the GitHub App must match the real domain.
 
-The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (used for canonical links, sitemap, RSS).
+The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (used for canonical links and the sitemap).
 
 ## Troubleshooting
 
