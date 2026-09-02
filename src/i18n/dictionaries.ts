@@ -428,8 +428,6 @@ const dict = {
       moreNews: 'More news',
       published: 'Published',
       author: 'Author',
-      subscribe: 'Subscribe',
-      rssNote: 'Follow the feed in any RSS reader.',
     },
     gallery: {
       title: 'Life at Česká',
@@ -1178,8 +1176,6 @@ const dict = {
       moreNews: 'Ďalšie novinky',
       published: 'Zverejnené',
       author: 'Autor',
-      subscribe: 'Odoberať',
-      rssNote: 'Sledujte feed v ľubovoľnej RSS čítačke.',
     },
     gallery: {
       title: 'Život na Českej',

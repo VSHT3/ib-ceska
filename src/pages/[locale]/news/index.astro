@@ -108,9 +108,11 @@ const hrefOf = (item: FeedItem) =>
           {dict.news.subtitle}
         </p>
       </div>
-      <div class="hero-rise mt-8" style="--rise-delay: 220ms" aria-hidden="true">
-        <div class="border-t-4 border-stone-900"></div>
-        <div class="mt-[3px] border-t border-stone-900"></div>
+      <div
+        class="hero-rise mt-8 border-t border-stone-900"
+        style="--rise-delay: 220ms"
+        aria-hidden="true"
+      >
       </div>
     </header>
 
@@ -248,7 +250,7 @@ const hrefOf = (item: FeedItem) =>
         }
       </div>
 
-      {/* Rail: upcoming events + subscribe */}
+      {/* Rail: upcoming events */}
       <aside class="lg:col-span-4 lg:self-start lg:sticky lg:top-28 lg:pt-10">
         <section class="rounded-3xl bg-stone-900 p-7 text-white sm:p-8" data-reveal>
           <h2
@@ -291,23 +293,6 @@ const hrefOf = (item: FeedItem) =>
             )
           }
         </section>
-
-        <a
-          href="/rss.xml"
-          class="group mt-5 flex items-center justify-between gap-4 rounded-3xl border border-stone-200 bg-white p-6 transition-colors hover:border-emerald-300"
-          data-reveal
-          style="--reveal-delay: 80ms"
-        >
-          <span>
-            <span class="block font-semibold text-stone-900">{dict.news.subscribe}</span>
-            <span class="mt-1 block text-sm text-stone-500">{dict.news.rssNote}</span>
-          </span>
-          <span
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-stone-100 text-xs font-bold tracking-widest text-stone-600 transition-colors group-hover:bg-emerald-100 group-hover:text-emerald-800"
-          >
-            RSS
-          </span>
-        </a>
       </aside>
     </div>
   </div>
