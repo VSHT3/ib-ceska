@@ -124,7 +124,7 @@ const fmtDate = (date: string | null) =>
             data-strand-filter={strand.key}
             aria-pressed="false"
             class:list={[
-              'group rounded-3xl border p-6 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md cursor-pointer',
+              'group rounded-3xl border p-6 text-left shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md data-[dimmed]:scale-[0.98] data-[dimmed]:opacity-40 data-[dimmed]:saturate-50 cursor-pointer',
               strand.block,
             ]}
             data-reveal
@@ -295,8 +295,10 @@ const fmtDate = (date: string | null) =>
           item.classList.toggle('hidden', filter !== 'all' && !itemStrands.includes(filter));
         });
         buttons.forEach((btn) => {
-          const active = btn.dataset.strandFilter === filter;
+          const buttonFilter = btn.dataset.strandFilter ?? 'all';
+          const active = buttonFilter === filter;
           btn.toggleAttribute('data-active', active);
+          btn.toggleAttribute('data-dimmed', filter !== 'all' && buttonFilter !== 'all' && !active);
           btn.setAttribute('aria-pressed', String(active));
         });
       };
