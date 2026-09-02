@@ -42,18 +42,13 @@ const dict = {
     },
     footer: {
       rights: 'All rights reserved.',
-      explore: 'Explore',
       contact: 'Contact',
-      visit: 'Visit Us',
-      links: 'Links',
       school: 'Main school website',
       ibo: 'International Baccalaureate',
-      admissions: 'Admissions',
       mission:
         'An international education in Bratislava, preparing students to think critically and grow into the world.',
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
-      resourcesGroup: 'Resources',
       visitCta: 'Apply now',
       candidateNote:
         'Súkromné gymnázium Česká is an IB World School authorized to offer the Diploma Programme, and a Candidate School* for the Middle Years Programme. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted.',
@@ -795,18 +790,13 @@ const dict = {
     },
     footer: {
       rights: 'Všetky práva vyhradené.',
-      explore: 'Preskúmajte',
       contact: 'Kontakt',
-      visit: 'Navštívte nás',
-      links: 'Odkazy',
       school: 'Hlavná stránka školy',
       ibo: 'International Baccalaureate',
-      admissions: 'Prijímacie konanie',
       mission:
         'Medzinárodné vzdelávanie v Bratislave - pripravujeme študentov kriticky myslieť a rásť do sveta.',
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
-      resourcesGroup: 'Zdroje',
       visitCta: 'Prihlásiť sa',
       candidateNote:
         'Súkromné gymnázium Česká je IB World School s autorizáciou ponúkať diplomový program a kandidátskou školou* pre Middle Years Programme. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje, že autorizácia bude udelená.',
