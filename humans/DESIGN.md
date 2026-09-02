@@ -117,15 +117,15 @@ The site uses **Keystatic CMS** for content management:
 - **Admin panel** at `/keystatic/` — visual editor with no coding required
 - **Storage:**
   - **Dev (local):** Writes to `.mdoc` files directly on disk
-  - **Production (github):** Commits changes to the GitHub repository, triggering Coolify redeploy
+  - **Production (github):** Commits changes to the GitHub repository, triggering a Cloudflare Worker redeploy
 - **Rendering:** Astro pages read content via the Keystatic Reader API (`src/lib/keystatic.ts`)
 - **Content format:** `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`
 - **Types:** Defined in `keystatic.config.ts` using Keystatic's `fields.*` API
 
 ## Deployment
 
-- **Target:** Coolify on VPS
+- **Target:** Cloudflare Workers with static assets
 - **Domain:** `https://ib.gymnaziumceska.sk`
-- **Build:** `pnpm run build` produces `dist/client/` (static pages) + `dist/server/` (Node server)
-- **Start:** `node dist/server/entry.mjs` on port 4321
-- **Env vars:** `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` (for GitHub OAuth in production)
+- **Build:** `pnpm run build`; deploy with `npx wrangler deploy`
+- **Runtime:** static assets plus Worker routes for Keystatic
+- **Secrets:** `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`

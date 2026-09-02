@@ -4,7 +4,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Critical — before launch
 
-- [x] ~~**Set up the production CMS login (developer task).**~~ Done — `IB Ceska CMS` GitHub App registered, the three `KEYSTATIC_*` env vars set in Coolify, site served over HTTPS, and login + Save verified on the temporary URL. Only people with write access to `VSHT3/ib-ceska` can edit. (When the real domain goes live, the App callback URL must be updated — see root `TODO.md` → "Domain switch".)
+- [x] ~~**Set up the production CMS login (developer task).**~~ Done — `IB Ceska CMS` GitHub App registered and login + Save verified. Add the three `KEYSTATIC_*` values as Cloudflare Worker secrets and add each deployed origin as a GitHub App callback URL. Only people with write access to `VSHT3/ib-ceska` can edit.
 - [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
 - [x] ~~Provide high-quality school logo~~ — vectorized the school-site logo into `public/logo.svg` (full lockup) and `public/logo-mark.svg` (triangle mark); nav, footer, and all favicons now use crisp SVG-derived assets. A designer-supplied original vector would still be marginally better if one exists.
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
@@ -63,7 +63,7 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 ## Succession (current maintainer leaving within ~a year)
 
 - [ ] Transfer GitHub repository ownership/admin to the school or the next maintainer
-- [ ] Transfer the hosting account (Coolify on the VPS) and document the server login — the site is already deployed there (Coolify project `IB Česká`); see `humans/DEPLOY.md`
+- [ ] Transfer the Cloudflare account that owns the Worker and DNS zone
 - [ ] Transfer DNS control for `ib.gymnaziumceska.sk`
 - [ ] Hand over the production environment variables (Keystatic GitHub secrets) — these are **not** in the repo
 - [ ] Identify and brief the next developer; point them at `humans/README.md` → "Succession" and the root `AGENTS.md`
@@ -73,4 +73,4 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [ ] Prioritize which i18n languages to implement first (English, Slovak, others?)
 - [ ] Decide if CAS entries should be publicly visible or login-gated
 - [ ] Decide if TOK essays should be public or restricted to students
-- [x] ~~Decide on hosting provider~~ — Coolify on a VPS; **site is live and auto-deploys on push** (see `humans/DEPLOY.md`)
+- [x] ~~Decide on hosting provider~~ — Cloudflare Workers with automatic builds from `main` (see `humans/DEPLOY.md`)

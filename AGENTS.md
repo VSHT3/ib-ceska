@@ -30,7 +30,7 @@ Follow YAGNI, one-liner solutions.
 - **Tailwind CSS 4** via `@tailwindcss/vite` plugin (CSS-first config, no `tailwind.config.*`)
 - **MDX** via `@astrojs/mdx` (for `.astro` page components with JSX)
 - **Keystatic CMS** via `@keystatic/astro` — admin UI at `/keystatic/`
-- **Dual deployment adapters** — Node remains the default for Coolify; `DEPLOY_TARGET=cloudflare` selects `@astrojs/cloudflare`
+- **Cloudflare adapter** — required for Keystatic server routes on Workers (`@astrojs/cloudflare`)
 - Node >= 22.12.0
 - Strict TypeScript (`astro/tsconfigs/strict`)
 
@@ -100,14 +100,12 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 
 ## Deployment
 
-- **Live on Coolify (VPS).** Project `IB Česká` → env `production` → app `IB Česká`, deployed from `VSHT3/ib-ceska` (`main`) via `v-s-h-t3` GitHub App. Full reference: [`humans/DEPLOY.md`](humans/DEPLOY.md).
-- **Auto-deploy:** push to `main` (incl. Keystatic Save, which commits) → GitHub webhook → Coolify pulls + builds + redeploys. No manual trigger except first deploy / forced rebuild.
-- **Build:** nixpacks (Node 22). Detects **pnpm** from `pnpm-lock.yaml`. `pnpm run build` → `dist/client/` (static) + `dist/server/` (Node); start `node dist/server/entry.mjs`; expose port `4321`.
-- **Required env:** `HOST=0.0.0.0` and `PORT=4321` — Astro's Node adapter binds `localhost` by default, unreachable inside container; without `HOST=0.0.0.0` app comes up `exited:unhealthy` / 502.
-- **Cloudflare candidate:** Workers deployment is prepared but not live. Use `pnpm run build:cloudflare`; Workers Builds must use that build command and `pnpm exec wrangler deploy` as its deploy command. The default Node build intentionally remains for a safe Coolify rollback.
+- **Target:** Cloudflare Workers with static assets, deployed from `VSHT3/ib-ceska` branch `main`. Full reference: [`humans/DEPLOY.md`](humans/DEPLOY.md).
+- **Workers Builds:** build command `pnpm run build`; deploy command `npx wrangler deploy`.
+- **Auto-deploy:** pushes and Keystatic Saves both commit to `main`, triggering the production build.
 - **Keystatic:** Production uses GitHub OAuth storage — **three** env vars set: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET` (from `IB Ceska CMS` GitHub App, ID `4043810` — separate from `v-s-h-t3` deploy app), and `KEYSTATIC_SECRET` (random hex, signs login sessions). CMS app's OAuth callback must equal `<origin>/api/keystatic/github/oauth/callback`.
 - **HTTPS mandatory for CMS** — Keystatic uses `crypto.subtle.digest`, `undefined` on plain HTTP, crashing editor with `Cannot read properties of undefined (reading 'digest')` / "Unable to load collection". FQDN must be `https://` so Traefik issues Let's Encrypt cert. See [`humans/DEPLOY.md`](humans/DEPLOY.md).
-- **Domain:** live on temporary **`https://`** `sslip.io` URL; target `ib.gymnaziumceska.sk` after the Cloudflare Worker and CMS are verified — switch steps in `TODO.md`.
+- **Domain:** target `ib.gymnaziumceska.sk` after the Cloudflare Worker and CMS are verified — switch steps in `TODO.md`.
 
 ## Gotchas
 
@@ -124,4 +122,4 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - i18n uses `routing: 'manual'` + `src/middleware.ts`. Built-in `prefixDefaultLocale` 404s any path without locale prefix, killing Keystatic's injected `/keystatic` and `/api/keystatic` routes — middleware lets them bypass i18n. Don't switch back to built-in routing.
 - Astro 7 defaults `compressHTML` to `'jsx'`: whitespace between expressions on separate source lines is stripped, so `{a}\n{b}` renders `ab`. Put an explicit `{' '}` where a space must survive (see `src/layouts/Layout.astro` footer copyright).
 - `vite.build.cssTarget` is pinned in `astro.config.mjs`. Without it Vite 8 emits Tailwind's media range syntax (`@media (width>=40rem)`), which Safari <16.4 ignores — every responsive breakpoint would collapse to the mobile layout.
-- `@keystatic/astro` 6 reads `KEYSTATIC_*` at runtime. Coolify runtime env vars or Cloudflare Worker secrets satisfy this; never commit them or put their values in `wrangler.jsonc`.
+- `@keystatic/astro` 6 reads `KEYSTATIC_*` at runtime. Cloudflare Worker secrets satisfy this; never commit them or put their values in `wrangler.jsonc`.

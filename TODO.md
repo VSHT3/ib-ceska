@@ -49,24 +49,23 @@ Tasks the AI must complete. Checked = done.
 
 ## Security & access
 
-- [x] Wire up Keystatic GitHub OAuth for production so only repo collaborators can save content — `IB Ceska CMS` GitHub App (ID 4043810) + 3 env vars (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` / `KEYSTATIC_SECRET`) set in Coolify; login + Save verified
-- [ ] Defence-in-depth: gate the `/keystatic/` route behind reverse-proxy basic-auth in Coolify (the admin UI is publicly reachable even though saves require GitHub auth)
-- [ ] Rotate the `IB Ceska CMS` client secret — the initial value was pasted into a chat during setup; regenerate on GitHub and update `KEYSTATIC_GITHUB_CLIENT_SECRET` in Coolify
+- [x] Wire up Keystatic GitHub OAuth so only repo collaborators can save content — `IB Ceska CMS` GitHub App (ID 4043810) + 3 runtime secrets (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` / `KEYSTATIC_SECRET`); login + Save verified
+- [ ] Defence-in-depth: gate `/keystatic/` behind Cloudflare Access (the admin UI is publicly reachable even though saves require GitHub auth)
+- [ ] Rotate the `IB Ceska CMS` client secret — the initial value was pasted into a chat during setup; regenerate on GitHub and update the `KEYSTATIC_GITHUB_CLIENT_SECRET` Worker secret
 
 ## Cloudflare Workers cutover and real domain
 
-The Worker-compatible build is ready; Coolify remains live until the preview and CMS are verified.
+The Worker-compatible build is ready. Complete the Cloudflare account and DNS steps:
 
-- [ ] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, branch `main`
-- [ ] Set build command `pnpm run build:cloudflare` and deploy command `pnpm exec wrangler deploy`
-- [ ] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (values from the working Coolify deployment; do not put them in source control)
-- [ ] Add the generated `workers.dev` Keystatic callback as an additional Callback URL on the `IB Ceska CMS` GitHub App; retain the live Coolify callback during testing
+- [ ] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, production branch `main`
+- [ ] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
+- [ ] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (do not put them in source control)
+- [ ] Add the generated `workers.dev` Keystatic callback as a Callback URL on the `IB Ceska CMS` GitHub App
 - [ ] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on the `workers.dev` URL
 - [ ] Add `gymnaziumceska.sk` to Cloudflare DNS and reproduce every existing DNS record before changing nameservers. A Workers Custom Domain requires an active Cloudflare zone; an external-DNS CNAME to `workers.dev` is not sufficient.
 - [ ] Worker → Settings → Domains & Routes → Add Custom Domain → `ib.gymnaziumceska.sk`
 - [ ] `IB Ceska CMS` GitHub App → **Callback URL** → `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback` (and update Homepage URL)
 - [ ] Verify Keystatic login + Save still work on the new origin
-- [ ] Disable the Coolify auto-deploy only after the Worker is verified; retain the app temporarily as rollback
 - [ ] Remove the old sslip.io callback URL after the Cloudflare cutover is stable
 - [ ] have real professional email for website
 

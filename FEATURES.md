@@ -4,7 +4,7 @@ Implemented and shipped.
 
 ## Project foundation
 
-- [x] Astro 7 hybrid mode (static prerender + Node adapter for CMS routes)
+- [x] Astro 7 hybrid mode (static prerender + Cloudflare Worker for CMS routes)
 - [x] Tailwind CSS 4 via `@tailwindcss/vite` plugin (CSS-first config)
 - [x] MDX integration (`@astrojs/mdx`)
 - [x] Strict TypeScript (`astro/tsconfigs/strict`)
@@ -116,13 +116,8 @@ Implemented and shipped.
 
 ## Deployment
 
-- [x] Live on Coolify (VPS) — project `IB Česká`, app via GitHub App on `VSHT3/ib-ceska` `main`
-- [x] nixpacks build (Node 22): `pnpm run build` → start `node dist/server/entry.mjs`, port 4321
-- [x] `HOST=0.0.0.0` + `PORT=4321` runtime env so the Node adapter binds inside the container
-- [x] Auto-deploy on push to `main` (GitHub App webhook); first deploy verified (`/`, `/en/`, `/keystatic` all 200)
 - [x] Production Keystatic GitHub OAuth wired (`IB Ceska CMS` app + 3 `KEYSTATIC_*` env vars); login + content Save verified
-- [x] HTTPS via Let's Encrypt (required — Keystatic's `crypto.subtle` needs a secure origin)
-- [x] Cloudflare Workers deployment path prepared — dual adapter selection, Wrangler config, build/preview/deploy scripts, compile-time images and automatic KV-backed Astro sessions; Coolify remains the safe default until cutover
+- [x] Cloudflare Workers deployment — Wrangler config, standard build/preview/deploy scripts, compile-time images and automatic KV-backed Astro sessions
 
 ## DX & tooling
 

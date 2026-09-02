@@ -21,7 +21,7 @@ When editing on the live site:
 
 - You log in with your **GitHub account** — only accounts with write access to the `VSHT3/ib-ceska` repository can save. This is how editor access is controlled (see `README.md` → "Who is allowed to edit").
 - Edits create commits directly to the repository
-- Coolify detects the push and automatically redeploys the site
+- Cloudflare Workers Builds detects the push and automatically redeploys the site
 - Changes go live within seconds
 
 ### Getting an editor their own access (do this — don't share one login)
@@ -42,7 +42,7 @@ Why own accounts, not a shared one:
 
 Notes:
 
-- The repo is **public**, so anyone can _read_ the source — that's fine (it's a school website and no secrets live in the repo; the production secrets are stored in Coolify, not GitHub). **Only collaborators can write/save.**
+- The repo is **public**, so anyone can _read_ the source — that's fine (it's a school website and no secrets live in the repo; production secrets are stored by Cloudflare, not GitHub). **Only collaborators can write/save.**
 - GitHub places no limit on free collaborators (public or private), so add as many editors as needed.
 
 ## Local workflow

@@ -31,17 +31,17 @@ pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 
 ## Commands
 
-| Command                       | Action                                             |
-| ----------------------------- | -------------------------------------------------- |
-| `pnpm run dev`                | Dev server at localhost:4321 (incl. `/keystatic/`) |
-| `pnpm run build`              | Coolify/Node production build                      |
-| `pnpm run build:cloudflare`   | Cloudflare Workers production build                |
-| `pnpm run preview:cloudflare` | Build and preview in the Workers runtime           |
-| `pnpm run check`              | Type-check the project (`astro check`)             |
+| Command            | Action                                             |
+| ------------------ | -------------------------------------------------- |
+| `pnpm run dev`     | Dev server at localhost:4321 (incl. `/keystatic/`) |
+| `pnpm run build`   | Cloudflare Workers production build                |
+| `pnpm run preview` | Build and preview in the Workers runtime           |
+| `pnpm run deploy`  | Build and deploy with Wrangler                     |
+| `pnpm run check`   | Type-check the project (`astro check`)             |
 
 ## Stack
 
-- **Astro 7**: hybrid mode (static prerender + Node or Cloudflare runtime for CMS routes)
+- **Astro 7**: hybrid mode (static prerender + Cloudflare Workers runtime for CMS routes)
 - **Tailwind CSS 4**: utility-first, CSS-based config (no `tailwind.config.js`)
 - **Keystatic CMS**: visual editor + Reader API. Content stored as `.mdoc` files
 - **MDX** (`@astrojs/mdx`): for `.astro` components that use JSX
@@ -84,15 +84,14 @@ See [`humans/`](humans/) for onboarding, the content-editing guide, design decis
 
 ## Deploy
 
-The live site remains on **Coolify** while a Cloudflare Workers replacement is tested. The default build stays Node-compatible so pushing this preparation does not break Coolify.
+Production targets **Cloudflare Workers with static assets**. Current `@astrojs/cloudflare` versions do not support Pages SSR, so create a Worker rather than a Pages project.
 
 ```bash
-pnpm run build                 # Coolify / Node
-pnpm run build:cloudflare      # Cloudflare Workers
-pnpm run preview:cloudflare    # local Workers-runtime preview
+pnpm run build
+npx wrangler deploy
 ```
 
-Cloudflare setup uses Workers, not Pages: current `@astrojs/cloudflare` versions no longer support Pages SSR. Full dashboard, secrets, verification, DNS and rollback instructions are in [`humans/DEPLOY.md`](humans/DEPLOY.md).
+Use `main` as the production branch so code pushes and Keystatic content commits trigger the same production pipeline. Full dashboard, secrets, verification and DNS instructions are in [`humans/DEPLOY.md`](humans/DEPLOY.md).
 
 ## License
 
