@@ -191,17 +191,6 @@ export const parentDocuments: DocItem[] = [
   },
 ];
 
-/** IB certificate of authorization for the Diploma Programme, shown on `/mission`. */
-export const authorizationDocument: DocItem = {
-  file: 'ib-dp-authorization-certificate.pdf',
-  title: 'Certificate of Authorization',
-  lang: 'EN',
-  note: {
-    en: 'IB certificate authorizing the school to offer the Diploma Programme, signed July 2022.',
-    sk: 'Certifikát IB, ktorý škole umožňuje ponúkať diplomový program, podpísaný v júli 2022.',
-  },
-};
-
 /** DP school fees, rendered as an HTML table on `/admissions`. */
 export interface FeeRow {
   item: { en: string; sk: string };
