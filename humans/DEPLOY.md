@@ -44,6 +44,7 @@ Current Astro 7 releases deploy server-rendered routes to **Workers with static 
    - `KEYSTATIC_GITHUB_CLIENT_SECRET`
    - `KEYSTATIC_SECRET`
 7. Deploy and note the generated `https://ib-ceska.<account-subdomain>.workers.dev` URL.
+8. In the `IB Ceska CMS` GitHub App, add (do not replace) `https://ib-ceska.<account-subdomain>.workers.dev/api/keystatic/github/oauth/callback` as another callback URL. GitHub Apps support multiple callback URLs, so the live Coolify callback can remain during testing.
 
 The Cloudflare adapter provisions an `ASSETS` binding for the static site and a `SESSION` KV binding for Astro sessions. No manual KV namespace is required by the repository configuration.
 

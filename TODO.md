@@ -60,6 +60,7 @@ The Worker-compatible build is ready; Coolify remains live until the preview and
 - [ ] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, branch `main`
 - [ ] Set build command `pnpm run build:cloudflare` and deploy command `pnpm exec wrangler deploy`
 - [ ] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (values from the working Coolify deployment; do not put them in source control)
+- [ ] Add the generated `workers.dev` Keystatic callback as an additional Callback URL on the `IB Ceska CMS` GitHub App; retain the live Coolify callback during testing
 - [ ] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on the `workers.dev` URL
 - [ ] Add `gymnaziumceska.sk` to Cloudflare DNS and reproduce every existing DNS record before changing nameservers. A Workers Custom Domain requires an active Cloudflare zone; an external-DNS CNAME to `workers.dev` is not sufficient.
 - [ ] Worker → Settings → Domains & Routes → Add Custom Domain → `ib.gymnaziumceska.sk`
