@@ -41,7 +41,7 @@ const newsItems: FeedItem[] = (await reader.collections.news.all()).map((n) => (
   author: n.entry.author,
 }));
 
-const eventItems: FeedItem[] = (await reader.collections.events.all()).map((e) => ({
+const eventItems = (await reader.collections.events.all()).map((e) => ({
   type: 'event' as const,
   slug: e.slug,
   date: e.entry.date,
@@ -53,7 +53,14 @@ const eventItems: FeedItem[] = (await reader.collections.events.all()).map((e) =
   location: e.entry.location,
 }));
 
-const feed = [...newsItems, ...eventItems].sort(
+// Events still ahead of the build date live in the rail; past ones stay in the feed.
+const today = new Date().toISOString().slice(0, 10);
+const upcoming = eventItems
+  .filter((e) => e.date && e.date >= today)
+  .sort((a, b) => a.date!.localeCompare(b.date!));
+const pastEvents: FeedItem[] = eventItems.filter((e) => !e.date || e.date < today);
+
+const feed = [...newsItems, ...pastEvents].sort(
   (a, b) => new Date(b.date ?? 0).getTime() - new Date(a.date ?? 0).getTime(),
 );
 
@@ -62,15 +69,14 @@ const rest = feed.slice(1);
 
 const fmtDate = (date: string | null) =>
   date
-    ? new Date(date).toLocaleDateString(loc, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
+    ? new Date(date).toLocaleDateString(loc, { year: 'numeric', month: 'long', day: 'numeric' })
     : null;
-const fmtShort = (date: string | null) =>
-  date ? new Date(date).toLocaleDateString(loc, { day: '2-digit', month: 'short' }) : null;
+const dayOf = (date: string) => new Date(date).toLocaleDateString(loc, { day: '2-digit' });
+const monthOf = (date: string) =>
+  new Date(date).toLocaleDateString(loc, { month: 'short' }).replace(/\.$/, '');
 const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : null);
+const hrefOf = (item: FeedItem) =>
+  item.type === 'event' ? `/${locale}/events/${item.slug}` : `/${locale}/news/${item.slug}`;
 ---
 
 <Layout
@@ -79,201 +85,232 @@ const yearOf = (date: string | null) => (date ? new Date(date).getFullYear() : n
   locale={locale}
   pageSchemaType="CollectionPage"
 >
-  {
-    feed.length === 0 ? (
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-24">
-        <h1 class="text-5xl sm:text-6xl font-bold tracking-tight">{dict.news.title}</h1>
-        <div class="mt-10">
-          <EmptyState message={dict.news.noNews} />
-        </div>
+  <div class="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-12">
+    {/* Masthead: folio line, nameplate, double rule */}
+    <header>
+      <div
+        class="hero-rise flex items-baseline justify-between gap-4 border-b border-stone-300 pb-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500"
+      >
+        <span class="truncate">{dict.site.title}</span>
+        <span>Bratislava</span>
       </div>
-    ) : (
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14 sm:py-20">
-        {/* Masthead: folio line, nameplate, double rule */}
-        <header>
-          <div class="hero-rise flex items-baseline justify-between gap-4 border-b border-stone-300 pb-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500">
-            <span class="truncate">{dict.site.title}</span>
-            <span class="hidden sm:block">Bratislava</span>
-            <a
-              href="/rss.xml"
-              class="shrink-0 rounded-full border border-stone-300 px-2.5 py-0.5 text-[10px] font-bold tracking-widest text-stone-500 transition-colors hover:border-emerald-400 hover:text-emerald-700"
-            >
-              RSS
-            </a>
-          </div>
-          <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 pt-7">
-            <h1
-              class="hero-rise text-6xl sm:text-8xl font-bold tracking-tighter leading-[0.9]"
-              style="--rise-delay: 80ms"
-            >
-              {dict.news.title}
-            </h1>
-            <p
-              class="hero-rise max-w-xs pb-1.5 text-sm text-stone-500 leading-relaxed sm:text-right"
-              style="--rise-delay: 160ms"
-            >
-              {dict.news.subtitle}
-            </p>
-          </div>
-          <div class="hero-rise mt-8" style="--rise-delay: 220ms" aria-hidden="true">
-            <div class="border-t-4 border-stone-900" />
-            <div class="mt-[3px] border-t border-stone-900" />
-          </div>
-        </header>
+      <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-4 pt-7">
+        <h1
+          class="hero-rise text-6xl font-bold tracking-tighter leading-[0.9] sm:text-8xl lg:text-9xl"
+          style="--rise-delay: 80ms"
+        >
+          {dict.news.title}
+        </h1>
+        <p
+          class="hero-rise max-w-xs pb-2 text-sm leading-relaxed text-stone-500 sm:text-right"
+          style="--rise-delay: 160ms"
+        >
+          {dict.news.subtitle}
+        </p>
+      </div>
+      <div class="hero-rise mt-8" style="--rise-delay: 220ms" aria-hidden="true">
+        <div class="border-t-4 border-stone-900"></div>
+        <div class="mt-[3px] border-t border-stone-900"></div>
+      </div>
+    </header>
 
-        {featured && (
-          <a
-            href={
-              featured.type === 'event'
-                ? `/${locale}/events/${featured.slug}`
-                : `/${locale}/news/${featured.slug}`
-            }
-            class="group block border-b border-stone-200 py-10 sm:py-14"
-            data-reveal
-          >
-            <div class="grid gap-x-12 gap-y-6 lg:grid-cols-[1.4fr_1fr]">
-              <div class="min-w-0">
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold uppercase tracking-widest">
-                  <span class="inline-flex items-center gap-2 text-emerald-700">
-                    <span
-                      class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-600"
-                      aria-hidden="true"
-                    />
-                    {dict.news.latest}
-                  </span>
-                  {featured.date && <time class="text-stone-400">{fmtDate(featured.date)}</time>}
-                </div>
-                <h2 class="mt-5 text-4xl font-bold tracking-tighter leading-[0.98] text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-6xl">
-                  {featured.title}
-                </h2>
-              </div>
-              <div class="lg:border-l lg:border-stone-200 lg:pl-10 lg:pt-1">
-                <p class="text-lg text-stone-600 leading-relaxed">
-                  {featured.type === 'event' ? featured.description : featured.excerpt}
-                </p>
-                <div class="mt-6 flex flex-wrap items-center gap-4">
-                  {featured.type === 'article' && featured.author && (
-                    <span class="text-sm text-stone-400">{featured.author}</span>
-                  )}
-                  {featured.type === 'event' && featured.location && (
-                    <span class="text-sm text-stone-400">{featured.location}</span>
-                  )}
-                  <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700">
-                    {featured.type === 'event' ? dict.news.readEvent : dict.news.readMore}
-                    <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">
-                      →
-                    </span>
-                  </span>
-                </div>
-              </div>
+    <div class="grid gap-14 lg:grid-cols-12 lg:gap-16">
+      {/* Feed */}
+      <div class="min-w-0 lg:col-span-8">
+        {
+          !featured ? (
+            <div class="py-16">
+              <EmptyState message={dict.news.noNews} />
             </div>
-          </a>
-        )}
+          ) : (
+            <a
+              href={hrefOf(featured)}
+              class="group block border-b border-stone-200 py-10 sm:py-14"
+              data-reveal
+            >
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold uppercase tracking-widest">
+                <span class="inline-flex items-center gap-2 text-emerald-700">
+                  <span class="h-1.5 w-1.5 rounded-full bg-emerald-600" aria-hidden="true" />
+                  {dict.news.latest}
+                </span>
+                <span class="text-stone-400">
+                  {featured.type === 'event' ? dict.news.eventBadge : dict.news.articleBadge}
+                </span>
+                {featured.date && <time class="text-stone-400">{fmtDate(featured.date)}</time>}
+              </div>
+              <h2 class="mt-6 max-w-4xl text-4xl font-bold tracking-tighter leading-[0.98] text-balance text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-5xl lg:text-6xl">
+                {featured.title}
+              </h2>
+              <p class="mt-6 max-w-2xl text-lg leading-relaxed text-stone-600">
+                {featured.type === 'event' ? featured.description : featured.excerpt}
+              </p>
+              <div class="mt-6 flex flex-wrap items-center gap-4 text-sm">
+                {featured.type === 'article' && featured.author && (
+                  <span class="text-stone-400">{featured.author}</span>
+                )}
+                {featured.type === 'event' && featured.location && (
+                  <span class="text-stone-400">{featured.location}</span>
+                )}
+                <span class="inline-flex items-center gap-1.5 font-semibold text-emerald-700">
+                  {featured.type === 'event' ? dict.news.readEvent : dict.news.readMore}
+                  <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+                    →
+                  </span>
+                </span>
+              </div>
+            </a>
+          )
+        }
 
-        {rest.length > 0 && (
-          <section class="mt-12">
-            <h2 class="mb-2 flex items-baseline gap-3 text-xs font-semibold uppercase tracking-widest text-stone-400">
-              {dict.news.allArticles}
-              <span class="text-stone-300">·</span>
-              <span class="text-stone-300 tabular-nums">{rest.length}</span>
-            </h2>
-            <ol>
-              {rest.map((item, i) => {
-                const year = yearOf(item.date);
-                const prevDate = i === 0 ? (featured?.date ?? null) : rest[i - 1].date;
-                const prevYear = yearOf(prevDate);
-                const showYear = year !== null && year !== prevYear;
-                return (
-                  <li data-reveal style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}>
-                    {showYear && (
-                      <div
-                        class="year-marker select-none pt-10 pb-2 text-6xl font-extrabold leading-none tracking-tighter sm:text-7xl"
-                        aria-hidden="true"
-                      >
-                        {year}
-                      </div>
-                    )}
-                    {item.type === 'article' ? (
+        {
+          rest.length > 0 && (
+            <section class="mt-10">
+              <h2 class="flex items-baseline gap-3 text-xs font-semibold uppercase tracking-widest text-stone-400">
+                {dict.news.allArticles}
+                <span class="text-stone-300">·</span>
+                <span class="text-stone-300 tabular-nums">{rest.length}</span>
+              </h2>
+              <ol class="mt-2">
+                {rest.map((item, i) => {
+                  const year = yearOf(item.date);
+                  const prevDate = i === 0 ? (featured?.date ?? null) : rest[i - 1].date;
+                  const showYear = year !== null && year !== yearOf(prevDate);
+                  const isEvent = item.type === 'event';
+                  return (
+                    <li data-reveal style={`--reveal-delay: ${(i % 4) * 60}ms`}>
+                      {showYear && (
+                        <div
+                          class="year-marker select-none pt-10 pb-2 text-6xl font-extrabold leading-none tracking-tighter sm:text-7xl"
+                          aria-hidden="true"
+                        >
+                          {year}
+                        </div>
+                      )}
                       <a
-                        href={`/${locale}/news/${item.slug}`}
-                        class="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 gap-y-1 border-b border-stone-200 py-6 sm:grid-cols-[7rem_1fr_auto] sm:gap-x-8"
+                        href={hrefOf(item)}
+                        class="group grid gap-x-6 gap-y-3 border-b border-stone-200 py-7 sm:grid-cols-[5.5rem_1fr_auto] sm:py-8"
                       >
-                        <time class="hidden text-sm text-stone-400 tabular-nums transition-colors group-hover:text-emerald-600 sm:block">
-                          {fmtShort(item.date)}
-                        </time>
-                        <div class="min-w-0">
-                          <div class="flex items-center gap-2">
-                            <span class="inline-block rounded bg-stone-100 px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-stone-500">
-                              {dict.news.articleBadge}
+                        {item.date ? (
+                          <time class="flex items-baseline gap-1.5 sm:block">
+                            <span class="text-3xl font-extrabold leading-none tracking-tighter text-stone-900 tabular-nums transition-colors group-hover:text-emerald-700 sm:text-4xl">
+                              {dayOf(item.date)}
                             </span>
+                            <span class="text-xs font-semibold uppercase tracking-widest text-stone-400 sm:mt-1.5 sm:block">
+                              {monthOf(item.date)}
+                            </span>
+                          </time>
+                        ) : (
+                          <span />
+                        )}
+                        <div class="min-w-0">
+                          <div class="flex flex-wrap items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-wide">
+                            <span
+                              class:list={[
+                                'inline-block rounded px-1.5 py-0.5',
+                                isEvent
+                                  ? 'bg-emerald-50 text-emerald-700'
+                                  : 'bg-stone-100 text-stone-500',
+                              ]}
+                            >
+                              {isEvent ? dict.news.eventBadge : dict.news.articleBadge}
+                            </span>
+                            {isEvent && item.time && (
+                              <span class="normal-case tracking-normal text-stone-400">
+                                {item.time}
+                              </span>
+                            )}
                           </div>
-                          <h3 class="mt-1 text-xl font-semibold tracking-tight text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-2xl">
+                          <h3 class="mt-2 text-xl font-semibold tracking-tight text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-2xl">
                             {item.title}
                           </h3>
-                          {item.excerpt && (
-                            <p class="mt-1.5 max-w-2xl text-sm text-stone-500 leading-relaxed line-clamp-2 sm:text-base">
-                              {item.excerpt}
+                          {(isEvent ? item.description : item.excerpt) && (
+                            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-stone-500 line-clamp-2 sm:text-base">
+                              {isEvent ? item.description : item.excerpt}
                             </p>
                           )}
-                          <div class="mt-2 flex items-center gap-3 text-xs text-stone-400 sm:hidden">
-                            {item.date && <time>{fmtDate(item.date)}</time>}
-                            {item.author && <span>· {item.author}</span>}
-                          </div>
+                          <p class="mt-2 text-xs text-stone-400">
+                            {isEvent ? item.location : item.author}
+                          </p>
                         </div>
                         <span
-                          class="-translate-x-1 font-semibold text-emerald-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                          class="hidden -translate-x-1 self-center font-semibold text-emerald-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100 sm:block"
                           aria-hidden="true"
                         >
                           →
                         </span>
                       </a>
-                    ) : (
-                      <a
-                        href={`/${locale}/events/${item.slug}`}
-                        class="group grid grid-cols-[1fr_auto] items-baseline gap-x-4 gap-y-1 border-b border-stone-200 py-6 sm:grid-cols-[7rem_1fr_auto] sm:gap-x-8"
-                      >
-                        <time class="hidden text-sm text-stone-400 tabular-nums transition-colors group-hover:text-emerald-600 sm:block">
-                          {fmtShort(item.date)}
-                        </time>
-                        <div class="min-w-0">
-                          <div class="flex items-center gap-2">
-                            <span class="inline-block rounded bg-emerald-50 px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-emerald-700">
-                              {dict.news.eventBadge}
-                            </span>
-                            {item.time && <span class="text-xs text-stone-400">{item.time}</span>}
-                          </div>
-                          <h3 class="mt-1 text-xl font-semibold tracking-tight text-stone-900 transition-colors group-hover:text-emerald-700 sm:text-2xl">
-                            {item.title}
-                          </h3>
-                          {item.description && (
-                            <p class="mt-1.5 max-w-2xl text-sm text-stone-500 leading-relaxed line-clamp-2 sm:text-base">
-                              {item.description}
-                            </p>
-                          )}
-                          {item.location && (
-                            <p class="mt-1 text-xs text-stone-400">{item.location}</p>
-                          )}
-                          <div class="mt-2 flex items-center gap-3 text-xs text-stone-400 sm:hidden">
-                            {item.date && <time>{fmtDate(item.date)}</time>}
-                          </div>
-                        </div>
-                        <span
-                          class="-translate-x-1 font-semibold text-emerald-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                          aria-hidden="true"
-                        >
-                          →
-                        </span>
-                      </a>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
-          </section>
-        )}
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          )
+        }
       </div>
-    )
-  }
+
+      {/* Rail: upcoming events + subscribe */}
+      <aside class="lg:col-span-4 lg:self-start lg:sticky lg:top-28 lg:pt-10">
+        <section class="rounded-3xl bg-stone-900 p-7 text-white sm:p-8" data-reveal>
+          <h2
+            class="flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-emerald-300"
+          >
+            <span class="h-px w-8 bg-current" aria-hidden="true"></span>
+            {dict.news.upcoming}
+          </h2>
+          {
+            upcoming.length === 0 ? (
+              <p class="mt-5 text-sm leading-relaxed text-stone-400">{dict.news.upcomingEmpty}</p>
+            ) : (
+              <ol class="mt-5 divide-y divide-white/10">
+                {upcoming.map((e) => (
+                  <li>
+                    <a
+                      href={`/${locale}/events/${e.slug}`}
+                      class="group grid grid-cols-[3.75rem_1fr] gap-4 py-5 first:pt-1 last:pb-1"
+                    >
+                      <time class="text-center">
+                        <span class="block text-4xl font-extrabold leading-none tracking-tighter tabular-nums">
+                          {dayOf(e.date!)}
+                        </span>
+                        <span class="mt-1 block text-[11px] font-semibold uppercase tracking-widest text-stone-400">
+                          {monthOf(e.date!)}
+                        </span>
+                      </time>
+                      <span class="min-w-0">
+                        <span class="block font-semibold leading-snug tracking-tight transition-colors group-hover:text-emerald-300">
+                          {e.title}
+                        </span>
+                        <span class="mt-1.5 block text-xs leading-relaxed text-stone-400">
+                          {[e.time, e.location].filter(Boolean).join(' · ')}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            )
+          }
+        </section>
+
+        <a
+          href="/rss.xml"
+          class="group mt-5 flex items-center justify-between gap-4 rounded-3xl border border-stone-200 bg-white p-6 transition-colors hover:border-emerald-300"
+          data-reveal
+          style="--reveal-delay: 80ms"
+        >
+          <span>
+            <span class="block font-semibold text-stone-900">{dict.news.subscribe}</span>
+            <span class="mt-1 block text-sm text-stone-500">{dict.news.rssNote}</span>
+          </span>
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-stone-100 text-xs font-bold tracking-widest text-stone-600 transition-colors group-hover:bg-emerald-100 group-hover:text-emerald-800"
+          >
+            RSS
+          </span>
+        </a>
+      </aside>
+    </div>
+  </div>
 
   <style>
     .year-marker {

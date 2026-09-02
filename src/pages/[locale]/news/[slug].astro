@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 const locale = (Astro.params.locale ?? 'en') as Locale;
 const slug = Astro.params.slug!;
 const dict = t(locale);
+const loc = locale === 'sk' ? 'sk-SK' : 'en-GB';
 
 const article = await reader.collections.news.read(slug);
 if (!article) return Astro.redirect(l('/news', locale));
@@ -26,13 +27,16 @@ const enHtml = await renderMarkdoc(article.content);
 const skHtml = await renderMarkdoc(article.sk.body);
 const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
 
-const dateLabel = article.date
-  ? new Date(article.date).toLocaleDateString(locale === 'sk' ? 'sk-SK' : 'en-GB', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-  : undefined;
+const fmtDate = (date: string | null) =>
+  date
+    ? new Date(date).toLocaleDateString(loc, { year: 'numeric', month: 'long', day: 'numeric' })
+    : null;
+const dateLabel = fmtDate(article.date);
+
+const more = (await reader.collections.news.all())
+  .filter((n) => n.slug !== slug)
+  .sort((a, b) => new Date(b.entry.date ?? 0).getTime() - new Date(a.entry.date ?? 0).getTime())
+  .slice(0, 3);
 ---
 
 <Layout
@@ -52,9 +56,9 @@ const dateLabel = article.date
     publisher: { '@id': new URL('/#school', Astro.site).href },
   }}
 >
-  <!-- Article masthead -->
-  <header class="border-b border-stone-200/80 bg-white">
-    <div class="mx-auto max-w-4xl px-4 pt-10 pb-10 sm:px-6 sm:pt-14">
+  <!-- Masthead: wide shell, oversized headline, double rule -->
+  <header class="bg-white">
+    <div class="mx-auto max-w-7xl px-6 pt-10 pb-10 sm:pt-14 lg:px-12">
       <a
         href={l('/news', locale)}
         class="hero-rise inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 transition-colors hover:text-emerald-800"
@@ -67,13 +71,12 @@ const dateLabel = article.date
         class="hero-rise mt-9 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-semibold uppercase tracking-[0.2em]"
         style="--rise-delay: 60ms"
       >
-        <span class="rounded bg-stone-100 px-2 py-0.5 text-stone-500">
-          {dict.news.articleBadge}
-        </span>
+        <span class="rounded bg-stone-100 px-2 py-0.5 text-stone-500">{dict.news.articleBadge}</span
+        >
         {dateLabel && <time class="text-stone-400">{dateLabel}</time>}
       </div>
       <h1
-        class="hero-rise mt-5 text-4xl font-bold tracking-tighter leading-[1.02] sm:text-5xl lg:text-6xl"
+        class="hero-rise mt-5 max-w-5xl text-4xl font-bold tracking-tighter leading-[0.98] text-balance sm:text-5xl lg:text-6xl xl:text-7xl"
         style="--rise-delay: 120ms"
       >
         {title}
@@ -81,31 +84,57 @@ const dateLabel = article.date
       {
         excerpt && (
           <p
-            class="hero-rise mt-6 max-w-3xl text-xl leading-relaxed text-stone-600"
+            class="hero-rise mt-7 max-w-3xl text-xl leading-relaxed text-stone-600 sm:text-2xl"
             style="--rise-delay: 200ms"
           >
             {excerpt}
           </p>
         )
       }
-      {
-        article.author && (
-          <p class="hero-rise mt-7 text-sm font-medium text-stone-400" style="--rise-delay: 260ms">
-            {article.author} · {dict.site.title}
-          </p>
-        )
-      }
-      <div class="hero-rise mt-9" style="--rise-delay: 300ms" aria-hidden="true">
+      <div class="hero-rise mt-10" style="--rise-delay: 280ms" aria-hidden="true">
         <div class="border-t-4 border-stone-900"></div>
         <div class="mt-[3px] border-t border-stone-900"></div>
       </div>
     </div>
   </header>
 
-  <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-14">
+  <!-- Body: sticky byline rail on the left, article on the right -->
+  <div
+    class="mx-auto grid max-w-7xl gap-10 px-6 pt-4 pb-16 sm:pb-20 lg:grid-cols-12 lg:gap-16 lg:px-12"
+  >
+    <aside class="lg:col-span-3 lg:self-start lg:sticky lg:top-28" data-reveal>
+      <dl class="grid grid-cols-2 gap-x-6 lg:grid-cols-1">
+        {
+          dateLabel && (
+            <div class="border-b border-stone-200 py-4">
+              <dt class="text-xs font-semibold uppercase tracking-widest text-stone-400">
+                {dict.news.published}
+              </dt>
+              <dd class="mt-1 font-medium text-stone-900">{dateLabel}</dd>
+            </div>
+          )
+        }
+        {
+          article.author && (
+            <div class="border-b border-stone-200 py-4">
+              <dt class="text-xs font-semibold uppercase tracking-widest text-stone-400">
+                {dict.news.author}
+              </dt>
+              <dd class="mt-1 font-medium text-stone-900">{article.author}</dd>
+            </div>
+          )
+        }
+      </dl>
+      <p class="mt-4 text-sm text-stone-400">{dict.site.title} · Bratislava</p>
+    </aside>
+
     <article
-      class:list={['rich-text article-body', hasContent(bodyHtml) && 'has-dropcap']}
+      class:list={[
+        'rich-text article-body max-w-[68ch] text-lg lg:col-span-8 lg:col-start-5',
+        hasContent(bodyHtml) && 'has-dropcap',
+      ]}
       data-reveal
+      style="--reveal-delay: 80ms"
     >
       {
         hasContent(bodyHtml) ? (
@@ -115,21 +144,56 @@ const dateLabel = article.date
         )
       }
     </article>
-
-    <footer
-      class="mt-12 flex flex-wrap items-baseline justify-between gap-4 border-t border-stone-200 pt-6"
-      data-reveal
-    >
-      {article.author && <p class="text-sm text-stone-400">{article.author}</p>}
-      <a
-        href={l('/news', locale)}
-        class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
-      >
-        <span aria-hidden="true">&larr;</span>
-        {dict.detail.backNews}
-      </a>
-    </footer>
   </div>
+
+  {
+    more.length > 0 && (
+      <section class="border-t border-stone-200 bg-stone-50">
+        <div class="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-12">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">{dict.news.moreNews}</h2>
+            <a
+              href={l('/news', locale)}
+              class="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
+            >
+              {dict.detail.backNews}
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+          <ul
+            class:list={[
+              'mt-8 grid gap-5',
+              more.length > 1 && 'sm:grid-cols-2',
+              more.length > 2 && 'lg:grid-cols-3',
+            ]}
+          >
+            {more.map((n, i) => (
+              <li data-reveal style={`--reveal-delay: ${(i % 3) * 80}ms`}>
+                <a
+                  href={`/${locale}/news/${n.slug}`}
+                  class="group flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-7 transition-[transform,border-color] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-1 hover:border-emerald-300"
+                >
+                  {n.entry.date && (
+                    <time class="text-xs font-semibold uppercase tracking-widest text-stone-400">
+                      {fmtDate(n.entry.date)}
+                    </time>
+                  )}
+                  <span class="mt-3 text-xl font-semibold leading-snug tracking-tight text-stone-900 transition-colors group-hover:text-emerald-700">
+                    {pick(locale, n.entry.sk.title, n.entry.title)}
+                  </span>
+                  {n.entry.excerpt && (
+                    <span class="mt-3 line-clamp-3 text-sm leading-relaxed text-stone-600">
+                      {pick(locale, n.entry.sk.excerpt, n.entry.excerpt)}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
 
   <style>
     /* Print-style drop cap on the opening paragraph */

@@ -38,11 +38,11 @@ Implemented and shipped.
 - [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
 - [x] `/cas` — strand-based listing (Creativity, Activity, Service); activities can span multiple strands and appear under each filter
 - [x] `/cas/[slug]` — CAS detail with reflection + multi-strand badges + learning-outcome sidebar
-- [x] `/tok` — essay/material listing with theme badges
-- [x] `/tok/[slug]` — TOK detail with full rendered essay
-- [x] `/ee` — Extended Essay timeline and resources
-- [x] `/news` — newspaper-style gazette: folio line (school · Bratislava · RSS chip), nameplate masthead with double rule, featured story with column rule, chronological feed with outlined year markers
-- [x] `/news/[slug]` — editorial article page: badge + date kicker, headline, standfirst, byline, double rule, print-style drop cap on the opening paragraph
+- [x] `/tok` — photo hero (classroom behind a left-to-right scrim, central question anchored bottom-right), course-anatomy bento (emerald core-theme tile, numbered optional themes, area-of-knowledge chips, 100 h / 3 pt figures), assessment panel whose column widths carry the ⅓ exhibition / ⅔ essay weighting, essay card grid, handbook band
+- [x] `/tok/[slug]` — dark masthead with quoted italic title, sticky theme/date rail beside a 70ch essay column, related-essay cards
+- [x] `/ee` — full-bleed split hero (copy + four IB facts left, library photograph to the edge right), sticky "what it is" column beside supervisor panel and numbered reflection sessions, five-cell hairline journey strip, dark resources band (IB page, academic integrity policy, policies index)
+- [x] `/news` — gazette masthead (folio line, oversized nameplate, double rule) over a 8/4 split: featured story + big-day-numeral feed with outlined year markers on the left, sticky rail with upcoming-events panel (built from event dates ahead of the build) and RSS card on the right; past events stay in the feed
+- [x] `/news/[slug]` — wide masthead with oversized headline, standfirst and double rule, sticky published/author rail beside a 68ch drop-cap article column, "More news" card row
 - [x] `/events` — calendar page, auto-split into upcoming/past
 - [x] `/gallery` — bilingual bento-mosaic photo gallery: gapless cell-rhythm grid (orientation-aware base/tall/big tiles, deterministic packing order, width-proportional row unit, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel

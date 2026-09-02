@@ -44,7 +44,8 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [ ] Review/approve the AI-generated Slovak UI strings (`src/i18n/dictionaries.ts`)
 - [ ] Fill Slovak translations of content entries via the CMS ("Slovak translation" section in each entry — English shows wherever Slovak is left empty)
 - [ ] Review EE timeline — adjust dates to match school calendar
-- [ ] Provide downloadable EE documents (EE Guide PDF, RPPF form, assessment criteria)
+- [ ] Provide downloadable EE documents (EE Guide PDF, RPPF form). Placeholder `#` download links were removed from `/ee`; it now links the IB EE page, the academic integrity policy, and `/policies`.
+- [ ] Confirm the IB facts written into `/ee` and `/tok` against the current guides: EE 4,000-word limit, ~40 hours of student work, 3–5 hours of supervision, three reflection sessions + RPPF, E as failing condition, up to 3 core points; TOK ≥100 hours, one core + two optional themes, five areas of knowledge, exhibition ⅓ (950 words, 35 prompts) / essay ⅔ (1,600 words, six prescribed titles). Strings live in `src/i18n/dictionaries.ts` (`ee`, `tok`).
 
 ## Branding & design
 
