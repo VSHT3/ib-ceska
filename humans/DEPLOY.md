@@ -136,7 +136,7 @@ The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (
 ## Troubleshooting
 
 - **CMS error "Unable to load collection" / `reading 'digest'`:** confirm the browser is using the HTTPS Worker or Custom Domain URL.
-- **`/api/keystatic/github/login` → 500 "Missing required config":** one of the three `KEYSTATIC_*` env vars is missing (commonly `KEYSTATIC_SECRET`).
+- **`/api/keystatic/github/login` → 500 with an empty body:** the running Worker can't see one of the three `KEYSTATIC_*` secrets (the log says "Missing required config …"). Two causes seen so far: a var is genuinely missing (commonly `KEYSTATIC_SECRET`), or the secrets were added in the dashboard but the resulting version was never deployed — the dashboard shows them, `wrangler secret list` shows them, yet `wrangler deployments list` still points at an older version. Click **Deploy** after editing variables, or run `npx wrangler versions list` and `npx wrangler versions deploy <id>@100% -y`.
 - **CMS login redirects to a 404/blank after authorizing:** the GitHub App **Callback URL** doesn't match the live origin (`https://…/api/keystatic/github/oauth/callback`).
 - **Save does nothing:** if not the HTTPS issue above, confirm the `IB Ceska CMS` app is installed on `VSHT3/ib-ceska` with **Contents: read/write** + **Pull requests: read/write** (changing permissions requires re-approving the install).
 - **Push didn't deploy:** confirm Workers Builds is connected to `VSHT3/ib-ceska` and the production branch is `main`.
