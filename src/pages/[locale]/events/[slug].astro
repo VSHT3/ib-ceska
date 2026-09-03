@@ -7,7 +7,13 @@ import { t, l } from '../../../i18n/dictionaries';
 import type { Locale } from '../../../i18n/dictionaries';
 
 export async function getStaticPaths() {
-  const slugs = await reader.collections.events.list();
+  // A hand-built `./<slug>.astro` next to this file overrides the generic page
+  // for that event (its `.mdoc` still feeds listings). Skip those slugs so
+  // Astro doesn't render and discard a duplicate on every build.
+  const custom = new Set(
+    Object.keys(import.meta.glob('./*.astro')).map((p) => p.slice(2, -'.astro'.length)),
+  );
+  const slugs = (await reader.collections.events.list()).filter((s) => !custom.has(s));
   return (['en', 'sk'] as const).flatMap((locale) =>
     slugs.map((slug) => ({ params: { locale, slug } })),
   );
