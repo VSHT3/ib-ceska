@@ -116,7 +116,8 @@ Maintain detailed docs in [`humans/`](humans/) for non-technical collaborators. 
 - `site` URL in `astro.config.mjs` is `https://ib.gymnaziumceska.sk`.
 - `tsconfig.json` uses `"exclude": ["dist"]` — do not remove.
 - Keystatic schema changes (`keystatic.config.ts`) require restarting `pnpm run dev`.
-- A server adapter is required even though public pages are prerendered: Keystatic injects runtime API routes. Do not remove both adapters or turn the project into a static-only deployment.
+- A server adapter is required even though public pages are prerendered: Keystatic injects runtime API routes. Do not turn the project into a static-only deployment.
+- **Two adapters, by command.** `astro dev` uses `@astrojs/node`; `build`/`preview`/`deploy` use `@astrojs/cloudflare` (`isDev` switch in `astro.config.mjs`). The Cloudflare adapter runs dev SSR inside `workerd`, which has no filesystem and no CommonJS: Keystatic's local reader returns empty collections (pages render with no subjects/news) and its API routes throw `exports is not defined`. Do not remove `@astrojs/node`. If dev ever complains "Another astro dev server is already running", run `pnpm exec astro dev stop`.
 - YAML values with colons (e.g. `LO1: text`) must be quoted in `.mdoc` frontmatter.
 - Keystatic CMS needs **secure origin** (HTTPS or localhost). On plain HTTP `crypto.subtle` undefined → "Unable to load collection" / `reading 'digest'` crash. Never deploy CMS on `http://` FQDN.
 - i18n uses `routing: 'manual'` + `src/middleware.ts`. Built-in `prefixDefaultLocale` 404s any path without locale prefix, killing Keystatic's injected `/keystatic` and `/api/keystatic` routes — middleware lets them bypass i18n. Don't switch back to built-in routing.

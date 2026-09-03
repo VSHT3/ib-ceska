@@ -2,13 +2,20 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
+import node from '@astrojs/node';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
 
+// `astro dev` runs SSR in Node. The Cloudflare adapter runs dev SSR inside
+// workerd, which has no filesystem and no CommonJS: Keystatic's local-mode
+// reader returns empty collections and its API routes throw `exports is not
+// defined`. Production is unaffected (Keystatic uses GitHub storage there).
+const isDev = process.argv.includes('dev');
+
 export default defineConfig({
   site: 'https://ib.gymnaziumceska.sk',
-  adapter: cloudflare({ imageService: 'compile' }),
+  adapter: isDev ? node({ mode: 'standalone' }) : cloudflare({ imageService: 'compile' }),
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'sk'],
