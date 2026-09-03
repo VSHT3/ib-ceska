@@ -1,6 +1,7 @@
 # TODO
 
 Tasks the AI must complete. Checked = done.
+Umami analytics
 
 ## IB branding
 
