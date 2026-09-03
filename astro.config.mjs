@@ -15,7 +15,12 @@ const isDev = process.argv.includes('dev');
 
 export default defineConfig({
   site: 'https://ib.gymnaziumceska.sk',
-  adapter: isDev ? node({ mode: 'standalone' }) : cloudflare({ imageService: 'compile' }),
+  // `prerenderEnvironment: 'node'`: the adapter otherwise prerenders inside
+  // workerd too, where the Keystatic reader finds no filesystem and every
+  // collection builds empty (0 subjects, 0 news).
+  adapter: isDev
+    ? node({ mode: 'standalone' })
+    : cloudflare({ imageService: 'compile', prerenderEnvironment: 'node' }),
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'sk'],
