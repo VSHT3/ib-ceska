@@ -47,6 +47,23 @@ const roleOf = (teacher: Teacher) => [
   ...teacher.responsibilities[locale],
 ];
 
+// Core roles ("TOK Coordinator", "Theory of Knowledge", "Koordinátor CAS",
+// "Extended Essay Coordinator") link to the matching IB Core page.
+const coreHref = (label: string) =>
+  /\bTOK\b|Theory of Knowledge|Teória poznania/i.test(label)
+    ? l('/tok', locale)
+    : /\bCAS\b/.test(label)
+      ? l('/cas', locale)
+      : /\bEE\b|Extended Essay|Rozšíren\S* esej/i.test(label)
+        ? l('/ee', locale)
+        : null;
+
+const chip =
+  'rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-stone-200';
+const chipLink = `${chip} transition-colors hover:bg-emerald-50 hover:text-emerald-900`;
+const roleLink =
+  'underline decoration-emerald-300 decoration-1 underline-offset-4 transition-colors hover:text-emerald-800 hover:decoration-emerald-600';
+
 const peopleSchemas = withPhoto.map((teacher) => ({
   '@type': 'Person',
   name: teacher.name,
@@ -109,7 +126,15 @@ const peopleSchemas = withPhoto.map((teacher) => ({
               </div>
               <ul class="space-y-1.5 sm:col-start-2 lg:col-start-3 lg:row-start-1 lg:border-l lg:border-stone-200 lg:pl-8">
                 {roleOf(teacher).map((role) => (
-                  <li class="text-sm leading-relaxed text-stone-600">{role}</li>
+                  <li class="text-sm leading-relaxed text-stone-600">
+                    {coreHref(role) ? (
+                      <a href={coreHref(role)!} class={roleLink}>
+                        {role}
+                      </a>
+                    ) : (
+                      role
+                    )}
+                  </li>
                 ))}
               </ul>
             </li>
@@ -136,14 +161,22 @@ const peopleSchemas = withPhoto.map((teacher) => ({
           faculty.map((teacher, index) => {
             const subs = subjectsOf(teacher);
             const single = subs.length === 1 ? subs[0] : null;
-            const CardTag = single ? 'a' : 'article';
+            const singleHref = single ? l(`/subjects/${single.slug}`, locale) : null;
+            // Chips: subject pages when matched, otherwise the area label
+            // (linked to a core page when it names TOK, CAS, or EE).
+            const chips =
+              subs.length > 0
+                ? subs.map((s) => ({ label: s.title, href: l(`/subjects/${s.slug}`, locale) }))
+                : teacher.areas[locale].map((area) => ({ label: area, href: coreHref(area) }));
+            const imageHref = singleHref ?? chips[0]?.href ?? null;
+            const Frame = imageHref ? 'a' : 'div';
             return (
               <li data-reveal style={`--reveal-delay: ${Math.min(index, 5) * 60}ms`}>
-                <CardTag
-                  href={single ? l(`/subjects/${single.slug}`, locale) : undefined}
-                  class="group flex h-full flex-col"
-                >
-                  <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-stone-200">
+                <article class="group flex h-full flex-col">
+                  <Frame
+                    href={imageHref ?? undefined}
+                    class="block aspect-[4/5] overflow-hidden rounded-2xl bg-stone-200"
+                  >
                     {teacher.image ? (
                       <Image
                         src={teacher.image}
@@ -158,53 +191,53 @@ const peopleSchemas = withPhoto.map((teacher) => ({
                         {initials(teacher.name)}
                       </div>
                     )}
-                  </div>
+                  </Frame>
                   <div class="mt-4 flex flex-1 flex-col border-t border-stone-300 pt-4">
-                    <h3 class="text-lg font-bold tracking-tight transition-colors group-hover:text-emerald-700">
-                      {teacher.name}
-                    </h3>
-                    {subs.length > 1 ? (
+                    <h3 class="text-lg font-bold tracking-tight">{teacher.name}</h3>
+                    {chips.length > 0 && (
                       <div class="mt-3 flex flex-wrap gap-1.5">
-                        {subs.map((s) => (
-                          <a
-                            href={l(`/subjects/${s.slug}`, locale)}
-                            class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-stone-200 transition-colors hover:bg-emerald-50 hover:text-emerald-900"
-                          >
-                            {s.title}
-                          </a>
-                        ))}
+                        {chips.map((c) =>
+                          c.href ? (
+                            <a href={c.href} class={chipLink}>
+                              {c.label}
+                            </a>
+                          ) : (
+                            <span class={chip}>{c.label}</span>
+                          ),
+                        )}
                       </div>
-                    ) : (
-                      teacher.areas[locale].length > 0 && (
-                        <div class="mt-3 flex flex-wrap gap-1.5">
-                          {teacher.areas[locale].map((area) => (
-                            <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-stone-200">
-                              {area}
-                            </span>
-                          ))}
-                        </div>
-                      )
                     )}
                     {teacher.responsibilities[locale].length > 0 && (
                       <ul class="mt-3 space-y-1.5">
                         {teacher.responsibilities[locale].map((role) => (
-                          <li class="text-sm leading-snug text-stone-500">{role}</li>
+                          <li class="text-sm leading-snug text-stone-500">
+                            {coreHref(role) ? (
+                              <a href={coreHref(role)!} class={roleLink}>
+                                {role}
+                              </a>
+                            ) : (
+                              role
+                            )}
+                          </li>
                         ))}
                       </ul>
                     )}
-                    {single && (
-                      <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-emerald-700">
+                    {singleHref && (
+                      <a
+                        href={singleHref}
+                        class="group/link mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
+                      >
                         {copy.viewSubject}
                         <span
-                          class="transition-transform group-hover:translate-x-1"
+                          class="transition-transform group-hover/link:translate-x-1"
                           aria-hidden="true"
                         >
                           →
                         </span>
-                      </span>
+                      </a>
                     )}
                   </div>
-                </CardTag>
+                </article>
               </li>
             );
           })
