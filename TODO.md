@@ -2,6 +2,7 @@
 
 Tasks the AI must complete. Checked = done.
 Umami analytics
+PDFs should open in a new tab
 
 ## IB branding
 
