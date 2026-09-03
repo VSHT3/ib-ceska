@@ -19,21 +19,21 @@ const groupDefs = [
   { key: '4', label: dict.subjects.group4 },
   { key: '5', label: dict.subjects.group5 },
   { key: '6', label: dict.subjects.group6 },
-  { key: 'core', label: dict.subjects.core },
 ];
 
 const groups = groupDefs
   .map((g) => ({
     ...g,
     id: `group-${g.key}`,
-    ghost: g.key === 'core' ? 'C' : `0${g.key}`,
-    // strip the "Group N: " / "Skupina N: " prefix - the ghost numeral already says it
+    // strip the "Group N: " / "Skupina N: " prefix; the numeral carries it
     shortLabel: g.label.replace(/^[^:]+:\s*/, ''),
     subjects: allSubjects
       .filter((s) => s.entry.group === g.key || s.entry.secondaryGroup === g.key)
       .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0)),
   }))
   .filter((g) => g.subjects.length > 0);
+
+const distinct = new Set(allSubjects.map((s) => s.slug)).size;
 ---
 
 <Layout
@@ -42,7 +42,7 @@ const groups = groupDefs
   locale={locale}
   pageSchemaType="CollectionPage"
 >
-  <!-- Hero: full-bleed DP brand band with a table-of-contents index -->
+  <!-- Hero: DP brand band, copy left, figures right -->
   <section class="relative overflow-hidden bg-dp-900 text-white">
     <div class="pointer-events-none absolute inset-0" aria-hidden="true">
       <div class="absolute -top-48 -left-40 h-[36rem] w-[36rem] rounded-full bg-dp-500/20 blur-3xl">
@@ -54,9 +54,9 @@ const groups = groupDefs
     </div>
 
     <div
-      class="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20"
+      class="relative mx-auto grid max-w-7xl items-end gap-12 px-6 pt-20 pb-16 sm:pt-24 sm:pb-20 lg:grid-cols-12 lg:gap-8 lg:px-12"
     >
-      <div>
+      <div class="lg:col-span-7">
         <div class="hero-rise flex flex-wrap items-center gap-3">
           <img
             src="/ib-dp-logo.png"
@@ -70,68 +70,46 @@ const groups = groupDefs
           </p>
         </div>
         <h1
-          class="hero-rise mt-6 text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl"
+          class="hero-rise mt-6 text-5xl font-bold tracking-tighter leading-[0.95] sm:text-6xl lg:text-7xl"
           style="--rise-delay: 80ms"
         >
           {dict.subjects.title}
         </h1>
         <p
-          class="hero-rise mt-5 max-w-2xl text-lg leading-relaxed text-dp-100/85"
+          class="hero-rise mt-5 max-w-xl text-lg leading-relaxed text-dp-100/85"
           style="--rise-delay: 160ms"
         >
           {dict.subjects.subtitle}
         </p>
-        <p
-          class="hero-rise mt-7 flex max-w-xl gap-2.5 rounded-xl border border-amber-300/25 bg-amber-400/10 px-4 py-3 text-sm leading-relaxed text-amber-100"
-          style="--rise-delay: 240ms"
-        >
-          <svg
-            class="mt-0.5 h-4 w-4 shrink-0 text-amber-300"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-9.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.25 7.5h1.5V12h-1.5V7.5Z"
-            ></path>
-          </svg>
-          <span>{dict.subjects.enrolmentNote}</span>
-        </p>
       </div>
 
-      <!-- Contents index -->
-      <nav class="hero-rise" style="--rise-delay: 200ms" aria-label={dict.subjects.onThisPage}>
-        <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300">
-          {dict.subjects.onThisPage}
-        </p>
-        <ol class="mt-3">
-          {
-            groups.map((g) => (
-              <li>
-                <a
-                  href={`#${g.id}`}
-                  class="group flex items-baseline gap-3 border-b border-white/10 py-3 text-sm transition-colors hover:border-dp-300/50"
-                >
-                  <span class="w-7 shrink-0 font-extrabold text-dp-300">{g.ghost}</span>
-                  <span class="truncate font-medium text-dp-50 transition-colors group-hover:text-white">
-                    {g.shortLabel}
-                  </span>
-                  <span
-                    class="mx-1 flex-1 border-b border-dotted border-white/20"
-                    aria-hidden="true"
-                  />
-                  <span class="shrink-0 text-xs font-bold text-dp-200/70">{g.subjects.length}</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </nav>
+      <dl
+        class="hero-rise grid grid-cols-3 gap-6 border-t border-white/15 pt-6 lg:col-span-4 lg:col-start-9"
+        style="--rise-delay: 240ms"
+      >
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">
+            {distinct}
+          </dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statSubjects}</dt>
+        </div>
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">
+            {groups.length}
+          </dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statGroups}</dt>
+        </div>
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">2</dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statLevels}</dt>
+        </div>
+      </dl>
     </div>
   </section>
 
-  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:grid lg:grid-cols-[260px_1fr] lg:gap-16">
+  <div
+    class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-16 lg:px-12"
+  >
     <!-- Sticky group rail (desktop) -->
     <aside class="hidden lg:block">
       <nav class="sticky top-28" aria-label={dict.subjects.onThisPage}>
@@ -145,97 +123,101 @@ const groups = groupDefs
                 <a
                   href={`#${g.id}`}
                   data-spy-link={g.id}
-                  class="group -ml-px flex items-baseline justify-between gap-2 border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-dp-700 data-[active]:border-dp-600 data-[active]:font-semibold data-[active]:text-dp-700"
+                  class="group -ml-px flex items-baseline gap-3 border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-dp-700 data-[active]:border-dp-600 data-[active]:font-semibold data-[active]:text-dp-700"
                 >
-                  <span class="truncate">{g.shortLabel}</span>
-                  <span class="text-xs text-stone-300 group-data-[active]:text-dp-400">
-                    {g.subjects.length}
+                  <span class="w-3 shrink-0 text-xs font-bold tabular-nums text-stone-300 group-data-[active]:text-dp-400">
+                    {g.key}
                   </span>
+                  <span class="truncate">{g.shortLabel}</span>
                 </a>
               </li>
             ))
           }
         </ul>
-        <a
-          href={l('/build-your-diploma', locale)}
-          class="group mt-8 block rounded-2xl bg-dp-900 p-5 text-white ring-1 ring-white/10 transition-transform hover:-translate-y-0.5"
+        <p
+          class="mt-8 flex gap-2.5 rounded-xl bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900"
         >
-          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-dp-300">
-            {dict.dp.shortTitle}
-          </p>
-          <p class="mt-1.5 text-sm font-semibold leading-snug">{dict.dp.builderTitle}</p>
-          <span
-            class="mt-3 inline-block text-sm font-semibold text-dp-200 transition-transform group-hover:translate-x-1"
-          >
-            {dict.nav.builder} →
-          </span>
-        </a>
+          <span class="mt-0.5 font-bold" aria-hidden="true">!</span>
+          {dict.subjects.enrolmentNote}
+        </p>
       </nav>
     </aside>
 
     <!-- Group sections -->
     <div class="min-w-0">
+      <p
+        class="mb-10 flex gap-2.5 rounded-xl bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-900 lg:hidden"
+      >
+        <span class="mt-0.5 font-bold" aria-hidden="true">!</span>
+        {dict.subjects.enrolmentNote}
+      </p>
       {
-        groups.map((group) => (
-          <section id={group.id} class="mb-20 scroll-mt-28" data-spy-section data-reveal>
-            <header class="relative flex items-end gap-4 border-b-2 border-stone-900 pb-3">
+        groups.map((group, gi) => (
+          <section
+            id={group.id}
+            class:list={['scroll-mt-28', gi > 0 && 'mt-16 sm:mt-20']}
+            data-spy-section
+            data-reveal
+          >
+            <header class="flex items-baseline gap-4 border-b-2 border-stone-900 pb-3">
               <span
-                class="ghost-numeral select-none text-7xl font-extrabold leading-none tracking-tighter sm:text-8xl"
+                class="text-4xl font-extrabold leading-none tracking-tighter tabular-nums text-dp-700 sm:text-5xl"
                 aria-hidden="true"
               >
-                {group.ghost}
+                {group.key}
               </span>
-              <div class="pb-1.5">
-                <p class="text-xs font-semibold uppercase tracking-widest text-dp-700">
-                  {group.label.split(':')[0]}
-                </p>
-                <h2 class="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
-                  {group.shortLabel}
-                </h2>
-              </div>
+              <h2 class="text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
+                {group.shortLabel}
+              </h2>
+              <span class="ml-auto text-sm text-stone-400 tabular-nums">
+                {group.subjects.length}
+              </span>
             </header>
-            <ul>
+            <ul class="mt-5 grid gap-4 sm:grid-cols-2">
               {group.subjects.map((s, i) => (
-                <li>
+                <li data-reveal style={`--reveal-delay: ${(i % 2) * 70}ms`}>
                   <a
                     href={`/${locale}/subjects/${s.slug}`}
-                    class="group grid grid-cols-[1fr_auto] items-center gap-4 rounded-lg border-b border-stone-200 py-6 transition-colors hover:bg-dp-50/50 sm:-mx-4 sm:px-4 sm:py-7"
-                    data-reveal
-                    style={`--reveal-delay: ${Math.min(i, 4) * 60}ms`}
+                    class="group flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-dp-400 hover:shadow-lg hover:shadow-dp-900/10 sm:p-6"
                   >
-                    <div class="min-w-0">
-                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                        <h3 class="text-xl font-semibold text-stone-900 transition-colors group-hover:text-dp-800 sm:text-2xl">
-                          {pick(locale, s.entry.sk.title, s.entry.title)}
-                        </h3>
-                        {s.entry.offeredLevels && (
+                    <div class="flex items-start justify-between gap-4">
+                      <h3 class="text-lg font-semibold leading-snug tracking-tight text-stone-900 transition-colors group-hover:text-dp-800 sm:text-xl">
+                        {pick(locale, s.entry.sk.title, s.entry.title)}
+                      </h3>
+                      <span
+                        class="mt-1 -translate-x-1 text-dp-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
+                    </div>
+                    {s.entry.offeredLevels && (
+                      <span class="mt-2.5 inline-flex gap-1.5">
+                        {(s.entry.offeredLevels === 'both'
+                          ? ['SL', 'HL']
+                          : [s.entry.offeredLevels]
+                        ).map((lv) => (
                           <span
                             class:list={[
-                              'shrink-0 rounded-full px-2.5 py-1 text-xs font-bold tracking-wide',
-                              s.entry.offeredLevels === 'SL'
-                                ? 'bg-sky-100 text-sky-800'
-                                : 'bg-emerald-100 text-emerald-800',
+                              'rounded-full px-2.5 py-0.5 text-xs font-bold',
+                              lv === 'HL'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : 'bg-sky-100 text-sky-800',
                             ]}
                           >
-                            {s.entry.offeredLevels === 'both' ? 'HL & SL' : s.entry.offeredLevels}
+                            {lv}
                           </span>
-                        )}
-                      </div>
-                      <p class="mt-2 max-w-3xl text-base leading-relaxed text-stone-600 sm:text-lg">
-                        {pick(locale, s.entry.sk.description, s.entry.description)}
+                        ))}
+                      </span>
+                    )}
+                    <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                      {pick(locale, s.entry.sk.description, s.entry.description)}
+                    </p>
+                    {s.entry.teacher && (
+                      <p class="mt-auto pt-4 text-xs text-stone-400">
+                        {dict.subjects.teacher}: {s.entry.teacher}
                       </p>
-                      {s.entry.teacher && (
-                        <p class="mt-2.5 text-sm text-stone-400">
-                          {dict.subjects.teacher}: {s.entry.teacher}
-                        </p>
-                      )}
-                    </div>
-                    <span
-                      class="-translate-x-1 text-xl font-semibold text-dp-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                      aria-hidden="true"
-                    >
-                      →
-                    </span>
+                    )}
                   </a>
                 </li>
               ))}
@@ -246,12 +228,29 @@ const groups = groupDefs
     </div>
   </div>
 
-  <!-- Builder cross-link: combine these subjects into a diploma -->
+  <!-- Builder cross-link -->
   <section class="bg-dp-900 text-white" data-reveal>
-    <div class="relative mx-auto max-w-7xl overflow-hidden px-4 py-16 sm:px-6 sm:py-20">
+    <div
+      class="relative mx-auto grid max-w-7xl items-center gap-10 overflow-hidden px-6 py-16 sm:py-20 lg:grid-cols-12 lg:px-12"
+    >
+      <div class="lg:col-span-7">
+        <p class="text-xs font-semibold uppercase tracking-widest text-dp-300">
+          {dict.dp.shortTitle}
+        </p>
+        <h2 class="mt-2 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
+          {dict.dp.builderTitle}
+        </h2>
+        <p class="mt-3 max-w-xl leading-relaxed text-white/75">{dict.dp.builderBody}</p>
+        <a
+          href={l('/build-your-diploma', locale)}
+          class="group mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-transform hover:translate-x-1"
+        >
+          {dict.dp.builderCta} →
+        </a>
+      </div>
       <svg
         viewBox="0 0 400 400"
-        class="pointer-events-none absolute -right-12 -bottom-32 h-80 w-80 text-white/10"
+        class="hidden h-64 w-64 justify-self-end text-white/15 lg:col-span-5 lg:block"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
@@ -266,19 +265,6 @@ const groups = groupDefs
         <line x1="200" y1="200" x2="53" y2="115"></line>
         <circle cx="200" cy="200" r="60"></circle>
       </svg>
-      <p class="text-xs font-semibold uppercase tracking-widest text-dp-300">
-        {dict.dp.shortTitle}
-      </p>
-      <h2 class="mt-2 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
-        {dict.dp.builderTitle}
-      </h2>
-      <p class="mt-3 max-w-xl leading-relaxed text-white/75">{dict.dp.builderBody}</p>
-      <a
-        href={l('/build-your-diploma', locale)}
-        class="group mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-transform hover:translate-x-1"
-      >
-        {dict.dp.builderCta} →
-      </a>
     </div>
   </section>
 
@@ -297,7 +283,6 @@ const groups = groupDefs
 
       const io = new IntersectionObserver(
         (entries) => {
-          // Pick the entry closest to the top of the reading band
           const visible = entries.filter((e) => e.isIntersecting);
           if (visible.length > 0) setActive(visible[0].target.id);
         },
@@ -308,16 +293,4 @@ const groups = groupDefs
 
     document.addEventListener('astro:page-load', initSubjectsSpy);
   </script>
-
-  <style>
-    .ghost-numeral {
-      color: var(--color-dp-100);
-    }
-    @supports (-webkit-text-stroke: 1px black) {
-      .ghost-numeral {
-        color: transparent;
-        -webkit-text-stroke: 2px var(--color-dp-200);
-      }
-    }
-  </style>
 </Layout>

@@ -199,6 +199,9 @@ const dict = {
       catalogueLabel: 'Course catalogue',
       enrolmentNote:
         'Subjects run each year only if enough students choose them, so the exact offering and the levels available can vary from year to year. Ask the school to confirm current options.',
+      statSubjects: 'subjects',
+      statGroups: 'groups',
+      statLevels: 'levels, SL and HL',
     },
     builder: {
       title: 'Build Your Diploma',
@@ -221,7 +224,7 @@ const dict = {
       rules: [
         'One subject from each of groups 1-5.',
         'A sixth from group 6, or a second from groups 1-4.',
-        'Three or four subjects at Higher Level (HL), the rest at Standard Level (SL). Most students take three HL.',
+        'Subjects are taken at Standard Level (SL) or Higher Level (HL). Three or four must be HL, and most students take three.',
       ],
       validComplete: 'This is a valid diploma combination.',
       errSix: 'Choose six subjects in total.',
@@ -943,6 +946,9 @@ const dict = {
       catalogueLabel: 'Katalóg kurzov',
       enrolmentNote:
         'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka a dostupné úrovne sa môžu rok od roka líšiť. Aktuálne možnosti si overte u školy.',
+      statSubjects: 'predmetov',
+      statGroups: 'skupín',
+      statLevels: 'úrovne, SL a HL',
     },
     builder: {
       title: 'Zostavte si diplom',
@@ -964,7 +970,7 @@ const dict = {
       rules: [
         'Jeden predmet z každej zo skupín 1-5.',
         'Šiesty zo skupiny 6, alebo druhý zo skupín 1-4.',
-        'Tri alebo štyri predmety na Higher Level (HL), zvyšok na Standard Level (SL). Väčšina študentov si volí tri HL.',
+        'Predmety sa študujú na Standard Level (SL) alebo Higher Level (HL). Tri alebo štyri musia byť HL, väčšina študentov si volí tri.',
       ],
       validComplete: 'Toto je platná kombinácia predmetov.',
       errSix: 'Vyberte spolu šesť predmetov.',
