@@ -39,7 +39,7 @@ That's it — you only do this once. (Why your own account? So the site records 
 Go to the website address with `/keystatic` on the end. On the current temporary address that is:
 
 ```
-https://jgnxdfbe0xrwuk0oz0i06hyg.87.106.7.54.sslip.io/keystatic
+https://ib-ceska.vsht.workers.dev/keystatic
 ```
 
 > When the site moves to its final address, this becomes `https://ib.gymnaziumceska.sk/keystatic`.
@@ -59,7 +59,7 @@ You'll see the list of collections (Subjects, News, …). Click one. You'll see 
 
 Use the form — type into text boxes, pick from dropdowns, choose dates. The big rich-text area (for the main body) works like a normal document editor: headings, bold, lists, links.
 
-> **Slovak version:** scroll to the bottom of the form — there's an optional **"Slovak translation"** section. Fill it if you have the Slovak text. If you leave it empty, the English shows on the Slovak side of the site automatically. You never *have* to fill it.
+> **Slovak version:** scroll to the bottom of the form — there's an optional **"Slovak translation"** section. Fill it if you have the Slovak text. If you leave it empty, the English shows on the Slovak side of the site automatically. You never _have_ to fill it.
 
 ### 5. Save
 
@@ -83,11 +83,11 @@ That's the whole loop: **open → edit → Save → wait a moment → live.**
 
 ## When something goes wrong
 
-| What you see | What to do |
-| ------------ | ---------- |
-| "Unable to load collection" or a crash when you click around | Tell the administrator — usually a server/website setting, not something you did. |
-| The Save button does nothing | Make sure you're logged in (try reloading and signing in again). If it still won't save, tell the administrator. |
-| GitHub won't let you log in | Check you accepted the email invitation to the project (see "Before you start"). |
-| Your change isn't live after a few minutes | Reload the public page; if still missing, tell the administrator. |
+| What you see                                                 | What to do                                                                                                       |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| "Unable to load collection" or a crash when you click around | Tell the administrator — usually a server/website setting, not something you did.                                |
+| The Save button does nothing                                 | Make sure you're logged in (try reloading and signing in again). If it still won't save, tell the administrator. |
+| GitHub won't let you log in                                  | Check you accepted the email invitation to the project (see "Before you start").                                 |
+| Your change isn't live after a few minutes                   | Reload the public page; if still missing, tell the administrator.                                                |
 
 For anything you're unsure about, ask the site administrator — better to ask than to guess.

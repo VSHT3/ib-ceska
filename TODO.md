@@ -58,11 +58,11 @@ Umami analytics
 
 The Worker-compatible build is ready. Complete the Cloudflare account and DNS steps:
 
-- [ ] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, production branch `main`
-- [ ] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
-- [ ] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (do not put them in source control)
-- [ ] Add the generated `workers.dev` Keystatic callback as a Callback URL on the `IB Ceska CMS` GitHub App
-- [ ] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on the `workers.dev` URL
+- [x] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, production branch `main`
+- [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
+- [x] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (do not put them in source control)
+- [x] Add the generated `workers.dev` Keystatic callback as a Callback URL on the `IB Ceska CMS` GitHub App
+- [x] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on `https://ib-ceska.vsht.workers.dev`
 - [ ] Add `gymnaziumceska.sk` to Cloudflare DNS and reproduce every existing DNS record before changing nameservers. A Workers Custom Domain requires an active Cloudflare zone; an external-DNS CNAME to `workers.dev` is not sufficient.
 - [ ] Worker → Settings → Domains & Routes → Add Custom Domain → `ib.gymnaziumceska.sk`
 - [ ] `IB Ceska CMS` GitHub App → **Callback URL** → `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback` (and update Homepage URL)

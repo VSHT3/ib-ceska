@@ -1,12 +1,12 @@
 # IB at Súkromné Gymnázium Česká
 
-[![Astro](https://img.shields.io/badge/Astro-6-ff5a03?logo=astro)](https://astro.build)
+[![Astro](https://img.shields.io/badge/Astro-7-ff5a03?logo=astro)](https://astro.build)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss)](https://tailwindcss.com)
 [![Keystatic](https://img.shields.io/badge/CMS-Keystatic-6644ff)](https://keystatic.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript)](https://www.typescriptlang.org)
 [![Node](https://img.shields.io/badge/Node-%3E%3D22.12.0-339933?logo=nodedotjs)](https://nodejs.org)
 
-Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia. Built with Astro in **hybrid mode**: pages are statically prerendered, and a small Node server backs the Keystatic CMS admin routes.
+Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia. Built with Astro in **hybrid mode**: pages are statically prerendered, and a Cloudflare Worker backs the Keystatic CMS admin routes.
 
 ## Features
 

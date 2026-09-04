@@ -30,12 +30,19 @@ pnpm-debug.log*
 # husky internal files
 .husky/_/
 
-# local Claude Code settings (personal, not shared)
-.claude/settings.local.json
-
-# Teams chat export used as a work source: contains account credentials
-teams-ib-web-chat/
-
-
-# Prose writing guide
+# AI tooling — private, never published
+AGENTS.md
+CLAUDE*.md
+PRODUCT.md
+.agents/
+.claude/
+.omp/
+.impeccable/
+.delta/
+openspec/
+skills-lock.json
 BANNED - *.md
+
+# Raw source material (Teams export contains credentials; PDFs are hosted from public/documents/)
+teams-ib-web-chat/
+pdfs/

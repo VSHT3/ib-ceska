@@ -6,7 +6,7 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 
 - **Host:** Cloudflare Workers with static assets.
 - **Source:** GitHub repo `VSHT3/ib-ceska`, branch `main`.
-- **Initial URL:** `https://ib-ceska.<account-subdomain>.workers.dev`.
+- **Current URL:** `https://ib-ceska.vsht.workers.dev` (live since 2026-09-02).
 - **Production domain:** `https://ib.gymnaziumceska.sk` after the DNS cutover.
 
 ### GitHub App
