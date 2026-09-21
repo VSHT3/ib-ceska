@@ -79,12 +79,12 @@ Implemented and shipped.
 
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
-- [x] Vector school logo: triangle mark (`/logo-mark.svg`) traced from the school's hi-res banner, full lockup (`/logo.svg`) with PT Serif Bold text rendered as glyph paths; used in nav (with text wordmark), footer, schema.org logo, and regenerated favicons
+- [x] Official burgundy triangle school logo (`/logo-mark.png`) supplied by the school; used in the nav, footer, schema.org metadata, and regenerated favicons
 - [x] Nav: `School` dropdown (Mission and vision, Team, Testimonials, Policies and guides) on desktop and mobile
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
-- [x] Official IB logos: IB sphere mark (`/ib-logo.svg`) in footer + What-is-IB; DP/MYP banner logos (`/ib-dp-logo.png`, `/ib-myp-logo.png`) on `/dp` `/myp` headers + homepage programme cards
+- [x] Official IB sphere mark (`/ib-logo.svg`) in the footer and What-is-IB section; official IB DP banner (`/ib-dp-logo.png`) on DP surfaces. MYP uses text-only branding while the school is awaiting authorization.
 - [x] Source Serif 4 + Source Sans 3 superfamily, self-hosted, latin + latin-ext only (hand-declared `@font-face`, 284 KB shipped vs 1.1 MB from a wholesale import). Serif on `h1`/`h2`/`h3`/`blockquote`, sans for UI, labels and data
 - [x] Tailwind-only CSS (animation utilities live in `global.css`)
 - [x] Full-photo homepage hero with a slow one-shot settle + staggered fade-in entrance, CTAs
@@ -111,7 +111,7 @@ Implemented and shipped.
 - [x] 2 news articles — with full article bodies
 - [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections, client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
 - [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed; events Keystatic collection retained.
-- [x] 13 downloadable school resources described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `admissionsDocuments`, `mypDocuments`), plus the authorization certificate embedded as an image on `/mission`
+- [x] 13 downloadable school resources described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `admissionsDocuments`, `mypDocuments`); EN + SK parent handbooks appear with application documents and on `/policies`, plus the authorization certificate embedded as an image on `/mission`
 - [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
 
 ## Deployment

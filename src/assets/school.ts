@@ -9,7 +9,6 @@ import hallwayLibrary from './school/hallway-library.jpg';
 import projectPresentation from './school/project-presentation.jpg';
 import schoolBuilding from './school/school-building.jpg';
 import studentsFun from './school/students-fun.jpg';
-import studentsReading from './school/students-reading.jpg';
 import studentsSelfie from './school/students-selfie.jpg';
 import volunteering from './school/volunteering.png';
 
@@ -21,7 +20,6 @@ export const school = {
   projectPresentation,
   schoolBuilding,
   studentsFun,
-  studentsReading,
   studentsSelfie,
   volunteering,
 } satisfies Record<string, ImageMetadata>;

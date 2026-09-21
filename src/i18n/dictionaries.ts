@@ -6,14 +6,18 @@ export const contact = {
 
 const dict = {
   en: {
-    site: { title: 'IB Gymnázium Česká', tagline: 'To Inspire And Grow' },
+    site: {
+      title: 'Súkromné gymnázium Česká, IB Diploma Programme',
+      schoolName: 'Súkromné gymnázium Česká',
+      tagline: 'To Inspire And Grow',
+    },
     nav: {
       home: 'Home',
       programmes: 'Programmes',
       myp: 'MYP',
       mypDesc: 'Middle Years Programme · ages 14-16',
-      dp: 'DP',
-      dpDesc: 'Diploma Programme · ages 16-19',
+      dp: 'IB DP',
+      dpDesc: 'IB Diploma Programme · ages 16-19',
       builder: 'Build your diploma',
       builderDesc: 'Plan a subject combination',
       subjects: 'Subjects',
@@ -79,28 +83,24 @@ const dict = {
       resultsCount: '{n} results',
     },
     home: {
-      badge: 'MYP & DP at Česká',
-      /** Rendered as one sentence, in three parts so the middle can be set in the IB's
-          own blue. Split rather than string-matched because Slovak inflects the tail:
-          "at Česká" becomes "na Českej". The accent itself is a proper noun and is
-          identical in both locales. */
-      hero: 'Study the',
-      heroAccent: 'International Baccalaureate',
-      heroTail: 'at Česká',
+      badge: 'MYP & IB DP at Česká',
+      hero: 'Súkromné gymnázium Česká,',
+      heroAccent: 'IB Diploma Programme',
+      heroTail: '',
       heroSub:
-        'Build strong subject knowledge, ask better questions, and take on work that reaches beyond the classroom.',
+        'Choose between MYP for ages 14 to 16 and our authorized IB Diploma Programme for ages 16 to 19.',
       ctaPrimary: 'Explore subjects',
       ctaSecondary: 'How to apply',
       statSchools: 'IB World Schools globally',
       statCountries: 'countries teach the IB',
       statGroups: 'subject groups in the DP',
-      statProgrammes: 'programmes at Česká: MYP & DP',
+      statProgrammes: 'programmes at Česká: MYP & IB DP',
       whatIsIBLabel: 'What is the IB?',
       whatIsIB: 'A global standard for curious minds',
       whatIsIBBody1:
         'The International Baccalaureate (IB) is a rigorous, internationally recognised curriculum taught in over 5,500 schools across 160 countries. It sets out to develop inquiring, knowledgeable, and caring young people who are motivated to succeed.',
       whatIsIBBody2:
-        'At Súkromné Gymnázium Česká, the curriculum combines academic depth with independent research, reflection, and community engagement.',
+        'At Súkromné gymnázium Česká, the IB Diploma Programme combines academic depth with independent research, reflection, and community engagement.',
       programmesLabel: 'Programmes',
       programmesHeading: 'Choose the right stage',
       mypTitle: 'Middle Years Programme (MYP)',
@@ -113,7 +113,7 @@ const dict = {
       mypItem4: 'Prepares the mindset for the Diploma Programme',
       mypNote:
         'Súkromné gymnázium Česká is a Candidate School* for the MYP and is pursuing authorization as an IB World School. *Only schools authorized by the IB Organization can offer its programmes; candidate status gives no guarantee that authorization will be granted. Learn more at www.ibo.org.',
-      dpTitle: 'Diploma Programme (DP)',
+      dpTitle: 'IB Diploma Programme (DP)',
       dpAges: '16-19 years',
       dpDesc:
         'The DP is a two-year, academically challenging programme that leads to a qualification respected by universities worldwide.',
@@ -122,7 +122,7 @@ const dict = {
       dpItem3: 'Extended Essay: a 4,000-word research paper',
       dpItem4: 'Creativity, Activity, Service (CAS)',
       mypCta: 'Explore the MYP',
-      dpCta: 'Explore the DP',
+      dpCta: 'Explore the IB DP',
       benefitsLabel: 'Student work',
       benefitsHeading: 'IB is built around work students can show',
       benefitsIntro:
@@ -184,7 +184,7 @@ const dict = {
       teachersLabel: 'Meet the team',
       teachersDesc:
         'Get to know the programme leaders, subject teachers, coordinators, and student support team.',
-      ctaHeading: 'Thinking about MYP or DP at Česká?',
+      ctaHeading: 'Thinking about MYP or IB DP at Česká?',
       ctaBody:
         'See the application steps, then talk directly with the school about current requirements.',
       ctaButton: 'How to apply',
@@ -481,8 +481,8 @@ const dict = {
       label: 'Join Česká',
       introTitle: 'Start with a conversation',
       introBody:
-        'Admissions details can change between school years. Contact the IB team before preparing documents so you receive the current process for your programme.',
-      emailButton: 'Email the IB team',
+        'Admissions details can change between school years. Contact the programme team before preparing documents so you receive the current process for your programme.',
+      emailButton: 'Email the programme team',
       callButton: 'Call the school',
       programmesLabel: 'Choose a programme',
       programmesTitle: 'Where would you enter?',
@@ -490,7 +490,7 @@ const dict = {
       mypAges: 'Ages 14-16 at Česká',
       mypBody:
         'For students building the academic habits and interdisciplinary thinking needed before the Diploma Programme.',
-      dpTitle: 'Diploma Programme',
+      dpTitle: 'IB Diploma Programme',
       dpAges: 'Ages 16-19',
       dpBody:
         'For students ready for a focused two-year programme with six subjects, TOK, CAS, and the Extended Essay.',
@@ -508,20 +508,20 @@ const dict = {
       prepareItems: [
         'Student name and current school year',
         'Current school and study programme',
-        'Interest in MYP or DP',
+        'Interest in MYP or IB DP',
         'Preferred language for communication',
         'Questions about subjects, dates, or requirements',
       ],
       directTitle: 'Talk directly with the school',
       directBody:
-        'The IB team can give you the latest information for the current admissions cycle.',
+        'The programme team can give you the latest information for the current admissions cycle.',
       schoolWebsite: 'Main school website',
       faqLabel: 'Good to know',
       faqTitle: 'Frequently asked questions',
       faqItems: [
         {
           q: 'When can I apply?',
-          a: 'Admissions windows vary by year and programme. Contact the IB team and they will confirm the current dates and whether places are still available for your year of entry.',
+          a: 'Admissions windows vary by year and programme. Contact the programme team and they will confirm the current dates and whether places are still available for your year of entry.',
         },
         {
           q: 'What are the entry requirements?',
@@ -543,9 +543,10 @@ const dict = {
       documentsLabel: 'Documents & forms',
       documentsTitle: 'Admissions documents',
       documentsIntro:
-        'Download the official admissions announcements, application forms, and process details. Always confirm current dates with the IB team before applying.',
-      documentsDpLabel: 'Diploma Programme',
+        'Download the official admissions announcements, application forms, process details, and parent handbooks. Always confirm current dates with the programme team before applying.',
+      documentsDpLabel: 'IB Diploma Programme',
       documentsMypLabel: 'Middle Years Programme',
+      documentsParentLabel: 'Parent handbooks · English & Slovak',
       feesLabel: 'School fees',
       feesTitle: 'DP tuition & costs',
       feesIntro:
@@ -567,7 +568,7 @@ const dict = {
       whatIsLabel: 'What is MYP?',
       whatIsTitle: 'A curriculum that teaches your child how to think',
       whatIsBody:
-        'The Middle Years Programme is the IB programme for students aged 14 to 16. Instead of memorising facts for exams, your child investigates real questions, connects ideas across subjects, and builds the skills they will need for university and work. At Česká, the MYP covers the final two years before the Diploma Programme.',
+        'MYP is a programme framework for students aged 14 to 16. Súkromné gymnázium Česká is currently a Candidate School for MYP and is pursuing authorization. Students investigate real questions, connect ideas across subjects, and build the skills they will need for university and work.',
       whatIsPoints: [
         {
           title: 'Eight subjects, connected',
@@ -605,7 +606,7 @@ const dict = {
       curriculumLabel: 'Curriculum',
       curriculumTitle: 'Eight subject groups',
       curriculumBody:
-        'The full MYP curriculum includes eight subject groups. In later years, schools may offer flexibility within IB requirements and local education rules.',
+        'The full MYP framework includes eight subject groups. In later years, schools may offer flexibility within programme requirements and local education rules.',
       curriculumItems: [
         'Language and literature',
         'Language acquisition',
@@ -655,7 +656,7 @@ const dict = {
       links: [
         {
           label: 'Explore subjects',
-          body: 'See the subject materials currently published on the Česká IB site.',
+          body: 'See the subject materials currently published on the Česká programme site.',
           href: '/subjects',
         },
         {
@@ -676,7 +677,7 @@ const dict = {
       afterMypLabel: 'After MYP',
       afterMypTitle: 'The MYP flows into the Diploma Programme',
       afterMypBody:
-        'The Diploma Programme (ages 16 to 19) is the direct path to university entrance worldwide. The habits your child builds in MYP (independent research, time management, connecting ideas across subjects) are exactly what the DP demands. Moving from MYP to DP at Česká means staying in the same school with teachers who already know your child.',
+        'The IB Diploma Programme (ages 16 to 19) is the direct path to university entrance worldwide. The habits your child builds in MYP (independent research, time management, connecting ideas across subjects) are exactly what IB DP demands. Moving from MYP to IB DP at Česká means staying in the same school with teachers who already know your child.',
       admissionsTitle: 'Is the MYP the right next step?',
       admissionsBody:
         'Contact the school for current entry requirements, dates, and programme details.',
@@ -687,13 +688,13 @@ const dict = {
         'A short overview of MYP at Česká and the official IB parent pack. For admissions forms, see the admissions page.',
     },
     dp: {
-      title: 'Diploma Programme',
-      shortTitle: 'DP',
+      title: 'IB Diploma Programme',
+      shortTitle: 'IB DP',
       subtitle:
         'A focused two-year programme built from six subjects and a core of research, reflection, and action.',
       age: 'Ages 16-19',
       duration: 'Two years',
-      label: 'Diploma Programme',
+      label: 'IB Diploma Programme',
       introTitle: 'Build depth, range, and independence',
       introBody:
         'DP students combine six subjects with three required core components. The programme expects careful subject choices, sustained work, and the ability to connect ideas across disciplines.',
@@ -761,14 +762,18 @@ const dict = {
     },
   },
   sk: {
-    site: { title: 'IB Gymnázium Česká', tagline: 'Inšpirovať a rásť' },
+    site: {
+      title: 'Súkromné gymnázium Česká, IB Diploma Programme',
+      schoolName: 'Súkromné gymnázium Česká',
+      tagline: 'Inšpirovať a rásť',
+    },
     nav: {
       home: 'Domov',
       programmes: 'Programy',
       myp: 'MYP',
       mypDesc: 'Middle Years Programme · vek 14-16',
-      dp: 'DP',
-      dpDesc: 'Diploma Programme · vek 16-19',
+      dp: 'IB DP',
+      dpDesc: 'IB Diploma Programme · vek 16-19',
       builder: 'Zostavte si diplom',
       builderDesc: 'Naplánujte si kombináciu predmetov',
       subjects: 'Predmety',
@@ -834,24 +839,24 @@ const dict = {
       resultsCount: '{n} výsledkov',
     },
     home: {
-      badge: 'MYP a DP na Českej',
-      hero: 'Študujte',
-      heroAccent: 'International Baccalaureate',
-      heroTail: 'na Českej',
+      badge: 'MYP a IB DP na Českej',
+      hero: 'Súkromné gymnázium Česká,',
+      heroAccent: 'IB Diploma Programme',
+      heroTail: '',
       heroSub:
-        'Získajte pevné vedomosti, pýtajte sa lepšie otázky a pracujte na projektoch, ktoré presahujú vyučovanie.',
+        'Vyberte si MYP pre vek 14 až 16 rokov alebo náš autorizovaný IB Diploma Programme pre vek 16 až 19 rokov.',
       ctaPrimary: 'Preskúmať predmety',
       ctaSecondary: 'Ako sa prihlásiť',
       statSchools: 'IB škôl po celom svete',
       statCountries: 'krajín vyučuje IB',
       statGroups: 'predmetových skupín v DP',
-      statProgrammes: 'programy na Českej: MYP a DP',
+      statProgrammes: 'programy na Českej: MYP a IB DP',
       whatIsIBLabel: 'Čo je IB?',
       whatIsIB: 'Globálny štandard pre zvedavé mysle',
       whatIsIBBody1:
         'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací program vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
       whatIsIBBody2:
-        'Na Súkromnom Gymnáziu Česká kurikulum spája akademickú hĺbku so samostatným výskumom, reflexiou a komunitnou angažovanosťou.',
+        'Na Súkromnom gymnáziu Česká spája IB Diploma Programme akademickú hĺbku so samostatným výskumom, reflexiou a komunitnou angažovanosťou.',
       programmesLabel: 'Programy',
       programmesHeading: 'Vyberte si správny stupeň',
       mypTitle: 'Middle Years Programme (MYP)',
@@ -864,7 +869,7 @@ const dict = {
       mypItem4: 'Pripravuje myslenie na Diplomový Program',
       mypNote:
         'Súkromné gymnázium Česká je kandidátskou školou* pre MYP a uchádza sa o autorizáciu ako IB World School. *Programy IB môžu ponúkať len školy autorizované IB Organizáciou; kandidátsky status nezaručuje udelenie autorizácie. Viac na www.ibo.org.',
-      dpTitle: 'Diploma Programme (DP)',
+      dpTitle: 'IB Diploma Programme (DP)',
       dpAges: '16-19 rokov',
       dpDesc:
         'DP je dvojročný, akademicky náročný program vedúci ku kvalifikácii uznávanej univerzitami po celom svete.',
@@ -873,7 +878,7 @@ const dict = {
       dpItem3: 'Extended Essay: výskumná práca na 4 000 slov',
       dpItem4: 'Creativity, Activity, Service (CAS)',
       mypCta: 'Spoznajte MYP',
-      dpCta: 'Spoznajte DP',
+      dpCta: 'Spoznajte IB DP',
       benefitsLabel: 'Práca študentov',
       benefitsHeading: 'IB stojí na práci, ktorú môžu študenti ukázať',
       benefitsIntro:
@@ -934,7 +939,7 @@ const dict = {
       teachersLabel: 'Spoznajte tím',
       teachersDesc:
         'Spoznajte vedenie programu, učiteľov predmetov, koordinátorov a tím podpory študentov.',
-      ctaHeading: 'Zvažujete MYP alebo DP na Českej?',
+      ctaHeading: 'Zvažujete MYP alebo IB DP na Českej?',
       ctaBody: 'Pozrite si postup prihlásenia a získajte od školy aktuálne požiadavky.',
       ctaButton: 'Ako sa prihlásiť',
       ctaCall: 'Zavolajte nám',
@@ -1229,8 +1234,8 @@ const dict = {
       label: 'Pridajte sa k Českej',
       introTitle: 'Začnite rozhovorom',
       introBody:
-        'Podmienky prijatia sa môžu medzi školskými rokmi meniť. Pred prípravou dokumentov kontaktujte IB tím, aby ste získali aktuálny postup pre svoj program.',
-      emailButton: 'Napísať IB tímu',
+        'Podmienky prijatia sa môžu medzi školskými rokmi meniť. Pred prípravou dokumentov kontaktujte tím programov, aby ste získali aktuálny postup pre svoj program.',
+      emailButton: 'Napísať tímu programov',
       callButton: 'Zavolať škole',
       programmesLabel: 'Výber programu',
       programmesTitle: 'Do ktorého programu nastupujete?',
@@ -1238,7 +1243,7 @@ const dict = {
       mypAges: 'Vek 14-16 rokov na Českej',
       mypBody:
         'Pre študentov, ktorí si budujú akademické návyky a medzipredmetové myslenie pred Diploma Programme.',
-      dpTitle: 'Diploma Programme',
+      dpTitle: 'IB Diploma Programme',
       dpAges: 'Vek 16-19 rokov',
       dpBody:
         'Pre študentov pripravených na intenzívny dvojročný program so šiestimi predmetmi, TOK, CAS a Extended Essay.',
@@ -1255,19 +1260,19 @@ const dict = {
       prepareItems: [
         'Meno študenta a aktuálny ročník',
         'Aktuálna škola a študijný program',
-        'Záujem o MYP alebo DP',
+        'Záujem o MYP alebo IB DP',
         'Preferovaný jazyk komunikácie',
         'Otázky o predmetoch, termínoch alebo požiadavkách',
       ],
       directTitle: 'Kontaktujte školu priamo',
-      directBody: 'IB tím vám poskytne najnovšie informácie pre aktuálny prijímací cyklus.',
+      directBody: 'Tím programov vám poskytne najnovšie informácie pre aktuálny prijímací cyklus.',
       schoolWebsite: 'Hlavná webová stránka školy',
       faqLabel: 'Dobré vedieť',
       faqTitle: 'Často kladené otázky',
       faqItems: [
         {
           q: 'Kedy sa môžem prihlásiť?',
-          a: 'Termíny prijímania sa líšia podľa roka a programu. Kontaktujte IB tím a potvrdí vám aktuálne dátumy a dostupnosť miest pre váš rok nástupu.',
+          a: 'Termíny prijímania sa líšia podľa roka a programu. Kontaktujte tím programov a potvrdí vám aktuálne dátumy a dostupnosť miest pre váš rok nástupu.',
         },
         {
           q: 'Aké sú podmienky prijatia?',
@@ -1289,9 +1294,10 @@ const dict = {
       documentsLabel: 'Dokumenty a formuláre',
       documentsTitle: 'Dokumenty k prijímaniu',
       documentsIntro:
-        'Stiahnite si oficiálne oznamy o prijímacom konaní, prihlášky a podrobnosti procesu. Aktuálne termíny vždy priebežne overujte s IB tímom pred podaním prihlášky.',
-      documentsDpLabel: 'Diploma Programme',
+        'Stiahnite si oficiálne oznamy o prijímacom konaní, prihlášky, podrobnosti procesu a príručky pre rodičov. Aktuálne termíny vždy overte s tímom programov pred podaním prihlášky.',
+      documentsDpLabel: 'IB Diploma Programme',
       documentsMypLabel: 'Middle Years Programme',
+      documentsParentLabel: 'Príručky pre rodičov · anglicky a slovensky',
       feesLabel: 'Školné',
       feesTitle: 'Školné a náklady DP',
       feesIntro:
@@ -1313,7 +1319,7 @@ const dict = {
       whatIsLabel: 'Čo je MYP?',
       whatIsTitle: 'Kurikulum, ktoré učí dieťa, ako myslieť',
       whatIsBody:
-        'Middle Years Programme je program IB pre študentov vo veku 14 až 16 rokov. Namiesto memorovania faktov pre skúšky vaše dieťa skúma skutočné otázky, prepája myšlienky naprieč predmetmi a buduje zručnosti, ktoré bude potrebovať na univerzite aj v živote. Na Českej pokrýva MYP posledné dva roky pred Diploma Programme.',
+        'MYP je programový rámec pre študentov vo veku 14 až 16 rokov. Súkromné gymnázium Česká je v súčasnosti kandidátskou školou pre MYP a uchádza sa o autorizáciu. Študenti skúmajú skutočné otázky, prepájajú myšlienky naprieč predmetmi a budujú zručnosti potrebné na univerzite aj v živote.',
       whatIsPoints: [
         {
           title: 'Osem predmetov, prepojených',
@@ -1351,7 +1357,7 @@ const dict = {
       curriculumLabel: 'Kurikulum',
       curriculumTitle: 'Osem predmetových skupín',
       curriculumBody:
-        'Úplné kurikulum MYP zahŕňa osem predmetových skupín. V neskorších rokoch môžu školy ponúknuť flexibilitu v rámci požiadaviek IB a miestnych pravidiel.',
+        'Úplný rámec MYP zahŕňa osem predmetových skupín. V neskorších rokoch môžu školy ponúknuť flexibilitu v rámci požiadaviek programu a miestnych pravidiel.',
       curriculumItems: [
         'Jazyk a literatúra',
         'Osvojovanie jazyka',
@@ -1392,7 +1398,7 @@ const dict = {
       links: [
         {
           label: 'Preskúmať predmety',
-          body: 'Pozrite si predmetové materiály aktuálne publikované na IB stránke Českej.',
+          body: 'Pozrite si predmetové materiály aktuálne publikované na stránke programov Českej.',
           href: '/subjects',
         },
         {
@@ -1413,7 +1419,7 @@ const dict = {
       afterMypLabel: 'Po MYP',
       afterMypTitle: 'MYP plynule prechádza do Diploma Programme',
       afterMypBody:
-        'Diploma Programme (vek 16 až 19) je priama cesta k univerzitnému štúdiu po celom svete. Návyky, ktoré vaše dieťa buduje v MYP (samostatný výskum, time management, prepájanie myšlienok naprieč predmetmi), sú presne to, čo DP vyžaduje. Prechod z MYP na DP na Českej znamená zostať v tej istej škole s učiteľmi, ktorí vaše dieťa už poznajú.',
+        'IB Diploma Programme (vek 16 až 19) je priama cesta k univerzitnému štúdiu po celom svete. Návyky, ktoré vaše dieťa buduje v MYP (samostatný výskum, time management, prepájanie myšlienok naprieč predmetmi), sú presne to, čo IB DP vyžaduje. Prechod z MYP na IB DP na Českej znamená zostať v tej istej škole s učiteľmi, ktorí vaše dieťa už poznajú.',
       admissionsTitle: 'Je MYP správny ďalší krok?',
       admissionsBody:
         'Kontaktujte školu pre aktuálne vstupné požiadavky, termíny a podrobnosti programu.',
@@ -1424,13 +1430,13 @@ const dict = {
         'Krátky prehľad MYP na Českej a oficiálne vydanie IB pre rodičov. Prihlášky nájdete na stránke prijímacieho konania.',
     },
     dp: {
-      title: 'Diploma Programme',
-      shortTitle: 'DP',
+      title: 'IB Diploma Programme',
+      shortTitle: 'IB DP',
       subtitle:
         'Intenzívny dvojročný program postavený na šiestich predmetoch a jadre výskumu, reflexie a činnosti.',
       age: 'Vek 16-19 rokov',
       duration: 'Dva roky',
-      label: 'Diploma Programme',
+      label: 'IB Diploma Programme',
       introTitle: 'Budujte hĺbku, rozsah a samostatnosť',
       introBody:
         'Študenti DP kombinujú šesť predmetov s tromi povinnými súčasťami jadra. Program vyžaduje premyslený výber predmetov, sústavnú prácu a schopnosť prepájať myšlienky naprieč disciplínami.',

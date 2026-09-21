@@ -15,7 +15,6 @@ const dict = t(locale);
 
 const galleryPhotos = [
   { src: school.classroom, alt: 'Students in class' },
-  { src: school.studentsReading, alt: 'Students reading in the library' },
   { src: school.projectPresentation, alt: 'Students presenting a project' },
   { src: school.hallwayLibrary, alt: 'School hallway and library' },
   { src: school.volunteering, alt: 'Students volunteering' },
@@ -163,8 +162,8 @@ const exploreCards = [
   <section class="grid items-stretch lg:grid-cols-2">
     <div class="relative min-h-[22rem] lg:min-h-[36rem]" data-reveal>
       <Image
-        src={school.studentsReading}
-        alt="Students reading together in the school library"
+        src={school.hallwayLibrary}
+        alt="School library and hallway at Česká"
         class="absolute inset-0 h-full w-full object-cover"
         widths={[768, 1024, 1280]}
         sizes="(min-width: 1024px) 50vw, 100vw"
@@ -220,13 +219,10 @@ const exploreCards = [
             class="group flex h-full flex-col rounded-3xl border border-stone-200 bg-white p-8 sm:p-10 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform hover:border-myp-300 hover:shadow-xl hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
             <div class="flex items-center justify-between gap-3 mb-6">
-              <img
-                src="/ib-myp-logo.png"
-                alt="IB Middle Years Programme logo"
-                width="640"
-                height="256"
-                class="h-12 w-auto transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none"
-              />
+              <span
+                class="text-2xl font-bold tracking-tight text-myp-800"
+                aria-label="Middle Years Programme">MYP</span
+              >
               <span
                 class="text-xs font-semibold rounded-full bg-myp-50 text-myp-700 border border-myp-200 px-3 py-1 shrink-0"
                 >{dict.home.mypAges}</span

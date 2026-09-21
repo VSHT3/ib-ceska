@@ -6,7 +6,7 @@ Umami analytics
 ## IB branding
 
 - [x] Add official IB brand colors as design tokens — IB corporate blue (`#004587`) + light blue (`#2FB4E9`) added to `@theme` in `global.css` as `--color-ib-blue` / `--color-ib-blue-light`. (Programme-specific PYP/MYP/DP hexes are not publicly published by the IB; not added.)
-- [x] Add official IB logos (IB Org, MYP, DP) — `public/ib-logo.svg` (IB sphere mark) in footer + homepage What-is-IB; `public/ib-dp-logo.png` / `ib-myp-logo.png` on the `/dp` `/myp` page headers and the homepage programme cards. (Mind IB logo usage rules for candidate schools.)
+- [x] Add official IB logos where authorized — `public/ib-logo.svg` (IB sphere mark) in the footer + homepage What-is-IB and `public/ib-dp-logo.png` on IB DP surfaces. MYP uses text-only branding until authorization.
 - [x] Dedicated bilingual MYP subpage (`/myp`)
 - [x] Dedicated bilingual DP subpage (`/dp`)
 
@@ -38,7 +38,7 @@ Umami analytics
 
 ## UI & UX
 
-- [ ] Update nav logo with high-quality version when provided (still missing better logo)
+- [x] Update nav logo with the school-supplied burgundy triangle logo; regenerate favicons and structured-data logo
 - [x] Optimize school photos via Astro `<Image>` (responsive sizes, AVIF/WebP)
 - [x] Gallery page (photos now in `src/assets/school/`)
 - [x] Admissions/contact page with bilingual application guidance and direct school contact
@@ -89,11 +89,11 @@ Source: IB coordinator's proposed site map (top-level sections → sub-items). C
 
 ### DONE — admissions & MYP documents hosted and wired
 
-The coordinator supplied the real PDFs (the old site had none — see below). 7 PDFs now live in `public/documents/` and are linked from the site:
+The coordinator supplied the real PDFs (the old site had none — see below). Documents now live in `public/documents/` and are linked from the relevant pages:
 
-- `/admissions` — **School fees** rendered as an HTML table (reconstructed from the school's fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: DP Admissions Announcement, DP Application Form, Prihláška na prijímacie konanie, Informácie o prijímacom konaní (DP group); MYP Admissions Announcement (MYP group). Each link shows a language badge (EN/SK).
+- `/admissions` — **School fees** rendered as an HTML table (reconstructed from the school's fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: IB DP Admissions Announcement, IB DP Application Form, Prihláška na prijímacie konanie, Informácie o prijímacom konaní (IB DP group); MYP Admissions Announcement (MYP group); Parent Handbook in English and Slovak.
 - `/myp` — **MYP guides for parents** section: MYP at Česká (short info, SK), MYP Parent Pack (official IB, EN).
-- Manifest: `src/data/documents.ts` (`admissionsDocuments`, `mypDocuments`, `dpFees`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
+- Manifest: `src/data/documents.ts` (`admissionsDocuments`, `parentDocuments`, `mypDocuments`, `dpFees`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
 - Skipped per coordinator: `program comparison` (content already covered on the site). Fees PDF not hosted — rendered as HTML instead, per coordinator.
 
 Section → current coverage:
@@ -101,7 +101,7 @@ Section → current coverage:
 1. **What is IBDP?** — `/dp` exists (explainer + core-element links); IBO Mission Statement ✅, School Mission + Vision ✅ (new `/mission` page, texts supplied 2026-08-27), IB Learner Profile ❌
 2. **Subjects & DP Core** — Subjects `/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
 3. **School Policies** — all five supplied 2026-07-25 and published on `/policies` ✅ (Admissions, Assessment, Language, Academic Integrity, Inclusion)
-4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ / Application Form ✅ / School Fees ✅ (HTML table) / Handbook for parents ✅ (EN + SK on `/policies`) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form)
+4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ / Application Form ✅ / School Fees ✅ (HTML table) / Handbook for parents ✅ (EN + SK on `/admissions` and `/policies`) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form)
 5. **Activities/Events** — `/news` merged feed ✅
 6. **Gallery** — `/gallery` ✅
 7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ (role titles updated per coordinator 2026-07-21) / Non-teaching staff ❌ / Organizational Chart ❌ (coordinator confirmed 2026-07-21 it is not required on the website; awaiting a decision on whether to render its structure natively on `/teachers`)

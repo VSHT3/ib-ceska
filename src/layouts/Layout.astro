@@ -93,7 +93,7 @@ const altUrl = (code: string) =>
   new URL(withTrailingSlash(`/${code}${pathSansLocale === '/' ? '/' : pathSansLocale}`), site).href;
 const canonicalUrl = new URL(withTrailingSlash(Astro.url.pathname), site).href;
 const ogImage = new URL(schoolBuilding.src, site).href;
-const logoUrl = new URL('/logo.svg', site).href;
+const logoUrl = new URL('/logo-mark.png', site).href;
 const fullTitle = title === dict.site.title ? title : `${title} | ${dict.site.title}`;
 const metaDescription = description ?? dict.site.tagline;
 
@@ -133,8 +133,8 @@ const baseSchemas: Record<string, unknown>[] = [
   {
     '@type': 'HighSchool',
     '@id': schoolId,
-    name: 'Súkromné Gymnázium Česká',
-    alternateName: dict.site.title,
+    name: dict.site.schoolName,
+    alternateName: 'SGČ',
     url: new URL('/', site).href,
     logo: logoUrl,
     image: ogImage,
@@ -256,15 +256,17 @@ const jsonLd = JSON.stringify({
       <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
         <a href={l('/', locale)} class="flex items-center gap-3 shrink-0">
           <img
-            src="/logo-mark.svg"
-            alt="Súkromné Gymnázium Česká IB Diploma Programme"
+            src="/logo-mark.png"
+            alt="Súkromné gymnázium Česká"
             class="h-12 w-auto"
-            width="1330"
-            height="1260"
+            width="1601"
+            height="1456"
           />
           <span class="hidden sm:flex flex-col leading-tight">
-            <span class="text-sm font-bold tracking-tight text-stone-900">{dict.site.title}</span>
-            <span class="text-[11px] font-medium text-stone-500">Diploma Programme</span>
+            <span class="text-sm font-bold tracking-tight text-stone-900">
+              {dict.site.schoolName}
+            </span>
+            <span class="text-[11px] font-medium text-stone-500">IB Diploma Programme</span>
           </span>
         </a>
 
@@ -683,11 +685,11 @@ const jsonLd = JSON.stringify({
           <div class="lg:col-span-5">
             <div class="flex items-center gap-5">
               <img
-                src="/logo-mark.svg"
-                alt={dict.site.title}
-                class="h-16 w-auto brightness-0 invert"
-                width="1330"
-                height="1260"
+                src="/logo-mark.png"
+                alt={dict.site.schoolName}
+                class="h-16 w-auto"
+                width="1601"
+                height="1456"
               />
               <span class="h-10 w-px bg-white/15" aria-hidden="true"></span>
               <img
