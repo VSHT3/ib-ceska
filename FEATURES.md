@@ -130,7 +130,7 @@ Implemented and shipped.
 ## Documentation
 
 - [x] `README.md` — badges, quick start, stack, collection overview, deploy section
-- [x] `AGENTS.md` — AI agent conventions, gotchas, stack details
+- [x] Lean remote repository — local AI/editor files and duplicate source documents excluded from Git
 - [x] `humans/README.md` — onboarding for non-technical collaborators
 - [x] `humans/CONTENT.md` — per-collection field reference, editor workflow
 - [x] `humans/DESIGN.md` — design tokens, layout rules, CMS architecture

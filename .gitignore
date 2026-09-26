@@ -24,6 +24,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+.vscode/
 .firecrawl/
 .fallow/
 
@@ -42,7 +43,10 @@ PRODUCT.md
 openspec/
 skills-lock.json
 BANNED - *.md
+--version/
 
-# Raw source material (Teams export contains credentials; PDFs are hosted from public/documents/)
+# Raw source material (published files live in public/)
 teams-ib-web-chat/
 pdfs/
+docs/
+Diplom.pdf
