@@ -5,6 +5,7 @@ import danielaMojzisova from '../assets/teachers/daniela-mojzisova.jpg';
 import janGonda from '../assets/teachers/jan-gonda.jpg';
 import janaSismisova from '../assets/teachers/jana-sismisova.jpg';
 import jurajBabic from '../assets/teachers/juraj-babic.jpg';
+import katarinaNagy from '../assets/teachers/katarina-nagy.jpg';
 import lubomirTancer from '../assets/teachers/lubomir-tancer.jpg';
 import luciaHoracikova from '../assets/teachers/lucia-horacikova.jpg';
 import martinaDanisova from '../assets/teachers/martina-danisova.png';
@@ -16,6 +17,7 @@ import svetlanaVeselova from '../assets/teachers/svetlana-veselova.jpeg';
 
 // Verified against the school's published IB roster on 15 June 2026.
 // Role titles updated per the IB DP coordinator on 2026-07-21.
+// Katarína Nagy and her portrait added at her request on 2026-09-26.
 type LocalizedList = {
   en: string[];
   sk: string[];
@@ -95,6 +97,16 @@ export const teachers: Teacher[] = [
       en: ['Head of Languages Department'],
       sk: ['Vedúca jazykového oddelenia'],
     },
+  },
+  {
+    name: 'Katarína Nagy',
+    image: katarinaNagy,
+    leadership: false,
+    areas: {
+      en: ['English B'],
+      sk: ['Anglický jazyk B'],
+    },
+    responsibilities: { en: [], sk: [] },
   },
   {
     name: 'Jakeline Jimenez',
