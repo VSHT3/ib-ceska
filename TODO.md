@@ -64,8 +64,9 @@ The Worker-compatible build is ready. Complete the Cloudflare account and DNS st
 - [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
 - [x] Existing live Worker was configured with GitHub App secrets and the `workers.dev` callback; this is historical and must be retired after Cloud login works.
 - [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
-- [x] Set a no-Worker bypass on `analytics.morumori.com/*` and verify its page and `/script.js` still return 200. No wildcard Worker route has been installed.
-- [ ] Enable Cloudflare for SaaS on the approved `morumori.com` Free-plan zone (account owner/payment information required). Then create and validate a dedicated fallback origin and custom hostname; only after confirming the analytics bypass, add `*/*` → `ib-ceska` and immediately recheck analytics. Cloudflare rejects `*/*` until SaaS is enabled. Coordinate with the school administrator to replace only `ib.gymnaziumceska.sk`, never parent nameservers or school mail. See `GO-LIVE-HANDOFF.md`.
+- [x] Enable SaaS on `morumori.com`, set an Active originless fallback, create `ib-ceska.morumori.com` as the CNAME target, and route `*/*` to `ib-ceska`. More-specific routes preserve `analytics.morumori.com/*` and the `morumori.com` studio site; all three were checked after the changes.
+- [x] Create the SaaS custom hostname `ib.gymnaziumceska.sk` with TXT certificate validation. School hostname and certificate remain pending until its DNS administrator adds the two TXT records in `GO-LIVE-HANDOFF.md`.
+- [ ] School DNS administrator: add the two TXT validation records and wait for both statuses Active. Then, during an agreed cutover, replace **only** the `ib` CNAME from `sites.framer.app` to `ib-ceska.morumori.com`; do not change parent nameservers or school mail.
 - [ ] Add the new hostname to Keystatic Cloud allowed URLs and verify login + Save on the school origin.
 - [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 

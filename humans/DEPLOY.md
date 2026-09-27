@@ -75,31 +75,27 @@ A Worker **Custom Domain** requires an active Cloudflare zone. A plain CNAME
 from the current DNS provider to `workers.dev` does **not** make one work.
 There is no `gymnaziumceska.sk` zone in this Cloudflare account.
 
-One non-disruptive option is a **partial (CNAME) zone** on Cloudflare Business
-or Enterprise: the school adds a verification TXT record and later replaces
-only its existing `ib` CNAME. See [partial-zone setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
-and [Worker Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
-Another option on a Free plan is [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/plans/)
-with a Worker as the [fallback origin](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
-The owner selected `morumori.com` as backing and permitted brief downtime
-for that website, but **`analytics.morumori.com` must remain available**. Its
-public DNS currently points directly to `87.106.7.54`. A protective
-`analytics.morumori.com/*` → no Worker route has been created and both the
-analytics page and `/script.js` still return 200. Cloudflare rejected an
-exact `ib.gymnaziumceska.sk/*` Worker route (zone name required), and rejected
-`*/*` → `ib-ceska` until Cloudflare for SaaS is enabled on the zone. SaaS
-activation [requires payment information](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/enable/)
-even on the Free plan; the available CLI OAuth lacks DNS/custom-hostname
-permissions. No wildcard route, SaaS custom hostname, or fallback origin
-has been created. When enabling SaaS and adding the wildcard route, verify
-analytics again immediately and roll back the wildcard if it fails.
-Both approaches leave the school's parent nameservers and mail untouched.
-Coordinate TLS validation and a rollback window with the school administrator.
-See `GO-LIVE-HANDOFF.md`.
+The chosen approach is [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/plans/)
+on the owner's `morumori.com` Free-plan zone, with the [Worker as fallback origin](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
+SaaS is enabled. `ib-ceska-fallback.morumori.com` is a proxied originless
+`AAAA` record (`100::`) and the **Active** fallback origin. The proxied
+`ib-ceska.morumori.com` CNAME points to that fallback; it already serves
+the IB site through the `*/*` → `ib-ceska` Worker route.
 
-Until the school chooses and approves a route, use the existing HTTPS `workers.dev`
-address. Do not promise working canonical links or social images there: the build's
-`site` setting currently points at the school hostname, still served by Framer.
+Two more-specific routes protect unrelated traffic: `analytics.morumori.com/*`
+has **no Worker** (and analytics currently resolves directly to `87.106.7.54`),
+while `morumori.com/*` runs the original `morumori` Worker. Both analytics
+`/script.js` and the studio homepage were verified after routing changed.
+The SaaS custom hostname `ib.gymnaziumceska.sk` is created but still
+**pending**: the school DNS administrator must publish its hostname and
+certificate TXT validation records before changing only the `ib` CNAME to
+`ib-ceska.morumori.com`. See `GO-LIVE-HANDOFF.md` for the exact records,
+current statuses, verification steps and rollback. Parent nameservers and
+mail records must remain unchanged.
+
+The alternative, if SaaS is abandoned, is a [partial zone](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
+on Cloudflare Business or Enterprise. A plain CNAME to `workers.dev` does
+not configure a Worker Custom Domain.
 
 ### CMS editor access
 
@@ -162,14 +158,12 @@ unverified until those accounts/origin exist.
 
 ## Switching to the school hostname
 
-Only after the school approves a DNS approach and the necessary Cloudflare
-zone/custom-hostname setup is active:
+Only after the school DNS administrator approves replacing its `ib` hostname:
 
-1. Coordinate replacement of the old Framer `ib` hostname with the school administrator.
-2. For a partial zone, attach `ib.gymnaziumceska.sk` as the `ib-ceska` Worker's Custom Domain. For Cloudflare for SaaS, configure its custom hostname, fallback origin and narrowly scoped route to the Worker instead.
-3. Pre-validate hostname ownership and TLS where the chosen setup allows it; have the DNS administrator change **only** the `ib` CNAME to its correct target. Do not touch parent nameservers. Confirm HTTPS certificate issuance.
-4. Add `https://ib.gymnaziumceska.sk` to the Keystatic Cloud project's allowed URLs, keeping the working `workers.dev` URL.
-5. Verify public pages, canonical links, images, Keystatic Cloud login and Save on the new origin. Keep `workers.dev` available until stable.
+1. Have the administrator add the two TXT records in `GO-LIVE-HANDOFF.md`, leaving the Framer CNAME unchanged until Cloudflare reports hostname and SSL statuses **Active**. Refresh expired certificate tokens if needed.
+2. Add `https://ib.gymnaziumceska.sk` to Keystatic Cloud project `ib-ceska/ib-ceska` as an allowed URL while keeping the `workers.dev` URL.
+3. Have the administrator replace **only** the `ib.gymnaziumceska.sk` CNAME from `sites.framer.app` to `ib-ceska.morumori.com`. Do not touch parent nameservers or mail.
+4. Verify HTTPS, public pages, analytics script, the morumori studio site, Keystatic Cloud login and Save on the new origin. Keep `workers.dev` available and restore the old Framer CNAME if the new route fails.
 
 The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk`
 (used for canonical links, social images and the sitemap).
