@@ -10,23 +10,22 @@ export interface SearchItem {
   type: string;
   href: string;
   locale: Locale;
-  /** Concatenated searchable text: title + description/excerpt/quote (+ role for testimonials). */
+  /** Concatenated searchable text: title + description/excerpt. */
   body: string;
 }
 
 /**
- * Build a flat, locale-resolved search index across every Keystatic
- * collection. Runs at build time inside page frontmatter; the result is
- * serialized to JSON and filtered client-side - no runtime reader calls.
+ * Build a flat, locale-resolved search index across public Keystatic content.
+ * Runs at build time inside page frontmatter; the result is serialized to JSON
+ * and filtered client-side - no runtime reader calls.
  */
 export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
-  const [subjects, news, cas, tok, events, testimonials] = await Promise.all([
+  const [subjects, news, cas, tok, events] = await Promise.all([
     reader.collections.subjects.all(),
     reader.collections.news.all(),
     reader.collections.cas.all(),
     reader.collections.tok.all(),
     reader.collections.events.all(),
-    reader.collections.testimonials.all(),
   ]);
 
   const items: SearchItem[] = [];
@@ -94,21 +93,6 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       href: l(`/events/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
-    });
-  }
-
-  // Testimonials have no detail page - link to the listing. Searchable on name + role + quote.
-  for (const { entry } of testimonials) {
-    const name = entry.name;
-    const role = pick(locale, entry.sk.role, entry.role);
-    const quote = pick(locale, entry.sk.quote, entry.quote);
-    items.push({
-      title: name,
-      description: quote,
-      type: 'Testimonial',
-      href: l('/testimonials', locale),
-      locale,
-      body: `${name} ${role} ${quote}`,
     });
   }
 

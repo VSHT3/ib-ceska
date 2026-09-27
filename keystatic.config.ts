@@ -24,12 +24,8 @@ const slovakFields = (opts: { description?: string; excerpt?: boolean; body?: st
   );
 
 export default config({
-  storage: isDev
-    ? { kind: 'local' }
-    : {
-        kind: 'github',
-        repo: { owner: 'VSHT3', name: 'ib-ceska' },
-      },
+  storage: isDev ? { kind: 'local' } : { kind: 'cloud' },
+  cloud: { project: 'ib-ceska/ib-ceska' },
   collections: {
     subjects: collection({
       label: 'Subjects',

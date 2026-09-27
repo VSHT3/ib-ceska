@@ -21,7 +21,7 @@ PDFs should open in a new tab
 
 - [x] School events page/section (Keystatic collection)
 - [ ] Public works showcase — student EEs, exhibitions, science collaboration project
-- [x] Student testimonials — `/testimonials` page + homepage featured strip (Keystatic collection; sample entries seeded, real ones await consent)
+- [ ] Publish student testimonials once real quotes and consent are supplied; the CMS collection stays available, but the public page, homepage strip, search results, navigation, and sitemap are hidden.
 - [x] Teachers list page (verified current IB roster, published portraits, roles, and subjects)
 
 ## Important
@@ -51,9 +51,10 @@ PDFs should open in a new tab
 
 ## Security & access
 
-- [x] Wire up Keystatic GitHub OAuth so only repo collaborators can save content — `IB Ceska CMS` GitHub App (ID 4043810) + 3 runtime secrets (`KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET` / `KEYSTATIC_SECRET`); login + Save verified
-- [ ] Defence-in-depth: gate `/keystatic/` behind Cloudflare Access (the admin UI is publicly reachable even though saves require GitHub auth)
-- [ ] Rotate the `IB Ceska CMS` client secret — the initial value was pasted into a chat during setup; regenerate on GitHub and update the `KEYSTATIC_GITHUB_CLIENT_SECRET` Worker secret
+- [x] Existing live CMS uses Keystatic GitHub OAuth; login + Save were verified on `workers.dev`. This remains active until the Cloud cutover is tested.
+- [ ] Owner: finish the Keystatic Cloud project `ib-ceska/ib-ceska`: set the primary URL to `https://ib-ceska.vsht.workers.dev`, connect GitHub owner `VSHT3` / repository `ib-ceska`, and invite the two teachers by email.
+- [ ] Deploy the Cloud-mode build and verify invited teacher login, collection access, Save to `main` and automatic rebuild. Then remove the old `IB Ceska CMS` GitHub App installation and revoke its exposed client secret and unused Worker secrets.
+- [ ] Optionally gate `/keystatic/` (and any CMS API paths still used) on each editor-facing origin behind Cloudflare Access, using the same approved individual email addresses. Keep public pages accessible and test the full sign-in flow.
 
 ## Cloudflare Workers cutover and real domain
 
@@ -61,15 +62,13 @@ The Worker-compatible build is ready. Complete the Cloudflare account and DNS st
 
 - [x] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, production branch `main`
 - [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
-- [x] Add Worker secrets `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and `KEYSTATIC_SECRET` (do not put them in source control)
-- [x] Add the generated `workers.dev` Keystatic callback as a Callback URL on the `IB Ceska CMS` GitHub App
-- [x] Verify `/`, `/en/`, `/sk/`, `/keystatic`, GitHub login, Save, and the resulting automatic rebuild on `https://ib-ceska.vsht.workers.dev`
-- [ ] Add `gymnaziumceska.sk` to Cloudflare DNS and reproduce every existing DNS record before changing nameservers. A Workers Custom Domain requires an active Cloudflare zone; an external-DNS CNAME to `workers.dev` is not sufficient.
-- [ ] Worker → Settings → Domains & Routes → Add Custom Domain → `ib.gymnaziumceska.sk`
-- [ ] `IB Ceska CMS` GitHub App → **Callback URL** → `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback` (and update Homepage URL)
-- [ ] Verify Keystatic login + Save still work on the new origin
-- [ ] Remove the old sslip.io callback URL after the Cloudflare cutover is stable
-- [ ] have real professional email for website
+- [x] Existing live Worker was configured with GitHub App secrets and the `workers.dev` callback; this is historical and must be retired after Cloud login works.
+- [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
+- [ ] Agree with the school administrator how to replace **only** `ib.gymnaziumceska.sk`, without moving the parent domain's nameservers or disturbing its site/mail. A Cloudflare partial (CNAME) zone requires Business or Enterprise; a separately delegated subdomain zone requires Enterprise. Until approved, keep `workers.dev`.
+- [ ] Add the Worker Custom Domain after the approved Cloudflare zone is active; have the school administrator update only the `ib` record.
+- [ ] On the approved school hostname, verify Keystatic Cloud login + Save; no GitHub App callback is needed in Cloud mode.
+- [ ] Confirm the old GitHub App installation, callbacks and secrets are removed after Cloud cutover.
+- [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 
 ## DX
 
@@ -80,7 +79,7 @@ The Worker-compatible build is ready. Complete the Cloudflare account and DNS st
 
 ## Content features
 
-- [x] Search across all collections — `/[locale]/search` page with build-time index (all 6 Keystatic collections, 27 items), client-side vanilla-JS filtering, bilingual, nav + footer link, sitemap entry.
+- [x] Search across the 5 public collections — `/[locale]/search` page with build-time index, client-side vanilla-JS filtering, bilingual results and sitemap entry; testimonials remain unpublished.
 - [ ] Tag/category filtering for CAS entries
 - [ ] PDF upload support for EE resources
 
@@ -119,7 +118,7 @@ Gaps to build (per-page, not crammed onto `/dp`) once approved:
 - [ ] **Admissions gaps still pending** — Subject Choice Form (not yet supplied — see HUMANTODO)
 - [ ] **Staff gaps** — Non-teaching staff (content is a human item); Organizational Chart pending a decision (see above)
 - [ ] **IB Learner Profile** — surface the public IB Learner Profile framework (the mission statements are now live on `/mission`)
-- [x] **Nav wiring** — new `School` dropdown in the main nav (Mission and vision, Team, Testimonials, Policies and guides), footer "School life" group, and sitemap entries
+- [x] **Nav wiring** — `School` dropdown (Mission and vision, Team, Policies and guides), footer "School life" group, and sitemap entries; testimonials hidden pending real consented quotes.
 - [ ] **EE guide** — coordinator said Simona is still writing it (2026-07-23); slot it into `/policies` → Core handbooks when it arrives
 
 Scope rule: no empty/"coming soon" stubs shipped as finished — a page is built only when its content exists or is a human item the school will supply imminently.

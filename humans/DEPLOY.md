@@ -7,16 +7,32 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 - **Host:** Cloudflare Workers with static assets.
 - **Source:** GitHub repo `VSHT3/ib-ceska`, branch `main`.
 - **Current URL:** `https://ib-ceska.vsht.workers.dev` (live since 2026-09-02).
-- **Production domain:** `https://ib.gymnaziumceska.sk` after the DNS cutover.
+- **Planned school hostname:** `https://ib.gymnaziumceska.sk` only after the school approves a DNS solution. The existing school DNS stays with its administrator.
 
-### GitHub App
+### Keystatic Cloud cutover
 
-| App                               | Purpose                                                               | Where configured         |
-| --------------------------------- | --------------------------------------------------------------------- | ------------------------ |
-| `IB Ceska CMS` (App ID `4043810`) | Keystatic CMS login: lets editors authenticate + commit content edits | github.com/settings/apps |
+The **currently deployed** CMS still uses the `IB Ceska CMS` GitHub App. The
+next release uses Keystatic Cloud; teachers can sign in without GitHub accounts.
+The owner must first create a Keystatic Cloud team and a project connected to
+`VSHT3/ib-ceska` on [keystatic.cloud](https://keystatic.cloud). Invite each
+teacher by email. Put unrelated sites in separate teams: membership grants
+access to all projects in a team. The free team supports three users (owner
+plus two teachers).
 
-The `IB Ceska CMS` app needs a callback for every origin used by editors:
-`https://<origin>/api/keystatic/github/oauth/callback`.
+The Cloud project key `ib-ceska/ib-ceska` is configured in
+`keystatic.config.ts`; no Worker secrets or build variables are needed for Cloud
+authentication. The owner must complete the project in Keystatic Cloud: set
+the primary project URL to `https://ib-ceska.vsht.workers.dev`, connect GitHub
+owner `VSHT3` and repository `ib-ceska`, then invite the teachers. Local
+`pnpm run dev` remains filesystem-based and requires no Cloud account. Finish
+the project and repository connection before pushing Cloud-mode code to `main`.
+
+After deployment, test an invited teacher signing in, opening a collection,
+saving an edit to `main` and the resulting rebuild. Only then remove the old
+`IB Ceska CMS` GitHub App installation, revoke its client secret (previously
+exposed in chat), and remove obsolete `KEYSTATIC_GITHUB_CLIENT_ID`,
+`KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET` Worker secrets. Do
+not rotate the old secret instead of removing it after the switch.
 
 ## Cloudflare Workers deployment
 
@@ -35,43 +51,62 @@ Current Astro 7 releases deploy server-rendered routes to **Workers with static 
 3. Set the build command to `pnpm run build`.
 4. Set the deploy command to `npx wrangler deploy`.
 5. Keep the Worker name `ib-ceska`, matching `wrangler.jsonc`.
-6. Add these as encrypted Worker secrets, not plain variables and never repository files:
-   - `KEYSTATIC_GITHUB_CLIENT_ID`
-   - `KEYSTATIC_GITHUB_CLIENT_SECRET`
-   - `KEYSTATIC_SECRET`
+6. Complete the Keystatic Cloud project `ib-ceska/ib-ceska` and its primary
+   project URL/repository connection before deploying Cloud-mode code.
 7. Deploy and note the generated `https://ib-ceska.<account-subdomain>.workers.dev` URL.
-8. In the `IB Ceska CMS` GitHub App, add `https://ib-ceska.<account-subdomain>.workers.dev/api/keystatic/github/oauth/callback` as a callback URL. GitHub Apps support multiple callback URLs.
 
 The Cloudflare adapter provisions an `ASSETS` binding for the static site and a `SESSION` KV binding for Astro sessions. No manual KV namespace is required by the repository configuration.
 
 ### Verify before changing DNS
 
-Check all of the following on the `workers.dev` URL:
+Check all of the following on the `workers.dev` URL after the Cloud cutover:
 
-| Check             | Expected result                                         |
-| ----------------- | ------------------------------------------------------- |
-| `/`               | 200 and language redirect behavior works                |
-| `/en/` and `/sk/` | Both localized homepages load with images and styles    |
-| `/keystatic`      | Admin interface loads over HTTPS                        |
-| GitHub login      | Returns to the same Worker origin                       |
-| Open a collection | Entries load without a Web Crypto error                 |
-| Save an edit      | A commit reaches `main` and triggers a new Worker build |
+| Check             | Expected result                                                |
+| ----------------- | -------------------------------------------------------------- |
+| `/`               | 200 and language redirect behavior works                       |
+| `/en/` and `/sk/` | Both localized homepages load with images and styles           |
+| `/keystatic`      | Cloud sign-in appears over HTTPS                               |
+| Teacher login     | Invited teacher can open a collection without a GitHub account |
+| Save an edit      | A commit reaches `main` and triggers a new Worker build        |
 
 Complete every check before attaching the school domain.
 
-### Cloudflare custom-domain prerequisite
+### School hostname without moving the school's DNS
 
-A Workers Custom Domain must belong to an **active Cloudflare DNS zone**. Pointing an external CNAME directly at `workers.dev` is not sufficient and will not provision correct routing or TLS.
+**Do not change the nameservers for `gymnaziumceska.sk` as part of this project.**
+The school's authoritative DNS remains at its current provider, and `ib.gymnaziumceska.sk`
+currently serves the old Framer site. Replacing that one hostname needs the school/domain
+administrator's approval; it does not require changing the main school's site or mail.
 
-Before changing the nameservers for `gymnaziumceska.sk`:
+A Worker **Custom Domain** requires an active Cloudflare zone. A plain CNAME from the
+current DNS provider to `workers.dev` does **not** make a Worker Custom Domain work.
+The non-disruptive Cloudflare option is a **partial (CNAME) zone**, which requires
+Cloudflare Business or Enterprise: the school adds a verification TXT record and replaces
+only the existing `ib` CNAME with the Cloudflare-provided hostname when ready to
+cut over. The root nameservers, main website and mail stay put. On a partial zone,
+Universal SSL may provision only after the CNAME is proxied; coordinate certificate
+validation and a rollback window with the school administrator before the switch.
+See [partial-zone setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
+and [Worker Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
+Standalone subdomain zone delegation also avoids moving root nameservers, but Cloudflare
+currently limits subdomain-zone setup to Enterprise.
 
-1. Add `gymnaziumceska.sk` as a website in Cloudflare.
-2. Copy and verify every existing DNS record, especially the school website and email records (`MX`, SPF, DKIM and DMARC).
-3. Ask the authorized school/domain administrator to replace the registrar nameservers with Cloudflare's assigned nameservers.
-4. Wait until Cloudflare reports the zone as active.
-5. Worker → **Settings** → **Domains & Routes** → **Add Custom Domain** → `ib.gymnaziumceska.sk`.
+Until the school chooses and approves a route, use the existing HTTPS `workers.dev`
+address. Do not promise working canonical links or social images there: the build's
+`site` setting currently points at the school hostname, still served by Framer.
 
-Moving nameservers without first reproducing all records can interrupt the school's main website or email. DNS cutover therefore remains a human-controlled step.
+### CMS editor access
+
+Invite editors individually to the Keystatic Cloud team. Removing their team
+membership revokes access to every project in that team. Teachers do not need
+repository collaborator accounts; the owner connects GitHub once. See
+`humans/CONTENT.md` for the editing workflow.
+
+Optionally add Cloudflare Zero Trust Access as a **self-hosted application**
+for the CMS paths on each editor-facing hostname, allowing the same individual
+email addresses. Do not gate the whole Worker: public pages must stay public.
+Test the Cloud sign-in and Save flow end to end before enabling extra gating.
+See [Worker Access path protection](https://developers.cloudflare.com/workers/configuration/cloudflare-access/#protect-a-specific-hostname-custom-domain-or-path).
 
 ## How updates go live (auto-deploy)
 
@@ -85,7 +120,7 @@ Use `pnpm run deploy` only for an intentional manual deployment.
 
 ## Build configuration
 
-The site is Astro in **hybrid mode**: public pages are prerendered, while `/keystatic/` and its API routes execute in the Worker.
+The site is Astro in **hybrid mode**: public pages are prerendered, while `/keystatic/` is served by the Worker. In Cloud mode editor authentication and repository access are handled by Keystatic Cloud.
 
 | Setting           | Value                 |
 | ----------------- | --------------------- |
@@ -94,17 +129,13 @@ The site is Astro in **hybrid mode**: public pages are prerendered, while `/keys
 | Deploy command    | `npx wrangler deploy` |
 | Wrangler config   | `wrangler.jsonc`      |
 
-### Required environment variables
+### Cloud project configuration
 
-Set these as encrypted secrets in the Worker's settings:
-
-| Key                              | Value                                       | Why                                              |
-| -------------------------------- | ------------------------------------------- | ------------------------------------------------ |
-| `KEYSTATIC_GITHUB_CLIENT_ID`     | (from the `IB Ceska CMS` GitHub App)        | Identifies the GitHub App at login               |
-| `KEYSTATIC_GITHUB_CLIENT_SECRET` | (generated on the GitHub App, shown once)   | Exchanges the OAuth authorization code           |
-| `KEYSTATIC_SECRET`               | random 32-byte hex (`openssl rand -hex 32`) | Signs the editor's login session; keep it stable |
-
-> **Three** Keystatic vars, not two — `KEYSTATIC_SECRET` is easy to miss. Without it the API throws "Missing required config … secret".
+`keystatic.config.ts` specifies the Cloud project key `ib-ceska/ib-ceska`.
+No Cloud project environment variable or Worker runtime secret is required.
+The `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and
+`KEYSTATIC_SECRET` Worker secrets are used only by the **currently deployed**
+GitHub-mode version; remove them after Cloud login and Save work.
 
 ## ⚠️ The site MUST be served over HTTPS (not plain HTTP)
 
@@ -115,42 +146,44 @@ TypeError: Cannot read properties of undefined (reading 'digest')
 Unable to load collection
 ```
 
-Login still works (that's server-side), and pages may half-render, but **opening a collection or saving fails** until the site is HTTPS. Cloudflare supplies HTTPS for both `workers.dev` and Custom Domains. Ref: [Thinkmill/keystatic#182](https://github.com/Thinkmill/keystatic/issues/182).
+Opening a collection or saving can fail on plain HTTP. Cloudflare supplies HTTPS for both `workers.dev` and Custom Domains. Ref: [Thinkmill/keystatic#182](https://github.com/Thinkmill/keystatic/issues/182).
 
-## Locally verified
+## Verification boundary
 
-The Worker build, Wrangler deployment dry run, static asset binding, KV session binding, `/`, `/en/`, `/keystatic`, and the Keystatic login redirect have passed locally. Real GitHub login and Save require the deployed Worker URL and production secrets.
+Local builds and preview can verify static content and the Cloud-mode UI.
+Signing in as a teacher and saving to `main` require a real Keystatic Cloud
+project connected to the repository, an invited editor, and the deployed origin.
 
-## Switching to the real domain
+## Switching to the school hostname
 
-After the Cloudflare Worker passes every preview check and the DNS zone is active:
+Only after the school approves a DNS approach and the required zone is active:
 
-1. Add `ib.gymnaziumceska.sk` as the Worker's Custom Domain.
-2. Wait for Cloudflare to report the hostname and certificate as active.
-3. Change the `IB Ceska CMS` GitHub App callback to `https://ib.gymnaziumceska.sk/api/keystatic/github/oauth/callback`.
-4. Verify login and Save again on the real domain.
-5. Remove any obsolete host only after the Cloudflare deployment is stable.
+1. Coordinate the replacement of the old Framer `ib` hostname with the school administrator.
+2. Add `ib.gymnaziumceska.sk` as the Worker's Custom Domain and plan TLS validation.
+3. On a partial-zone setup, have the DNS administrator change **only** the `ib` CNAME to the Cloudflare-provided target. Do not touch the root nameservers. Confirm HTTPS certificate issuance before considering the cutover complete.
+4. Verify public pages, canonical links, images, Keystatic Cloud login and Save on the new origin.
+5. Keep the `workers.dev` address available until the new origin is stable.
 
-The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk` (used for canonical links and the sitemap).
+The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk`
+(used for canonical links, social images and the sitemap).
 
 ## Troubleshooting
 
-- **CMS error "Unable to load collection" / `reading 'digest'`:** confirm the browser is using the HTTPS Worker or Custom Domain URL.
-- **`/api/keystatic/github/login` → 500 with an empty body:** the running Worker can't see one of the three `KEYSTATIC_*` secrets (the log says "Missing required config …"). Two causes seen so far: a var is genuinely missing (commonly `KEYSTATIC_SECRET`), or the secrets were added in the dashboard but the resulting version was never deployed — the dashboard shows them, `wrangler secret list` shows them, yet `wrangler deployments list` still points at an older version. Click **Deploy** after editing variables, or run `npx wrangler versions list` and `npx wrangler versions deploy <id>@100% -y`.
+- **CMS error "Unable to load collection" / `reading 'digest'`:** confirm the browser is using an HTTPS Worker or Custom Domain URL.
+- **Cloud login redirects to an unauthorized origin:** ensure the Keystatic Cloud project URL includes the current origin `https://ib-ceska.vsht.workers.dev` (without `/keystatic`).
+- **Cloud login or Save fails:** confirm the Cloud project is connected to `VSHT3/ib-ceska`, the editor belongs to its team, and the current build contains the correct project identifier.
 - **Live pages show no subjects/news (e.g. "0 subjects, 0 groups") but the build succeeded:** the Cloudflare adapter prerendered inside `workerd`, where the Keystatic reader has no filesystem. `astro.config.mjs` must keep `prerenderEnvironment: 'node'` on `cloudflare(...)`. Verify locally: `pnpm run build`, then check `dist/client/en/subjects/index.html` contains subject links.
-- **CMS login redirects to a 404/blank after authorizing:** the GitHub App **Callback URL** doesn't match the live origin (`https://…/api/keystatic/github/oauth/callback`).
-- **Save does nothing:** if not the HTTPS issue above, confirm the `IB Ceska CMS` app is installed on `VSHT3/ib-ceska` with **Contents: read/write** + **Pull requests: read/write** (changing permissions requires re-approving the install).
 - **Push didn't deploy:** confirm Workers Builds is connected to `VSHT3/ib-ceska` and the production branch is `main`.
 - **Cloudflare deploy says Pages or `ASSETS` is reserved:** a Pages project was created. Use a Worker; current Astro Cloudflare adapters no longer support Pages SSR.
-- **Cloudflare CMS reports missing config:** add all three `KEYSTATIC_*` values as Worker secrets. Build-time variables alone do not replace runtime secrets.
-- **Custom Domain cannot be added:** confirm `gymnaziumceska.sk` is an active zone in the same Cloudflare account.
+- **Custom Domain cannot be added:** confirm the approved Cloudflare zone is active in the same account.
 
 ## Succession — what to hand over
 
-These are **not** in the repo and must be transferred to the next maintainer or the school:
+These are **not** in the repo and must be transferred to the next maintainer or school:
 
-- Cloudflare account access for the Worker and DNS zone.
-- DNS control for `ib.gymnaziumceska.sk`.
-- The `IB Ceska CMS` GitHub App (App ID `4043810`) and the three production `KEYSTATIC_*` values.
+- Cloudflare account access for the Worker and any future school-hostname zone.
+- School administrator contact for DNS control over `ib.gymnaziumceska.sk`.
+- Keystatic Cloud team ownership, project settings and editor invitations; the
+  owner also needs GitHub access to maintain the repository connection.
 
 See `HUMANTODO.md` → "Succession".

@@ -39,12 +39,15 @@ New to this? Start with the step-by-step [`TUTORIAL.md`](TUTORIAL.md). Full fiel
 
 ## Who is allowed to edit (access & security)
 
-- On the **live site**, saving requires logging in with **GitHub**. Only people added as collaborators on the `VSHT3/ib-ceska` GitHub repository can save changes. GitHub repository membership _is_ the list of authorized editors.
-- **Each editor uses their own free GitHub account — never a shared login.** Every save is committed as that person (so the history shows who changed what), and access can be revoked per-person. Step-by-step in [`CONTENT.md`](CONTENT.md) → "Getting an editor their own access".
-- To give a new person edit access: add their GitHub account to the repository as a collaborator with Write access (a developer or the repo owner does this). To remove access: remove them from the repo.
-- The repo is **public** — anyone can _read_ the source, but only collaborators can _save_. That's fine: it is a school site, and production secrets live in Cloudflare Worker secrets, not in the repo.
-- ⚠️ As of now the production login is **not finished being set up** — see "Critical — before launch" in [`HUMANTODO.md`](HUMANTODO.md). A developer must register a GitHub App and add two secret keys before the live CMS can save.
-- The admin page address (`/keystatic/`) is reachable by anyone, but **no one can change anything without a GitHub login that has repo access**. For extra peace of mind, a developer can also put the page behind a password at the server level (tracked in the root `TODO.md`).
+- Keystatic Cloud will manage editor access after the cutover: a team administrator
+  invites each teacher by email. Teachers do **not** need GitHub accounts.
+- Each teacher has their own login. Removing them from the Cloud team revokes
+  access to the CMS; team access covers every project in that team.
+- The site owner connects Keystatic Cloud to the GitHub repository once. The
+  repository remains the source of content and each Save triggers a rebuild.
+- **Until the Cloud project is created and deployed**, the live Worker still uses
+  the old GitHub App login. The administrator should confirm the switch and test
+  a teacher's Save before inviting everyone to use it.
 
 ## Succession — for whoever takes this over
 

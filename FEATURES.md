@@ -47,7 +47,6 @@ Implemented and shipped.
 - [x] `/gallery` — bilingual bento-mosaic photo gallery: gapless cell-rhythm grid (orientation-aware base/tall/big tiles, deterministic packing order, width-proportional row unit, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
-- [x] `/testimonials` — student-voice cards (quote, name, role, optional photo) + homepage featured strip
 - [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
@@ -80,7 +79,7 @@ Implemented and shipped.
 - [x] Shared `Layout.astro` with sticky nav + footer
 - [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
 - [x] Official burgundy triangle school logo (`/logo-mark.png`) supplied by the school; used in the nav, footer, schema.org metadata, and regenerated favicons
-- [x] Nav: `School` dropdown (Mission and vision, Team, Testimonials, Policies and guides) on desktop and mobile
+- [x] Nav: `School` dropdown (Mission and vision, Team, Policies and guides) on desktop and mobile
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
@@ -101,7 +100,7 @@ Implemented and shipped.
 - [x] School photography from the old Framer site (`public/images/school/`)
 - [x] Accessibility: WCAG AA contrast verified across all pages in both locales, one global `:focus-visible` outline, `prefers-reduced-motion` honoured, content visible without JS
 - [x] Light mode only — single theme, no dark mode (reverted)
-- [x] Editorial layout pass on interior pages (mission, admissions, TOK, CAS, policies, teachers, testimonials, EE, search): wide `max-w-7xl` shells with measure-constrained text, asymmetric 12-col/fractional grids, sticky heading rails, ghost-numeral hairline rows, full-bleed dark/neutral bands; recomposed `PageHeader` (hairline eyebrow, larger display title)
+- [x] Editorial layout pass on interior pages (mission, admissions, TOK, CAS, policies, teachers, EE, search): wide `max-w-7xl` shells with measure-constrained text, asymmetric 12-col/fractional grids, sticky heading rails, ghost-numeral hairline rows, full-bleed dark/neutral bands; recomposed `PageHeader` (hairline eyebrow, larger display title)
 
 ## Sample content
 
@@ -109,7 +108,7 @@ Implemented and shipped.
 - [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
-- [x] Search page (`/[locale]/search`) — build-time index of all 6 Keystatic collections, client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
+- [x] Search page (`/[locale]/search`) — build-time index of 5 public Keystatic collections (testimonials excluded until published), client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
 - [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed; events Keystatic collection retained.
 - [x] 13 downloadable school resources described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `admissionsDocuments`, `mypDocuments`); EN + SK parent handbooks appear with application documents and on `/policies`, plus the authorization certificate embedded as an image on `/mission`
 - [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
@@ -117,7 +116,7 @@ Implemented and shipped.
 
 ## Deployment
 
-- [x] Production Keystatic GitHub OAuth wired (`IB Ceska CMS` app + 3 `KEYSTATIC_*` env vars); login + content Save verified
+- [x] Existing production Keystatic GitHub OAuth login and Save were verified. Cloud-mode config is prepared locally; it requires an owner-created Keystatic Cloud project and a verified live Save before replacing the running GitHub-mode deployment.
 - [x] Cloudflare Workers deployment — Wrangler config, standard build/preview/deploy scripts, compile-time images and automatic KV-backed Astro sessions
 
 ## DX & tooling

@@ -128,4 +128,4 @@ The site uses **Keystatic CMS** for content management:
 - **Domain:** `https://ib.gymnaziumceska.sk`
 - **Build:** `pnpm run build`; deploy with `npx wrangler deploy`
 - **Runtime:** static assets plus Worker routes for Keystatic
-- **Secrets:** `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`
+- **Cloud CMS config:** `cloud.project` is `ib-ceska/ib-ceska` in `keystatic.config.ts`; old GitHub App secrets belong only to the previous live deployment and must be removed after cutover.

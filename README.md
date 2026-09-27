@@ -67,10 +67,10 @@ Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files b
 
 ## Editing content (Keystatic)
 
-- **URL:** `/keystatic/` at `http://localhost:4321/keystatic/` in dev, `https://ib.gymnaziumceska.sk/keystatic/` in production.
+- **URL:** `/keystatic/` at `http://localhost:4321/keystatic/` in dev; the current live hostname is `https://ib-ceska.vsht.workers.dev/keystatic/`.
 - **Dev** (`kind: 'local'`): writes `.mdoc` files straight to disk, no login.
-- **Production** (`kind: 'github'`): saves are commits authored via **GitHub OAuth**, so only people with write access to the `VSHT3/ib-ceska` repo can save. GitHub repo membership _is_ the access list.
-- Production OAuth uses the `IB Ceska CMS` GitHub App and three host secrets. See [`humans/DEPLOY.md`](humans/DEPLOY.md).
+- **Next production release** (`kind: 'cloud'`): Keystatic Cloud manages editor accounts without requiring teachers to join GitHub. The project `ib-ceska/ib-ceska` is configured in `keystatic.config.ts`; its owner must finish the Cloud project URL/repository setup and invite teachers before deploying. Until that release, the live Worker still uses the existing GitHub App login.
+- See [`humans/DEPLOY.md`](humans/DEPLOY.md) for cutover and verification.
 
 ## Language policy
 

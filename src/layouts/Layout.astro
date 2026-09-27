@@ -48,11 +48,6 @@ const coreLinks = [
 ];
 const newsLink = { href: l('/news', locale), label: dict.nav.news };
 const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
-const testimonialsLink = {
-  href: l('/testimonials', locale),
-  label: dict.nav.testimonials,
-  desc: dict.nav.testimonialsDesc,
-};
 const teachersLink = {
   href: l('/teachers', locale),
   label: dict.nav.teachers,
@@ -68,7 +63,7 @@ const policiesLink = {
   label: dict.nav.policies,
   desc: dict.nav.policiesDesc,
 };
-const aboutLinks = [missionLink, teachersLink, testimonialsLink, policiesLink];
+const aboutLinks = [missionLink, teachersLink, policiesLink];
 const secondaryLinks = [newsLink, galleryLink];
 const admissionsHref = l('/admissions', locale);
 
@@ -107,7 +102,6 @@ const routeLabels: Record<string, string> = {
   ee: dict.nav.ee,
   news: dict.nav.news,
   gallery: dict.nav.gallery,
-  testimonials: dict.nav.testimonials,
   teachers: dict.nav.teachers,
   mission: dict.nav.mission,
   policies: dict.nav.policies,

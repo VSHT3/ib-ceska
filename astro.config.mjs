@@ -10,7 +10,7 @@ import keystatic from '@keystatic/astro';
 // `astro dev` runs SSR in Node. The Cloudflare adapter runs dev SSR inside
 // workerd, which has no filesystem and no CommonJS: Keystatic's local-mode
 // reader returns empty collections and its API routes throw `exports is not
-// defined`. Production is unaffected (Keystatic uses GitHub storage there).
+// defined`. Production CMS authentication is handled by Keystatic Cloud.
 const isDev = process.argv.includes('dev');
 
 export default defineConfig({

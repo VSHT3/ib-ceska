@@ -22,13 +22,12 @@ You edit them in a visual editor called **Keystatic**. Your changes go live on t
 
 ## Before you start (one-time)
 
-You need **your own free GitHub account**, added to the project so you're allowed to save.
+The site administrator will invite you to the Keystatic Cloud team by email.
+Accept the invitation and set up your own Keystatic login. **You do not need a
+GitHub account.** If you have not received the invitation, ask the administrator.
 
-1. If you don't have a GitHub account, create one (free) at [github.com](https://github.com).
-2. Send your GitHub username to the site administrator.
-3. They add you as an editor. You'll get an email invitation from GitHub — **click the link in it to accept**.
-
-That's it — you only do this once. (Why your own account? So the site records who made each change, and access can be turned off for one person without affecting anyone else.)
+The site is being moved to this login method. Until the administrator confirms
+the cutover is complete, the live editor still uses its previous GitHub login.
 
 ---
 
@@ -44,9 +43,11 @@ https://ib-ceska.vsht.workers.dev/keystatic
 
 > When the site moves to its final address, this becomes `https://ib.gymnaziumceska.sk/keystatic`.
 
-### 2. Log in with GitHub
+### 2. Log in
 
-Click the **Sign in with GitHub** button and approve. You only do this occasionally — it remembers you for a while.
+Use the Keystatic Cloud sign-in option with the account you were invited to.
+If the editor still asks for GitHub, contact the administrator: the Cloud
+cutover has not been deployed yet.
 
 ### 3. Pick what to edit
 

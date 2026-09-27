@@ -4,8 +4,8 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Critical — before launch
 
-- [x] ~~**Set up the production CMS login (developer task).**~~ Done — `IB Ceska CMS` GitHub App registered and login + Save verified. Add the three `KEYSTATIC_*` values as Cloudflare Worker secrets and add each deployed origin as a GitHub App callback URL. Only people with write access to `VSHT3/ib-ceska` can edit.
-- [ ] **Decide who gets edit access** and add their GitHub accounts as collaborators on the repo. Removing access = removing them from the repo.
+- [ ] **Finish the Keystatic Cloud project (site owner).** In project `ib-ceska/ib-ceska`, set the primary URL to `https://ib-ceska.vsht.workers.dev`, GitHub owner to `VSHT3`, repository to `ib-ceska`, and complete setup. The existing GitHub App login stays live until the Cloud-mode deployment and Save are tested.
+- [ ] **Invite the two teachers** to the Keystatic Cloud team using their own email addresses. They do not need GitHub accounts. Once an invited teacher can log in and Save, remove the old `IB Ceska CMS` GitHub App installation and its exposed secret; remove unused Worker secrets.
 - [x] ~~Provide high-quality school logo~~ — the school-supplied burgundy triangle logo is published as `public/logo-mark.png`; the nav, footer, schema.org metadata, and favicons use it.
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
 - [x] ~~Provide real teacher names and titles for all IB subjects~~ — current IB roster and responsibilities were taken from the school’s published IB website on 15 June 2026
@@ -15,7 +15,7 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Provide real news/announcement content
 - [ ] Provide the real subjects list (incl. HL/SL offerings and any preset subject combinations students choose from)
 - [x] ~~Provide teachers list — names, roles, subjects, photos~~ — `/teachers` now uses the roster and portraits already published on the school’s official IB website; keep that source page current
-- [ ] Provide student testimonials — quotes, names, year (with consent). The `/testimonials` page is **built and live**, but currently shows "coming soon": the three sample entries are **hidden from visitors** because their quotes still begin `SAMPLE —`. They stay visible in Keystatic as templates. Edit one in Keystatic (Testimonials collection), remove the `SAMPLE —` prefix, and it publishes itself — there is no separate switch. Tick "Feature on homepage" on the best 2–3. Only add a photo with the student's written consent.
+- [ ] Provide student testimonials — quotes, names, year, and written consent. The CMS collection still has three sample templates, but testimonials are not published anywhere on the site until the school requests that the public page and homepage strip be restored. Only add a photo with the student's written consent.
 - [ ] Provide school events list (dates, descriptions, photos)
 - [ ] Provide public works to showcase: student EEs, exhibition materials, science collaboration project details — **needs student/parent consent to publish**
 - [ ] Provide real CAS project records to feature
@@ -65,7 +65,7 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [ ] Transfer GitHub repository ownership/admin to the school or the next maintainer
 - [ ] Transfer the Cloudflare account that owns the Worker and DNS zone
 - [ ] Transfer DNS control for `ib.gymnaziumceska.sk`
-- [ ] Hand over the production environment variables (Keystatic GitHub secrets) — these are **not** in the repo
+- [ ] Hand over ownership of Keystatic Cloud team/project `ib-ceska/ib-ceska`; retire the old GitHub App and secrets after cutover.
 - [ ] Identify and brief the next developer; point them at `humans/README.md` → "Succession" and the root `AGENTS.md`
 
 ## Future decisions

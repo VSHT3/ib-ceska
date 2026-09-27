@@ -15,35 +15,27 @@ exception. A developer maintains them in `src/data/teachers.ts` and
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
 
-## Production workflow (GitHub OAuth)
+## Production workflow (Keystatic Cloud)
 
-When editing on the live site:
+Once the Cloud cutover has been deployed, editors log in to Keystatic with their
+own invited accounts. **Teachers do not need GitHub accounts.** The site owner
+connects Keystatic Cloud to the GitHub repository once; editors save content
+through Cloud, which commits to `main` and triggers an automatic Worker rebuild.
+Changes appear after the build succeeds, not immediately upon pressing Save.
 
-- You log in with your **GitHub account** — only accounts with write access to the `VSHT3/ib-ceska` repository can save. This is how editor access is controlled (see `README.md` → "Who is allowed to edit").
-- Edits create commits directly to the repository
-- Cloudflare Workers Builds detects the push and automatically redeploys the site
-- Changes go live within seconds
+### Adding or removing an editor
 
-### Getting an editor their own access (do this — don't share one login)
+1. A Keystatic Cloud team administrator invites each teacher using their own email
+   address. Do not share one login.
+2. The teacher accepts the invitation and signs in at `/keystatic/`.
+3. To remove access, remove that user from the Keystatic Cloud team. Team access
+   applies to every project in that team, so keep unrelated sites in other teams.
 
-Each editor (teacher, coordinator) uses **their own free GitHub account**. Do **not** hand out a shared login.
-
-1. The editor creates a free account at [github.com](https://github.com) (if they don't have one) and sends you their GitHub username.
-2. A repo owner/admin adds them as a **collaborator** with **Write** access on `VSHT3/ib-ceska`
-   (GitHub → repo → **Settings → Collaborators → Add people**).
-3. They accept the email invite, then log in at `/keystatic/` with their own GitHub account and can save.
-4. To remove access later: remove them from the repo collaborators list.
-
-Why own accounts, not a shared one:
-
-- Every save is committed as that person, so the history shows **who changed what**.
-- Access is revoked per-person without disrupting anyone else.
-- No one is handed a password that also carries repo-admin powers.
-
-Notes:
-
-- The repo is **public**, so anyone can _read_ the source — that's fine (it's a school website and no secrets live in the repo; production secrets are stored by Cloudflare, not GitHub). **Only collaborators can write/save.**
-- GitHub places no limit on free collaborators (public or private), so add as many editors as needed.
+The free team has a three-user limit: one owner and two teachers fit. See the
+[Keystatic Cloud guide](https://keystatic.com/docs/cloud) for current plan details.
+The owner still needs GitHub access to connect and maintain the repository.
+Before the Cloud project is connected and the new build deployed, the _existing_
+live site continues to use the GitHub App login; see `humans/DEPLOY.md`.
 
 ## Local workflow
 
@@ -140,12 +132,11 @@ today's date — no manual archiving needed.
 
 ### Testimonials (`src/content/testimonials/`)
 
-Student and alumni voices shown on the `/testimonials` page, with the
-"Feature on homepage" ones also appearing on the homepage.
-
-> ⚠️ **Consent first.** Only publish a real name, quote, or photo with the
-> student's (and, for minors, parent's) written consent. The collection ships
-> with three entries marked **"(sample)"** — replace these with real ones.
+The CMS collection contains three sample templates, but testimonials are currently
+**not published** on the site. Editing or featuring an entry does not make it public:
+the public page, homepage strip, search results and links must be restored separately
+once the school supplies real quotes and written consent (including parental consent
+for minors). Do not share a student's name, quote or photo without that consent.
 
 **Fields:**
 
@@ -156,7 +147,7 @@ Student and alumni voices shown on the `/testimonials` page, with the
 | `gradYear` | number   | no       | Graduation year                                                             |
 | `photo`    | image    | no       | Headshot — **only with written consent**; a coloured initial shows if empty |
 | `order`    | number   | no       | Display order (lower = first)                                               |
-| `featured` | checkbox | no       | Show this one on the homepage strip                                         |
+| `featured` | checkbox | no       | Reserved for the homepage strip when testimonials are restored              |
 | `sk`       | group    | no       | Slovak translation (role, quote)                                            |
 | `quote`    | textarea | yes      | The testimonial itself                                                      |
 
