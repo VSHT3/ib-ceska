@@ -64,8 +64,8 @@ The Worker-compatible build is ready. Complete the Cloudflare account and DNS st
 - [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
 - [x] Existing live Worker was configured with GitHub App secrets and the `workers.dev` callback; this is historical and must be retired after Cloud login works.
 - [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
-- [ ] Agree with the school administrator how to replace **only** `ib.gymnaziumceska.sk`, without moving parent nameservers or disturbing the school's site/mail. The owner selected `morumori.com` as a possible Free-plan SaaS backing zone, but an exact Worker route was rejected and a wildcard route would affect other traffic; a paid partial zone or dedicated SaaS zone may be safer. See `GO-LIVE-HANDOFF.md`.
-- [ ] Configure and validate the chosen custom-hostname route/TLS, then have the school administrator change only the `ib` record.
+- [x] Set a no-Worker bypass on `analytics.morumori.com/*` and verify its page and `/script.js` still return 200. No wildcard Worker route has been installed.
+- [ ] Enable Cloudflare for SaaS on the approved `morumori.com` Free-plan zone (account owner/payment information required). Then create and validate a dedicated fallback origin and custom hostname; only after confirming the analytics bypass, add `*/*` → `ib-ceska` and immediately recheck analytics. Cloudflare rejects `*/*` until SaaS is enabled. Coordinate with the school administrator to replace only `ib.gymnaziumceska.sk`, never parent nameservers or school mail. See `GO-LIVE-HANDOFF.md`.
 - [ ] Add the new hostname to Keystatic Cloud allowed URLs and verify login + Save on the school origin.
 - [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 

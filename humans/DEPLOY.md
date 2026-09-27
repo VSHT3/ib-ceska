@@ -81,15 +81,21 @@ only its existing `ib` CNAME. See [partial-zone setup](https://developers.cloudf
 and [Worker Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
 Another option on a Free plan is [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/plans/)
 with a Worker as the [fallback origin](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
-The owner selected `morumori.com` as a possible backing zone, but Cloudflare
-rejected an exact `ib.gymnaziumceska.sk/*` Worker route there (zone name
-required). A `*/*` route would catch unrelated `morumori.com` traffic; do not
-add it without a complete audit and exclusions, or use a dedicated zone.
-Enabling SaaS on a Free-plan zone [requires payment information](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/enable/),
-and the available CLI OAuth lacks DNS/custom-hostname permissions. No SaaS
-resources were configured. Both approaches leave the school's parent
-nameservers and mail untouched. Coordinate TLS validation and a rollback
-window with the school administrator. See `GO-LIVE-HANDOFF.md`.
+The owner selected `morumori.com` as backing and permitted brief downtime
+for that website, but **`analytics.morumori.com` must remain available**. Its
+public DNS currently points directly to `87.106.7.54`. A protective
+`analytics.morumori.com/*` → no Worker route has been created and both the
+analytics page and `/script.js` still return 200. Cloudflare rejected an
+exact `ib.gymnaziumceska.sk/*` Worker route (zone name required), and rejected
+`*/*` → `ib-ceska` until Cloudflare for SaaS is enabled on the zone. SaaS
+activation [requires payment information](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/enable/)
+even on the Free plan; the available CLI OAuth lacks DNS/custom-hostname
+permissions. No wildcard route, SaaS custom hostname, or fallback origin
+has been created. When enabling SaaS and adding the wildcard route, verify
+analytics again immediately and roll back the wildcard if it fails.
+Both approaches leave the school's parent nameservers and mail untouched.
+Coordinate TLS validation and a rollback window with the school administrator.
+See `GO-LIVE-HANDOFF.md`.
 
 Until the school chooses and approves a route, use the existing HTTPS `workers.dev`
 address. Do not promise working canonical links or social images there: the build's
