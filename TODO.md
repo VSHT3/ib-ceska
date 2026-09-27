@@ -51,9 +51,9 @@ PDFs should open in a new tab
 
 ## Security & access
 
-- [x] Existing live CMS uses Keystatic GitHub OAuth; login + Save were verified on `workers.dev`. This remains active until the Cloud cutover is tested.
-- [ ] Owner: finish the Keystatic Cloud project `ib-ceska/ib-ceska`: set the primary URL to `https://ib-ceska.vsht.workers.dev`, connect GitHub owner `VSHT3` / repository `ib-ceska`, and invite the two teachers by email.
-- [ ] Deploy the Cloud-mode build and verify invited teacher login, collection access, Save to `main` and automatic rebuild. Then remove the old `IB Ceska CMS` GitHub App installation and revoke its exposed client secret and unused Worker secrets.
+- [x] Keystatic Cloud mode deployed on `workers.dev`; owner confirmed CMS works. Old GitHub-mode `KEYSTATIC_*` Worker secrets removed on 2026-09-27.
+- [ ] Invite two teachers to Keystatic Cloud when ready; no GitHub accounts required.
+- [ ] GitHub App owner: revoke the exposed `IB Ceska CMS` client secret and remove its obsolete installation/callbacks in GitHub. Deleting Worker secrets did not revoke this credential.
 - [ ] Optionally gate `/keystatic/` (and any CMS API paths still used) on each editor-facing origin behind Cloudflare Access, using the same approved individual email addresses. Keep public pages accessible and test the full sign-in flow.
 
 ## Cloudflare Workers cutover and real domain
@@ -64,10 +64,9 @@ The Worker-compatible build is ready. Complete the Cloudflare account and DNS st
 - [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
 - [x] Existing live Worker was configured with GitHub App secrets and the `workers.dev` callback; this is historical and must be retired after Cloud login works.
 - [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
-- [ ] Agree with the school administrator how to replace **only** `ib.gymnaziumceska.sk`, without moving the parent domain's nameservers or disturbing its site/mail. A Cloudflare partial (CNAME) zone requires Business or Enterprise; a separately delegated subdomain zone requires Enterprise. Until approved, keep `workers.dev`.
-- [ ] Add the Worker Custom Domain after the approved Cloudflare zone is active; have the school administrator update only the `ib` record.
-- [ ] On the approved school hostname, verify Keystatic Cloud login + Save; no GitHub App callback is needed in Cloud mode.
-- [ ] Confirm the old GitHub App installation, callbacks and secrets are removed after Cloud cutover.
+- [ ] Agree with the school administrator how to replace **only** `ib.gymnaziumceska.sk`, without moving parent nameservers or disturbing the school's site/mail. The owner selected `morumori.com` as a possible Free-plan SaaS backing zone, but an exact Worker route was rejected and a wildcard route would affect other traffic; a paid partial zone or dedicated SaaS zone may be safer. See `GO-LIVE-HANDOFF.md`.
+- [ ] Configure and validate the chosen custom-hostname route/TLS, then have the school administrator change only the `ib` record.
+- [ ] Add the new hostname to Keystatic Cloud allowed URLs and verify login + Save on the school origin.
 - [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 
 ## DX

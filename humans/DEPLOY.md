@@ -11,28 +11,21 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 
 ### Keystatic Cloud cutover
 
-The **currently deployed** CMS still uses the `IB Ceska CMS` GitHub App. The
-next release uses Keystatic Cloud; teachers can sign in without GitHub accounts.
-The owner must first create a Keystatic Cloud team and a project connected to
-`VSHT3/ib-ceska` on [keystatic.cloud](https://keystatic.cloud). Invite each
-teacher by email. Put unrelated sites in separate teams: membership grants
-access to all projects in a team. The free team supports three users (owner
-plus two teachers).
+The deployed CMS now uses Keystatic Cloud. The owner confirmed login and editing
+work on `https://ib-ceska.vsht.workers.dev/keystatic/`; teachers can be invited
+to the team later without GitHub accounts. Team membership covers every project
+in that team. The free team supports three users (owner plus two teachers).
 
 The Cloud project key `ib-ceska/ib-ceska` is configured in
-`keystatic.config.ts`; no Worker secrets or build variables are needed for Cloud
-authentication. The owner must complete the project in Keystatic Cloud: set
-the primary project URL to `https://ib-ceska.vsht.workers.dev`, connect GitHub
-owner `VSHT3` and repository `ib-ceska`, then invite the teachers. Local
-`pnpm run dev` remains filesystem-based and requires no Cloud account. Finish
-the project and repository connection before pushing Cloud-mode code to `main`.
+`keystatic.config.ts`; no Worker secret or build variable is needed for Cloud
+authentication. Local `pnpm run dev` remains filesystem-based.
 
-After deployment, test an invited teacher signing in, opening a collection,
-saving an edit to `main` and the resulting rebuild. Only then remove the old
-`IB Ceska CMS` GitHub App installation, revoke its client secret (previously
-exposed in chat), and remove obsolete `KEYSTATIC_GITHUB_CLIENT_ID`,
-`KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET` Worker secrets. Do
-not rotate the old secret instead of removing it after the switch.
+The old GitHub-mode `KEYSTATIC_GITHUB_CLIENT_ID`,
+`KEYSTATIC_GITHUB_CLIENT_SECRET` and `KEYSTATIC_SECRET` Worker secrets were
+removed on 2026-09-27; the Cloud login screen still loads. The exposed
+`IB Ceska CMS` GitHub App client secret and installation must still be revoked
+by the GitHub App owner separately. Do not treat deleting Worker secrets as
+revoking the GitHub App credential.
 
 ## Cloudflare Workers deployment
 
@@ -78,18 +71,25 @@ The school's authoritative DNS remains at its current provider, and `ib.gymnaziu
 currently serves the old Framer site. Replacing that one hostname needs the school/domain
 administrator's approval; it does not require changing the main school's site or mail.
 
-A Worker **Custom Domain** requires an active Cloudflare zone. A plain CNAME from the
-current DNS provider to `workers.dev` does **not** make a Worker Custom Domain work.
-The non-disruptive Cloudflare option is a **partial (CNAME) zone**, which requires
-Cloudflare Business or Enterprise: the school adds a verification TXT record and replaces
-only the existing `ib` CNAME with the Cloudflare-provided hostname when ready to
-cut over. The root nameservers, main website and mail stay put. On a partial zone,
-Universal SSL may provision only after the CNAME is proxied; coordinate certificate
-validation and a rollback window with the school administrator before the switch.
-See [partial-zone setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
+A Worker **Custom Domain** requires an active Cloudflare zone. A plain CNAME
+from the current DNS provider to `workers.dev` does **not** make one work.
+There is no `gymnaziumceska.sk` zone in this Cloudflare account.
+
+One non-disruptive option is a **partial (CNAME) zone** on Cloudflare Business
+or Enterprise: the school adds a verification TXT record and later replaces
+only its existing `ib` CNAME. See [partial-zone setup](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
 and [Worker Custom Domains](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/).
-Standalone subdomain zone delegation also avoids moving root nameservers, but Cloudflare
-currently limits subdomain-zone setup to Enterprise.
+Another option on a Free plan is [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/plans/)
+with a Worker as the [fallback origin](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
+The owner selected `morumori.com` as a possible backing zone, but Cloudflare
+rejected an exact `ib.gymnaziumceska.sk/*` Worker route there (zone name
+required). A `*/*` route would catch unrelated `morumori.com` traffic; do not
+add it without a complete audit and exclusions, or use a dedicated zone.
+Enabling SaaS on a Free-plan zone [requires payment information](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/enable/),
+and the available CLI OAuth lacks DNS/custom-hostname permissions. No SaaS
+resources were configured. Both approaches leave the school's parent
+nameservers and mail untouched. Coordinate TLS validation and a rollback
+window with the school administrator. See `GO-LIVE-HANDOFF.md`.
 
 Until the school chooses and approves a route, use the existing HTTPS `workers.dev`
 address. Do not promise working canonical links or social images there: the build's
@@ -133,9 +133,9 @@ The site is Astro in **hybrid mode**: public pages are prerendered, while `/keys
 
 `keystatic.config.ts` specifies the Cloud project key `ib-ceska/ib-ceska`.
 No Cloud project environment variable or Worker runtime secret is required.
-The `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, and
-`KEYSTATIC_SECRET` Worker secrets are used only by the **currently deployed**
-GitHub-mode version; remove them after Cloud login and Save work.
+The old GitHub-mode Worker secrets were removed after the owner confirmed the
+Cloud CMS works. The old GitHub App installation and exposed client secret
+still need revocation at GitHub; this is separate from Cloudflare configuration.
 
 ## ⚠️ The site MUST be served over HTTPS (not plain HTTP)
 
@@ -150,19 +150,20 @@ Opening a collection or saving can fail on plain HTTP. Cloudflare supplies HTTPS
 
 ## Verification boundary
 
-Local builds and preview can verify static content and the Cloud-mode UI.
-Signing in as a teacher and saving to `main` require a real Keystatic Cloud
-project connected to the repository, an invited editor, and the deployed origin.
+The owner confirmed Keystatic Cloud editing works on the `workers.dev`
+address. Teacher invitations and CMS login/Save on the school hostname remain
+unverified until those accounts/origin exist.
 
 ## Switching to the school hostname
 
-Only after the school approves a DNS approach and the required zone is active:
+Only after the school approves a DNS approach and the necessary Cloudflare
+zone/custom-hostname setup is active:
 
-1. Coordinate the replacement of the old Framer `ib` hostname with the school administrator.
-2. Add `ib.gymnaziumceska.sk` as the Worker's Custom Domain and plan TLS validation.
-3. On a partial-zone setup, have the DNS administrator change **only** the `ib` CNAME to the Cloudflare-provided target. Do not touch the root nameservers. Confirm HTTPS certificate issuance before considering the cutover complete.
-4. Verify public pages, canonical links, images, Keystatic Cloud login and Save on the new origin.
-5. Keep the `workers.dev` address available until the new origin is stable.
+1. Coordinate replacement of the old Framer `ib` hostname with the school administrator.
+2. For a partial zone, attach `ib.gymnaziumceska.sk` as the `ib-ceska` Worker's Custom Domain. For Cloudflare for SaaS, configure its custom hostname, fallback origin and narrowly scoped route to the Worker instead.
+3. Pre-validate hostname ownership and TLS where the chosen setup allows it; have the DNS administrator change **only** the `ib` CNAME to its correct target. Do not touch parent nameservers. Confirm HTTPS certificate issuance.
+4. Add `https://ib.gymnaziumceska.sk` to the Keystatic Cloud project's allowed URLs, keeping the working `workers.dev` URL.
+5. Verify public pages, canonical links, images, Keystatic Cloud login and Save on the new origin. Keep `workers.dev` available until stable.
 
 The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk`
 (used for canonical links, social images and the sitemap).

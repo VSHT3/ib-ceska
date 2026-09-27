@@ -4,8 +4,8 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 
 ## Critical — before launch
 
-- [ ] **Finish the Keystatic Cloud project (site owner).** In project `ib-ceska/ib-ceska`, set the primary URL to `https://ib-ceska.vsht.workers.dev`, GitHub owner to `VSHT3`, repository to `ib-ceska`, and complete setup. The existing GitHub App login stays live until the Cloud-mode deployment and Save are tested.
-- [ ] **Invite the two teachers** to the Keystatic Cloud team using their own email addresses. They do not need GitHub accounts. Once an invited teacher can log in and Save, remove the old `IB Ceska CMS` GitHub App installation and its exposed secret; remove unused Worker secrets.
+- [x] ~~**Complete Keystatic Cloud project and test CMS.**~~ Owner confirmed Cloud editing works at `https://ib-ceska.vsht.workers.dev/keystatic/`. No teacher invitations yet.
+- [ ] **Invite the two teachers** to the Keystatic Cloud team using their own email addresses. They do not need GitHub accounts. The old GitHub-mode Worker secrets were removed; the GitHub App owner must still revoke the exposed `IB Ceska CMS` client secret and obsolete installation in GitHub.
 - [x] ~~Provide high-quality school logo~~ — the school-supplied burgundy triangle logo is published as `public/logo-mark.png`; the nav, footer, schema.org metadata, and favicons use it.
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`
 - [x] ~~Provide real teacher names and titles for all IB subjects~~ — current IB roster and responsibilities were taken from the school’s published IB website on 15 June 2026
