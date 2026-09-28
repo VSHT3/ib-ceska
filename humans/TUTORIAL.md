@@ -26,28 +26,23 @@ The site administrator will invite you to the Keystatic Cloud team by email.
 Accept the invitation and set up your own Keystatic login. **You do not need a
 GitHub account.** If you have not received the invitation, ask the administrator.
 
-The site is being moved to this login method. Until the administrator confirms
-the cutover is complete, the live editor still uses its previous GitHub login.
-
 ---
 
 ## Editing — step by step
 
 ### 1. Open the editor
 
-Go to the website address with `/keystatic` on the end. On the current temporary address that is:
+Go to the live website editor:
 
 ```
-https://ib-ceska.vsht.workers.dev/keystatic
+https://ib.gymnaziumceska.sk/keystatic/
 ```
-
-> When the site moves to its final address, this becomes `https://ib.gymnaziumceska.sk/keystatic`.
 
 ### 2. Log in
 
 Use the Keystatic Cloud sign-in option with the account you were invited to.
-If the editor still asks for GitHub, contact the administrator: the Cloud
-cutover has not been deployed yet.
+If your login fails, tell the administrator which URL you used so they can
+check the Cloud project's allowed origins.
 
 ### 3. Pick what to edit
 

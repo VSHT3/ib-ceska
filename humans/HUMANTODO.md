@@ -2,9 +2,9 @@
 
 Things the humans (IB coordinators, teachers, school staff) must provide or decide. AI cannot do these without your input.
 
-## Critical — before launch
+## Remaining owner and school decisions
 
-- [x] ~~**Complete Keystatic Cloud project and test CMS.**~~ Owner confirmed Cloud editing works at `https://ib-ceska.vsht.workers.dev/keystatic/`. No teacher invitations yet.
+- [x] ~~**Complete Keystatic Cloud project and deploy the school hostname.**~~ The owner confirmed Cloud editing on `workers.dev`; the new school hostname serves HTTPS. An authenticated CMS login and Save on the school origin remain unverified. No teacher invitations yet.
 - [ ] **Invite the two teachers** to the Keystatic Cloud team using their own email addresses. They do not need GitHub accounts. The old GitHub-mode Worker secrets were removed; the GitHub App owner must still revoke the exposed `IB Ceska CMS` client secret and obsolete installation in GitHub.
 - [x] ~~Provide high-quality school logo~~ — the school-supplied burgundy triangle logo is published as `public/logo-mark.png`; the nav, footer, schema.org metadata, and favicons use it.
 - [x] ~~Confirm final domain name~~ — set to `ib.gymnaziumceska.sk` in `astro.config.mjs`

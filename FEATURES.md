@@ -116,8 +116,8 @@ Implemented and shipped.
 
 ## Deployment
 
-- [x] Existing production Keystatic GitHub OAuth login and Save were verified. Cloud-mode config is prepared locally; it requires an owner-created Keystatic Cloud project and a verified live Save before replacing the running GitHub-mode deployment.
-- [x] Cloudflare Workers deployment — Wrangler config, standard build/preview/deploy scripts, compile-time images and automatic KV-backed Astro sessions
+- [x] Keystatic Cloud production CMS (`ib-ceska/ib-ceska`) is deployed; the owner confirmed editing on `workers.dev`. The school-hostname login/Save path still needs an authenticated check.
+- [x] Cloudflare Workers deployment at `ib.gymnaziumceska.sk` via the `morumori.com` Cloudflare for SaaS zone; originless fallback, Worker routing, and automatic HTTP-validated TLS are active. The zone routes preserve the studio site and analytics.
 
 ## DX & tooling
 

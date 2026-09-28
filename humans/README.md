@@ -39,15 +39,15 @@ New to this? Start with the step-by-step [`TUTORIAL.md`](TUTORIAL.md). Full fiel
 
 ## Who is allowed to edit (access & security)
 
-- Keystatic Cloud will manage editor access after the cutover: a team administrator
-  invites each teacher by email. Teachers do **not** need GitHub accounts.
+- Keystatic Cloud manages editor access: a team administrator invites each
+  teacher by email. Teachers do **not** need GitHub accounts.
 - Each teacher has their own login. Removing them from the Cloud team revokes
   access to the CMS; team access covers every project in that team.
 - The site owner connects Keystatic Cloud to the GitHub repository once. The
   repository remains the source of content and each Save triggers a rebuild.
-- **Until the Cloud project is created and deployed**, the live Worker still uses
-  the old GitHub App login. The administrator should confirm the switch and test
-  a teacher's Save before inviting everyone to use it.
+- The live editor uses Keystatic Cloud, not the former GitHub App login. The
+  owner confirmed editing on `workers.dev`; login and Save should also be
+  checked on the school hostname before treating that origin as verified.
 
 ## Succession — for whoever takes this over
 

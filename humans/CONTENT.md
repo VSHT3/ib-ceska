@@ -17,7 +17,7 @@ exception. A developer maintains them in `src/data/teachers.ts` and
 
 ## Production workflow (Keystatic Cloud)
 
-Once the Cloud cutover has been deployed, editors log in to Keystatic with their
+On the live site, editors log in to Keystatic Cloud with their
 own invited accounts. **Teachers do not need GitHub accounts.** The site owner
 connects Keystatic Cloud to the GitHub repository once; editors save content
 through Cloud, which commits to `main` and triggers an automatic Worker rebuild.
@@ -34,8 +34,6 @@ Changes appear after the build succeeds, not immediately upon pressing Save.
 The free team has a three-user limit: one owner and two teachers fit. See the
 [Keystatic Cloud guide](https://keystatic.com/docs/cloud) for current plan details.
 The owner still needs GitHub access to connect and maintain the repository.
-Before the Cloud project is connected and the new build deployed, the _existing_
-live site continues to use the GitHub App login; see `humans/DEPLOY.md`.
 
 ## Local workflow
 

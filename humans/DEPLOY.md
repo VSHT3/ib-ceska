@@ -6,8 +6,8 @@ Where the site is hosted, how a deploy happens, and what to do when something br
 
 - **Host:** Cloudflare Workers with static assets.
 - **Source:** GitHub repo `VSHT3/ib-ceska`, branch `main`.
-- **Current URL:** `https://ib-ceska.vsht.workers.dev` (live since 2026-09-02).
-- **Planned school hostname:** `https://ib.gymnaziumceska.sk` only after the school approves a DNS solution. The existing school DNS stays with its administrator.
+- **Public school URL:** `https://ib.gymnaziumceska.sk` (live).
+- **Alternate Worker URL:** `https://ib-ceska.vsht.workers.dev` (kept for fallback and CMS access).
 
 ### Keystatic Cloud cutover
 
@@ -50,52 +50,43 @@ Current Astro 7 releases deploy server-rendered routes to **Workers with static 
 
 The Cloudflare adapter provisions an `ASSETS` binding for the static site and a `SESSION` KV binding for Astro sessions. No manual KV namespace is required by the repository configuration.
 
-### Verify before changing DNS
+### Production smoke checks
 
-Check all of the following on the `workers.dev` URL after the Cloud cutover:
+The school hostname serves both `/en/` and `/sk/` over HTTPS. The Cloudflare
+for SaaS custom hostname and certificate became **Active** on 2026-09-28
+after automatic HTTP validation. `/keystatic/` displays Keystatic Cloud
+sign-in, but authenticated login and Save on the school hostname have **not**
+been verified; the owner confirmed CMS editing on `workers.dev`.
 
-| Check             | Expected result                                                |
-| ----------------- | -------------------------------------------------------------- |
-| `/`               | 200 and language redirect behavior works                       |
-| `/en/` and `/sk/` | Both localized homepages load with images and styles           |
-| `/keystatic`      | Cloud sign-in appears over HTTPS                               |
-| Teacher login     | Invited teacher can open a collection without a GitHub account |
-| Save an edit      | A commit reaches `main` and triggers a new Worker build        |
-
-Complete every check before attaching the school domain.
+After changing the hostname or Worker routes, check public pages, images,
+documents, the CMS, `analytics.morumori.com/script.js`, and `morumori.com`.
+Keep the alternate Worker URL available for troubleshooting.
 
 ### School hostname without moving the school's DNS
 
-**Do not change the nameservers for `gymnaziumceska.sk` as part of this project.**
-The school's authoritative DNS remains at its current provider, and `ib.gymnaziumceska.sk`
-currently serves the old Framer site. Replacing that one hostname needs the school/domain
-administrator's approval; it does not require changing the main school's site or mail.
+**Do not change the nameservers for `gymnaziumceska.sk`.** The school manages
+its authoritative DNS at Websupport. Only its `ib.gymnaziumceska.sk` CNAME
+points to `ib-ceska.morumori.com`; its main site and mail records stay put.
 
-A Worker **Custom Domain** requires an active Cloudflare zone. A plain CNAME
-from the current DNS provider to `workers.dev` does **not** make one work.
-There is no `gymnaziumceska.sk` zone in this Cloudflare account.
+The school hostname is a [Cloudflare for SaaS custom hostname](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/)
+on the owner's `morumori.com` zone, **not** a Worker Custom Domain or a
+`gymnaziumceska.sk` Cloudflare zone. The Active fallback origin is a proxied
+originless `AAAA 100::` at `ib-ceska-fallback.morumori.com`. A proxied CNAME
+at `ib-ceska.morumori.com` points to it.
 
-The chosen approach is [Cloudflare for SaaS](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/plans/)
-on the owner's `morumori.com` Free-plan zone, with the [Worker as fallback origin](https://developers.cloudflare.com/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/).
-SaaS is enabled. `ib-ceska-fallback.morumori.com` is a proxied originless
-`AAAA` record (`100::`) and the **Active** fallback origin. The proxied
-`ib-ceska.morumori.com` CNAME points to that fallback; it already serves
-the IB site through the `*/*` → `ib-ceska` Worker route.
+Worker routes on the `morumori.com` zone:
 
-Two more-specific routes protect unrelated traffic: `analytics.morumori.com/*`
-has **no Worker** (and analytics currently resolves directly to `87.106.7.54`),
-while `morumori.com/*` runs the original `morumori` Worker. Both analytics
-`/script.js` and the studio homepage were verified after routing changed.
-The SaaS custom hostname `ib.gymnaziumceska.sk` is created but still
-**pending**: the school DNS administrator must publish its hostname and
-certificate TXT validation records before changing only the `ib` CNAME to
-`ib-ceska.morumori.com`. See `GO-LIVE-HANDOFF.md` for the exact records,
-current statuses, verification steps and rollback. Parent nameservers and
-mail records must remain unchanged.
+| Pattern                    | Worker     | Reason                       |
+| -------------------------- | ---------- | ---------------------------- |
+| `*/*`                      | `ib-ceska` | Serve SaaS custom hostnames  |
+| `analytics.morumori.com/*` | none       | Preserve analytics           |
+| `morumori.com/*`           | `morumori` | Preserve the studio homepage |
 
-The alternative, if SaaS is abandoned, is a [partial zone](https://developers.cloudflare.com/dns/zone-setups/partial-setup/setup/)
-on Cloudflare Business or Enterprise. A plain CNAME to `workers.dev` does
-not configure a Worker Custom Domain.
+The more-specific routes must remain in place when the wildcard route is
+changed. The school hostname and certificate are **Active** using automatic
+**HTTP** domain validation; no TXT records were required. If changing the
+validation method, confirm a replacement certificate is Active before assuming
+the school hostname will continue to work.
 
 ### CMS editor access
 
@@ -148,35 +139,35 @@ TypeError: Cannot read properties of undefined (reading 'digest')
 Unable to load collection
 ```
 
-Opening a collection or saving can fail on plain HTTP. Cloudflare supplies HTTPS for both `workers.dev` and Custom Domains. Ref: [Thinkmill/keystatic#182](https://github.com/Thinkmill/keystatic/issues/182).
+Opening a collection or saving can fail on plain HTTP. Cloudflare serves HTTPS for `workers.dev` and for the school's SaaS custom hostname. Ref: [Thinkmill/keystatic#182](https://github.com/Thinkmill/keystatic/issues/182).
 
-## Verification boundary
+## Verification boundary and rollback
 
-The owner confirmed Keystatic Cloud editing works on the `workers.dev`
-address. Teacher invitations and CMS login/Save on the school hostname remain
-unverified until those accounts/origin exist.
+The owner confirmed Keystatic Cloud editing on `workers.dev`. The public
+school-origin pages and CMS sign-in screen load, but an **authenticated**
+login and Save from `https://ib.gymnaziumceska.sk/keystatic/` remain to be
+verified. If Cloud rejects the new origin, add
+`https://ib.gymnaziumceska.sk` to project `ib-ceska/ib-ceska`'s allowed URLs,
+retaining the `workers.dev` URL. Verify the resulting commit to `main` and
+automatic rebuild before onboarding editors there.
 
-## Switching to the school hostname
+If the school hostname fails, the authorized Websupport DNS administrator
+can restore **only** its previous `ib` CNAME (`sites.framer.app`) while the
+Worker remains reachable at `workers.dev`. Do not change parent nameservers,
+school mail or unrelated DNS. After restoration, recheck certificate status,
+analytics, and the `morumori.com` studio homepage.
 
-Only after the school DNS administrator approves replacing its `ib` hostname:
-
-1. Have the administrator add the two TXT records in `GO-LIVE-HANDOFF.md`, leaving the Framer CNAME unchanged until Cloudflare reports hostname and SSL statuses **Active**. Refresh expired certificate tokens if needed.
-2. Add `https://ib.gymnaziumceska.sk` to Keystatic Cloud project `ib-ceska/ib-ceska` as an allowed URL while keeping the `workers.dev` URL.
-3. Have the administrator replace **only** the `ib.gymnaziumceska.sk` CNAME from `sites.framer.app` to `ib-ceska.morumori.com`. Do not touch parent nameservers or mail.
-4. Verify HTTPS, public pages, analytics script, the morumori studio site, Keystatic Cloud login and Save on the new origin. Keep `workers.dev` available and restore the old Framer CNAME if the new route fails.
-
-The `site` URL in `astro.config.mjs` is already `https://ib.gymnaziumceska.sk`
+The `site` URL in `astro.config.mjs` is `https://ib.gymnaziumceska.sk`
 (used for canonical links, social images and the sitemap).
 
 ## Troubleshooting
 
-- **CMS error "Unable to load collection" / `reading 'digest'`:** confirm the browser is using an HTTPS Worker or Custom Domain URL.
-- **Cloud login redirects to an unauthorized origin:** ensure the Keystatic Cloud project URL includes the current origin `https://ib-ceska.vsht.workers.dev` (without `/keystatic`).
+- **CMS error "Unable to load collection" / `reading 'digest'`:** confirm the browser is using HTTPS.
+- **Cloud login redirects to an unauthorized origin:** add `https://ib.gymnaziumceska.sk` to Keystatic Cloud project `ib-ceska/ib-ceska`'s allowed URLs, retaining the working `workers.dev` URL.
 - **Cloud login or Save fails:** confirm the Cloud project is connected to `VSHT3/ib-ceska`, the editor belongs to its team, and the current build contains the correct project identifier.
 - **Live pages show no subjects/news (e.g. "0 subjects, 0 groups") but the build succeeded:** the Cloudflare adapter prerendered inside `workerd`, where the Keystatic reader has no filesystem. `astro.config.mjs` must keep `prerenderEnvironment: 'node'` on `cloudflare(...)`. Verify locally: `pnpm run build`, then check `dist/client/en/subjects/index.html` contains subject links.
 - **Push didn't deploy:** confirm Workers Builds is connected to `VSHT3/ib-ceska` and the production branch is `main`.
 - **Cloudflare deploy says Pages or `ASSETS` is reserved:** a Pages project was created. Use a Worker; current Astro Cloudflare adapters no longer support Pages SSR.
-- **Custom Domain cannot be added:** confirm the approved Cloudflare zone is active in the same account.
 
 ## Succession — what to hand over
 

@@ -56,18 +56,17 @@ PDFs should open in a new tab
 - [ ] GitHub App owner: revoke the exposed `IB Ceska CMS` client secret and remove its obsolete installation/callbacks in GitHub. Deleting Worker secrets did not revoke this credential.
 - [ ] Optionally gate `/keystatic/` (and any CMS API paths still used) on each editor-facing origin behind Cloudflare Access, using the same approved individual email addresses. Keep public pages accessible and test the full sign-in flow.
 
-## Cloudflare Workers cutover and real domain
+## Cloudflare Workers and live school domain
 
-The Worker-compatible build is ready. Complete the Cloudflare account and DNS steps:
+The site is live at `https://ib.gymnaziumceska.sk`; remaining items are operational verification and access cleanup:
 
 - [x] Cloudflare → Workers & Pages → Create → Import repository `VSHT3/ib-ceska`, production branch `main`
 - [x] Set build command `pnpm run build` and deploy command `npx wrangler deploy`
 - [x] Existing live Worker was configured with GitHub App secrets and the `workers.dev` callback; this is historical and must be retired after Cloud login works.
 - [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
 - [x] Enable SaaS on `morumori.com`, set an Active originless fallback, create `ib-ceska.morumori.com` as the CNAME target, and route `*/*` to `ib-ceska`. More-specific routes preserve `analytics.morumori.com/*` and the `morumori.com` studio site; all three were checked after the changes.
-- [x] Create the SaaS custom hostname `ib.gymnaziumceska.sk` with TXT certificate validation. School hostname and certificate remain pending until its DNS administrator adds the two TXT records in `GO-LIVE-HANDOFF.md`.
-- [ ] School DNS administrator: add the two TXT validation records and wait for both statuses Active. Then, during an agreed cutover, replace **only** the `ib` CNAME from `sites.framer.app` to `ib-ceska.morumori.com`; do not change parent nameservers or school mail.
-- [ ] Add the new hostname to Keystatic Cloud allowed URLs and verify login + Save on the school origin.
+- [x] `ib.gymnaziumceska.sk` now CNAMEs to `ib-ceska.morumori.com`. The Cloudflare for SaaS hostname and certificate are Active using automatic HTTP validation, with no school TXT records required. Both localized homepages and the CMS sign-in screen load over HTTPS.
+- [ ] Add the school hostname to Keystatic Cloud's allowed URLs if needed, then verify an authenticated login and Save from `/keystatic/` on the school origin.
 - [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 
 ## DX
