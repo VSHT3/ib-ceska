@@ -91,6 +91,32 @@ const teamProfile = (label: string) =>
     },
   );
 
+const programmeField = () =>
+  fields.select({
+    label: 'Programme',
+    description:
+      'Choose only confirmed applicability. Existing content is unclassified by default.',
+    options: [
+      { label: 'Unclassified — needs confirmation', value: 'unclassified' },
+      { label: 'IB MYP', value: 'myp' },
+      { label: 'IB DP', value: 'dp' },
+      { label: 'Both programmes / shared', value: 'both' },
+    ],
+    defaultValue: 'unclassified',
+  });
+
+const editorialStatus = () =>
+  fields.select({
+    label: 'Editorial status',
+    description:
+      'Preparation only: these collections do not feed public pages yet. Uploaded assets are publicly hosted even in drafts.',
+    options: [
+      { label: 'Draft — collecting materials', value: 'draft' },
+      { label: 'Approved — ready for publication', value: 'approved' },
+    ],
+    defaultValue: 'draft',
+  });
+
 export default config({
   storage: isDev ? { kind: 'local' } : { kind: 'cloud' },
   cloud: { project: 'ib-ceska/ib-ceska' },
@@ -230,6 +256,7 @@ export default config({
       format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: 'Headline' } }),
+        programme: programmeField(),
         date: fields.date({ label: 'Date' }),
         excerpt: fields.text({ label: 'Excerpt', multiline: true }),
         author: fields.text({ label: 'Author' }),
@@ -314,6 +341,7 @@ export default config({
       format: { contentField: 'content' },
       schema: {
         title: fields.slug({ name: { label: 'Event Name' } }),
+        programme: programmeField(),
         date: fields.date({ label: 'Date' }),
         endDate: fields.date({ label: 'End date (optional, for multi-day events)' }),
         time: fields.text({ label: 'Time (e.g. 17:00–19:00)' }),
@@ -357,6 +385,156 @@ export default config({
           },
         ),
         quote: fields.text({ label: 'Quote', multiline: true }),
+      },
+    }),
+    resources: collection({
+      label: 'Policies and guides',
+      slugField: 'title',
+      path: 'src/content/resources/*',
+      format: { data: 'json' },
+      schema: {
+        title: fields.slug({
+          name: { label: 'Document title', validation: { isRequired: true } },
+        }),
+        programme: programmeField(),
+        status: editorialStatus(),
+        category: fields.select({
+          label: 'Document category',
+          options: [
+            { label: 'Policy', value: 'policy' },
+            { label: 'Parent handbook', value: 'parent-handbook' },
+            { label: 'Subject / course guide', value: 'subject-guide' },
+            { label: 'Personal Project', value: 'personal-project' },
+            { label: 'Service as Action', value: 'service-as-action' },
+            { label: 'Admissions / application form', value: 'admissions' },
+            { label: 'Other guide or form', value: 'other' },
+          ],
+          defaultValue: 'other',
+        }),
+        academicYear: fields.text({ label: 'Academic year (e.g. 2026/27)' }),
+        version: fields.text({ label: 'Version / revision identifier' }),
+        updatedDate: fields.date({ label: 'Document revision date (optional)' }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        englishFile: fields.file({
+          label: 'English document (optional)',
+          description: 'Upload only files cleared for public hosting.',
+          directory: 'public/documents/resources',
+          publicPath: '/documents/resources',
+        }),
+        slovakFile: fields.file({
+          label: 'Slovak document (optional)',
+          directory: 'public/documents/resources',
+          publicPath: '/documents/resources',
+        }),
+        externalUrl: fields.text({ label: 'Official external document URL (optional)' }),
+        owner: fields.text({ label: 'Responsible staff member / maintenance owner' }),
+        order: fields.integer({ label: 'Display order', defaultValue: 0 }),
+        content: fields.markdoc.inline({ label: 'Guidance / web content (optional)' }),
+        sk: slovakFields({ description: 'Description', body: 'Guidance / web content' }),
+      },
+    }),
+    galleryAlbums: collection({
+      label: 'Gallery albums',
+      slugField: 'title',
+      path: 'src/content/gallery-albums/*',
+      format: { data: 'json' },
+      schema: {
+        title: fields.slug({
+          name: { label: 'Album / activity name', validation: { isRequired: true } },
+        }),
+        programme: programmeField(),
+        status: editorialStatus(),
+        date: fields.date({ label: 'Activity date (optional)' }),
+        description: fields.text({ label: 'Description', multiline: true }),
+        permissionConfirmed: fields.checkbox({
+          label: 'Publication permission confirmed for every photograph',
+          description: 'Only upload approved photos: draft albums do not make image URLs private.',
+          defaultValue: false,
+        }),
+        credit: fields.text({ label: 'Photographer / image credit (if known)' }),
+        photos: fields.array(
+          fields.object({
+            image: fields.image({
+              label: 'Photograph',
+              directory: 'public/images/gallery-albums',
+              publicPath: '/images/gallery-albums',
+              validation: { isRequired: true },
+            }),
+            alt: fields.text({
+              label: 'Accessible image description (English)',
+              validation: { isRequired: true },
+            }),
+            caption: fields.text({ label: 'Caption (English)', multiline: true }),
+            sk: fields.object(
+              {
+                alt: fields.text({ label: 'Accessible image description (Slovak)' }),
+                caption: fields.text({ label: 'Caption (Slovak)', multiline: true }),
+              },
+              { label: 'Slovak translation — optional, falls back to English' },
+            ),
+          }),
+          { label: 'Photographs', itemLabel: (props) => props.fields.alt.value || 'Photograph' },
+        ),
+        order: fields.integer({ label: 'Display order', defaultValue: 0 }),
+        sk: slovakFields({ description: 'Description' }),
+      },
+    }),
+    assessments: collection({
+      label: 'Assessment calendar',
+      slugField: 'title',
+      path: 'src/content/assessments/*',
+      format: { data: 'json' },
+      schema: {
+        title: fields.slug({
+          name: { label: 'Assessment name', validation: { isRequired: true } },
+        }),
+        programme: programmeField(),
+        status: editorialStatus(),
+        academicYear: fields.text({ label: 'Academic year (e.g. 2026/27)' }),
+        subject: fields.text({ label: 'Subject' }),
+        yearGroup: fields.text({
+          label: 'Year / class',
+          description: 'Use the school’s actual year or class, e.g. MYP 3 or DP 1.',
+        }),
+        date: fields.date({ label: 'Assessment date / deadline (optional while drafting)' }),
+        time: fields.text({ label: 'Time (optional)' }),
+        teacher: fields.text({ label: 'Teacher / assessment owner' }),
+        description: fields.text({ label: 'Assessment details', multiline: true }),
+        sk: slovakFields({ description: 'Assessment details' }),
+      },
+    }),
+    vacancies: collection({
+      label: 'Vacancies',
+      slugField: 'title',
+      path: 'src/content/vacancies/*',
+      format: { data: 'json' },
+      schema: {
+        title: fields.slug({
+          name: { label: 'Job title', validation: { isRequired: true } },
+        }),
+        programme: programmeField(),
+        status: editorialStatus(),
+        subject: fields.text({ label: 'Subject / teaching area (optional)' }),
+        employmentType: fields.select({
+          label: 'Employment type',
+          options: [
+            { label: 'Not yet confirmed', value: 'unconfirmed' },
+            { label: 'Full-time', value: 'full-time' },
+            { label: 'Part-time', value: 'part-time' },
+            { label: 'Other — describe in job details', value: 'other' },
+          ],
+          defaultValue: 'unconfirmed',
+        }),
+        startDate: fields.date({ label: 'Expected start date (optional)' }),
+        deadline: fields.date({ label: 'Application deadline (optional)' }),
+        closed: fields.checkbox({ label: 'Applications closed', defaultValue: false }),
+        description: fields.text({ label: 'Short description', multiline: true }),
+        applicationEmail: fields.text({ label: 'Application contact email' }),
+        applicationUrl: fields.text({ label: 'Application form URL (optional)' }),
+        content: fields.markdoc.inline({
+          label: 'Job details, qualifications, required documents, and how to apply',
+        }),
+        sk: slovakFields({ description: 'Short description', body: 'Job details / how to apply' }),
       },
     }),
   },

@@ -15,10 +15,24 @@ pending programme attribution. The MYP catalogue currently contains the two
 confirmed Mathematics offerings; add other courses only when the school confirms them.
 See [PROGRAMME-STRUCTURE.md](PROGRAMME-STRUCTURE.md) for the remaining plan.
 
+### Preparing the remaining materials
+
+Four new collections are ready for data entry, but do not feed public pages yet:
+**Policies and guides** (category, academic year/version, EN/SK documents or web text),
+**Gallery albums** (photos, bilingual captions/alt text, permission confirmation),
+**Assessment calendar** (subject, year/class, date, teacher), and **Vacancies**
+(employment type, dates, application contact, bilingual job details).
+All start as **Draft** and **Unclassified**. Mark MYP, DP, or Both only after confirmation;
+use Approved once the school has reviewed the material. News/Events now have the same
+programme selector; their existing public feed is unchanged.
+
+**Uploaded files/images are public even in drafts.** Upload only materials cleared
+for public hosting; do not upload confidential documents or unconsented photos.
+
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Programme teams, IB DP subjects, IB MYP subjects, News, Events, CAS Activities, TOK Materials, or Testimonials (8 collections)
+2. **Choose a collection** — Programme teams, IB DP subjects, IB MYP subjects, News, Events, CAS Activities, TOK Materials, Testimonials, Policies and guides, Gallery albums, Assessment calendar, or Vacancies (12 collections)
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -48,7 +62,7 @@ The owner still needs GitHub access to connect and maintain the repository.
 When running `pnpm run dev` locally:
 
 - The admin panel is available at `http://localhost:4321/keystatic/`
-- Edits write to `.mdoc` files or team/MYP-subject `.json` records in `src/content/`
+- Edits write to `.mdoc` files or `.json` records in `src/content/`
 - No GitHub auth required — changes stay local
 
 ## Collections

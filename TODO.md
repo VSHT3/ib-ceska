@@ -90,6 +90,7 @@ The site is live at `https://ib.gymnaziumceska.sk`; remaining items are operatio
 - [x] Separate `/dp/team` and `/myp/team`, with one Keystatic Programme teams collection and independently editable programme profiles. Preserve the current DP roster; seed only confirmed MYP leaders. Migrate menu/footer/homepage links and sitemap; redirect legacy `/teachers` to DP team.
 - [x] Highlight only the current destination inside programme menus (Home is exact-match); move the existing DP subject catalogue/details to `/dp/subjects`, update all internal links/search/SEO/sitemap, and permanently redirect legacy subject URLs.
 - [x] Add separate Keystatic-editable MYP subjects, bilingual catalogue/detail routes, and the confirmed Mathematics / Mathematics EL offerings; connect MYP navigation, overview, search, sitemap, and programme-specific teacher links.
+- [x] Prepare draft-first CMS collections for policies/guides, gallery albums, assessment calendar, and vacancies; add programme tagging to News/Events without changing their public feeds. Connect new collections to public pages when approved materials arrive.
 - [ ] Confirm programme section/menu structure and gather real MYP subjects, staff membership, content attribution, assessment calendar, handbook, and vacancy details.
 - [ ] Implement remaining programme-owned subjects, news, gallery, policies/guides, and relevant sections as content is confirmed; preserve DP levels/planner and the clarified MYP Mathematics offerings.
 

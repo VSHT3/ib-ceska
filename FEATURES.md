@@ -13,7 +13,7 @@ Implemented and shipped.
 
 ## CMS — Keystatic
 
-- [x] `keystatic.config.ts` — 8 collections with typed schemas
+- [x] `keystatic.config.ts` — 12 collections with typed schemas
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
 - [x] `src/lib/keystatic.ts` — shared reader singleton
@@ -22,7 +22,7 @@ Implemented and shipped.
 - [x] Markdoc rich-text editor for long-form content (subjects, CAS, TOK, news bodies)
 - [x] Select fields, date pickers, array fields with validation
 
-## Content (8 collections)
+## Content (12 collections)
 
 - [x] `subjects` — title, group (1-6/core), optional secondaryGroup (interdisciplinary subjects surface in two groups), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
@@ -32,6 +32,8 @@ Implemented and shipped.
 - [x] `testimonials` — name, role, gradYear, photo, order, featured, quote (+ SK)
 - [x] `team` — shared person name/portrait, independent MYP and DP publication, leadership, ordering, teaching areas, responsibilities, and Slovak list fallback; initial roster migrated to JSON
 - [x] `mypSubjects` — eight-group MYP taxonomy, school-year coverage, Mathematics-only EL metadata, optional teacher/syllabus, EN/SK fallback; two confirmed Mathematics offerings seeded in JSON
+- [x] Draft-first CMS collections: `resources` (policies/guides, EN/SK files), `galleryAlbums` (photos, captions, consent), `assessments` (programme/class/subject/deadlines), and `vacancies` (job details/application contacts); public-page integration pending
+- [x] News and Events programme tagging: unclassified, MYP, DP, or both; existing entries are not assigned by inference
 
 ## Pages (routes + detail pages + admin)
 
