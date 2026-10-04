@@ -1,0 +1,30 @@
+{
+  "name": "Ľubomír Tancer",
+  "photo": "/images/team/lubomir-tancer/lubomir-tancer.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 14,
+    "areas": [
+      "Physics"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Fyzika"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 16,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

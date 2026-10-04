@@ -15,6 +15,12 @@ const isDev = process.argv.includes('dev');
 
 export default defineConfig({
   site: 'https://ib.gymnaziumceska.sk',
+  redirects: {
+    '/en/teachers': { destination: '/en/dp/team', status: 301 },
+    '/sk/teachers': { destination: '/sk/dp/team', status: 301 },
+    '/en/subjects': { destination: '/en/dp/subjects', status: 301 },
+    '/sk/subjects': { destination: '/sk/dp/subjects', status: 301 },
+  },
   // `prerenderEnvironment: 'node'`: the adapter otherwise prerenders inside
   // workerd too, where the Keystatic reader finds no filesystem and every
   // collection builds empty (0 subjects, 0 news).

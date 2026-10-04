@@ -108,7 +108,7 @@ Pages add more specific schema where useful: subjects are `Course` entries, news
 
 School photos live in `src/assets/school/` and run through Astro's responsive image pipeline. The homepage uses `school-building.jpg` for the hero and the person-free `hallway-library.jpg` for the "What is the IB?" section.
 
-Published IB faculty portraits live in `src/assets/teachers/` and are rendered through Astro's image pipeline on `/teachers`. The verified roster and bilingual roles live in `src/data/teachers.ts`; update that file when the [official IB team page](https://ib.gymnaziumceska.sk/about) changes.
+Programme team portraits are uploaded through Keystatic and stored in `public/images/team/<person-slug>/`. `/dp/team` and `/myp/team` share `ProgrammeTeam.astro`, rendering public portraits in 4:5 frames with initials when absent. The roster lives in the `team` JSON collection, with a shared name/portrait and independently editable programme profiles; `src/lib/team.ts` handles ordering and EN/SK list fallback.
 
 ## CMS architecture
 
@@ -116,10 +116,10 @@ The site uses **Keystatic CMS** for content management:
 
 - **Admin panel** at `/keystatic/` — visual editor with no coding required
 - **Storage:**
-  - **Dev (local):** Writes to `.mdoc` files directly on disk
-  - **Production (github):** Commits changes to the GitHub repository, triggering a Cloudflare Worker redeploy
+  - **Dev (local):** Writes `.mdoc` content and team/MYP-subject `.json` records directly on disk
+  - **Production (Keystatic Cloud):** Commits changes to the GitHub repository, triggering a Cloudflare Worker redeploy
 - **Rendering:** Astro pages read content via the Keystatic Reader API (`src/lib/keystatic.ts`)
-- **Content format:** `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`
+- **Content format:** `.mdoc` files (YAML frontmatter + Markdoc body) and team/MYP-subject `.json` records with optional inline Markdoc in `src/content/`
 - **Types:** Defined in `keystatic.config.ts` using Keystatic's `fields.*` API
 
 ## Deployment

@@ -13,7 +13,7 @@ Implemented and shipped.
 
 ## CMS — Keystatic
 
-- [x] `keystatic.config.ts` — 6 collections with typed schemas
+- [x] `keystatic.config.ts` — 8 collections with typed schemas
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
 - [x] `src/lib/keystatic.ts` — shared reader singleton
@@ -22,7 +22,7 @@ Implemented and shipped.
 - [x] Markdoc rich-text editor for long-form content (subjects, CAS, TOK, news bodies)
 - [x] Select fields, date pickers, array fields with validation
 
-## Content (6 collections)
+## Content (8 collections)
 
 - [x] `subjects` — title, group (1-6/core), optional secondaryGroup (interdisciplinary subjects surface in two groups), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
@@ -30,12 +30,15 @@ Implemented and shipped.
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
 - [x] `events` — title, date, endDate, time, location, description, details body; auto upcoming/past split
 - [x] `testimonials` — name, role, gradYear, photo, order, featured, quote (+ SK)
+- [x] `team` — shared person name/portrait, independent MYP and DP publication, leadership, ordering, teaching areas, responsibilities, and Slovak list fallback; initial roster migrated to JSON
+- [x] `mypSubjects` — eight-group MYP taxonomy, school-year coverage, Mathematics-only EL metadata, optional teacher/syllabus, EN/SK fallback; two confirmed Mathematics offerings seeded in JSON
 
 ## Pages (routes + detail pages + admin)
 
 - [x] `/` — homepage with hero, stats, programmes, student benefits, gallery
-- [x] `/subjects` — DP-branded course catalogue: dark DP hero with dotted-leader table-of-contents index, outlined ghost numerals, scroll-spy rail with builder mini-card, grouped listing by IB group (1–6 + core), builder CTA band
-- [x] `/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar
+- [x] `/dp/subjects` — DP-owned course catalogue: dark DP hero with dotted-leader table-of-contents index, outlined ghost numerals, scroll-spy rail with builder mini-card, grouped listing by IB group (1–6 + core), builder CTA band; legacy `/subjects` redirects here
+- [x] `/dp/subjects/[slug]` — subject detail with rendered syllabus + meta sidebar; migrated teacher/search links and course metadata, with HTTP 301 redirects from legacy subject URLs
+- [x] `/myp/subjects` and `/myp/subjects/[slug]` — bilingual MYP catalogue and course pages; Mathematics for MYP 3 and Mathematics EL for MYP 4–5, no HL/SL controls, indexed in search and sitemap
 - [x] `/cas` — strand-based listing (Creativity, Activity, Service); activities can span multiple strands and appear under each filter
 - [x] `/cas/[slug]` — CAS detail with reflection + multi-strand badges + learning-outcome sidebar
 - [x] `/tok` — photo hero (classroom behind a left-to-right scrim, central question anchored bottom-right), course-anatomy bento (emerald core-theme tile, numbered optional themes, area-of-knowledge chips, 100 h / 3 pt figures), assessment panel whose column widths carry the ⅓ exhibition / ⅔ essay weighting, essay card grid, handbook band
@@ -47,7 +50,7 @@ Implemented and shipped.
 - [x] `/gallery` — bilingual bento-mosaic photo gallery: gapless cell-rhythm grid (orientation-aware base/tall/big tiles, deterministic packing order, width-proportional row unit, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
-- [x] `/teachers` — verified IB leadership, teaching, and support roster with published school portraits
+- [x] `/dp/team` and `/myp/team` — separate bilingual CMS-editable teams; current DP roster preserved, confirmed MYP leadership seeded, portraitless published profiles show initials; legacy `/teachers` redirects to DP team
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
 - [x] `/mission` — IB mission statement, school mission and vision, authorized-IB-World-School statement with the IB Certificate of Authorization embedded on the page
@@ -77,9 +80,10 @@ Implemented and shipped.
 ## Layout & design
 
 - [x] Shared `Layout.astro` with sticky nav + footer
-- [x] Nav: explicit Home link, Programmes dropdown, IB Core dropdown (CAS/TOK/EE), Apply CTA
+- [x] Nav: Home, separate MYP and IB DP dropdowns, Vision and mission, and Apply; each programme menu includes Home, Subjects, Team, Policies and guides, News, Gallery, and Admissions, with MYP projects/parent guides and DP core/planner inside their respective menus; mobile uses native expandable sections
+- [x] Programme dropdowns highlight Home only on their landing page, leaving Team or Subjects as the sole active destination on nested pages
 - [x] Official burgundy triangle school logo (`/logo-mark.png`) supplied by the school; used in the nav, footer, schema.org metadata, and regenerated favicons
-- [x] Nav: `School` dropdown (Mission and vision, Team, Policies and guides) on desktop and mobile
+- [x] Nav: direct bilingual Vision and mission link replaces the School dropdown on desktop and mobile; current Team and Policies and guides pages remain reachable from the footer pending programme separation
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
@@ -108,7 +112,7 @@ Implemented and shipped.
 - [x] 4 CAS entries (incl. Daffodil Day 2026, a real multi-strand fundraising project) — each with a reflection mapped to learning outcomes
 - [x] 2 TOK essays — each with a knowledge question, full essay, and discussion prompts
 - [x] 2 news articles — with full article bodies
-- [x] Search page (`/[locale]/search`) — build-time index of 5 public Keystatic collections (testimonials excluded until published), client-side vanilla-JS filtering (no dependency), bilingual, results grouped by type with counts. Nav link hidden (page accessible by URL).
+- [x] Search page (`/[locale]/search`) — build-time index of 6 public Keystatic collections, including programme-specific subject links; client-side filtering, bilingual results, and type grouping. Team/testimonials are not indexed. Nav link hidden.
 - [x] News + Events merged into unified `/news` feed — chronological stream of articles and events with type badges. `/events` page removed; events Keystatic collection retained.
 - [x] 13 downloadable school resources described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `admissionsDocuments`, `mypDocuments`); EN + SK parent handbooks appear with application documents and on `/policies`, plus the authorization certificate embedded as an image on `/mission`
 - [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
@@ -137,3 +141,4 @@ Implemented and shipped.
 - [x] `humans/HUMANTODO.md` — tasks for human collaborators
 - [x] `TODO.md` — AI task backlog
 - [x] `FEATURES.md` — this file
+- [x] `humans/PROGRAMME-STRUCTURE.md` — MYP / IB DP separation brief with clarified Mathematics, content requirements, future acceptance criteria, and the implemented direct Vision and mission navigation change; full programme split remains planned

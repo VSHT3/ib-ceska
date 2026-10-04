@@ -1,0 +1,30 @@
+{
+  "name": "Lucia Horáčiková",
+  "photo": "/images/team/lucia-horacikova/lucia-horacikova.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 5,
+    "areas": [
+      "Slovak A: Literature"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Slovenská literatúra A"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 7,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Mathematics",
+  "group": {
+    "discriminant": "mathematics",
+    "value": {
+      "level": "none"
+    }
+  },
+  "years": [
+    "3"
+  ],
+  "description": "Mathematics is offered in MYP 3 at Česká.",
+  "order": 1,
+  "content": "",
+  "sk": {
+    "title": "Matematika",
+    "description": "Matematika sa na Českej vyučuje v MYP 3.",
+    "body": ""
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Juraj Babic",
+  "photo": "/images/team/juraj-babic/photo.jpg",
+  "dp": {
+    "published": true,
+    "leadership": true,
+    "order": 2,
+    "areas": [],
+    "responsibilities": [
+      "Head of IB",
+      "Head of IB DP",
+      "MYP Coordinator",
+      "CAS Coordinator"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Vedúci IB",
+        "Vedúci IB DP",
+        "Koordinátor MYP",
+        "Koordinátor CAS"
+      ]
+    }
+  },
+  "myp": {
+    "published": true,
+    "leadership": true,
+    "order": 2,
+    "areas": [],
+    "responsibilities": [
+      "MYP Coordinator"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Koordinátor MYP"
+      ]
+    }
+  }
+}

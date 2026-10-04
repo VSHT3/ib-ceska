@@ -1,0 +1,29 @@
+{
+  "name": "Abier Alaroush",
+  "dp": {
+    "published": false,
+    "leadership": false,
+    "order": 9,
+    "areas": [
+      "Economics"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Ekonómia"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 11,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

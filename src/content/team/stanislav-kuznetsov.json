@@ -1,0 +1,38 @@
+{
+  "name": "Stanislav Kuznetsov",
+  "photo": "/images/team/stanislav-kuznetsov/stanislav-kuznetsov.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 10,
+    "areas": [
+      "Psychology",
+      "Biology"
+    ],
+    "responsibilities": [
+      "Head of Humanities Department",
+      "University and Career Counsellor"
+    ],
+    "sk": {
+      "areas": [
+        "Psychológia",
+        "Biológia"
+      ],
+      "responsibilities": [
+        "Vedúci humanitného oddelenia",
+        "Univerzitný a kariérny poradca"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 12,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

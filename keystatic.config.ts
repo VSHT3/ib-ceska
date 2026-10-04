@@ -1,6 +1,34 @@
 import { collection, config, fields } from '@keystatic/core';
+import { type MypYear, mypSubjectGroups } from './src/data/myp-subjects';
 
 const isDev = process.env.NODE_ENV !== 'production';
+
+const mypYears = fields.multiselect({
+  label: 'MYP years',
+  description: 'Select at least one year in which this subject is offered.',
+  options: [
+    { label: 'MYP 3', value: '3' },
+    { label: 'MYP 4', value: '4' },
+    { label: 'MYP 5', value: '5' },
+  ],
+});
+
+// Keystatic's multiselect has no minimum-selection validation option.
+const validateMypYears = (value: readonly MypYear[]) => {
+  if (value.length === 0) {
+    throw new Error('Select at least one MYP year.');
+  }
+  return mypYears.validate(value);
+};
+
+const requiredMypYears = {
+  ...mypYears,
+  validate: validateMypYears,
+  reader: {
+    parse: (value: Parameters<typeof mypYears.reader.parse>[0]) =>
+      validateMypYears(mypYears.reader.parse(value)),
+  },
+};
 
 // Grouped Slovak translation fields. All optional — pages fall back to the
 // English fields when a translation is empty.
@@ -23,12 +51,71 @@ const slovakFields = (opts: { description?: string; excerpt?: boolean; body?: st
     },
   );
 
+const teamProfile = (label: string) =>
+  fields.object(
+    {
+      published: fields.checkbox({
+        label: 'Publish on this programme’s team page',
+        defaultValue: false,
+      }),
+      leadership: fields.checkbox({ label: 'Leadership', defaultValue: false }),
+      order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
+      areas: fields.array(fields.text({ label: 'Teaching area (English)' }), {
+        label: 'Teaching areas (English)',
+        itemLabel: (props) => props.value ?? 'Teaching area',
+      }),
+      responsibilities: fields.array(fields.text({ label: 'Responsibility (English)' }), {
+        label: 'Responsibilities (English)',
+        itemLabel: (props) => props.value ?? 'Responsibility',
+      }),
+      sk: fields.object(
+        {
+          areas: fields.array(fields.text({ label: 'Teaching area (Slovak)' }), {
+            label: 'Teaching areas (Slovak)',
+            itemLabel: (props) => props.value ?? 'Teaching area',
+          }),
+          responsibilities: fields.array(fields.text({ label: 'Responsibility (Slovak)' }), {
+            label: 'Responsibilities (Slovak)',
+            itemLabel: (props) => props.value ?? 'Responsibility',
+          }),
+        },
+        {
+          label: 'Slovak translation',
+          description: 'Optional — an empty list falls back to the English list.',
+        },
+      ),
+    },
+    {
+      label,
+      description: 'Only include roles confirmed for this programme.',
+    },
+  );
+
 export default config({
   storage: isDev ? { kind: 'local' } : { kind: 'cloud' },
   cloud: { project: 'ib-ceska/ib-ceska' },
   collections: {
+    team: collection({
+      label: 'Programme teams',
+      slugField: 'name',
+      path: 'src/content/team/*',
+      format: { data: 'json' },
+      schema: {
+        name: fields.slug({
+          name: { label: 'Name', validation: { isRequired: true } },
+        }),
+        photo: fields.image({
+          label: 'Portrait (optional)',
+          description: 'Shared by both programme profiles. Without a portrait, initials are shown.',
+          directory: 'public/images/team',
+          publicPath: '/images/team',
+        }),
+        dp: teamProfile('IB Diploma Programme'),
+        myp: teamProfile('Middle Years Programme'),
+      },
+    }),
     subjects: collection({
-      label: 'Subjects',
+      label: 'IB DP subjects',
       slugField: 'title',
       path: 'src/content/subjects/*',
       format: { contentField: 'content' },
@@ -83,6 +170,57 @@ export default config({
             image: { directory: 'public/images/subjects', publicPath: '/images/subjects' },
           },
         }),
+      },
+    }),
+    mypSubjects: collection({
+      label: 'IB MYP subjects',
+      slugField: 'title',
+      path: 'src/content/myp-subjects/*',
+      format: { data: 'json' },
+      schema: {
+        title: fields.slug({
+          name: { label: 'Subject Name', validation: { isRequired: true } },
+        }),
+        group: fields.conditional(
+          fields.select({
+            label: 'MYP subject group',
+            options: mypSubjectGroups.map(({ value, label }) => ({ value, label: label.en })),
+            defaultValue: 'language-literature',
+          }),
+          {
+            'language-literature': fields.empty(),
+            'language-acquisition': fields.empty(),
+            'individuals-societies': fields.empty(),
+            sciences: fields.empty(),
+            mathematics: fields.object(
+              {
+                level: fields.select({
+                  label: 'Mathematics level',
+                  options: [
+                    { label: 'No separate level label', value: 'none' },
+                    { label: 'Extended Level (EL)', value: 'extended' },
+                  ],
+                  defaultValue: 'none',
+                }),
+              },
+              { label: 'Mathematics' },
+            ),
+            arts: fields.empty(),
+            'physical-health-education': fields.empty(),
+            design: fields.empty(),
+          },
+        ),
+        years: requiredMypYears,
+        description: fields.text({ label: 'Description', multiline: true }),
+        teacher: fields.text({ label: 'Teacher (optional)' }),
+        order: fields.integer({ label: 'Display Order', defaultValue: 0 }),
+        content: fields.markdoc.inline({
+          label: 'Syllabus Details (optional)',
+          options: {
+            image: { directory: 'public/images/myp-subjects', publicPath: '/images/myp-subjects' },
+          },
+        }),
+        sk: slovakFields({ description: 'Description', body: 'Syllabus Details' }),
       },
     }),
     news: collection({

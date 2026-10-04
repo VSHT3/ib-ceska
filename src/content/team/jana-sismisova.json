@@ -1,0 +1,34 @@
+{
+  "name": "Jana Šišmišová",
+  "photo": "/images/team/jana-sismisova/jana-sismisova.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 6,
+    "areas": [
+      "English B"
+    ],
+    "responsibilities": [
+      "Head of Languages Department"
+    ],
+    "sk": {
+      "areas": [
+        "Anglický jazyk B"
+      ],
+      "responsibilities": [
+        "Vedúca jazykového oddelenia"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 8,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

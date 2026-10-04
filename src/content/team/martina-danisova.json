@@ -1,0 +1,30 @@
+{
+  "name": "Martina Danišová",
+  "photo": "/images/team/martina-danisova/martina-danisova.png",
+  "dp": {
+    "published": true,
+    "leadership": true,
+    "order": 1,
+    "areas": [],
+    "responsibilities": [
+      "Overall Principal of SG Česká"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Riaditeľka SG Česká"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 3,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

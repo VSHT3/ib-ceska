@@ -1,0 +1,36 @@
+{
+  "name": "Daniela Mojžišová",
+  "photo": "/images/team/daniela-mojzisova/daniela-mojzisova.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 13,
+    "areas": [
+      "Geography",
+      "Environmental Systems and Societies"
+    ],
+    "responsibilities": [
+      "International Mindedness and Partnerships Coordinator"
+    ],
+    "sk": {
+      "areas": [
+        "Geografia",
+        "Environmentálne systémy a spoločnosti"
+      ],
+      "responsibilities": [
+        "Koordinátorka medzinárodného zmýšľania a partnerstiev"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 15,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

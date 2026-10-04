@@ -1,0 +1,19 @@
+{
+  "title": "Mathematics EL",
+  "group": {
+    "discriminant": "mathematics",
+    "value": {
+      "level": "extended"
+    }
+  },
+  "years": ["4", "5"],
+  "description": "Mathematics Extended Level (EL) is offered in MYP 4 and MYP 5 at Česká.",
+  "teacher": "",
+  "order": 2,
+  "content": "",
+  "sk": {
+    "title": "Matematika EL",
+    "description": "Matematika Extended Level (EL) sa na Českej vyučuje v MYP 4 a MYP 5.",
+    "body": ""
+  }
+}

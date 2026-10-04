@@ -1,3 +1,4 @@
+import { formatMypYears } from '../data/myp-subjects';
 import type { Locale } from '../i18n/dictionaries';
 import { l } from '../i18n/dictionaries';
 import { pick, reader } from './keystatic';
@@ -20,8 +21,9 @@ export interface SearchItem {
  * and filtered client-side - no runtime reader calls.
  */
 export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
-  const [subjects, news, cas, tok, events] = await Promise.all([
+  const [subjects, mypSubjects, news, cas, tok, events] = await Promise.all([
     reader.collections.subjects.all(),
+    reader.collections.mypSubjects.all(),
     reader.collections.news.all(),
     reader.collections.cas.all(),
     reader.collections.tok.all(),
@@ -37,9 +39,23 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       title,
       description,
       type: 'Subject',
-      href: l(`/subjects/${slug}`, locale),
+      href: l(`/dp/subjects/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
+    });
+  }
+
+  for (const { slug, entry } of mypSubjects) {
+    const title = pick(locale, entry.sk.title, entry.title);
+    const description = pick(locale, entry.sk.description, entry.description);
+    const yearLabel = formatMypYears(entry.years);
+    items.push({
+      title,
+      description: `${yearLabel} · ${description}`,
+      type: locale === 'sk' ? 'Predmet MYP' : 'MYP Subject',
+      href: l(`/myp/subjects/${slug}`, locale),
+      locale,
+      body: `${title} ${yearLabel} ${description}`,
     });
   }
 

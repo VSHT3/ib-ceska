@@ -1,0 +1,36 @@
+{
+  "name": "Simona Latková",
+  "photo": "/images/team/simona-latkova/simona-latkova.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 4,
+    "areas": [
+      "English A: Language and Literature"
+    ],
+    "responsibilities": [
+      "Extended Essay Coordinator",
+      "DP1 Homeroom Teacher"
+    ],
+    "sk": {
+      "areas": [
+        "Anglický jazyk a literatúra A"
+      ],
+      "responsibilities": [
+        "Koordinátorka Extended Essay",
+        "Triedna učiteľka DP1"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 6,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

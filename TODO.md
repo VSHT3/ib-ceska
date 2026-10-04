@@ -78,9 +78,20 @@ The site is live at `https://ib.gymnaziumceska.sk`; remaining items are operatio
 
 ## Content features
 
-- [x] Search across the 5 public collections — `/[locale]/search` page with build-time index, client-side vanilla-JS filtering, bilingual results and sitemap entry; testimonials remain unpublished.
+- [x] Search across the 6 public collections — DP/MYP subjects, news, events, CAS, and TOK; bilingual build-time index and sitemap links; testimonials remain unpublished.
 - [ ] Tag/category filtering for CAS entries
 - [ ] PDF upload support for EE resources
+
+## MYP / IB DP programme branches
+
+- [x] Create `feat/programme-sections` and document the teacher's notes, the owner's clarifications, current architecture, and a proposed migration in [humans/PROGRAMME-STRUCTURE.md](humans/PROGRAMME-STRUCTURE.md).
+- [x] Replace School with a direct bilingual Vision and mission link on desktop and mobile; keep existing Team and Policies pages reachable from the footer until programme ownership is confirmed. Browser-smoked both locales and viewport sizes; check/build passed. Global format/lint checks remain blocked by unrelated files.
+- [x] Replace Programmes and standalone Subjects/IB Core/News/Gallery navigation with separate MYP and IB DP menus on desktop and mobile. MYP subjects/projects/guides link to existing overview sections; shared resources still use existing pages pending content attribution.
+- [x] Separate `/dp/team` and `/myp/team`, with one Keystatic Programme teams collection and independently editable programme profiles. Preserve the current DP roster; seed only confirmed MYP leaders. Migrate menu/footer/homepage links and sitemap; redirect legacy `/teachers` to DP team.
+- [x] Highlight only the current destination inside programme menus (Home is exact-match); move the existing DP subject catalogue/details to `/dp/subjects`, update all internal links/search/SEO/sitemap, and permanently redirect legacy subject URLs.
+- [x] Add separate Keystatic-editable MYP subjects, bilingual catalogue/detail routes, and the confirmed Mathematics / Mathematics EL offerings; connect MYP navigation, overview, search, sitemap, and programme-specific teacher links.
+- [ ] Confirm programme section/menu structure and gather real MYP subjects, staff membership, content attribution, assessment calendar, handbook, and vacancy details.
+- [ ] Implement remaining programme-owned subjects, news, gallery, policies/guides, and relevant sections as content is confirmed; preserve DP levels/planner and the clarified MYP Mathematics offerings.
 
 ## IB site IA — coordinator's requested section structure
 
@@ -98,12 +109,12 @@ The coordinator supplied the real PDFs (the old site had none — see below). Do
 Section → current coverage:
 
 1. **What is IBDP?** — `/dp` exists (explainer + core-element links); IBO Mission Statement ✅, School Mission + Vision ✅ (new `/mission` page, texts supplied 2026-08-27), IB Learner Profile ❌
-2. **Subjects & DP Core** — Subjects `/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
+2. **Subjects & DP Core** — Subjects `/dp/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
 3. **School Policies** — all five supplied 2026-07-25 and published on `/policies` ✅ (Admissions, Assessment, Language, Academic Integrity, Inclusion)
 4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ / Application Form ✅ / School Fees ✅ (HTML table) / Handbook for parents ✅ (EN + SK on `/admissions` and `/policies`) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form)
 5. **Activities/Events** — `/news` merged feed ✅
 6. **Gallery** — `/gallery` ✅
-7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ (role titles updated per coordinator 2026-07-21) / Non-teaching staff ❌ / Organizational Chart ❌ (coordinator confirmed 2026-07-21 it is not required on the website; awaiting a decision on whether to render its structure natively on `/teachers`)
+7. **Staff** — Leadership + pedagogical faculty on `/dp/team` ✅, confirmed MYP leadership on `/myp/team` ✅; both Keystatic-editable / Non-teaching staff ❌ / Organizational Chart ❌ (coordinator confirmed 2026-07-21 it is not required on the website; awaiting a decision on whether to render its structure natively on the relevant team page)
 8. **University Admission** — ❌ no page (where graduates go: countries/universities, entry requirements, outcomes)
 9. **Contacts** — footer only ❌ no dedicated page
 

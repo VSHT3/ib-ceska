@@ -1,0 +1,30 @@
+{
+  "name": "Daniel Zahumenický",
+  "photo": "/images/team/daniel-zahumenicky/daniel-zahumenicky.png",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 12,
+    "areas": [
+      "Computer Science"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Informatika"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 14,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

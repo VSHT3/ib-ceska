@@ -1,0 +1,346 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from './PageHeader.astro';
+import EmptyState from './EmptyState.astro';
+import { getTeam } from '../lib/team';
+import type { Programme, TeamMember } from '../lib/team';
+import { reader, pick } from '../lib/keystatic';
+import { t, l, contact } from '../i18n/dictionaries';
+import type { Locale } from '../i18n/dictionaries';
+
+interface Props {
+  locale: Locale;
+  programme: Programme;
+}
+
+const { locale, programme } = Astro.props;
+const dict = t(locale);
+const copy = dict.team;
+const programmeCopy = copy[programme];
+const isMyp = programme === 'myp';
+const programmeLabel = isMyp ? dict.nav.myp : dict.nav.dp;
+const team = await getTeam(programme, locale);
+const leadership = team.filter((member) => member.leadership);
+const faculty = team.filter((member) => !member.leadership);
+
+// Match each programme's own subjects to team members by exact trimmed name.
+const subjectsByTeacher = new Map<string, { slug: string; title: string }[]>();
+const allSubjects = await (programme === 'dp'
+  ? reader.collections.subjects.all()
+  : reader.collections.mypSubjects.all());
+for (const subject of allSubjects) {
+  const name = subject.entry.teacher?.trim();
+  if (!name) continue;
+  const list = subjectsByTeacher.get(name) ?? [];
+  list.push({
+    slug: subject.slug,
+    title: pick(locale, subject.entry.sk.title, subject.entry.title),
+  });
+  subjectsByTeacher.set(name, list);
+}
+const subjectsPath = `/${programme}/subjects`;
+const subjectsOf = (member: TeamMember) => subjectsByTeacher.get(member.name.trim()) ?? [];
+const initials = (name: string) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('');
+const roleOf = (member: TeamMember) => [...member.areas, ...member.responsibilities];
+
+const coreHref = (label: string): string | null => {
+  if (programme !== 'dp') return null;
+  return /\bTOK\b|Theory of Knowledge|Teória poznania/i.test(label)
+    ? l('/tok', locale)
+    : /\bCAS\b/.test(label)
+      ? l('/cas', locale)
+      : /\bEE\b|Extended Essay|Rozšíren\S* esej/i.test(label)
+        ? l('/ee', locale)
+        : null;
+};
+
+const accentText = isMyp ? 'text-myp-700' : 'text-emerald-700';
+const initialsClass = isMyp ? 'bg-myp-100 text-myp-700' : 'bg-emerald-100 text-emerald-700';
+const chip =
+  'rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-emerald-800 ring-1 ring-stone-200';
+const chipLink = `${chip} transition-colors hover:bg-emerald-50 hover:text-emerald-900`;
+const roleLink =
+  'underline decoration-emerald-300 decoration-1 underline-offset-4 transition-colors hover:text-emerald-800 hover:decoration-emerald-600';
+const peopleSchemas = team.map((member) => ({
+  '@type': 'Person',
+  name: member.name,
+  jobTitle: roleOf(member),
+  worksFor: { '@id': new URL('/#school', Astro.site).href },
+  ...(member.image ? { image: new URL(member.image, Astro.site).href } : {}),
+}));
+---
+
+<Layout
+  title={programmeCopy.title}
+  description={programmeCopy.subtitle}
+  locale={locale}
+  pageSchemaType="CollectionPage"
+  structuredData={peopleSchemas}
+>
+  <PageHeader
+    title={programmeCopy.title}
+    subtitle={programmeCopy.subtitle}
+    label={programmeCopy.label}
+    tone={isMyp ? 'myp' : 'emerald'}
+  >
+    <nav aria-label={copy.breadcrumbLabel} class="hero-rise mt-8 text-sm text-white/90">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li>
+          <a href={l('/', locale)} class="underline underline-offset-4 hover:text-white"
+            >{dict.nav.home}</a
+          >
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href={l(`/${programme}`, locale)} class="underline underline-offset-4 hover:text-white"
+            >{programmeLabel}</a
+          >
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">{programmeCopy.title}</li>
+      </ol>
+    </nav>
+  </PageHeader>
+
+  {
+    team.length === 0 && (
+      <section class="mx-auto max-w-7xl px-6 py-20 lg:px-12 sm:py-28">
+        <EmptyState message={programmeCopy.emptyMessage} hint={programmeCopy.emptyHint} />
+      </section>
+    )
+  }
+
+  {
+    leadership.length > 0 && (
+      <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
+        <div class="grid gap-10 lg:grid-cols-[0.52fr_1.48fr] lg:gap-16 items-start">
+          <div class="lg:sticky lg:top-24 self-start" data-reveal>
+            <p
+              class:list={[
+                'flex items-center gap-3 text-xs font-semibold uppercase tracking-widest',
+                accentText,
+              ]}
+            >
+              <span class="h-px w-10 bg-current" aria-hidden="true" />
+              {copy.leadershipLabel}
+            </p>
+            <h2 class="mt-3 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
+              {copy.leadershipTitle}
+            </h2>
+          </div>
+          <ul class="border-t border-stone-200 divide-y divide-stone-200">
+            {leadership.map((member, index) => (
+              <li
+                class="grid gap-6 py-10 sm:grid-cols-[minmax(0,220px)_1fr] sm:gap-x-10 sm:gap-y-3 lg:grid-cols-[minmax(0,220px)_1fr_1fr] first:pt-0 lg:first:pt-2"
+                data-reveal
+                style={`--reveal-delay: ${index * 70}ms`}
+              >
+                <div class="group aspect-[4/5] max-w-[260px] overflow-hidden rounded-2xl bg-stone-100 sm:row-span-2 lg:row-span-1">
+                  {member.image ? (
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      width="640"
+                      height="800"
+                      class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                      loading={index < 2 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  ) : (
+                    <div
+                      class:list={[
+                        'flex h-full items-center justify-center text-5xl font-bold',
+                        initialsClass,
+                      ]}
+                      aria-hidden="true"
+                    >
+                      {initials(member.name)}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold tracking-tight sm:text-2xl">{member.name}</h3>
+                </div>
+                <ul class="space-y-1.5 sm:col-start-2 lg:col-start-3 lg:row-start-1 lg:border-l lg:border-stone-200 lg:pl-8">
+                  {roleOf(member).map((role) => (
+                    <li class="text-sm leading-relaxed text-stone-600">
+                      {coreHref(role) ? (
+                        <a href={coreHref(role)!} class={roleLink}>
+                          {role}
+                        </a>
+                      ) : (
+                        role
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    faculty.length > 0 && (
+      <section class="bg-stone-100 border-y border-stone-200/70">
+        <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
+          <div data-reveal>
+            <p class:list={['text-xs font-semibold uppercase tracking-widest', accentText]}>
+              {copy.facultyLabel}
+            </p>
+            <h2 class="mt-2 max-w-2xl text-3xl font-bold tracking-tight sm:text-4xl">
+              {programmeCopy.facultyTitle}
+            </h2>
+          </div>
+          <ul class="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {faculty.map((member, index) => {
+              const subjects = subjectsOf(member);
+              const single = subjects.length === 1 ? subjects[0] : null;
+              const singleHref = single ? l(`${subjectsPath}/${single.slug}`, locale) : null;
+              const chips =
+                subjects.length > 0
+                  ? subjects.map((subject) => ({
+                      label: subject.title,
+                      href: l(`${subjectsPath}/${subject.slug}`, locale),
+                    }))
+                  : member.areas.map((area) => ({ label: area, href: coreHref(area) }));
+              const imageHref = singleHref ?? chips[0]?.href ?? null;
+              const Frame = imageHref ? 'a' : 'div';
+              return (
+                <li data-reveal style={`--reveal-delay: ${Math.min(index, 5) * 60}ms`}>
+                  <article class="group flex h-full flex-col">
+                    <Frame
+                      href={imageHref ?? undefined}
+                      aria-label={imageHref ? member.name : undefined}
+                      class="block aspect-[4/5] overflow-hidden rounded-2xl bg-stone-200"
+                    >
+                      {member.image ? (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          width="640"
+                          height="800"
+                          class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div
+                          class:list={[
+                            'flex h-full items-center justify-center text-5xl font-bold',
+                            initialsClass,
+                          ]}
+                          aria-hidden="true"
+                        >
+                          {initials(member.name)}
+                        </div>
+                      )}
+                    </Frame>
+                    <div class="mt-4 flex flex-1 flex-col border-t border-stone-300 pt-4">
+                      <h3 class="text-lg font-bold tracking-tight">{member.name}</h3>
+                      {chips.length > 0 && (
+                        <div class="mt-3 flex flex-wrap gap-1.5">
+                          {chips.map((item) =>
+                            item.href ? (
+                              <a href={item.href} class={chipLink}>
+                                {item.label}
+                              </a>
+                            ) : (
+                              <span class={chip}>{item.label}</span>
+                            ),
+                          )}
+                        </div>
+                      )}
+                      {member.responsibilities.length > 0 && (
+                        <ul class="mt-3 space-y-1.5">
+                          {member.responsibilities.map((role) => (
+                            <li class="text-sm leading-snug text-stone-500">
+                              {coreHref(role) ? (
+                                <a href={coreHref(role)!} class={roleLink}>
+                                  {role}
+                                </a>
+                              ) : (
+                                role
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {singleHref && (
+                        <a
+                          href={singleHref}
+                          class="group/link mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-emerald-700 transition-colors hover:text-emerald-800"
+                        >
+                          {copy.viewSubject}
+                          <span
+                            class="transition-transform group-hover/link:translate-x-1"
+                            aria-hidden="true"
+                          >
+                            →
+                          </span>
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="bg-stone-900 text-white">
+    <div
+      class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-24 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between"
+      data-reveal
+    >
+      <div class="max-w-xl">
+        <p
+          class:list={[
+            'text-xs font-semibold uppercase tracking-widest',
+            isMyp ? 'text-myp-300' : 'text-emerald-400',
+          ]}
+        >
+          {copy.contactLabel}
+        </p>
+        <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          {programmeCopy.contactTitle}
+        </h2>
+        <p class="mt-4 text-sm leading-relaxed text-stone-300">{programmeCopy.contactBody}</p>
+      </div>
+      <div class="flex shrink-0 flex-wrap gap-3">
+        <a
+          href={l('/admissions', locale)}
+          class:list={[
+            'rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors',
+            isMyp ? 'bg-myp-700 hover:bg-myp-600' : 'bg-emerald-600 hover:bg-emerald-500',
+          ]}
+        >
+          {copy.admissionsLink}
+        </a>
+        <a
+          href={`mailto:${contact.email}`}
+          data-umami-event="mail-click"
+          class:list={[
+            'rounded-full border border-stone-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors',
+            isMyp
+              ? 'hover:border-myp-400 hover:text-myp-300'
+              : 'hover:border-emerald-400 hover:text-emerald-300',
+          ]}
+        >
+          {programmeCopy.emailLink}
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

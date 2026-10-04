@@ -18,8 +18,9 @@ function urlEntry(path: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const [subjects, cas, tok, news] = await Promise.all([
+  const [subjects, mypSubjects, cas, tok, news] = await Promise.all([
     reader.collections.subjects.list(),
+    reader.collections.mypSubjects.list(),
     reader.collections.cas.list(),
     reader.collections.tok.list(),
     reader.collections.news.list(),
@@ -29,19 +30,22 @@ export const GET: APIRoute = async () => {
     '/',
     '/myp',
     '/dp',
-    '/subjects',
+    '/dp/subjects',
+    '/myp/subjects',
     '/cas',
     '/tok',
     '/ee',
     '/news',
     '/gallery',
     '/build-your-diploma',
-    '/teachers',
+    '/myp/team',
+    '/dp/team',
     '/admissions',
     '/mission',
     '/policies',
     '/search',
-    ...subjects.map((slug) => `/subjects/${slug}`),
+    ...subjects.map((slug) => `/dp/subjects/${slug}`),
+    ...mypSubjects.map((slug) => `/myp/subjects/${slug}`),
     ...cas.map((slug) => `/cas/${slug}`),
     ...tok.map((slug) => `/tok/${slug}`),
     ...news.map((slug) => `/news/${slug}`),

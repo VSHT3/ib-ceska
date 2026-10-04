@@ -1,0 +1,29 @@
+{
+  "name": "Brooks Guetschow",
+  "dp": {
+    "published": false,
+    "leadership": false,
+    "order": 17,
+    "areas": [],
+    "responsibilities": [
+      "Librarian"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Knihovník"
+      ]
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 19,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

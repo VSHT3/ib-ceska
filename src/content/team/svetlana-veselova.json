@@ -1,0 +1,40 @@
+{
+  "name": "Svetlana Veselová",
+  "photo": "/images/team/svetlana-veselova/svetlana-veselova.jpeg",
+  "dp": {
+    "published": true,
+    "leadership": true,
+    "order": 3,
+    "areas": [],
+    "responsibilities": [
+      "Head of MYP",
+      "IB DP Coordinator",
+      "ATL Coordinator"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Vedúca MYP",
+        "Koordinátorka IB DP",
+        "Koordinátorka ATL"
+      ]
+    }
+  },
+  "myp": {
+    "published": true,
+    "leadership": true,
+    "order": 1,
+    "areas": [],
+    "responsibilities": [
+      "Head of MYP",
+      "ATL Coordinator"
+    ],
+    "sk": {
+      "areas": [],
+      "responsibilities": [
+        "Vedúca MYP",
+        "Koordinátorka ATL"
+      ]
+    }
+  }
+}

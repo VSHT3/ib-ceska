@@ -1,0 +1,29 @@
+{
+  "name": "Jakeline Jimenez",
+  "dp": {
+    "published": false,
+    "leadership": false,
+    "order": 8,
+    "areas": [
+      "Spanish"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Španielsky jazyk"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 10,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

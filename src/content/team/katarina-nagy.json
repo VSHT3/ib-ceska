@@ -1,0 +1,30 @@
+{
+  "name": "Katarína Nagy",
+  "photo": "/images/team/katarina-nagy/katarina-nagy.jpg",
+  "dp": {
+    "published": true,
+    "leadership": false,
+    "order": 7,
+    "areas": [
+      "English B"
+    ],
+    "responsibilities": [],
+    "sk": {
+      "areas": [
+        "Anglický jazyk B"
+      ],
+      "responsibilities": []
+    }
+  },
+  "myp": {
+    "published": false,
+    "leadership": false,
+    "order": 9,
+    "areas": [],
+    "responsibilities": [],
+    "sk": {
+      "areas": [],
+      "responsibilities": []
+    }
+  }
+}

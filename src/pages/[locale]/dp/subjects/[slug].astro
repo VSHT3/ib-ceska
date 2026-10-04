@@ -1,10 +1,10 @@
 ---
-import { reader, pick } from '../../../lib/keystatic';
-import { renderMarkdoc, hasContent } from '../../../lib/markdoc';
-import Layout from '../../../layouts/Layout.astro';
-import PageHeader from '../../../components/PageHeader.astro';
-import { t, l } from '../../../i18n/dictionaries';
-import type { Locale } from '../../../i18n/dictionaries';
+import { reader, pick } from '../../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../../lib/markdoc';
+import Layout from '../../../../layouts/Layout.astro';
+import PageHeader from '../../../../components/PageHeader.astro';
+import { t, l } from '../../../../i18n/dictionaries';
+import type { Locale } from '../../../../i18n/dictionaries';
 
 export async function getStaticPaths() {
   const slugs = await reader.collections.subjects.list();
@@ -18,7 +18,7 @@ const slug = Astro.params.slug!;
 const dict = t(locale);
 
 const subject = await reader.collections.subjects.read(slug);
-if (!subject) return Astro.redirect(l('/subjects', locale));
+if (!subject) return Astro.redirect(l('/dp/subjects', locale));
 
 const groupLabels: Record<string, string> = {
   '1': dict.subjects.group1,
@@ -44,7 +44,7 @@ const enHtml = await renderMarkdoc(subject.content);
 const skHtml = await renderMarkdoc(subject.sk.body);
 const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
 
-const courseId = `${new URL(`/${locale}/subjects/${slug}/`, Astro.site).href}#course`;
+const courseId = `${new URL(`/${locale}/dp/subjects/${slug}/`, Astro.site).href}#course`;
 const courseSchema = {
   '@type': 'Course',
   '@id': courseId,
@@ -72,7 +72,7 @@ const courseSchema = {
 
   <div class="mx-auto max-w-6xl px-4 sm:px-6 py-14">
     <a
-      href={l('/subjects', locale)}
+      href={l('/dp/subjects', locale)}
       class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
     >
       <span aria-hidden="true">&larr;</span>

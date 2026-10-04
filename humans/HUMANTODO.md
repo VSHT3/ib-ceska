@@ -14,7 +14,8 @@ Things the humans (IB coordinators, teachers, school staff) must provide or deci
 - [ ] Provide real TOK essay titles and themes
 - [ ] Provide real news/announcement content
 - [ ] Provide the real subjects list (incl. HL/SL offerings and any preset subject combinations students choose from)
-- [x] ~~Provide teachers list — names, roles, subjects, photos~~ — `/teachers` now uses the roster and portraits already published on the school’s official IB website; keep that source page current
+- [x] ~~Provide IB DP teachers list — names, roles, subjects, photos~~ — existing roster retained on `/dp/team` and migrated to Keystatic Programme teams
+- [ ] Confirm the remaining MYP teaching/support roster and roles; `/myp/team` currently publishes only the confirmed Head of MYP/ATL Coordinator and MYP Coordinator. Add confirmed memberships through Keystatic Programme teams.
 - [ ] Provide student testimonials — quotes, names, year, and written consent. The CMS collection still has three sample templates, but testimonials are not published anywhere on the site until the school requests that the public page and homepage strip be restored. Only add a photo with the student's written consent.
 - [ ] Provide school events list (dates, descriptions, photos)
 - [ ] Provide public works to showcase: student EEs, exhibition materials, science collaboration project details — **needs student/parent consent to publish**
@@ -33,8 +34,8 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [x] ~~**Entrance Exams info**~~ — supplied: `dp-admissions-announcement.pdf`, `informacie-o-prijimacom-konani.pdf`, `myp-admissions-announcement.pdf` (dates, subjects, interview), linked on `/admissions`.
 - [x] ~~**School Mission Statement**~~ — supplied 2026-08-27 (`Our IB Identity.docx`) together with the school vision; both live on `/mission` beside the IB mission statement.
 - [ ] **Complaints or appeals procedure** — on the coordinator's own "essential public information" list (2026-07-21) but never supplied. Send it and it goes on `/policies`.
-- [ ] **Organizational Chart** — decision needed, not content. The chart we have is role-only (no names) and its visual language does not match the site. Confirmed on 2026-07-21 that the IB does not require it on the website. Options: (a) leave it off the site, (b) we redraw the same structure in the site's own styling as a section on `/teachers`. Tell us which.
-- [ ] **Non-teaching staff** to list on `/teachers` (if they should appear)
+- [ ] **Organizational Chart** — decision needed, not content. The chart we have is role-only (no names) and its visual language does not match the site. Confirmed on 2026-07-21 that the IB does not require it on the website. Options: (a) leave it off the site, (b) we redraw the same structure in the site's own styling on the relevant programme team page. Tell us which.
+- [ ] **Non-teaching staff** to list on the relevant programme team page (if they should appear)
 - [ ] **University Admission** data: which countries/universities graduates go to, average + highest Diploma points, entry requirements — feeds the new University Admission page
 - [ ] **Print-quality prospectus PDF under 5 MB** — the 2026/27 prospectus is published as web pages in News. The supplied PDF is 38 MB, too large to host; send a compressed version if a download link is wanted.
 

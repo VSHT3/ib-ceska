@@ -1,0 +1,157 @@
+---
+import { reader, pick } from '../../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../../lib/markdoc';
+import { mypSubjectGroups, formatMypYears } from '../../../../data/myp-subjects';
+import Layout from '../../../../layouts/Layout.astro';
+import PageHeader from '../../../../components/PageHeader.astro';
+import { t, l, contact } from '../../../../i18n/dictionaries';
+import type { Locale } from '../../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.mypSubjects.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } })),
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+const copy = dict.mypSubjects;
+const subject = await reader.collections.mypSubjects.read(slug);
+if (!subject) return Astro.redirect(l('/myp/subjects', locale));
+
+const title = pick(locale, subject.sk.title, subject.title);
+const description = pick(locale, subject.sk.description, subject.description);
+const groupLabel = mypSubjectGroups.find((group) => group.value === subject.group.discriminant)!
+  .label[locale];
+const extended =
+  subject.group.discriminant === 'mathematics' && subject.group.value.level === 'extended';
+const teacher = subject.teacher?.trim();
+const yearLabel = formatMypYears(subject.years);
+
+const [enHtml, skHtml] = await Promise.all([
+  renderMarkdoc(subject.content),
+  renderMarkdoc(subject.sk.body),
+]);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+const courseUrl = new URL(`/${locale}/myp/subjects/${slug}/`, Astro.site).href;
+const courseId = `${courseUrl}#course`;
+const courseSchema = {
+  '@type': 'Course',
+  '@id': courseId,
+  url: courseUrl,
+  name: title,
+  description,
+  inLanguage: locale,
+  educationalLevel: subject.years.map((year) => `MYP ${year}`),
+  about: groupLabel,
+  provider: { '@id': new URL('/#school', Astro.site).href },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  pageSchemaType="ItemPage"
+  pageSchema={{ mainEntity: { '@id': courseId } }}
+  structuredData={courseSchema}
+>
+  <PageHeader title={title} subtitle={description} label={groupLabel} tone="myp">
+    <nav aria-label={copy.breadcrumbLabel} class="hero-rise mt-8 text-sm text-white/90">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li>
+          <a href={l('/myp', locale)} class="underline underline-offset-4 hover:text-white">
+            {dict.nav.myp}
+          </a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a
+            href={l('/myp/subjects', locale)}
+            class="underline underline-offset-4 hover:text-white"
+          >
+            {copy.title}
+          </a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page">{title}</li>
+      </ol>
+    </nav>
+  </PageHeader>
+
+  <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16 lg:px-12">
+    <a
+      href={l('/myp/subjects', locale)}
+      class="inline-flex items-center gap-2 text-sm font-medium text-myp-700 underline underline-offset-4 hover:text-myp-800"
+    >
+      <span aria-hidden="true">←</span>
+      {copy.backSubjects}
+    </a>
+
+    <div class="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <div class="min-w-0">
+        <section aria-labelledby="course-information" data-reveal>
+          <h2 id="course-information" class="text-2xl font-bold tracking-tight">
+            {copy.detailTitle}
+          </h2>
+          <dl class="mt-6 grid gap-6 border-t border-stone-200 pt-6 sm:grid-cols-2">
+            <div>
+              <dt class="text-sm text-stone-500">{copy.group}</dt>
+              <dd class="mt-1 text-base font-semibold text-stone-900">{groupLabel}</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-stone-500">{copy.years}</dt>
+              <dd class="mt-1 text-base font-semibold text-myp-700">{yearLabel}</dd>
+            </div>
+            {
+              extended && (
+                <div>
+                  <dt class="text-sm text-stone-500">{copy.level}</dt>
+                  <dd class="mt-1 text-base font-semibold text-stone-900">{copy.extendedLevel}</dd>
+                </div>
+              )
+            }
+            {
+              teacher && (
+                <div>
+                  <dt class="text-sm text-stone-500">{copy.teacher}</dt>
+                  <dd class="mt-1 text-base font-semibold text-stone-900">{teacher}</dd>
+                </div>
+              )
+            }
+          </dl>
+        </section>
+        {
+          hasContent(bodyHtml) && (
+            <article class="rich-text mt-10 border-t border-stone-200 pt-8" data-reveal>
+              <Fragment set:html={bodyHtml} />
+            </article>
+          )
+        }
+      </div>
+
+      <aside data-reveal>
+        <div class="rounded-2xl border border-stone-200 bg-white p-6 lg:sticky lg:top-28">
+          <h2 class="text-lg font-semibold tracking-tight">{copy.contactTitle}</h2>
+          <p class="mt-3 text-sm leading-relaxed text-stone-600">{copy.contactBody}</p>
+          <div class="mt-5 flex flex-col items-start gap-4">
+            <a
+              href={l('/myp/team', locale)}
+              class="text-sm font-semibold text-myp-700 underline underline-offset-4 hover:text-myp-800"
+            >
+              {copy.teamLink}
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              class="text-sm font-semibold text-myp-700 underline underline-offset-4 hover:text-myp-800"
+            >
+              {copy.emailLink}
+            </a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>
