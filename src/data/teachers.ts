@@ -14,10 +14,12 @@ import miroslavaHruskova from '../assets/teachers/miroslava-hruskova.jpg';
 import simonaLatkova from '../assets/teachers/simona-latkova.jpg';
 import stanislavKuznetsov from '../assets/teachers/stanislav-kuznetsov.jpg';
 import svetlanaVeselova from '../assets/teachers/svetlana-veselova.jpeg';
+import vandaCvrkalova from '../assets/teachers/vanda-cvrkalova.jpg';
 
 // Verified against the school's published IB roster on 15 June 2026.
 // Role titles updated per the IB DP coordinator on 2026-07-21.
 // Katarína Nagy and her portrait added at her request on 2026-09-26.
+// Vanda Cvrkalová's German B profile and supplied portrait added on 2026-10-28.
 type LocalizedList = {
   en: string[];
   sk: string[];
@@ -105,6 +107,16 @@ export const teachers: Teacher[] = [
     areas: {
       en: ['English B'],
       sk: ['Anglický jazyk B'],
+    },
+    responsibilities: { en: [], sk: [] },
+  },
+  {
+    name: 'Vanda Cvrkalová',
+    image: vandaCvrkalova,
+    leadership: false,
+    areas: {
+      en: ['German B'],
+      sk: ['Nemecký jazyk B'],
     },
     responsibilities: { en: [], sk: [] },
   },

@@ -113,6 +113,7 @@ Implemented and shipped.
 - [x] 13 downloadable school resources described bilingually via `src/data/documents.ts` (`policyDocuments`, `guideDocuments`, `parentDocuments`, `admissionsDocuments`, `mypDocuments`); EN + SK parent handbooks appear with application documents and on `/policies`, plus the authorization certificate embedded as an image on `/mission`
 - [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
 - [x] IB team profile for English B teacher Katarína Nagy, with her supplied portrait
+- [x] IB team profile for German B teacher Vanda Cvrkalová, with her supplied portrait and Slovak subject label
 
 ## Deployment
 

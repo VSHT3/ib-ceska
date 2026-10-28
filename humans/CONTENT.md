@@ -5,7 +5,10 @@ Most website content is managed through the **Keystatic CMS admin panel** — a 
 The verified IB team roster and published portraits on `/teachers` are the one
 exception. A developer maintains them in `src/data/teachers.ts` and
 `src/assets/teachers/` using the school's
-[official IB team page](https://ib.gymnaziumceska.sk/about) as the source.
+[official IB team page](https://ib.gymnaziumceska.sk/about) and direct staff requests
+as sources. Vanda Cvrkalová's supplied portrait and German B profile were added
+on 2026-10-28. Keep supplied portraits as local assets so Astro generates responsive
+images; provide both English and Slovak subject labels in the roster.
 
 ## How to edit content
 

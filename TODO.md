@@ -23,6 +23,7 @@ PDFs should open in a new tab
 - [ ] Public works showcase — student EEs, exhibitions, science collaboration project
 - [ ] Publish student testimonials once real quotes and consent are supplied; the CMS collection stays available, but the public page, homepage strip, search results, navigation, and sitemap are hidden.
 - [x] Teachers list page (verified current IB roster, published portraits, roles, and subjects)
+- [x] Add Vanda Cvrkalová's supplied portrait and German B profile in English and Slovak (2026-10-28)
 
 ## Important
 
