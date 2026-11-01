@@ -114,6 +114,7 @@ Implemented and shipped.
 - [x] News: 2026/27 prospectus published as 4 web-optimized flyer pages, and the S.A.V.E. Ambassador diploma congratulation
 - [x] IB team profile for English B teacher Katarína Nagy, with her supplied portrait
 - [x] IB team profile for German B teacher Vanda Cvrkalová, with her supplied portrait and Slovak subject label
+- [x] Connected HTML/CSS MYP organisation chart on the Team page (September 2026 - June 2027), with leadership branches, programme support, eight subject groups and explicit class/year/teacher homeroom nodes in EN/SK; single-column tree on mobile.
 
 ## Deployment
 

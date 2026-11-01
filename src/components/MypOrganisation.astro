@@ -1,0 +1,389 @@
+---
+import type { Locale } from '../i18n/dictionaries';
+import { t } from '../i18n/dictionaries';
+import {
+  mypLeadership,
+  mypSupport,
+  mypSubjectLeaders,
+  mypHomerooms,
+} from '../data/myp-organisation';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale).teachers.organisation;
+const groups = [
+  { title: copy.support, roles: mypSupport },
+  { title: copy.subjects, roles: mypSubjectLeaders },
+];
+const node = 'rounded-xl border border-stone-300 bg-white px-5 py-4';
+---
+
+<section
+  id="myp-organisation"
+  aria-labelledby="myp-organisation-title"
+  class="border-t border-stone-200 bg-stone-50"
+>
+  <div class="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-12">
+    <header class="mb-10 sm:mb-12">
+      <h2 id="myp-organisation-title" class="text-3xl font-bold tracking-tight sm:text-4xl">
+        {copy.title}
+      </h2>
+      <p class="mt-3 text-sm text-stone-600">{copy.period}</p>
+    </header>
+
+    <div class="org-chart">
+      <div
+        class="org-head rounded-xl border border-emerald-700 bg-emerald-50 px-5 py-4 text-center"
+      >
+        <p class="text-sm font-semibold text-emerald-800">{mypLeadership.head.title[locale]}</p>
+        <p class="mt-1 text-xl font-bold tracking-tight text-stone-900">
+          {mypLeadership.head.name}
+        </p>
+      </div>
+
+      <div class="org-management">
+        <ul class="org-coordinators" aria-label={copy.coordination}>
+          {
+            mypLeadership.coordination.map((person) => (
+              <li class:list={[node, 'org-manager text-center']}>
+                <p class="text-sm font-semibold text-emerald-800">{person.title[locale]}</p>
+                <p class="mt-1 text-lg font-bold tracking-tight text-stone-900">{person.name}</p>
+                {'detail' in person && person.detail && (
+                  <p class="mt-2 text-sm leading-snug text-stone-600">{person.detail[locale]}</p>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <ul class="org-branches">
+        {
+          groups.map((group) => (
+            <li class="org-branch">
+              <h3 class="org-group rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-center font-sans text-base font-semibold text-emerald-950">
+                {group.title}
+              </h3>
+              <ul class="org-leaves">
+                {group.roles.map((role) => (
+                  <li class="org-leaf">
+                    <div class:list={[node, 'org-role']}>
+                      <p class="text-sm leading-snug text-stone-600">{role.label[locale]}</p>
+                      {role.name && (
+                        <p class="mt-1 text-base font-semibold text-stone-900">{role.name}</p>
+                      )}
+                    </div>
+                    {role.children && (
+                      <ul class="org-subroles">
+                        {role.children.map((child) => (
+                          <li class:list={[node, 'org-subrole text-sm font-medium text-stone-700']}>
+                            {child.label[locale]}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+
+        <li class="org-branch">
+          <h3
+            id="myp-homerooms-title"
+            class="org-group rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-center font-sans text-base font-semibold text-emerald-950"
+          >
+            {copy.homerooms}
+          </h3>
+          <ul class="org-leaves" aria-labelledby="myp-homerooms-title">
+            {
+              mypHomerooms.map((room) => (
+                <li class="org-leaf">
+                  <div class:list={[node, 'org-homeroom']}>
+                    <p class="text-xs font-medium text-stone-600">
+                      {room.classes.length > 1 ? copy.classes : copy.class}
+                    </p>
+                    <p class="mt-1 text-2xl font-bold tracking-tight text-stone-900">
+                      {room.classes.join(' + ')}
+                    </p>
+                    <p class="mt-1 text-sm font-medium text-emerald-800">
+                      MYP {room.year}{' '}
+                      <span class="px-1 text-stone-400" aria-hidden="true">
+                        /
+                      </span>
+                      {copy.grade} {room.grade}
+                    </p>
+                    <div class="mt-4 border-t border-stone-200 pt-3">
+                      <p class="text-xs text-stone-600">
+                        {room.teachers.length > 1 ? copy.homeroomTeachers : copy.homeroomTeacher}
+                      </p>
+                      <ul class="mt-1 space-y-1">
+                        {room.teachers.map((name) => (
+                          <li class="text-base font-semibold leading-snug text-stone-900">
+                            {name}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Lines express the hierarchy, never decoration. Nodes share the site's 12px radius. */
+  .org-chart {
+    --org-line: var(--color-stone-500);
+    --org-step: 1.25rem;
+  }
+
+  .org-head {
+    position: relative;
+    width: min(100%, 22rem);
+    margin-inline: auto;
+  }
+
+  .org-head::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: var(--org-step);
+    border-left: 1px solid var(--org-line);
+  }
+
+  .org-management {
+    position: relative;
+    max-width: 48rem;
+    margin: calc(var(--org-step) * 2) auto 0;
+  }
+
+  .org-coordinators {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .org-management::before,
+  .org-management::after {
+    content: '';
+    position: absolute;
+    left: calc((100% - 2rem) / 4);
+    right: calc((100% - 2rem) / 4);
+    border-top: 1px solid var(--org-line);
+  }
+
+  .org-management::before {
+    top: calc(-1 * var(--org-step));
+  }
+  .org-management::after {
+    bottom: calc(-1 * var(--org-step));
+  }
+
+  .org-manager {
+    position: relative;
+  }
+
+  .org-manager::before,
+  .org-manager::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: var(--org-step);
+    border-left: 1px solid var(--org-line);
+  }
+
+  .org-manager::before {
+    bottom: 100%;
+  }
+  .org-manager::after {
+    top: 100%;
+  }
+
+  .org-branches {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 2rem;
+    margin-top: calc(var(--org-step) * 3 + 0.25rem);
+  }
+
+  .org-branches::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: calc(-2 * var(--org-step) - 0.25rem);
+    height: calc(var(--org-step) + 0.25rem);
+    border-left: 1px solid var(--org-line);
+  }
+
+  .org-branch {
+    position: relative;
+    min-width: 0;
+  }
+
+  .org-branch::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--org-step));
+    left: 50%;
+    height: var(--org-step);
+    border-left: 1px solid var(--org-line);
+  }
+
+  .org-branch::after {
+    content: '';
+    position: absolute;
+    top: calc(-1 * var(--org-step));
+    left: -1rem;
+    right: -1rem;
+    border-top: 1px solid var(--org-line);
+  }
+
+  .org-branch:first-child::after {
+    left: 50%;
+  }
+  .org-branch:last-child::after {
+    right: 50%;
+  }
+
+  .org-group {
+    position: relative;
+  }
+
+  .org-leaves {
+    display: grid;
+    gap: 0.75rem;
+    margin: var(--org-step) 0 0 1rem;
+    padding-left: var(--org-step);
+  }
+
+  .org-leaf {
+    position: relative;
+  }
+
+  .org-leaf::before {
+    content: '';
+    position: absolute;
+    top: 2.5rem;
+    left: calc(-1 * var(--org-step));
+    width: var(--org-step);
+    border-top: 1px solid var(--org-line);
+  }
+
+  .org-leaf::after {
+    content: '';
+    position: absolute;
+    top: -0.75rem;
+    bottom: -0.75rem;
+    left: calc(-1 * var(--org-step));
+    border-left: 1px solid var(--org-line);
+  }
+
+  .org-leaf:first-child::after {
+    top: calc(-1 * var(--org-step));
+  }
+  .org-leaf:last-child::after {
+    bottom: calc(100% - 2.5rem);
+  }
+
+  .org-role {
+    display: flex;
+    min-height: 5rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .org-subroles {
+    margin: 1rem 0 0 1.25rem;
+  }
+  .org-subrole {
+    position: relative;
+  }
+  .org-subrole::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    height: 1rem;
+    border-left: 1px solid var(--org-line);
+  }
+
+  /* At tablet/mobile sizes the same hierarchy becomes a left-to-right tree,
+     without shrinking text, a scrollable canvas or a JS-only alternate view. */
+  @media (max-width: 1023px) {
+    .org-head {
+      margin-inline: 0;
+      width: 100%;
+      max-width: 30rem;
+      text-align: left;
+    }
+    .org-head::after {
+      left: 1rem;
+    }
+    .org-management {
+      margin-top: var(--org-step);
+      margin-left: 1rem;
+      max-width: none;
+    }
+    .org-management::before,
+    .org-management::after,
+    .org-manager::before,
+    .org-manager::after,
+    .org-branches::before {
+      display: none;
+    }
+    .org-coordinators {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+      border-left: 1px solid var(--org-line);
+      padding-left: var(--org-step);
+    }
+    .org-manager {
+      text-align: left;
+    }
+    .org-manager::before {
+      display: block;
+      left: calc(-1 * var(--org-step));
+      top: 2rem;
+      width: var(--org-step);
+      height: 0;
+      border-top: 1px solid var(--org-line);
+      border-left: 0;
+    }
+    .org-branches {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+      margin-top: 0;
+      margin-left: 1rem;
+      border-left: 1px solid var(--org-line);
+      padding: 2rem 0 0 var(--org-step);
+    }
+    .org-branch::before {
+      top: 1.75rem;
+      left: calc(-1 * var(--org-step));
+      width: var(--org-step);
+      height: 0;
+      border-left: 0;
+      border-top: 1px solid var(--org-line);
+    }
+    .org-branch::after {
+      display: none;
+    }
+    .org-group {
+      text-align: left;
+    }
+    .org-leaves {
+      margin-left: 0.75rem;
+    }
+  }
+</style>

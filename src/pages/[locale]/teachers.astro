@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import MypOrganisation from '../../components/MypOrganisation.astro';
 import { teachers } from '../../data/teachers';
 import { reader, pick } from '../../lib/keystatic';
 import { t, l, contact } from '../../i18n/dictionaries';
@@ -143,6 +144,8 @@ const peopleSchemas = withPhoto.map((teacher) => ({
       </ul>
     </div>
   </section>
+
+  <MypOrganisation locale={locale} />
 
   <!-- Faculty (full-bleed neutral band, hairline portrait grid) -->
   <section class="bg-stone-100 border-y border-stone-200/70">

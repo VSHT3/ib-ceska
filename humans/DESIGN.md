@@ -110,6 +110,10 @@ School photos live in `src/assets/school/` and run through Astro's responsive im
 
 Published IB faculty portraits live in `src/assets/teachers/` and are rendered through Astro's image pipeline on `/teachers`. The verified roster and bilingual roles live in `src/data/teachers.ts`; update that file when the [official IB team page](https://ib.gymnaziumceska.sk/about) changes.
 
+The Team page includes `MypOrganisation.astro`, a connected, HTML/CSS organisational chart. The Head of MYP branches into coordination and procedural management, then into programme support, subject leaders and homerooms. Thin orthogonal connectors express relationships; the nodes use the site's emerald accent, sans-serif data typography and 12px corners. Below 1024px it becomes a single-column tree, with readable text and no horizontal canvas or JavaScript dependency. Do not replace it with directory tables, a generated image or source-commentary placeholders.
+
+The September 2026 - June 2027 assignments live in `src/data/myp-organisation.ts`; UI copy lives under `teachers.organisation` in the EN/SK dictionaries. Update the period and assignments together. Unnamed roles show only their role title. Each homeroom node puts the class first, followed by its MYP year, grade and explicitly labelled teacher names. The source groups II.B and II.F with K. Nagy and J. Jimenez but does not specify individual pairings, so keep those classes and teachers together. Their full names are available in the general teacher roster; preserve initials for the other homeroom teachers until the school supplies their full names.
+
 ## CMS architecture
 
 The site uses **Keystatic CMS** for content management:
