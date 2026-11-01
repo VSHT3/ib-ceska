@@ -1,0 +1,141 @@
+---
+import { reader, pick } from '../../../../lib/keystatic';
+import { renderMarkdoc, hasContent } from '../../../../lib/markdoc';
+import Layout from '../../../../layouts/Layout.astro';
+import PageHeader from '../../../../components/PageHeader.astro';
+import { t, l } from '../../../../i18n/dictionaries';
+import type { Locale } from '../../../../i18n/dictionaries';
+
+export async function getStaticPaths() {
+  const slugs = await reader.collections.subjects.list();
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    slugs.map((slug) => ({ params: { locale, slug } })),
+  );
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const slug = Astro.params.slug!;
+const dict = t(locale);
+
+const subject = await reader.collections.subjects.read(slug);
+if (!subject) return Astro.redirect(l('/dp/subjects', locale));
+
+const groupLabels: Record<string, string> = {
+  '1': dict.subjects.group1,
+  '2': dict.subjects.group2,
+  '3': dict.subjects.group3,
+  '4': dict.subjects.group4,
+  '5': dict.subjects.group5,
+  '6': dict.subjects.group6,
+  core: dict.subjects.core,
+};
+
+const title = pick(locale, subject.sk.title, subject.title);
+const description = pick(locale, subject.sk.description, subject.description);
+
+const secondaryGroup =
+  subject.secondaryGroup && subject.secondaryGroup !== 'none' ? subject.secondaryGroup : null;
+const groupLabel = groupLabels[subject.group];
+const groupLabelFull = secondaryGroup
+  ? `${groupLabel} / ${groupLabels[secondaryGroup]}`
+  : groupLabel;
+
+const enHtml = await renderMarkdoc(subject.content);
+const skHtml = await renderMarkdoc(subject.sk.body);
+const bodyHtml = locale === 'sk' && hasContent(skHtml) ? skHtml : enHtml;
+
+const courseId = `${new URL(`/${locale}/dp/subjects/${slug}/`, Astro.site).href}#course`;
+const courseSchema = {
+  '@type': 'Course',
+  '@id': courseId,
+  name: title,
+  description,
+  inLanguage: locale,
+  educationalLevel:
+    subject.offeredLevels === 'both' ? ['Higher Level', 'Standard Level'] : subject.offeredLevels,
+  about: secondaryGroup
+    ? [groupLabels[subject.group], groupLabels[secondaryGroup]]
+    : groupLabels[subject.group],
+  provider: { '@id': new URL('/#school', Astro.site).href },
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  pageSchemaType="ItemPage"
+  pageSchema={{ mainEntity: { '@id': courseId } }}
+  structuredData={courseSchema}
+>
+  <PageHeader
+    title={title}
+    subtitle={description}
+    label={`${dict.dp.shortTitle} · ${groupLabelFull}`}
+    tone="sky"
+  />
+
+  <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <a
+      href={l('/dp/subjects', locale)}
+      class="inline-flex items-center gap-1.5 text-sm font-medium text-emerald-700 hover:text-emerald-800 transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span>
+      {dict.detail.backSubjects}
+    </a>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_260px]">
+      <article class="rich-text min-w-0" data-reveal>
+        {
+          hasContent(bodyHtml) ? (
+            <Fragment set:html={bodyHtml} />
+          ) : (
+            <p class="text-stone-500">{dict.detail.comingSoon}</p>
+          )
+        }
+      </article>
+
+      <aside class="lg:order-last order-first" data-reveal>
+        <div class="rounded-2xl border border-stone-200 bg-white p-5 space-y-4 lg:sticky lg:top-24">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">
+              {dict.detail.group}
+            </p>
+            <p class="text-sm font-medium text-stone-800 mt-1">
+              {groupLabelFull}
+            </p>
+          </div>
+          {
+            subject.offeredLevels && (
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">
+                  {dict.detail.level}
+                </p>
+                <span
+                  class:list={[
+                    'inline-block mt-1 text-xs px-2.5 py-1 rounded-full font-bold',
+                    subject.offeredLevels === 'SL'
+                      ? 'bg-sky-100 text-sky-800'
+                      : 'bg-emerald-100 text-emerald-800',
+                  ]}
+                >
+                  {subject.offeredLevels === 'both' ? 'SL & HL' : subject.offeredLevels}
+                </span>
+              </div>
+            )
+          }
+          {
+            subject.teacher && (
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">
+                  {dict.detail.teacher}
+                </p>
+                <p class="text-sm font-medium text-stone-800 mt-1">{subject.teacher}</p>
+              </div>
+            )
+          }
+        </div>
+      </aside>
+    </div>
+  </div>
+</Layout>

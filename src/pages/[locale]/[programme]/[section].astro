@@ -1,0 +1,31 @@
+---
+import Mission from '../../../components/programme/Mission.astro';
+import Team from '../../../components/programme/Team.astro';
+import Policies from '../../../components/programme/Policies.astro';
+import type { Locale } from '../../../i18n/dictionaries';
+import type { Programme, SchoolSection } from '../../../components/programme/school-copy';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    (['myp', 'dp'] as const).flatMap((programme) =>
+      (['mission', 'teachers', 'policies'] as const).map((section) => ({
+        params: { locale, programme, section },
+        props: { locale, programme, section },
+      })),
+    ),
+  );
+}
+
+interface Props {
+  locale: Locale;
+  programme: Programme;
+  section: SchoolSection;
+}
+
+const { locale, programme, section } = Astro.props;
+const Page = { mission: Mission, teachers: Team, policies: Policies }[section];
+---
+
+<Page locale={locale} programme={programme} />

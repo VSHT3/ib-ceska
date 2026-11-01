@@ -1,14 +1,16 @@
 # Content editing guide
 
-Most website content is managed through the **Keystatic CMS admin panel** — a visual editor that requires no coding knowledge. You edit content in your browser, and changes are saved directly to the repository.
+Keystatic manages **DP subjects, CAS activities, TOK materials, news, events, and unpublished testimonials** through a visual editor. Programme reference pages and team data are maintained by a developer, not through new CMS collections.
 
-The verified IB team roster and published portraits on `/teachers` are the one
-exception. A developer maintains them in `src/data/teachers.ts` and
-`src/assets/teachers/` using the school's
-[official IB team page](https://ib.gymnaziumceska.sk/about) and direct staff requests
-as sources. Vanda Cvrkalová's supplied portrait and German B profile were added
-on 2026-10-28. Keep supplied portraits as local assets so Astro generates responsive
-images; provide both English and Slovak subject labels in the roster.
+## Programme ownership
+
+- **MYP curriculum:** bilingual reference content in `src/data/myp-programme.ts`, used by `/myp/subjects` and the four `/myp/core/…` pages. This is the MYP learning framework, not a DP HL/SL course catalogue or a confirmed yearly timetable.
+- **MYP team:** the connected organisational chart appears only on `/myp/teachers`. Its roster and hierarchy come from `src/data/myp-organisation.ts`; keep class/year labels and teacher assignments explicit.
+- **DP team:** the separate portrait roster on `/dp/teachers` comes from `src/data/teachers.ts` and local portraits in `src/assets/teachers/`. Use school-confirmed staff information and supplied portraits; provide both English and Slovak subject labels. Astro generates responsive image variants.
+- **Programme mission and policies:** renderers and bilingual school copy live in `src/components/programme/`; the prerendered route `src/pages/[locale]/[programme]/[section].astro` generates mission, teachers, and policies for both programmes. Document metadata is maintained in `src/data/documents.ts`.
+- **DP CMS content:** existing `src/content/subjects/`, `src/content/cas/`, and `src/content/tok/` storage stays unchanged. Only public URLs move under `/dp`; do not create duplicate MYP entries in those collections.
+
+**Authorization boundary:** MYP remains a **candidate programme** and must retain the candidate-school disclaimer and text-only branding. Candidacy is not authorization and does not guarantee authorization. DP is authorized; its authorization wording, official DP branding, and certificate must not be presented as evidence of MYP authorization. MYP service as action and personal project are not DP CAS and EE.
 
 ## How to edit content
 
@@ -50,7 +52,7 @@ When running `pnpm run dev` locally:
 
 ### Subjects (`src/content/subjects/`)
 
-Each entry represents one IB subject offering.
+Each entry represents one **DP** subject offering, published under `/dp/subjects`. MYP subject groups are maintained separately as reference data.
 
 **Fields:**
 
@@ -68,7 +70,7 @@ Each entry represents one IB subject offering.
 
 ### CAS Activities (`src/content/cas/`)
 
-Each entry is one CAS activity or project.
+Each entry is one **DP CAS** activity or project, published under `/dp/cas`, not an MYP service-as-action record.
 
 **Fields:**
 
@@ -84,7 +86,7 @@ Each entry is one CAS activity or project.
 
 ### TOK Materials (`src/content/tok/`)
 
-Theory of Knowledge essays, themes, and discussion materials.
+**DP Theory of Knowledge** essays, themes, and discussion materials, published under `/dp/tok`.
 
 **Fields:**
 
@@ -114,9 +116,8 @@ Announcements, exam schedules, and events.
 
 ### Events (`src/content/events/`)
 
-Open evenings, deadlines, exhibitions, and key calendar dates. The `/events`
-page automatically splits entries into **Upcoming** and **Past** based on
-today's date — no manual archiving needed.
+Open evenings, deadlines, exhibitions, and key calendar dates. Events share the
+`/news` feed with news articles and link to detail pages at `/events/<slug>`.
 
 **Fields:**
 
@@ -169,30 +170,38 @@ The website shows every page in **English** (`/en/…`) and **Slovak** (`/sk/…
 
 ## Where content appears on the site
 
-Each entry shows up in two places, both generated automatically:
+Public collection entries have a listing and a detail page (testimonials remain unpublished):
 
-- A **listing page** — the card grid at `/subjects`, `/cas`, `/tok`, or `/news`. Shows the title, short description, and badges from the top fields.
-- A **detail page** — its own page at `/subjects/<name>`, `/cas/<name>`, `/tok/<name>`, or `/news/<name>`. This is where the **rich-text body** (`content` field) is shown in full. Cards on the listing pages link to these detail pages.
+- **DP subjects:** `/dp/subjects` and `/dp/subjects/<slug>`
+- **DP CAS:** `/dp/cas` and `/dp/cas/<slug>`
+- **DP TOK:** `/dp/tok` and `/dp/tok/<slug>`
+- **Shared news:** `/news` and `/news/<slug>`; events share this feed and use `/events/<slug>` details
+
+Listing cards show summaries and badges; detail pages display the rich-text body (`content` field).
 
 So: put the one-line summary in `description`/`excerpt`, and the full write-up (syllabus, reflection, essay, article) in the rich-text body.
 
-## File format (for developers)
+## Programme routes and old links
 
-Content is stored as `.mdoc` files (YAML frontmatter + Markdoc body) in `src/content/`. The CMS handles this automatically — manual editing is not recommended unless you know what you're doing.
+All public paths here are relative to `/en` or `/sk` (for example, `/sk/myp/teachers`).
 
-**Example `.mdoc` file:**
+| Section         | MYP                                                                                                                                     | IB DP                                                                               |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Overview        | `/myp`                                                                                                                                  | `/dp`                                                                               |
+| Subjects        | `/myp/subjects`                                                                                                                         | `/dp/subjects` and `/dp/subjects/<slug>`                                            |
+| Core            | `/myp/core/interdisciplinary-learning`, `/myp/core/approaches-to-learning`, `/myp/core/service-as-action`, `/myp/core/personal-project` | **IB DP Core**: `/dp/cas`, `/dp/tok`, `/dp/ee`; CAS/TOK also have `/<slug>` details |
+| Mission         | `/myp/mission`                                                                                                                          | `/dp/mission`                                                                       |
+| Team            | `/myp/teachers`                                                                                                                         | `/dp/teachers`                                                                      |
+| Policies        | `/myp/policies`                                                                                                                         | `/dp/policies`                                                                      |
+| Diploma builder | Not applicable                                                                                                                          | `/dp/build-your-diploma`                                                            |
 
-```yaml
----
-title: Mathematics Analysis and Approaches
-group: '5'
-level: HL
-description: Calculus, statistics, probability, and algebra
-teacher: Lucia Horáčiková
-order: 1
----
-Full syllabus content here using rich text...
-```
+The top-level **MYP** and **IB DP** menus expose each programme's own sections. Desktop menus support hover, click, and keyboard use; mobile menus have expandable programme sections. News, gallery, admissions, and search remain shared.
+
+Old locale-prefixed `/subjects`, `/cas`, `/tok`, `/ee`, `/build-your-diploma`, `/mission`, `/teachers`, and `/policies` links return **HTTP 301** to their `/dp` equivalents, including subject/CAS/TOK detail slugs. Query strings are preserved; unsupported locales are rejected. Use the new programme URLs in new links.
+
+## File storage (for developers)
+
+Keystatic stores YAML frontmatter and Markdoc bodies as `.mdoc` files in `src/content/`. **Use `/keystatic/` to edit entries; do not edit `.mdoc` files manually.** Moving a public page under `/dp` does not move its collection files or add CMS fields.
 
 ## Adding a new field
 

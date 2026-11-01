@@ -1,0 +1,296 @@
+---
+import { reader, pick } from '../../../../lib/keystatic';
+import Layout from '../../../../layouts/Layout.astro';
+import { t, l } from '../../../../i18n/dictionaries';
+import type { Locale } from '../../../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+
+const allSubjects = await reader.collections.subjects.all();
+const groupDefs = [
+  { key: '1', label: dict.subjects.group1 },
+  { key: '2', label: dict.subjects.group2 },
+  { key: '3', label: dict.subjects.group3 },
+  { key: '4', label: dict.subjects.group4 },
+  { key: '5', label: dict.subjects.group5 },
+  { key: '6', label: dict.subjects.group6 },
+];
+
+const groups = groupDefs
+  .map((g) => ({
+    ...g,
+    id: `group-${g.key}`,
+    // strip the "Group N: " / "Skupina N: " prefix; the numeral carries it
+    shortLabel: g.label.replace(/^[^:]+:\s*/, ''),
+    subjects: allSubjects
+      .filter((s) => s.entry.group === g.key || s.entry.secondaryGroup === g.key)
+      .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0)),
+  }))
+  .filter((g) => g.subjects.length > 0);
+
+const distinct = new Set(allSubjects.map((s) => s.slug)).size;
+---
+
+<Layout
+  title={dict.subjects.title}
+  description={dict.subjects.subtitle}
+  locale={locale}
+  pageSchemaType="CollectionPage"
+>
+  <!-- Hero: DP brand band, copy left, figures right -->
+  <section class="relative overflow-hidden bg-dp-900 text-white">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-48 -left-40 h-[36rem] w-[36rem] rounded-full bg-dp-500/20 blur-3xl">
+      </div>
+      <div
+        class="absolute -bottom-56 -right-24 h-[32rem] w-[32rem] rounded-full bg-dp-400/10 blur-3xl"
+      >
+      </div>
+    </div>
+
+    <div
+      class="relative mx-auto grid max-w-7xl items-end gap-8 px-6 py-12 sm:py-16 lg:grid-cols-12 lg:px-12"
+    >
+      <div class="lg:col-span-7">
+        <div class="hero-rise flex flex-wrap items-center gap-3">
+          <img
+            src="/ib-dp-logo.png"
+            alt="IB Diploma Programme logo"
+            class="h-auto max-h-11 w-24 max-w-full rounded-lg bg-white p-1.5"
+            width="640"
+            height="256"
+          />
+          <p class="text-xs font-semibold uppercase tracking-widest text-dp-200">
+            {dict.dp.label} · {dict.subjects.catalogueLabel}
+          </p>
+        </div>
+        <h1
+          class="hero-rise mt-4 text-4xl font-bold leading-[1.08] tracking-tight text-balance sm:text-5xl lg:text-6xl"
+          style="--rise-delay: 80ms"
+        >
+          {dict.subjects.title}
+        </h1>
+        <p
+          class="hero-rise mt-5 max-w-xl text-lg leading-relaxed text-dp-100/85"
+          style="--rise-delay: 160ms"
+        >
+          {dict.subjects.subtitle}
+        </p>
+      </div>
+
+      <dl
+        class="hero-rise grid grid-cols-3 gap-6 border-t border-white/15 pt-6 lg:col-span-4 lg:col-start-9"
+        style="--rise-delay: 240ms"
+      >
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">
+            {distinct}
+          </dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statSubjects}</dt>
+        </div>
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">
+            {groups.length}
+          </dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statGroups}</dt>
+        </div>
+        <div>
+          <dd class="text-4xl font-extrabold tracking-tighter tabular-nums sm:text-5xl">2</dd>
+          <dt class="mt-1.5 text-xs text-dp-200">{dict.subjects.statLevels}</dt>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <div
+    class="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-16 lg:px-12"
+  >
+    <!-- Sticky group rail (desktop) -->
+    <aside class="hidden lg:block">
+      <nav class="sticky top-28" aria-label={dict.subjects.onThisPage}>
+        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-400">
+          {dict.subjects.onThisPage}
+        </p>
+        <ul class="space-y-1 border-l border-stone-200">
+          {
+            groups.map((g) => (
+              <li>
+                <a
+                  href={`#${g.id}`}
+                  data-spy-link={g.id}
+                  class="group -ml-px flex items-baseline gap-3 border-l-2 border-transparent py-1.5 pl-4 pr-2 text-sm text-stone-500 transition-colors hover:text-dp-700 data-[active]:border-dp-600 data-[active]:font-semibold data-[active]:text-dp-700"
+                >
+                  <span class="w-3 shrink-0 text-xs font-bold tabular-nums text-stone-300 group-data-[active]:text-dp-400">
+                    {g.key}
+                  </span>
+                  <span class="truncate">{g.shortLabel}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p
+          class="mt-8 flex gap-2.5 rounded-xl bg-amber-50 px-4 py-3 text-xs leading-relaxed text-amber-900"
+        >
+          <span class="mt-0.5 font-bold" aria-hidden="true">!</span>
+          {dict.subjects.enrolmentNote}
+        </p>
+      </nav>
+    </aside>
+
+    <!-- Group sections -->
+    <div class="min-w-0">
+      <p
+        class="mb-10 flex gap-2.5 rounded-xl bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-900 lg:hidden"
+      >
+        <span class="mt-0.5 font-bold" aria-hidden="true">!</span>
+        {dict.subjects.enrolmentNote}
+      </p>
+      {
+        groups.map((group, gi) => (
+          <section
+            id={group.id}
+            class:list={['scroll-mt-28', gi > 0 && 'mt-16 sm:mt-20']}
+            data-spy-section
+            data-reveal
+          >
+            <header class="flex items-baseline gap-3 border-b-2 border-stone-900 pb-3 sm:gap-4">
+              <span
+                class="text-4xl font-extrabold leading-none tracking-tighter tabular-nums text-dp-700 sm:text-5xl"
+                aria-hidden="true"
+              >
+                {group.key}
+              </span>
+              <h2 class="min-w-0 text-2xl font-bold leading-snug tracking-tight text-stone-900 sm:text-3xl">
+                {group.shortLabel}
+              </h2>
+              <span class="ml-auto shrink-0 text-sm text-stone-400 tabular-nums">
+                {group.subjects.length}
+              </span>
+            </header>
+            <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+              {group.subjects.map((s, i) => (
+                <li data-reveal style={`--reveal-delay: ${(i % 2) * 70}ms`}>
+                  <a
+                    href={`/${locale}/dp/subjects/${s.slug}`}
+                    class="group flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-5 transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-dp-400 hover:shadow-lg hover:shadow-dp-900/10 sm:p-6"
+                  >
+                    <div class="flex items-start justify-between gap-4">
+                      <h3 class="text-lg font-semibold leading-snug tracking-tight text-stone-900 transition-colors group-hover:text-dp-800 sm:text-xl">
+                        {pick(locale, s.entry.sk.title, s.entry.title)}
+                      </h3>
+                      <span
+                        class="mt-1 -translate-x-1 text-dp-700 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
+                    </div>
+                    {s.entry.offeredLevels && (
+                      <span class="mt-2.5 inline-flex gap-1.5">
+                        {(s.entry.offeredLevels === 'both'
+                          ? ['SL', 'HL']
+                          : [s.entry.offeredLevels]
+                        ).map((lv) => (
+                          <span
+                            class:list={[
+                              'rounded-full px-2.5 py-0.5 text-xs font-bold',
+                              lv === 'HL'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : 'bg-sky-100 text-sky-800',
+                            ]}
+                          >
+                            {lv}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                    <p class="mt-3 text-sm leading-relaxed text-stone-600">
+                      {pick(locale, s.entry.sk.description, s.entry.description)}
+                    </p>
+                    {s.entry.teacher && (
+                      <p class="mt-auto pt-4 text-xs text-stone-400">
+                        {dict.subjects.teacher}: {s.entry.teacher}
+                      </p>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Builder cross-link -->
+  <section class="bg-dp-900 text-white" data-reveal>
+    <div
+      class="relative mx-auto grid max-w-7xl items-center gap-10 overflow-hidden px-6 py-16 sm:py-20 lg:grid-cols-12 lg:px-12"
+    >
+      <div class="lg:col-span-7">
+        <p class="text-xs font-semibold uppercase tracking-widest text-dp-300">
+          {dict.dp.shortTitle}
+        </p>
+        <h2 class="mt-2 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl">
+          {dict.dp.builderTitle}
+        </h2>
+        <p class="mt-3 max-w-xl leading-relaxed text-white/75">{dict.dp.builderBody}</p>
+        <a
+          href={l('/dp/build-your-diploma', locale)}
+          class="group mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-stone-900 transition-transform hover:translate-x-1"
+        >
+          {dict.dp.builderCta} →
+        </a>
+      </div>
+      <svg
+        viewBox="0 0 400 400"
+        class="hidden h-64 w-64 justify-self-end text-white/15 lg:col-span-5 lg:block"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <polygon points="200,30 347,115 347,285 200,370 53,285 53,115"></polygon>
+        <line x1="200" y1="200" x2="200" y2="30"></line>
+        <line x1="200" y1="200" x2="347" y2="115"></line>
+        <line x1="200" y1="200" x2="347" y2="285"></line>
+        <line x1="200" y1="200" x2="200" y2="370"></line>
+        <line x1="200" y1="200" x2="53" y2="285"></line>
+        <line x1="200" y1="200" x2="53" y2="115"></line>
+        <circle cx="200" cy="200" r="60"></circle>
+      </svg>
+    </div>
+  </section>
+
+  <script>
+    function initSubjectsSpy() {
+      const links = document.querySelectorAll<HTMLAnchorElement>('[data-spy-link]');
+      const sections = document.querySelectorAll<HTMLElement>('[data-spy-section]');
+      if (links.length === 0 || sections.length === 0) return;
+
+      const setActive = (id: string) => {
+        links.forEach((link) => {
+          if (link.dataset.spyLink === id) link.setAttribute('data-active', '');
+          else link.removeAttribute('data-active');
+        });
+      };
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          const visible = entries.filter((e) => e.isIntersecting);
+          if (visible.length > 0) setActive(visible[0].target.id);
+        },
+        { rootMargin: '-25% 0px -65% 0px' },
+      );
+      sections.forEach((s) => io.observe(s));
+    }
+
+    document.addEventListener('astro:page-load', initSubjectsSpy);
+  </script>
+</Layout>

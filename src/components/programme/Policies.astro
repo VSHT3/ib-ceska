@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../PageHeader.astro';
+import DocumentList from '../DocumentList.astro';
+import { l } from '../../i18n/dictionaries';
+import { schoolCopy } from './school-copy';
+import type { Programme } from './school-copy';
+import type { Locale } from '../../i18n/dictionaries';
+import {
+  guideDocuments,
+  parentDocuments,
+  policyDocuments,
+  mypDocuments,
+} from '../../data/documents';
+
+interface Props {
+  locale: Locale;
+  programme: Programme;
+}
+
+const { locale, programme } = Astro.props;
+const { policies, candidateNote } = schoolCopy(locale, programme);
+
+// The language policy explicitly covers MYP; academic integrity applies across
+// the school. Inclusion, assessment and admissions policies describe DP rules.
+const sharedPolicies = policyDocuments
+  .filter((document) =>
+    ['academic-integrity-policy.pdf', 'language-policy.pdf'].includes(document.file),
+  )
+  .map((document) =>
+    document.file === 'language-policy.pdf'
+      ? {
+          ...document,
+          note: {
+            en: 'School language philosophy, multilingualism, and MYP and DP language pathways.',
+            sk: 'Jazyková filozofia školy, viacjazyčnosť a jazykové vzdelávanie v MYP a DP.',
+          },
+        }
+      : document,
+  );
+const groups =
+  programme === 'myp'
+    ? [
+        { title: policies.mypTitle, intro: policies.mypIntro, items: mypDocuments },
+        { title: policies.sharedTitle, intro: policies.sharedIntro, items: sharedPolicies },
+      ]
+    : [
+        { title: policies.policiesTitle, intro: policies.policiesIntro, items: policyDocuments },
+        { title: policies.guidesTitle, intro: policies.guidesIntro, items: guideDocuments },
+        { title: policies.parentsTitle, intro: policies.parentsIntro, items: parentDocuments },
+      ];
+---
+
+<Layout
+  title={`${policies.title} · ${programme === 'myp' ? 'MYP' : 'IB DP'}`}
+  description={policies.subtitle}
+  locale={locale}
+  pageSchemaType="CollectionPage"
+>
+  <PageHeader
+    title={policies.title}
+    subtitle={policies.subtitle}
+    tone={programme === 'myp' ? 'myp' : 'sky'}
+  />
+
+  {
+    programme === 'myp' && (
+      <div class="mx-auto max-w-7xl px-6 pt-12 sm:pt-16 lg:px-12">
+        <p class="max-w-3xl text-base leading-relaxed text-stone-600">{candidateNote}</p>
+      </div>
+    )
+  }
+
+  <div class="mx-auto max-w-7xl px-6 lg:px-12 py-12 sm:py-16">
+    <div class="divide-y divide-stone-200">
+      {
+        groups.map((group, index) => (
+          <section
+            class="grid items-start gap-8 py-12 first:pt-0 last:pb-0 sm:py-16 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-16"
+            data-reveal
+            style={`--reveal-delay: ${index * 80}ms`}
+          >
+            <div class="min-w-0 lg:sticky lg:top-24 self-start">
+              <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+                {group.title}
+              </h2>
+              <p class="mt-4 max-w-prose text-base text-stone-600 leading-relaxed">{group.intro}</p>
+            </div>
+            <div class="min-w-0">
+              <DocumentList items={group.items} locale={locale} tone={programme} />
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Admissions hand-off: full-bleed dark band, content in shell -->
+  <section class="bg-stone-900 text-white">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-12 sm:py-16" data-reveal>
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">
+            {policies.admissionsTitle}
+          </h2>
+          <p class="mt-4 max-w-xl text-stone-300 leading-relaxed">{policies.admissionsBody}</p>
+        </div>
+        <div class="flex flex-col items-start gap-4 lg:col-span-4 lg:col-start-9 lg:items-end">
+          <a
+            href={l('/admissions', locale)}
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-600"
+          >
+            {policies.admissionsCta}
+          </a>
+          <a
+            href={l(`/${programme}/mission`, locale)}
+            class="group inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200 transition-colors"
+          >
+            {policies.missionCta}
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5"
+              >→</span
+            >
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

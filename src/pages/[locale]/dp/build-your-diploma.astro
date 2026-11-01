@@ -1,0 +1,854 @@
+---
+import { reader, pick } from '../../../lib/keystatic';
+import Layout from '../../../layouts/Layout.astro';
+import { t, l } from '../../../i18n/dictionaries';
+import type { Locale } from '../../../i18n/dictionaries';
+
+export function getStaticPaths() {
+  return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
+}
+
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const dict = t(locale);
+const b = dict.builder;
+
+const allSubjects = await reader.collections.subjects.all();
+
+type Choice = {
+  slug: string;
+  title: string;
+  group: string;
+  offered: 'both' | 'HL' | 'SL';
+};
+
+const subjectsOf = (group: string): Choice[] =>
+  allSubjects
+    .filter((s) => s.entry.group === group || s.entry.secondaryGroup === group)
+    .sort((a, b) => (a.entry.order ?? 0) - (b.entry.order ?? 0))
+    .map((s) => ({
+      slug: s.slug,
+      title: pick(locale, s.entry.sk.title, s.entry.title),
+      group: group,
+      offered: (s.entry.offeredLevels ?? 'both') as Choice['offered'],
+    }));
+
+// Groups 1-5 are single-select. The sixth subject is an elective:
+// any group-6 subject, or a second from groups 1-4.
+const coreGroups = [
+  { key: '1', label: dict.subjects.group1 },
+  { key: '2', label: dict.subjects.group2 },
+  { key: '3', label: dict.subjects.group3 },
+  { key: '4', label: dict.subjects.group4 },
+  { key: '5', label: dict.subjects.group5 },
+].map((g) => ({ ...g, subjects: subjectsOf(g.key) }));
+
+// An interdisciplinary subject (e.g. ESS) can surface in two groups, so the
+// elective pool is de-duplicated by slug.
+const electiveSubjects = [
+  ...subjectsOf('6'),
+  ...subjectsOf('1'),
+  ...subjectsOf('2'),
+  ...subjectsOf('3'),
+  ...subjectsOf('4'),
+].filter((s, i, arr) => arr.findIndex((o) => o.slug === s.slug) === i);
+
+const shortLabel = (label: string) => label.replace(/^[^:]+:\s*/, '');
+const levelChips = (offered: Choice['offered']) => (offered === 'both' ? ['SL', 'HL'] : [offered]);
+
+const cardClass =
+  'group relative flex cursor-pointer items-start justify-between gap-3 rounded-xl border border-stone-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-dp-400 hover:shadow-lg hover:shadow-dp-900/10 has-[:checked]:border-dp-600 has-[:checked]:bg-dp-50/60 has-[:checked]:ring-1 has-[:checked]:ring-dp-600 data-[taken]:cursor-not-allowed data-[taken]:hover:translate-y-0 data-[taken]:hover:border-stone-200 data-[taken]:hover:shadow-none';
+
+// DP hexagon geometry (viewBox 400×400, centre 200,200, R 170)
+const hexPoints = '200,30 347,115 347,285 200,370 53,285 53,115';
+const hexVertices = [
+  [200, 30],
+  [347, 115],
+  [347, 285],
+  [200, 370],
+  [53, 285],
+  [53, 115],
+];
+const hexNumbers = [
+  [255, 105],
+  [310, 200],
+  [255, 295],
+  [145, 295],
+  [90, 200],
+  [145, 105],
+];
+---
+
+<Layout
+  title={b.title}
+  description={b.subtitle}
+  locale={locale}
+  pageSchemaType="WebApplication"
+  pageSchema={{ applicationCategory: 'EducationalApplication', browserRequirements: 'JavaScript' }}
+>
+  <!-- Hero: full-bleed DP brand band with programme hexagon -->
+  <section class="relative overflow-hidden bg-dp-900 text-white">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -top-48 -left-40 h-[36rem] w-[36rem] rounded-full bg-dp-500/20 blur-3xl">
+      </div>
+      <div
+        class="absolute -bottom-56 -right-24 h-[32rem] w-[32rem] rounded-full bg-dp-400/10 blur-3xl"
+      >
+      </div>
+    </div>
+
+    <div
+      class="relative mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12"
+    >
+      <div>
+        <div class="hero-rise flex flex-wrap items-center gap-3">
+          <img
+            src="/ib-dp-logo.png"
+            alt="IB Diploma Programme logo"
+            class="h-auto max-h-11 w-24 max-w-full rounded-lg bg-white p-1.5"
+            width="640"
+            height="256"
+          />
+          <p class="text-xs font-semibold uppercase tracking-widest text-dp-200">
+            {dict.dp.label} · {dict.dp.age}
+          </p>
+        </div>
+        <h1
+          class="hero-rise mt-4 text-4xl font-bold leading-[1.08] tracking-tight text-balance sm:text-5xl lg:text-6xl"
+          style="--rise-delay: 80ms"
+        >
+          {b.title}
+        </h1>
+        <p
+          class="hero-rise mt-5 max-w-xl text-lg leading-relaxed text-dp-100/85"
+          style="--rise-delay: 160ms"
+        >
+          {b.subtitle}
+        </p>
+        <p class="hero-rise mt-7 max-w-xl text-sm text-dp-100/70" style="--rise-delay: 240ms">
+          {b.dpNote}
+        </p>
+        <a
+          href={l('/dp', locale)}
+          class="hero-rise mt-2 inline-block text-sm font-semibold text-white underline decoration-dp-300/60 underline-offset-4 transition-colors hover:decoration-white"
+          style="--rise-delay: 280ms"
+        >
+          {b.dpLink} →
+        </a>
+      </div>
+
+      <!-- The DP programme model: six groups around the core -->
+      <div class="hero-fade hidden lg:block" aria-hidden="true">
+        <svg viewBox="0 0 400 400" class="hex-figure mx-auto w-full max-w-[26rem]">
+          <circle
+            cx="200"
+            cy="200"
+            r="194"
+            fill="none"
+            stroke="#99e0ec"
+            stroke-opacity="0.25"
+            stroke-dasharray="2 10"
+            class="hex-orbit"></circle>
+          {
+            hexVertices.map((v, i) => (
+              <polygon
+                points={`200,200 ${v[0]},${v[1]} ${hexVertices[(i + 1) % 6]![0]},${hexVertices[(i + 1) % 6]![1]}`}
+                fill="#2bbadd"
+                fill-opacity={i % 2 === 0 ? '0.05' : '0.11'}
+              />
+            ))
+          }
+          <polygon
+            points={hexPoints}
+            fill="none"
+            stroke="#5fcbe3"
+            stroke-opacity="0.5"
+            stroke-width="1.5"></polygon>
+          {
+            hexVertices.map((v) => (
+              <line x1="200" y1="200" x2={v[0]} y2={v[1]} stroke="#5fcbe3" stroke-opacity="0.3" />
+            ))
+          }
+          {
+            hexNumbers.map((p, i) => (
+              <text
+                x={p[0]}
+                y={p[1]}
+                text-anchor="middle"
+                dominant-baseline="middle"
+                font-size="26"
+                font-weight="700"
+                fill="#c9eef5"
+                fill-opacity="0.9"
+              >
+                {i + 1}
+              </text>
+            ))
+          }
+          <circle
+            cx="200"
+            cy="200"
+            r="62"
+            fill="#02748a"
+            fill-opacity="0.65"
+            stroke="#5fcbe3"
+            stroke-opacity="0.55"></circle>
+          <text x="200" y="194" text-anchor="middle" font-size="30" font-weight="800" fill="#ffffff"
+            >DP</text
+          >
+          <text x="200" y="220" text-anchor="middle" font-size="13" font-weight="600" fill="#c9eef5"
+            >TOK · EE · CAS</text
+          >
+        </svg>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <div class="relative border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-4 pt-7 pb-8 sm:px-6">
+        <p
+          class="hero-rise text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300"
+          style="--rise-delay: 300ms"
+        >
+          {b.ruleHeading}
+        </p>
+        <div class="mt-4 grid gap-5 sm:grid-cols-3 sm:gap-10">
+          {
+            b.rules.map((r, i) => (
+              <div class="hero-rise flex gap-3" style={`--rise-delay: ${360 + i * 90}ms`}>
+                <span class="text-sm font-extrabold text-dp-300">0{i + 1}</span>
+                <p class="text-sm leading-relaxed text-dp-100/80">{r}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-14"
+  >
+    <!-- Picker -->
+    <form id="diploma-builder" class="min-w-0 space-y-14">
+      {
+        coreGroups.map((g) => (
+          <fieldset
+            class="relative border-t-2 border-stone-900 pt-5"
+            data-group={g.key}
+            data-reveal
+          >
+            <legend class="float-left flex w-full items-baseline gap-3">
+              <span class="group-numeral select-none" aria-hidden="true">
+                {g.key}
+              </span>
+              <span class="text-2xl font-bold tracking-tight">{shortLabel(g.label)}</span>
+            </legend>
+            {g.subjects.length === 0 ? (
+              <p class="clear-both pt-4 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
+            ) : (
+              <div class="clear-both grid gap-3 pt-5 sm:grid-cols-2">
+                {g.subjects.map((s) => (
+                  <label class={cardClass}>
+                    <div class="min-w-0">
+                      <input
+                        type="radio"
+                        name={`group-${g.key}`}
+                        value={s.slug}
+                        data-slug={s.slug}
+                        data-group={g.key}
+                        data-offered={s.offered}
+                        data-title={s.title}
+                        class="peer sr-only"
+                      />
+                      <span class="block font-semibold text-stone-900 peer-checked:text-dp-900">
+                        {s.title}
+                      </span>
+                      <span class="mt-2 inline-flex gap-1.5" data-level-group={`group-${g.key}`}>
+                        {levelChips(s.offered).map((lv) => (
+                          <button
+                            type="button"
+                            data-level={lv}
+                            class:list={[
+                              'rounded-full border px-2.5 py-0.5 text-xs font-bold transition-colors',
+                              lv === 'HL'
+                                ? 'border-emerald-200 text-emerald-700 hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white'
+                                : 'border-sky-200 text-sky-700 hover:border-sky-400 data-[on]:border-sky-600 data-[on]:bg-sky-600 data-[on]:text-white',
+                            ]}
+                          >
+                            {lv}
+                          </button>
+                        ))}
+                      </span>
+                    </div>
+                    <span
+                      class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 border-stone-300 transition-colors group-has-[:checked]:border-dp-600 group-has-[:checked]:bg-dp-600"
+                      aria-hidden="true"
+                      data-dot
+                    >
+                      <svg
+                        class="h-3 w-3 text-white opacity-0 transition-opacity group-has-[:checked]:opacity-100"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M2.5 6.5 5 9l4.5-6" />
+                      </svg>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </fieldset>
+        ))
+      }
+
+      <!-- Sixth subject (elective) -->
+      <fieldset class="relative border-t-2 border-stone-900 pt-5" data-group="6" data-reveal>
+        <legend class="float-left flex w-full items-baseline gap-3">
+          <span class="group-numeral select-none" aria-hidden="true">6</span>
+          <span class="text-2xl font-bold tracking-tight">{shortLabel(dict.subjects.group6)}</span>
+          <span class="text-sm font-semibold text-dp-700">/ +</span>
+        </legend>
+        <p class="clear-both pt-2 text-sm text-stone-500">{b.group6Note}</p>
+        {
+          electiveSubjects.length === 0 ? (
+            <p class="pt-4 text-sm text-stone-400">{b.noSubjectsInGroup}</p>
+          ) : (
+            <div class="grid gap-3 pt-5 sm:grid-cols-2">
+              {electiveSubjects.map((s) => (
+                <label class={cardClass}>
+                  <div class="min-w-0">
+                    <input
+                      type="radio"
+                      name="group-6"
+                      value={s.slug}
+                      data-slug={s.slug}
+                      data-group="6"
+                      data-source-group={s.group}
+                      data-offered={s.offered}
+                      data-title={s.title}
+                      class="peer sr-only"
+                    />
+                    <span class="block font-semibold text-stone-900 peer-checked:text-dp-900">
+                      {s.title}
+                    </span>
+                    <span class="mt-1 block text-[11px] text-stone-400">
+                      {shortLabel(
+                        coreGroups.find((g) => g.key === s.group)?.label ?? dict.subjects.group6,
+                      )}
+                    </span>
+                    <span class="mt-2 inline-flex gap-1.5" data-level-group="group-6">
+                      {levelChips(s.offered).map((lv) => (
+                        <button
+                          type="button"
+                          data-level={lv}
+                          class:list={[
+                            'rounded-full border px-2.5 py-0.5 text-xs font-bold transition-colors',
+                            lv === 'HL'
+                              ? 'border-emerald-200 text-emerald-700 hover:border-emerald-400 data-[on]:border-emerald-600 data-[on]:bg-emerald-600 data-[on]:text-white'
+                              : 'border-sky-200 text-sky-700 hover:border-sky-400 data-[on]:border-sky-600 data-[on]:bg-sky-600 data-[on]:text-white',
+                          ]}
+                        >
+                          {lv}
+                        </button>
+                      ))}
+                    </span>
+                  </div>
+                  <span
+                    class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 border-stone-300 transition-colors group-has-[:checked]:border-dp-600 group-has-[:checked]:bg-dp-600"
+                    aria-hidden="true"
+                    data-dot
+                  >
+                    <svg
+                      class="h-3 w-3 text-white opacity-0 transition-opacity group-has-[:checked]:opacity-100"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M2.5 6.5 5 9l4.5-6" />
+                    </svg>
+                  </span>
+                </label>
+              ))}
+            </div>
+          )
+        }
+      </fieldset>
+    </form>
+
+    <!-- Summary: dark diploma card with six fixed slots -->
+    <aside id="diploma-summary" class="mt-14 scroll-mt-24 lg:sticky lg:top-24 lg:mt-0">
+      <div
+        class="relative overflow-hidden rounded-2xl bg-dp-900 text-white shadow-2xl ring-1 ring-white/10"
+      >
+        <div
+          class="pointer-events-none absolute -top-24 -right-24 h-56 w-56 rounded-full bg-dp-500/25 blur-3xl"
+          aria-hidden="true"
+        >
+        </div>
+        <div class="relative p-6 sm:p-7">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-dp-300">
+                {dict.dp.label}
+              </p>
+              <h2 class="mt-1 text-xl font-bold tracking-tight">{b.summaryTitle}</h2>
+            </div>
+            <span
+              class="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-dp-300/40 bg-white/5"
+            >
+              <span class="text-sm font-extrabold leading-none">
+                <span id="count-total">0</span><span class="font-semibold text-white/40">/6</span>
+              </span>
+            </span>
+          </div>
+
+          <p id="summary-empty" class="mt-4 text-xs leading-relaxed text-white/40">
+            {b.summaryEmpty}
+          </p>
+
+          <ol class="mt-5">
+            {
+              ['1', '2', '3', '4', '5', '6'].map((k) => (
+                <li data-slot={k} class="flex items-center gap-3 border-b border-white/10 py-2.5">
+                  <span class="w-6 shrink-0 text-[11px] font-bold text-dp-300/80">0{k}</span>
+                  <span data-slot-name class="flex-1 truncate text-sm text-white/30">
+                    {b.slotEmpty}
+                  </span>
+                  <span data-slot-level class="hidden" />
+                </li>
+              ))
+            }
+          </ol>
+
+          <div class="mt-6">
+            <div class="flex items-baseline justify-between gap-3">
+              <p class="text-[11px] font-bold uppercase tracking-widest text-dp-300">
+                {b.hlMeter}
+              </p>
+              <p class="text-xs text-white/60">
+                <span id="count-sl" class="font-bold text-sky-300">0</span> SL ·
+                <span id="count-hl" class="font-bold text-emerald-300">0</span> HL
+              </p>
+            </div>
+            <div class="mt-2.5 grid grid-cols-6 gap-1" data-hl-track>
+              {
+                [0, 1, 2, 3, 4, 5].map((i) => (
+                  <span
+                    data-hl-seg
+                    class:list={[
+                      'h-1.5 rounded-full bg-white/10 transition-colors',
+                      (i === 2 || i === 3) && 'ring-1 ring-inset ring-dp-300/50',
+                    ]}
+                  />
+                ))
+              }
+            </div>
+            <p class="mt-1.5 text-[10px] text-white/40">{b.hlTarget}</p>
+          </div>
+
+          <p
+            id="builder-status"
+            class="mt-5 hidden rounded-xl px-4 py-3 text-sm font-medium"
+            role="status"
+          >
+          </p>
+
+          <button
+            type="button"
+            id="builder-reset"
+            class="mt-5 w-full rounded-full border border-white/15 py-2.5 text-sm font-semibold text-white/80 transition-colors hover:border-white/40 hover:text-white"
+          >
+            {b.reset}
+          </button>
+
+          <div class="mt-6 border-t border-dashed border-white/15 pt-5">
+            <p class="text-[11px] font-bold uppercase tracking-widest text-dp-300">
+              {b.coreLabel}
+            </p>
+            <div class="mt-2.5 flex gap-2">
+              {
+                ['TOK', 'EE', 'CAS'].map((c) => (
+                  <span class="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-bold text-dp-100">
+                    {c}
+                  </span>
+                ))
+              }
+            </div>
+            <p class="mt-3 text-xs leading-relaxed text-white/50">{b.coreNote}</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Mobile progress bar (summary is below the form on small screens) -->
+  <div
+    id="mobile-bar"
+    class="fixed inset-x-3 bottom-3 z-40 hidden items-center justify-between gap-3 rounded-2xl bg-dp-900/95 px-4 py-3 text-white shadow-2xl ring-1 ring-white/10 backdrop-blur lg:hidden!"
+  >
+    <p class="text-sm">
+      <span id="mcount" class="font-extrabold">0</span><span class="text-white/50">/6</span>
+      <span class="mx-1 text-white/30">·</span>
+      <span id="mhl" class="font-extrabold">0</span>
+      <span class="text-white/50">HL</span>
+    </p>
+    <a
+      href="#diploma-summary"
+      class="rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-dp-900"
+    >
+      {b.summaryTitle} ↓
+    </a>
+  </div>
+
+  <script
+    is:inline
+    type="application/json"
+    id="builder-strings"
+    set:html={JSON.stringify({
+      validComplete: b.validComplete,
+      errSix: b.errSix,
+      errHlRange: b.errHlRange,
+      slotEmpty: b.slotEmpty,
+    }).replaceAll('<', '\\u003c')}
+  />
+
+  <script>
+    import { animate, createSpring, stagger, utils } from 'animejs';
+
+    function initDiplomaBuilder() {
+      const $ = (id: string) => document.getElementById(id);
+      const formEl = $('diploma-builder');
+      const statusEl = $('builder-status');
+      const totalEl = $('count-total');
+      const hlEl = $('count-hl');
+      const slEl = $('count-sl');
+      const emptyEl = $('summary-empty');
+      const reset = $('builder-reset');
+      const stringsEl = $('builder-strings');
+      const mobileBar = $('mobile-bar');
+      const mTotal = $('mcount');
+      const mHl = $('mhl');
+      if (!formEl || !statusEl || !totalEl || !hlEl || !slEl || !emptyEl || !stringsEl) return;
+      // rebind: narrowed consts survive into the closures below
+      const form = formEl;
+      const status = statusEl;
+      const empty = emptyEl;
+      const elTotal = totalEl;
+      const elHl = hlEl;
+      const elSl = slEl;
+
+      const slots = Array.from(document.querySelectorAll<HTMLElement>('[data-slot]'));
+      const segs = Array.from(document.querySelectorAll<HTMLElement>('[data-hl-seg]'));
+
+      const strings = JSON.parse(stringsEl.textContent ?? '{}') as Record<string, string>;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const pop = () => createSpring({ stiffness: 260, damping: 13 });
+
+      // level chosen per radio input slug; defaults to first available
+      const levelFor = new Map<string, string>();
+      const counters = { total: { v: 0 }, hl: { v: 0 }, sl: { v: 0 } };
+      let lastStatusKey = '';
+      let prevHl = 0;
+
+      const radios = () => Array.from(form.querySelectorAll<HTMLInputElement>('input[type=radio]'));
+      const checked = () => radios().filter((r) => r.checked);
+      const levelOf = (input: HTMLInputElement) =>
+        levelFor.get(input.value) || (input.dataset.offered === 'HL' ? 'HL' : 'SL');
+
+      function shake(el: Element) {
+        if (reduced) return;
+        utils.remove(el);
+        animate(el, { x: [-7, 6, -4, 2, 0], duration: 400, ease: 'outQuad' });
+      }
+
+      // Counter ticks: number counts to the new value while the digit pops
+      function tick(el: HTMLElement, state: { v: number }, next: number) {
+        if (state.v === next) return;
+        if (reduced) {
+          state.v = next;
+          el.textContent = String(next);
+          return;
+        }
+        utils.remove(state);
+        animate(state, {
+          v: next,
+          duration: 450,
+          ease: 'outQuad',
+          onUpdate: () => {
+            el.textContent = String(Math.round(state.v));
+          },
+        });
+        utils.remove(el);
+        animate(el, { scale: [1, 1.16, 1], duration: 350, ease: 'outQuad' });
+      }
+
+      function setLevelButtons(label: HTMLLabelElement) {
+        const wrap = label.querySelector('[data-level-group]');
+        const input = label.querySelector<HTMLInputElement>('input[type=radio]');
+        if (!wrap || !input) return;
+        const chosen = levelOf(input);
+        levelFor.set(input.value, chosen);
+        wrap.querySelectorAll<HTMLButtonElement>('button[data-level]').forEach((btn) => {
+          btn.toggleAttribute('data-on', btn.dataset.level === chosen);
+        });
+      }
+
+      // A subject picked anywhere greys out its duplicate card in other groups
+      function syncTaken() {
+        const selected = new Map<string, HTMLInputElement>();
+        checked().forEach((r) => selected.set(r.value, r));
+        radios().forEach((r) => {
+          const dup = selected.get(r.value);
+          const taken = !!dup && dup !== r && !r.checked;
+          const label = r.closest('label');
+          if (!label || label.hasAttribute('data-taken') === taken) return;
+          label.toggleAttribute('data-taken', taken);
+          r.disabled = taken;
+          if (reduced) {
+            label.style.opacity = taken ? '0.45' : '1';
+          } else {
+            utils.remove(label);
+            animate(label, {
+              opacity: taken ? 0.45 : 1,
+              scale: taken ? 0.98 : 1,
+              duration: 300,
+              ease: 'outQuad',
+            });
+          }
+        });
+      }
+
+      function updateStatus(total: number, hl: number) {
+        status.classList.remove(
+          'bg-emerald-400/15',
+          'text-emerald-200',
+          'bg-amber-400/15',
+          'text-amber-200',
+        );
+        if (total === 0) {
+          status.classList.add('hidden');
+          lastStatusKey = '';
+          return;
+        }
+        let kind: 'ok' | 'error' = 'ok';
+        let text = strings.validComplete;
+        if (total !== 6) {
+          kind = 'error';
+          text = strings.errSix;
+        } else if (hl < 3 || hl > 4) {
+          kind = 'error';
+          text = strings.errHlRange;
+        }
+        status.textContent = text ?? '';
+        status.classList.add(
+          ...(kind === 'ok'
+            ? ['bg-emerald-400/15', 'text-emerald-200']
+            : ['bg-amber-400/15', 'text-amber-200']),
+        );
+        status.classList.remove('hidden');
+        const key = `${kind}:${text}`;
+        if (key === lastStatusKey) return;
+        lastStatusKey = key;
+        if (reduced) return;
+        if (kind === 'error') {
+          shake(status);
+        } else {
+          // valid diploma: status springs in, slots cascade
+          utils.remove(status);
+          animate(status, {
+            scale: [0.94, 1],
+            y: [8, 0],
+            opacity: [0, 1],
+            duration: 550,
+            ease: pop(),
+          });
+          animate('[data-slot]', {
+            x: [0, 6, 0],
+            duration: 400,
+            delay: stagger(50),
+            ease: 'outQuad',
+          });
+        }
+      }
+
+      const SEG_ZONE = ' ring-1 ring-inset ring-dp-300/50';
+      function renderMeter(hl: number) {
+        segs.forEach((seg, i) => {
+          const active = i < hl;
+          seg.className =
+            'h-1.5 rounded-full transition-colors' +
+            (active ? (i < 4 ? ' bg-emerald-400' : ' bg-amber-400') : ' bg-white/10') +
+            (i === 2 || i === 3 ? SEG_ZONE : '');
+        });
+      }
+
+      function render() {
+        const sel = checked();
+        let hl = 0;
+        let sl = 0;
+        const byGroup = new Map<string, HTMLInputElement>();
+        sel.forEach((r) => byGroup.set(r.dataset.group ?? '', r));
+
+        slots.forEach((slot) => {
+          const input = byGroup.get(slot.dataset.slot ?? '');
+          const nameEl = slot.querySelector<HTMLElement>('[data-slot-name]');
+          const lvlEl = slot.querySelector<HTMLElement>('[data-slot-level]');
+          if (!nameEl || !lvlEl) return;
+          if (input) {
+            const level = levelOf(input);
+            if (level === 'HL') hl++;
+            else sl++;
+            const key = `${input.value}:${level}`;
+            if (slot.dataset.filled === key) return;
+            slot.dataset.filled = key;
+            nameEl.textContent = input.dataset.title ?? '';
+            nameEl.className = 'flex-1 truncate text-sm font-medium text-white';
+            lvlEl.textContent = level;
+            lvlEl.className =
+              'shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ' +
+              (level === 'HL' ? 'bg-emerald-400 text-emerald-950' : 'bg-sky-400 text-sky-950');
+            if (!reduced) {
+              utils.remove(slot);
+              animate(slot, { x: [10, 0], opacity: [0.3, 1], duration: 450, ease: pop() });
+            }
+          } else if (slot.dataset.filled) {
+            delete slot.dataset.filled;
+            nameEl.textContent = strings.slotEmpty ?? '';
+            nameEl.className = 'flex-1 truncate text-sm text-white/30';
+            lvlEl.textContent = '';
+            lvlEl.className = 'hidden';
+          }
+        });
+
+        const total = sel.length;
+        tick(elTotal, counters.total, total);
+        tick(elHl, counters.hl, hl);
+        tick(elSl, counters.sl, sl);
+        renderMeter(hl);
+        empty.classList.toggle('hidden', total > 0);
+
+        if (mTotal) mTotal.textContent = String(total);
+        if (mHl) mHl.textContent = String(hl);
+        if (mobileBar) {
+          mobileBar.classList.toggle('hidden', total === 0);
+          mobileBar.classList.toggle('flex', total > 0);
+        }
+
+        // climbing past 4 HL nudges the meter
+        if (hl > 4 && prevHl <= 4) {
+          const track = document.querySelector('[data-hl-track]');
+          if (track) shake(track);
+        }
+        prevHl = hl;
+
+        syncTaken();
+        updateStatus(total, hl);
+      }
+
+      // Initialise level button states
+      form.querySelectorAll('label').forEach(setLevelButtons);
+
+      form.addEventListener('change', (e) => {
+        const input = e.target;
+        if (!(input instanceof HTMLInputElement) || input.type !== 'radio') return;
+        if (!reduced) {
+          const dot = input.closest('label')?.querySelector('[data-dot]');
+          if (dot) {
+            utils.remove(dot);
+            animate(dot, { scale: [0.4, 1], duration: 500, ease: pop() });
+          }
+        }
+        render();
+      });
+
+      form.addEventListener('click', (e) => {
+        const target = e.target as Element;
+
+        // duplicate of an already-picked subject: refuse with a shake
+        const takenLabel = target.closest('label[data-taken]');
+        if (takenLabel) {
+          e.preventDefault();
+          shake(takenLabel);
+          return;
+        }
+
+        // Level chip clicks (inside labels) must not toggle the radio
+        const btn = target.closest<HTMLButtonElement>('button[data-level]');
+        if (!btn) return;
+        e.preventDefault();
+        const label = btn.closest('label');
+        const input = label?.querySelector<HTMLInputElement>('input[type=radio]');
+        if (!label || !input) return;
+        levelFor.set(input.value, btn.dataset.level ?? 'SL');
+        setLevelButtons(label);
+        if (!reduced) {
+          utils.remove(btn);
+          animate(btn, { scale: [1, 1.25, 1], duration: 300, ease: 'outQuad' });
+        }
+        if (input.checked) render();
+      });
+
+      reset?.addEventListener('click', () => {
+        radios().forEach((r) => {
+          r.checked = false;
+        });
+        render();
+        if (!reduced && slots.length) {
+          animate(slots, {
+            opacity: [0, 1],
+            x: [-8, 0],
+            duration: 350,
+            delay: stagger(35),
+            ease: 'outQuad',
+          });
+        }
+      });
+
+      render();
+    }
+
+    document.addEventListener('astro:page-load', initDiplomaBuilder);
+  </script>
+
+  <style>
+    .group-numeral {
+      font-size: 2.5rem;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      font-variant-numeric: tabular-nums;
+      color: var(--color-dp-700);
+    }
+    @keyframes orbit-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    .hex-orbit {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: orbit-spin 80s linear infinite;
+    }
+    @keyframes hex-float {
+      to {
+        transform: translateY(-10px);
+      }
+    }
+    .hex-figure {
+      animation: hex-float 7s ease-in-out infinite alternate;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hex-orbit,
+      .hex-figure {
+        animation: none;
+      }
+    }
+  </style>
+</Layout>

@@ -96,7 +96,7 @@ export const mypDocuments: DocItem[] = [
 ];
 
 /**
- * The five IB school policies, shown on `/policies`.
+ * The five IB DP school policies, shown on `/dp/policies`; relevant shared policies also appear on `/myp/policies`.
  * Supplied by the IB DP coordinator (2026-07-25).
  */
 export const policyDocuments: DocItem[] = [
@@ -147,7 +147,7 @@ export const policyDocuments: DocItem[] = [
   },
 ];
 
-/** DP core handbooks, shown on `/policies` and on the matching core pages. */
+/** DP core handbooks, shown on `/dp/policies` and on the matching DP core pages. */
 export const guideDocuments: DocItem[] = [
   {
     file: 'cas-handbook.pdf',
@@ -169,7 +169,7 @@ export const guideDocuments: DocItem[] = [
   },
 ];
 
-/** Parent-facing handbooks, shown on `/policies`. */
+/** Parent-facing DP handbooks, shown on `/dp/policies`. */
 export const parentDocuments: DocItem[] = [
   {
     file: 'ib-dp-parent-handbook.pdf',

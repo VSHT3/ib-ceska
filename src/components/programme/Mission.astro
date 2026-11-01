@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../PageHeader.astro';
+import { school } from '../../assets/school';
+import { l } from '../../i18n/dictionaries';
+import { schoolCopy } from './school-copy';
+import type { Programme } from './school-copy';
+import type { Locale } from '../../i18n/dictionaries';
+
+interface Props {
+  locale: Locale;
+  programme: Programme;
+}
+
+const { locale, programme } = Astro.props;
+const mission = schoolCopy(locale, programme).mission;
+---
+
+<Layout
+  title={`${mission.title} · ${programme === 'myp' ? 'MYP' : 'IB DP'}`}
+  description={mission.subtitle}
+  locale={locale}
+  pageSchemaType="AboutPage"
+>
+  <PageHeader
+    title={mission.title}
+    subtitle={mission.subtitle}
+    tone={programme === 'myp' ? 'myp' : 'sky'}
+  />
+
+  <!-- Programme status: only DP has an authorization certificate. -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-12 sm:py-16" data-reveal>
+    <div class="grid gap-8 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-9">
+        {
+          programme === 'dp' && (
+            <img src="/ib-dp-logo.png" alt="IB Diploma Programme" class="h-12 w-auto" />
+          )
+        }
+        <h2
+          class:list={[
+            'text-3xl sm:text-4xl font-bold tracking-tight text-stone-900',
+            programme === 'dp' && 'mt-6',
+          ]}
+        >
+          {mission.authTitle}
+        </h2>
+        <p class="mt-5 max-w-3xl text-stone-600 leading-relaxed">{mission.authBody}</p>
+      </div>
+      {
+        programme === 'dp' && (
+          <figure class="lg:col-span-12" data-reveal style="--reveal-delay: 120ms">
+            <div class="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
+              <img
+                src="/images/ib-dp-authorization-certificate.jpg"
+                alt={`${mission.authDocLabel}: ${mission.authTitle}`}
+                width="2106"
+                height="1491"
+                class="block h-auto w-full"
+              />
+            </div>
+            <figcaption class="mt-4 text-sm font-medium text-stone-600">
+              {mission.authDocLabel}
+            </figcaption>
+          </figure>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- IB mission statement (official IBO text): full-bleed dark band, big typographic treatment -->
+  <section class="bg-stone-900 text-white">
+    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-12 sm:py-16" data-reveal>
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-3">
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">
+            {mission.ibTitle}
+          </h2>
+          <p class="mt-4 text-sm leading-relaxed text-stone-400">{mission.ibSource}</p>
+        </div>
+        <div class="lg:col-span-8 lg:col-start-5">
+          <p
+            class="max-w-3xl text-2xl sm:text-3xl font-medium leading-snug tracking-tight text-white"
+          >
+            {mission.ibBody1}
+          </p>
+          <p class="mt-8 max-w-2xl text-stone-300 leading-relaxed">{mission.ibBody2}</p>
+          <p class="mt-4 max-w-2xl text-stone-300 leading-relaxed">{mission.ibBody3}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- School mission: editorial split, photo takes the wider column -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 py-12 sm:py-16" data-reveal>
+    <div class="grid gap-10 lg:grid-cols-12 lg:gap-16 items-start">
+      <div class="overflow-hidden rounded-3xl lg:col-span-6">
+        <Image
+          src={school.schoolBuilding}
+          alt="Súkromné gymnázium Česká in Bratislava"
+          widths={[480, 720]}
+          sizes="(min-width: 1024px) 34rem, 100vw"
+          class="w-full aspect-[4/3] object-cover transition-transform duration-700 hover:scale-[1.03]"
+          loading="lazy"
+        />
+      </div>
+      <div class="max-w-prose lg:col-span-5 lg:col-start-8 lg:pt-4">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+          {mission.schoolTitle}
+        </h2>
+        <p class="mt-5 text-lg text-stone-700 leading-relaxed">{mission.schoolBody1}</p>
+        <p class="mt-4 text-stone-600 leading-relaxed">{mission.schoolBody2}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vision: open typographic statement under a hairline rule, with the policies CTA in its rhythm -->
+  <section class="mx-auto max-w-7xl px-6 lg:px-12 pb-12 sm:pb-16" data-reveal>
+    <div class="border-t border-stone-200 pt-12 sm:pt-16">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900">
+        {mission.visionTitle}
+      </h2>
+      <p class="mt-5 max-w-3xl text-xl sm:text-2xl font-medium leading-relaxed text-stone-700">
+        {mission.visionBody}
+      </p>
+      <a
+        href={l(`/${programme}/policies`, locale)}
+        class="group mt-10 inline-flex items-center gap-2 text-base font-semibold text-emerald-700 hover:text-emerald-800 transition-colors"
+        data-reveal
+        style="--reveal-delay: 120ms"
+      >
+        {mission.policiesCta}
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+      </a>
+    </div>
+  </section>
+</Layout>

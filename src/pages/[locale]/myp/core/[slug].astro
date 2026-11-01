@@ -1,0 +1,145 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import PageHeader from '../../../../components/PageHeader.astro';
+import DocumentList from '../../../../components/DocumentList.astro';
+import { l, t, type Locale } from '../../../../i18n/dictionaries';
+import { mypSupport } from '../../../../data/myp-organisation';
+import { mypDocuments } from '../../../../data/documents';
+import {
+  getMypCoreTopics,
+  mypCurriculumCopy,
+  type MypCoreTopic,
+} from '../../../../data/myp-programme';
+
+export function getStaticPaths() {
+  return (['en', 'sk'] as const).flatMap((locale) =>
+    getMypCoreTopics(locale).map((topic) => ({
+      params: { locale, slug: topic.slug },
+      props: { topic },
+    })),
+  );
+}
+
+interface Props {
+  topic: MypCoreTopic;
+}
+
+const { topic }: Props = Astro.props;
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const p = t(locale).myp;
+const copy = mypCurriculumCopy[locale];
+const coordinator = mypSupport.find((role) => role.label.en === topic.supportLabel);
+const related = getMypCoreTopics(locale).filter((item) => item.slug !== topic.slug);
+---
+
+<Layout title={`${topic.title} · MYP`} description={topic.intro} locale={locale}>
+  <PageHeader
+    title={topic.title}
+    subtitle={topic.intro}
+    label={locale === 'sk' ? 'MYP · Kandidátsky program' : 'MYP · Candidate programme'}
+    tone="myp"
+  />
+
+  <div class="border-b border-myp-200 bg-myp-50 px-6 py-6 lg:px-12">
+    <p class="mx-auto max-w-7xl text-sm leading-relaxed text-stone-700">{p.note}</p>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-6 py-12 lg:px-12 lg:py-16">
+    <div class="grid items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <article class="min-w-0 space-y-12 lg:col-span-8 lg:space-y-16">
+        {
+          topic.sections.map((section) => (
+            <section class="max-w-prose" data-reveal>
+              <h2 class="break-words text-2xl font-bold tracking-tight sm:text-3xl">
+                {section.title}
+              </h2>
+              <div class="mt-5 space-y-5 text-lg leading-relaxed text-stone-600">
+                {section.paragraphs.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+              </div>
+              {section.points && (
+                <ul class="mt-6 list-disc space-y-3 pl-6 leading-relaxed text-stone-600 marker:text-myp-700">
+                  {section.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))
+        }
+        {
+          topic.slug === 'approaches-to-learning' && (
+            <section class="max-w-prose" data-reveal>
+              <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">{copy.skillTitle}</h2>
+              <dl class="mt-6 divide-y divide-myp-200 border-y border-myp-200">
+                {p.atl.map((skill) => (
+                  <div class="py-5">
+                    <dt class="text-lg font-semibold text-stone-900">{skill.title}</dt>
+                    <dd class="mt-2 leading-relaxed text-stone-600">{skill.desc}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          )
+        }
+      </article>
+
+      <aside class="min-w-0 space-y-8 lg:col-span-4">
+        {
+          coordinator?.name && (
+            <section class="rounded-2xl border border-myp-200 bg-myp-50 p-6" data-reveal>
+              <h2 class="break-words text-2xl font-bold tracking-tight text-stone-900">
+                {coordinator.label[locale]}
+              </h2>
+              <p class="mt-4 text-lg font-semibold text-stone-900">{coordinator.name}</p>
+              <a
+                href={l('/myp/teachers', locale)}
+                class="mt-5 inline-flex text-sm font-semibold text-myp-700 hover:underline"
+              >
+                {copy.team} →
+              </a>
+            </section>
+          )
+        }
+        <nav aria-label={copy.relatedTitle} class="border-t border-stone-300 pt-6" data-reveal>
+          <h2 class="text-2xl font-bold tracking-tight">{copy.relatedTitle}</h2>
+          <ul class="mt-5 space-y-4 break-words font-semibold text-myp-700">
+            <li>
+              <a href={l('/myp/subjects', locale)} class="hover:underline">{copy.subjectsTitle} →</a
+              >
+            </li>
+            {
+              related.map((item) => (
+                <li>
+                  <a href={l(`/myp/core/${item.slug}`, locale)} class="hover:underline">
+                    {item.title} →
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a href={l('/myp/policies', locale)} class="hover:underline">{copy.policies} →</a>
+            </li>
+          </ul>
+        </nav>
+        <a
+          href={p.officialUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex text-sm font-semibold text-myp-700 hover:underline"
+        >
+          {p.officialLink} ↗
+        </a>
+      </aside>
+    </div>
+  </div>
+
+  <section class="border-t border-stone-200 bg-stone-50 px-6 py-12 lg:px-12 lg:py-16" data-reveal>
+    <div class="mx-auto max-w-7xl">
+      <h2 class="text-3xl font-bold tracking-tight">{copy.guidesTitle}</h2>
+      <p class="mt-4 max-w-3xl leading-relaxed text-stone-600">{copy.guidesBody}</p>
+      <div class="mt-8"><DocumentList items={mypDocuments} locale={locale} tone="myp" /></div>
+    </div>
+  </section>
+</Layout>

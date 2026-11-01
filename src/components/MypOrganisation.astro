@@ -1,6 +1,6 @@
 ---
 import type { Locale } from '../i18n/dictionaries';
-import { t } from '../i18n/dictionaries';
+import { l, t } from '../i18n/dictionaries';
 import {
   mypLeadership,
   mypSupport,
@@ -21,16 +21,12 @@ const groups = [
 const node = 'rounded-xl border border-stone-300 bg-white px-5 py-4';
 ---
 
-<section
-  id="myp-organisation"
-  aria-labelledby="myp-organisation-title"
-  class="border-t border-stone-200 bg-stone-50"
->
-  <div class="mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-12">
-    <header class="mb-10 sm:mb-12">
-      <h2 id="myp-organisation-title" class="text-3xl font-bold tracking-tight sm:text-4xl">
+<section id="myp-organisation" aria-labelledby="myp-organisation-title" class="bg-stone-50">
+  <div class="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-12">
+    <header class="mb-8 sm:mb-10">
+      <h1 id="myp-organisation-title" class="text-3xl font-bold tracking-tight sm:text-4xl">
         {copy.title}
-      </h2>
+      </h1>
       <p class="mt-3 text-sm text-stone-600">{copy.period}</p>
     </header>
 
@@ -68,25 +64,38 @@ const node = 'rounded-xl border border-stone-300 bg-white px-5 py-4';
                 {group.title}
               </h3>
               <ul class="org-leaves">
-                {group.roles.map((role) => (
-                  <li class="org-leaf">
-                    <div class:list={[node, 'org-role']}>
-                      <p class="text-sm leading-snug text-stone-600">{role.label[locale]}</p>
-                      {role.name && (
-                        <p class="mt-1 text-base font-semibold text-stone-900">{role.name}</p>
+                {group.roles.map((role) => {
+                  const RoleCard = role.href ? 'a' : 'div';
+                  return (
+                    <li class="org-leaf">
+                      <RoleCard
+                        href={role.href ? l(role.href, locale) : undefined}
+                        class:list={[node, 'org-role', { 'org-role-link': role.href }]}
+                      >
+                        <p class="text-sm leading-snug text-stone-600">{role.label[locale]}</p>
+                        {role.name && (
+                          <p class="mt-1 text-base font-semibold text-stone-900">{role.name}</p>
+                        )}
+                        {role.href && (
+                          <span class="org-role-arrow" aria-hidden="true">
+                            →
+                          </span>
+                        )}
+                      </RoleCard>
+                      {role.children && (
+                        <ul class="org-subroles">
+                          {role.children.map((child) => (
+                            <li
+                              class:list={[node, 'org-subrole text-sm font-medium text-stone-700']}
+                            >
+                              {child.label[locale]}
+                            </li>
+                          ))}
+                        </ul>
                       )}
-                    </div>
-                    {role.children && (
-                      <ul class="org-subroles">
-                        {role.children.map((child) => (
-                          <li class:list={[node, 'org-subrole text-sm font-medium text-stone-700']}>
-                            {child.label[locale]}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             </li>
           ))
@@ -303,6 +312,33 @@ const node = 'rounded-xl border border-stone-300 bg-white px-5 py-4';
     flex-direction: column;
     justify-content: center;
   }
+
+  .org-role-link {
+    position: relative;
+    padding-right: 2.5rem;
+    text-decoration: none;
+  }
+
+  .org-role-link:hover {
+    border-color: var(--color-emerald-700);
+    background-color: var(--color-emerald-50);
+  }
+
+  .org-role-link:focus-visible {
+    outline: 3px solid var(--color-emerald-700);
+    outline-offset: 3px;
+    border-color: var(--color-emerald-700);
+    background-color: var(--color-emerald-50);
+  }
+
+  .org-role-arrow {
+    position: absolute;
+    right: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-emerald-700);
+  }
+
   .org-subroles {
     margin: 1rem 0 0 1.25rem;
   }

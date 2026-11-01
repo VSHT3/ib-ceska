@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import ProgrammeContext from '../components/ProgrammeContext.astro';
 import schoolBuilding from '../assets/school/school-building.jpg';
 import { t, l, contact } from '../i18n/dictionaries';
 import type { Locale } from '../i18n/dictionaries';
@@ -11,6 +12,7 @@ interface Props {
   description?: string;
   locale: Locale;
   noindex?: boolean;
+  showProgrammeContext?: boolean;
   ogType?: 'website' | 'article';
   publishedTime?: string | null;
   author?: string | null;
@@ -24,6 +26,7 @@ const {
   description,
   locale,
   noindex = false,
+  showProgrammeContext = true,
   ogType = 'website',
   publishedTime,
   author,
@@ -35,50 +38,95 @@ const dict = t(locale);
 const currentYear = new Date().getFullYear();
 
 const homeLink = { href: l('/', locale), label: dict.nav.home };
-const programmeLinks = [
-  { href: l('/myp', locale), label: dict.nav.myp, desc: dict.nav.mypDesc },
-  { href: l('/dp', locale), label: dict.nav.dp, desc: dict.nav.dpDesc },
-  { href: l('/build-your-diploma', locale), label: dict.nav.builder, desc: dict.nav.builderDesc },
+const programmeNavigation = [
+  {
+    id: 'myp',
+    label: dict.nav.myp,
+    href: l('/myp', locale),
+    groups: [
+      {
+        label: dict.nav.myp,
+        links: [
+          { href: l('/myp', locale), label: dict.nav.overview },
+          { href: l('/myp/subjects', locale), label: dict.nav.subjects },
+        ],
+      },
+      {
+        label: dict.nav.mypCore,
+        links: [
+          {
+            href: l('/myp/core/interdisciplinary-learning', locale),
+            label: dict.nav.interdisciplinaryLearning,
+          },
+          {
+            href: l('/myp/core/approaches-to-learning', locale),
+            label: dict.nav.approachesToLearning,
+          },
+          { href: l('/myp/core/service-as-action', locale), label: dict.nav.serviceAsAction },
+          { href: l('/myp/core/personal-project', locale), label: dict.nav.personalProject },
+        ],
+      },
+      {
+        label: dict.nav.about,
+        links: [
+          { href: l('/myp/mission', locale), label: dict.nav.mission },
+          { href: l('/myp/teachers', locale), label: dict.nav.teachers },
+          { href: l('/myp/policies', locale), label: dict.nav.policies },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'dp',
+    label: dict.nav.dp,
+    href: l('/dp', locale),
+    groups: [
+      {
+        label: dict.nav.dp,
+        links: [
+          { href: l('/dp', locale), label: dict.nav.overview },
+          { href: l('/dp/subjects', locale), label: dict.nav.subjects },
+          { href: l('/dp/build-your-diploma', locale), label: dict.nav.builder },
+        ],
+      },
+      {
+        label: dict.nav.dpCore,
+        links: [
+          { href: l('/dp/cas', locale), label: dict.nav.cas },
+          { href: l('/dp/tok', locale), label: dict.nav.tok },
+          { href: l('/dp/ee', locale), label: dict.nav.ee },
+        ],
+      },
+      {
+        label: dict.nav.about,
+        links: [
+          { href: l('/dp/mission', locale), label: dict.nav.mission },
+          { href: l('/dp/teachers', locale), label: dict.nav.teachers },
+          { href: l('/dp/policies', locale), label: dict.nav.policies },
+        ],
+      },
+    ],
+  },
 ];
-const subjectsLink = { href: l('/subjects', locale), label: dict.nav.subjects };
-const coreLinks = [
-  { href: l('/cas', locale), label: dict.nav.cas, desc: dict.nav.casDesc },
-  { href: l('/tok', locale), label: dict.nav.tok, desc: dict.nav.tokDesc },
-  { href: l('/ee', locale), label: dict.nav.ee, desc: dict.nav.eeDesc },
+const secondaryLinks = [
+  { href: l('/news', locale), label: dict.nav.news },
+  { href: l('/gallery', locale), label: dict.nav.gallery },
 ];
-const newsLink = { href: l('/news', locale), label: dict.nav.news };
-const galleryLink = { href: l('/gallery', locale), label: dict.nav.gallery };
-const teachersLink = {
-  href: l('/teachers', locale),
-  label: dict.nav.teachers,
-  desc: dict.nav.teachersDesc,
-};
-const missionLink = {
-  href: l('/mission', locale),
-  label: dict.nav.mission,
-  desc: dict.nav.missionDesc,
-};
-const policiesLink = {
-  href: l('/policies', locale),
-  label: dict.nav.policies,
-  desc: dict.nav.policiesDesc,
-};
-const aboutLinks = [missionLink, teachersLink, policiesLink];
-const secondaryLinks = [newsLink, galleryLink];
 const admissionsHref = l('/admissions', locale);
-
-// Footer link groups (label + href only)
-const strip = ({ href, label }: { href: string; label: string }) => ({ href, label });
-const footerProgramme = [...programmeLinks, subjectsLink, ...coreLinks].map(strip);
-const footerSchoolLife = [...secondaryLinks, ...aboutLinks].map(strip);
+const footerSharedLinks = [
+  homeLink,
+  ...secondaryLinks,
+  { href: admissionsHref, label: dict.nav.apply },
+  { href: l('/search', locale), label: dict.nav.search },
+];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '');
 const isActive = (href: string) =>
   currentPath === href.replace(/\/$/, '') || currentPath.startsWith(href.replace(/\/$/, '') + '/');
-const homeActive = currentPath === homeLink.href.replace(/\/$/, '');
-const programmesActive = programmeLinks.some(({ href }) => isActive(href));
-const coreActive = coreLinks.some(({ href }) => isActive(href));
-const aboutActive = aboutLinks.some(({ href }) => isActive(href));
+const isCurrent = (href: string) => currentPath === href.replace(/\/$/, '');
+const isProgrammeLinkActive = (href: string, overview: string) =>
+  href === overview ? isCurrent(href) : isActive(href);
+const homeActive = isCurrent(homeLink.href);
 
 const site = Astro.site ?? new URL('https://ib.gymnaziumceska.sk');
 const pathSansLocale = Astro.url.pathname.replace(/^\/(en|sk)(?=\/|$)/, '') || '/';
@@ -100,6 +148,11 @@ const routeLabels: Record<string, string> = {
   cas: dict.nav.cas,
   tok: dict.nav.tok,
   ee: dict.nav.ee,
+  core: dict.nav.mypCore,
+  'interdisciplinary-learning': dict.nav.interdisciplinaryLearning,
+  'approaches-to-learning': dict.nav.approachesToLearning,
+  'service-as-action': dict.nav.serviceAsAction,
+  'personal-project': dict.nav.personalProject,
   news: dict.nav.news,
   gallery: dict.nav.gallery,
   teachers: dict.nav.teachers,
@@ -111,12 +164,15 @@ const routeLabels: Record<string, string> = {
 const segments = pathSansLocale.split('/').filter(Boolean);
 const breadcrumbs = [
   { name: dict.site.title, item: new URL(`/${locale}/`, site).href },
-  ...segments.map((segment, index) => {
+  ...segments.flatMap((segment, index) => {
+    if (segment === 'core') return [];
     const path = `/${locale}/${segments.slice(0, index + 1).join('/')}/`;
-    return {
-      name: index === segments.length - 1 ? title : (routeLabels[segment] ?? segment),
-      item: new URL(path, site).href,
-    };
+    return [
+      {
+        name: index === segments.length - 1 ? title : (routeLabels[segment] ?? segment),
+        item: new URL(path, site).href,
+      },
+    ];
   }),
 ];
 
@@ -256,18 +312,21 @@ const jsonLd = JSON.stringify({
             width="1601"
             height="1456"
           />
+          <span class="flex flex-col leading-tight sm:hidden">
+            <span class="text-sm font-bold tracking-tight text-stone-900">IB Česká</span>
+            <span class="mt-0.5 text-[11px] font-medium text-stone-600">MYP &amp; IB DP</span>
+          </span>
           <span class="hidden sm:flex flex-col leading-tight">
             <span class="text-sm font-bold tracking-tight text-stone-900">
               {dict.site.schoolName}
             </span>
-            <span class="text-[11px] font-medium text-stone-500">IB Diploma Programme</span>
+            <span class="text-[11px] font-medium text-stone-500">{dict.nav.programmes}</span>
           </span>
         </a>
 
         <ul
-          class="hidden xl:flex gap-1 xl:gap-2 text-sm font-medium items-center"
-          role="navigation"
-          aria-label="Primary"
+          class="hidden xl:flex flex-nowrap whitespace-nowrap gap-1 text-sm font-medium items-center"
+          aria-label={dict.nav.primaryNavigation}
         >
           <li>
             <a
@@ -283,136 +342,76 @@ const jsonLd = JSON.stringify({
               {homeLink.label}
             </a>
           </li>
-          <li class="relative group">
-            <button
-              type="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class:list={[
-                'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
-                programmesActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
-              ]}
-            >
-              {dict.nav.programmes}
-              <svg
-                class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"></path>
-              </svg>
-            </button>
-            <div
-              class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2"
-            >
-              <div
-                class="w-72 rounded-2xl border border-stone-200 bg-white p-1.5 shadow-lg shadow-stone-900/10"
-              >
-                {
-                  programmeLinks.map(({ href, label, desc }) => (
-                    <a
-                      href={href}
-                      aria-current={isActive(href) ? 'page' : undefined}
-                      class:list={[
-                        'block rounded-xl px-3.5 py-2.5 transition-colors',
-                        isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
-                      ]}
-                    >
-                      <span
-                        class:list={[
-                          'block font-semibold',
-                          isActive(href) ? 'text-emerald-700' : 'text-stone-800',
-                        ]}
-                      >
-                        {label}
-                      </span>
-                      <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
-                    </a>
-                  ))
-                }
-              </div>
-            </div>
-          </li>
-          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
-          <li>
-            <a
-              href={subjectsLink.href}
-              aria-current={isActive(subjectsLink.href) ? 'page' : undefined}
-              class:list={[
-                'relative rounded-full px-3 py-1.5 transition-colors',
-                isActive(subjectsLink.href)
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 hover:text-emerald-700 hover:bg-stone-100',
-              ]}
-            >
-              {subjectsLink.label}
-            </a>
-          </li>
-          <li class="relative group">
-            <button
-              type="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class:list={[
-                'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
-                coreActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
-              ]}
-            >
-              {dict.nav.core}
-              <svg
-                class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"></path>
-              </svg>
-            </button>
-            <div
-              class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute left-0 top-full pt-2"
-            >
-              <div
-                class="w-72 rounded-2xl border border-stone-200 bg-white p-1.5 shadow-lg shadow-stone-900/10"
-              >
-                {
-                  coreLinks.map(({ href, label, desc }) => (
-                    <a
-                      href={href}
-                      aria-current={isActive(href) ? 'page' : undefined}
-                      class:list={[
-                        'block rounded-xl px-3.5 py-2.5 transition-colors',
-                        isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
-                      ]}
-                    >
-                      <span
-                        class:list={[
-                          'block font-semibold',
-                          isActive(href) ? 'text-emerald-700' : 'text-stone-800',
-                        ]}
-                      >
-                        {label}
-                      </span>
-                      <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
-                    </a>
-                  ))
-                }
-              </div>
-            </div>
-          </li>
-          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
+          {
+            programmeNavigation.map((programme) => (
+              <li class="relative" data-programme-menu>
+                <button
+                  type="button"
+                  data-programme-toggle
+                  aria-expanded="false"
+                  aria-controls={`desktop-${programme.id}`}
+                  class:list={[
+                    'programme-toggle flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors hover:bg-stone-100 hover:text-emerald-700',
+                    isActive(programme.href) ? 'bg-emerald-50 text-emerald-700' : 'text-stone-600',
+                  ]}
+                >
+                  {programme.label}
+                  <svg
+                    class="h-3.5 w-3.5 transition-transform motion-reduce:transition-none"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div
+                  id={`desktop-${programme.id}`}
+                  data-programme-panel
+                  hidden
+                  class="absolute left-0 top-full z-50 w-[36rem] max-w-[calc(100vw-2rem)] pt-2 whitespace-normal"
+                >
+                  <div class="max-h-[calc(100dvh-7rem)] overflow-y-auto rounded-2xl border border-stone-200 bg-white p-5 shadow-lg shadow-stone-900/10">
+                    <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+                      {programme.groups.map((group, index) => (
+                        <div class:list={[index === 1 && 'row-span-2']}>
+                          <p class="mb-2 px-3 text-lg font-bold leading-tight tracking-tight text-emerald-950">
+                            {group.label}
+                          </p>
+                          <ul class="space-y-0.5">
+                            {group.links.map(({ href, label }) => (
+                              <li>
+                                <a
+                                  href={href}
+                                  aria-current={isCurrent(href) ? 'page' : undefined}
+                                  class:list={[
+                                    'block rounded-lg px-3 py-2 transition-colors hover:bg-stone-100 hover:text-emerald-700',
+                                    isProgrammeLinkActive(href, programme.href)
+                                      ? 'bg-emerald-50 text-emerald-700'
+                                      : 'text-stone-700',
+                                  ]}
+                                >
+                                  {label}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
           {
             secondaryLinks.map(({ href, label }) => (
               <li>
                 <a
                   href={href}
-                  aria-current={isActive(href) ? 'page' : undefined}
+                  aria-current={isCurrent(href) ? 'page' : undefined}
                   class:list={[
                     'relative rounded-full px-3 py-1.5 transition-colors',
                     isActive(href)
@@ -425,67 +424,14 @@ const jsonLd = JSON.stringify({
               </li>
             ))
           }
-          <li class="relative group">
-            <button
-              type="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              class:list={[
-                'flex items-center gap-1 rounded-full px-3 py-1.5 transition-colors',
-                aboutActive
-                  ? 'bg-emerald-50 text-emerald-700'
-                  : 'text-stone-600 group-hover:text-emerald-700 group-hover:bg-stone-100',
-              ]}
-            >
-              {dict.nav.about}
-              <svg
-                class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"></path>
-              </svg>
-            </button>
-            <div
-              class="invisible opacity-0 translate-y-1 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute right-0 top-full pt-2"
-            >
-              <div
-                class="w-72 rounded-2xl border border-stone-200 bg-white p-1.5 shadow-lg shadow-stone-900/10"
-              >
-                {
-                  aboutLinks.map(({ href, label, desc }) => (
-                    <a
-                      href={href}
-                      aria-current={isActive(href) ? 'page' : undefined}
-                      class:list={[
-                        'block rounded-xl px-3.5 py-2.5 transition-colors',
-                        isActive(href) ? 'bg-emerald-50' : 'hover:bg-stone-100',
-                      ]}
-                    >
-                      <span
-                        class:list={[
-                          'block font-semibold',
-                          isActive(href) ? 'text-emerald-700' : 'text-stone-800',
-                        ]}
-                      >
-                        {label}
-                      </span>
-                      <span class="block text-xs text-stone-500 mt-0.5">{desc}</span>
-                    </a>
-                  ))
-                }
-              </div>
-            </div>
-          </li>
+          <li aria-hidden="true" class="mx-1 h-5 w-px bg-stone-200"></li>
           <li class="ml-2 pl-3 border-l border-stone-200">
             <LanguageSwitcher locale={locale} />
           </li>
           <li>
             <a
               href={admissionsHref}
-              aria-current={isActive(admissionsHref) ? 'page' : undefined}
+              aria-current={isCurrent(admissionsHref) ? 'page' : undefined}
               class="ml-1 rounded-full bg-emerald-700 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-800"
               data-umami-event="cta-primary"
               data-umami-event-target="admissions"
@@ -520,7 +466,10 @@ const jsonLd = JSON.stringify({
         </div>
       </nav>
 
-      <div id="mobile-menu" class="hidden xl:hidden border-t border-stone-200 bg-white px-4 py-3">
+      <div
+        id="mobile-menu"
+        class="hidden xl:hidden max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-stone-200 bg-white px-4 py-3"
+      >
         <ul class="flex flex-col gap-1 text-sm font-medium">
           <li>
             <a
@@ -536,43 +485,71 @@ const jsonLd = JSON.stringify({
               {homeLink.label}
             </a>
           </li>
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          <li
-            class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400"
-          >
-            {dict.nav.programmes}
-          </li>
           {
-            programmeLinks.map(({ href, label, desc }) => (
-              <li>
-                <a
-                  href={href}
-                  aria-current={isActive(href) ? 'page' : undefined}
+            programmeNavigation.map((programme) => (
+              <li class="border-y border-stone-100">
+                <button
+                  type="button"
+                  data-mobile-programme-toggle
+                  aria-expanded={isActive(programme.href) ? 'true' : 'false'}
+                  aria-controls={`mobile-${programme.id}`}
                   class:list={[
-                    'block rounded-lg px-3 py-2.5 transition-colors',
-                    isActive(href)
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
+                    'programme-toggle flex w-full items-center justify-between rounded-lg px-3 py-3 text-left',
+                    isActive(programme.href) ? 'bg-emerald-50 text-emerald-700' : 'text-stone-700',
                   ]}
                 >
-                  {label}
-                  <span class="block text-xs font-normal text-stone-500">{desc}</span>
-                </a>
+                  {programme.label}
+                  <svg
+                    class="h-4 w-4 transition-transform motion-reduce:transition-none"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div
+                  id={`mobile-${programme.id}`}
+                  hidden={!isActive(programme.href)}
+                  class="pb-3 pl-3"
+                >
+                  {programme.groups.map((group) => (
+                    <div class="mt-3">
+                      <p class="px-3 pb-2 text-lg font-bold leading-tight tracking-tight text-emerald-950">
+                        {group.label}
+                      </p>
+                      <ul>
+                        {group.links.map(({ href, label }) => (
+                          <li>
+                            <a
+                              href={href}
+                              aria-current={isCurrent(href) ? 'page' : undefined}
+                              class:list={[
+                                'block rounded-lg px-3 py-2.5 transition-colors hover:bg-stone-100 hover:text-emerald-700',
+                                isProgrammeLinkActive(href, programme.href)
+                                  ? 'bg-emerald-50 text-emerald-700'
+                                  : 'text-stone-700',
+                              ]}
+                            >
+                              {label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </li>
             ))
           }
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          <li
-            class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400"
-          >
-            {dict.nav.core}
-          </li>
           {
-            coreLinks.map(({ href, label, desc }) => (
+            secondaryLinks.map(({ href, label }) => (
               <li>
                 <a
                   href={href}
-                  aria-current={isActive(href) ? 'page' : undefined}
+                  aria-current={isCurrent(href) ? 'page' : undefined}
                   class:list={[
                     'block rounded-lg px-3 py-2.5 transition-colors',
                     isActive(href)
@@ -581,51 +558,6 @@ const jsonLd = JSON.stringify({
                   ]}
                 >
                   {label}
-                  <span class="block text-xs font-normal text-stone-500">{desc}</span>
-                </a>
-              </li>
-            ))
-          }
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          {
-            [subjectsLink, ...secondaryLinks].map(({ href, label }) => (
-              <li>
-                <a
-                  href={href}
-                  aria-current={isActive(href) ? 'page' : undefined}
-                  class:list={[
-                    'block rounded-lg px-3 py-2.5 transition-colors',
-                    isActive(href)
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
-                  ]}
-                >
-                  {label}
-                </a>
-              </li>
-            ))
-          }
-          <li aria-hidden="true" class="my-1.5 h-px bg-stone-200/80"></li>
-          <li
-            class="px-3 pt-1 pb-0.5 text-xs font-semibold uppercase tracking-widest text-stone-400"
-          >
-            {dict.nav.about}
-          </li>
-          {
-            aboutLinks.map(({ href, label, desc }) => (
-              <li>
-                <a
-                  href={href}
-                  aria-current={isActive(href) ? 'page' : undefined}
-                  class:list={[
-                    'block rounded-lg px-3 py-2.5 transition-colors',
-                    isActive(href)
-                      ? 'bg-emerald-50 text-emerald-700'
-                      : 'text-stone-700 hover:bg-stone-100 hover:text-emerald-700',
-                  ]}
-                >
-                  {label}
-                  <span class="block text-xs font-normal text-stone-500">{desc}</span>
                 </a>
               </li>
             ))
@@ -646,6 +578,7 @@ const jsonLd = JSON.stringify({
     </header>
 
     <main>
+      {showProgrammeContext && <ProgrammeContext locale={locale} />}
       <slot />
     </main>
 
@@ -716,44 +649,29 @@ const jsonLd = JSON.stringify({
           </div>
 
           <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
-            <div>
-              <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                {dict.footer.programmeGroup}
-              </h3>
-              <ul class="space-y-2.5 text-sm">
-                {
-                  footerProgramme.map(({ href, label }) => (
-                    <li>
-                      <a
-                        href={href}
-                        class="text-stone-400 transition-colors hover:text-emerald-400"
-                      >
-                        {label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
-            <div>
-              <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                {dict.footer.schoolLifeGroup}
-              </h3>
-              <ul class="space-y-2.5 text-sm">
-                {
-                  footerSchoolLife.map(({ href, label }) => (
-                    <li>
-                      <a
-                        href={href}
-                        class="text-stone-400 transition-colors hover:text-emerald-400"
-                      >
-                        {label}
-                      </a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </div>
+            {
+              programmeNavigation.map((programme) => (
+                <div>
+                  <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                    {programme.label}
+                  </h3>
+                  <ul class="space-y-2.5 text-sm">
+                    {programme.groups
+                      .flatMap((group) => group.links)
+                      .map(({ href, label }) => (
+                        <li>
+                          <a
+                            href={href}
+                            class="text-stone-400 transition-colors hover:text-emerald-400"
+                          >
+                            {label}
+                          </a>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ))
+            }
             <div class="col-span-2 sm:col-span-1">
               <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
                 {dict.footer.contact}
@@ -777,6 +695,23 @@ const jsonLd = JSON.stringify({
                 </li>
                 <li class="leading-relaxed text-stone-400">{contact.address}</li>
               </ul>
+              <h3 class="mt-8 mb-4 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                {dict.footer.schoolLifeGroup}
+              </h3>
+              <ul class="space-y-2.5 text-sm">
+                {
+                  footerSharedLinks.map(({ href, label }) => (
+                    <li>
+                      <a
+                        href={href}
+                        class="text-stone-400 transition-colors hover:text-emerald-400"
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
             </div>
           </div>
         </div>
@@ -788,8 +723,21 @@ const jsonLd = JSON.stringify({
       </div>
     </footer>
 
+    <style>
+      .programme-toggle[aria-expanded='true'] > svg {
+        transform: rotate(180deg);
+      }
+    </style>
+
     <script>
+      let pageController: AbortController | undefined;
+      let revealObserver: IntersectionObserver | undefined;
+
       function initPage() {
+        pageController?.abort();
+        revealObserver?.disconnect();
+        pageController = new AbortController();
+        const { signal } = pageController;
         // Scroll-reveal
         const revealEls = document.querySelectorAll('[data-reveal]:not(.revealed)');
         if (revealEls.length > 0) {
@@ -805,6 +753,7 @@ const jsonLd = JSON.stringify({
             { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
           );
           revealEls.forEach((el) => io.observe(el));
+          revealObserver = io;
         }
 
         // Hero parallax: background lags scroll for depth
@@ -835,9 +784,13 @@ const jsonLd = JSON.stringify({
 
         // Language switch keeps scroll position (ClientRouter scrolls to top by default)
         document.querySelectorAll<HTMLAnchorElement>('a[data-lang-switch]').forEach((a) => {
-          a.addEventListener('click', () => {
-            sessionStorage.setItem('lang-switch-scroll', String(window.scrollY));
-          });
+          a.addEventListener(
+            'click',
+            () => {
+              sessionStorage.setItem('lang-switch-scroll', String(window.scrollY));
+            },
+            { signal },
+          );
         });
         const savedScroll = sessionStorage.getItem('lang-switch-scroll');
         if (savedScroll !== null) {
@@ -845,20 +798,181 @@ const jsonLd = JSON.stringify({
           window.scrollTo({ top: Number(savedScroll), behavior: 'instant' });
         }
 
-        // Mobile menu
+        const desktopMenus = Array.from(
+          document.querySelectorAll<HTMLElement>('[data-programme-menu]'),
+        ).flatMap((root) => {
+          const button = root.querySelector<HTMLButtonElement>('[data-programme-toggle]');
+          const panel = root.querySelector<HTMLElement>('[data-programme-panel]');
+          return button && panel ? [{ root, button, panel, pinned: false }] : [];
+        });
+        type DesktopMenu = (typeof desktopMenus)[number];
+        const setDesktopOpen = (menu: DesktopMenu, open: boolean) => {
+          if (open) {
+            desktopMenus.forEach((other) => {
+              if (other !== menu) setDesktopOpen(other, false);
+            });
+          } else {
+            menu.pinned = false;
+          }
+          menu.button.setAttribute('aria-expanded', String(open));
+          menu.panel.hidden = !open;
+          if (open) {
+            const { left } = menu.root.getBoundingClientRect();
+            const width = menu.panel.getBoundingClientRect().width;
+            const panelLeft = Math.max(16, Math.min(left, window.innerWidth - width - 16));
+            menu.panel.style.left = `${panelLeft - left}px`;
+          }
+        };
+        desktopMenus.forEach((menu) => {
+          let pointerFocus = false;
+          menu.button.addEventListener(
+            'pointerdown',
+            () => {
+              pointerFocus = true;
+            },
+            { signal },
+          );
+          menu.button.addEventListener(
+            'pointercancel',
+            () => {
+              pointerFocus = false;
+            },
+            { signal },
+          );
+          menu.button.addEventListener(
+            'click',
+            () => {
+              pointerFocus = false;
+              const open = !menu.pinned;
+              menu.pinned = open;
+              setDesktopOpen(menu, open);
+            },
+            { signal },
+          );
+          menu.root.addEventListener(
+            'pointerenter',
+            (event) => {
+              if (event.pointerType !== 'mouse') return;
+              setDesktopOpen(menu, true);
+            },
+            { signal },
+          );
+          menu.root.addEventListener(
+            'pointerleave',
+            (event) => {
+              if (event.pointerType !== 'mouse') return;
+              if (!menu.pinned && !menu.root.contains(document.activeElement))
+                setDesktopOpen(menu, false);
+            },
+            { signal },
+          );
+          menu.root.addEventListener(
+            'focusin',
+            () => {
+              if (!pointerFocus) setDesktopOpen(menu, true);
+            },
+            { signal },
+          );
+          menu.root.addEventListener(
+            'focusout',
+            () => {
+              queueMicrotask(() => {
+                if (!signal.aborted && !menu.root.contains(document.activeElement))
+                  setDesktopOpen(menu, false);
+              });
+            },
+            { signal },
+          );
+          menu.button.addEventListener(
+            'keydown',
+            (event) => {
+              if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                setDesktopOpen(menu, true);
+                menu.panel.querySelector<HTMLAnchorElement>('a')?.focus();
+              }
+            },
+            { signal },
+          );
+        });
+
         const toggle = document.getElementById('menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-        if (toggle && menu) {
-          toggle.addEventListener('click', () => {
-            const open = menu.classList.toggle('hidden') === false;
-            toggle.setAttribute('aria-expanded', String(open));
-            toggle.querySelector('.menu-open')?.classList.toggle('hidden', open);
-            toggle.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+        const mobileMenu = document.getElementById('mobile-menu');
+        const setMobileOpen = (open: boolean) => {
+          mobileMenu?.classList.toggle('hidden', !open);
+          toggle?.setAttribute('aria-expanded', String(open));
+          toggle?.querySelector('.menu-open')?.classList.toggle('hidden', open);
+          toggle?.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+        };
+        toggle?.addEventListener(
+          'click',
+          () => {
+            setMobileOpen(toggle.getAttribute('aria-expanded') !== 'true');
+          },
+          { signal },
+        );
+        document
+          .querySelectorAll<HTMLButtonElement>('[data-mobile-programme-toggle]')
+          .forEach((button) => {
+            const panel = document.getElementById(button.getAttribute('aria-controls') ?? '');
+            if (!panel) return;
+            button.addEventListener(
+              'click',
+              () => {
+                const open = button.getAttribute('aria-expanded') !== 'true';
+                button.setAttribute('aria-expanded', String(open));
+                panel.hidden = !open;
+              },
+              { signal },
+            );
           });
-        }
+        document.addEventListener(
+          'pointerdown',
+          (event) => {
+            const target = event.target;
+            if (!(target instanceof Node)) return;
+            desktopMenus.forEach((menu) => {
+              if (!menu.root.contains(target)) setDesktopOpen(menu, false);
+            });
+            if (!mobileMenu?.contains(target) && !toggle?.contains(target)) setMobileOpen(false);
+          },
+          { signal },
+        );
+        document.addEventListener(
+          'keydown',
+          (event) => {
+            if (event.key !== 'Escape') return;
+            const focusedMenu = desktopMenus.find(
+              (menu) => menu.root.contains(document.activeElement) && !menu.panel.hidden,
+            );
+            if (focusedMenu) {
+              event.preventDefault();
+              focusedMenu.button.focus();
+            }
+            desktopMenus.forEach((menu) => setDesktopOpen(menu, false));
+            if (toggle?.getAttribute('aria-expanded') === 'true') {
+              event.preventDefault();
+              toggle.focus();
+              setMobileOpen(false);
+            }
+          },
+          { signal },
+        );
+        window.addEventListener(
+          'resize',
+          () => {
+            desktopMenus.forEach((menu) => setDesktopOpen(menu, false));
+            setMobileOpen(false);
+          },
+          { signal },
+        );
       }
 
       document.addEventListener('astro:page-load', initPage);
+      document.addEventListener('astro:before-swap', () => {
+        pageController?.abort();
+        revealObserver?.disconnect();
+      });
     </script>
   </body>
 </html>

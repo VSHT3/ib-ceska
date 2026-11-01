@@ -1,0 +1,73 @@
+---
+import { l, t } from '../i18n/dictionaries';
+import type { Locale } from '../i18n/dictionaries';
+
+interface Props {
+  locale: Locale;
+}
+
+type Programme = 'myp' | 'dp';
+
+const { locale } = Astro.props;
+const dict = t(locale);
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const isWithin = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
+const programme: Programme | undefined = isWithin(l('/myp', locale))
+  ? 'myp'
+  : isWithin(l('/dp', locale))
+    ? 'dp'
+    : undefined;
+const overviewHref = programme ? l(`/${programme}`, locale) : '';
+const programmeLabel = programme === 'myp' ? dict.nav.myp : dict.nav.dp;
+const accent = programme === 'myp' ? 'text-myp-700' : 'text-dp-800';
+const links = programme
+  ? [
+      { href: l(`/${programme}/subjects`, locale), label: dict.nav.subjects },
+      { href: l(`/${programme}/teachers`, locale), label: dict.nav.teachers },
+      { href: l(`/${programme}/policies`, locale), label: dict.nav.policies },
+    ]
+  : [];
+---
+
+{
+  programme && (
+    <nav
+      aria-label={locale === 'sk' ? `Navigácia ${programmeLabel}` : `${programmeLabel} navigation`}
+      class="border-b border-stone-200 bg-stone-50 text-sm"
+    >
+      <div class="mx-auto flex max-w-7xl min-w-0 flex-wrap items-center gap-x-6 gap-y-1 px-6 py-3 lg:px-12">
+        <a
+          href={overviewHref}
+          aria-label={`${programmeLabel}: ${dict.nav.overview}`}
+          aria-current={currentPath === overviewHref ? 'page' : undefined}
+          class:list={[
+            'shrink-0 py-1 font-bold underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4',
+            accent,
+          ]}
+        >
+          {programmeLabel}
+        </a>
+        <ul class="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1 max-[360px]:basis-full">
+          {links.map(({ href, label }) => (
+            <li class="min-w-0 max-w-full">
+              <a
+                href={href}
+                aria-current={
+                  currentPath === href ? 'page' : isWithin(href) ? 'location' : undefined
+                }
+                class:list={[
+                  'inline-block max-w-full break-words py-1 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4',
+                  isWithin(href)
+                    ? ['font-semibold', accent]
+                    : 'text-stone-600 hover:text-stone-900',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  )
+}

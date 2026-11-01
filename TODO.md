@@ -11,6 +11,23 @@ PDFs should open in a new tab
 - [x] Dedicated bilingual MYP subpage (`/myp`)
 - [x] Dedicated bilingual DP subpage (`/dp`)
 
+## Programme-first restructure
+
+- [x] Implement separate MYP and IB DP top-level menus: desktop hover/click/keyboard support and expandable mobile sections, each with its own subjects, core, mission, team, and policies. Use **IB DP Core** for DP core navigation.
+- [x] Fill the mobile header's empty space with a compact school wordmark and both programme names.
+- [x] Remove programme-menu description text and strengthen the visual hierarchy of group headings above links.
+- [x] Apply programme-page consistency pass: compact context links, tighter copy, stronger headings and unified spacing; fix the 320px homepage programme-badge overflow.
+- [x] Make MYP chart subject/core cards interactive with real EN/SK destinations and accessible link states; keep people without profile destinations as plain text.
+- [x] Simplify the MYP team page to a single chart heading; remove stacked hero/context bands and move the candidacy notice below the chart.
+- [x] Remove narrow copy-width caps from programme overview heroes and the MYP candidacy band.
+- [x] Keep `/myp` and `/dp` overviews; add `/myp/subjects` and `/myp/core/{interdisciplinary-learning,approaches-to-learning,service-as-action,personal-project}`; move DP subjects, CAS, TOK, EE, and diploma builder under `/dp`.
+- [x] Provide `/{myp,dp}/{mission,teachers,policies}` with the organisational chart only on `/myp/teachers` and the separate portrait roster on `/dp/teachers`.
+- [x] Keep MYP candidate-school wording and text-only branding separate from authorized DP claims and its certificate.
+- [x] Keep existing DP subjects/CAS/TOK CMS storage unchanged; maintain bilingual MYP reference data in `src/data/myp-programme.ts` and chart data in `src/data/myp-organisation.ts`.
+- [x] Redirect legacy locale-prefixed programme URLs and subject/CAS/TOK detail URLs to DP equivalents with HTTP 301, preserving query strings and rejecting unsupported locales. Shared news, gallery, admissions, and search remain outside programmes.
+
+Completion marks implementation; confirm production deployment separately.
+
 ## Content
 
 - [ ] Replace all Czech placeholder text with English
@@ -28,7 +45,7 @@ PDFs should open in a new tab
 
 ## Important
 
-- [ ] Leadership in @team should be centered and bit bigger than the rest.
+- [x] Center DP leadership profiles and make portraits and names more prominent than the faculty grid.
 - [ ] twitter OG image something (the site "preview" on whatsapp and stuff)
 
 ## i18n
@@ -99,28 +116,28 @@ The coordinator supplied the real PDFs (the old site had none — see below). Do
 
 Section → current coverage:
 
-1. **What is IBDP?** — `/dp` exists (explainer + core-element links); IBO Mission Statement ✅, School Mission + Vision ✅ (new `/mission` page, texts supplied 2026-08-27), IB Learner Profile ❌
-2. **Subjects & DP Core** — Subjects `/subjects` ✅, EE `/ee` ✅, TOK `/tok` ✅, CAS `/cas` ✅
-3. **School Policies** — all five supplied 2026-07-25 and published on `/policies` ✅ (Admissions, Assessment, Language, Academic Integrity, Inclusion)
-4. **Admissions & Fees** — process `/admissions` ✅ / Entrance Exams info ✅ / Application Form ✅ / School Fees ✅ (HTML table) / Handbook for parents ✅ (EN + SK on `/admissions` and `/policies`) / Subject Choice Form ❌ (not supplied; `/build-your-diploma` is a picker, not a form)
+1. **What is IBDP?** — `/dp` overview and IB DP Core links; IBO Mission Statement and School Mission + Vision on `/dp/mission` ✅; IB Learner Profile ❌
+2. **Subjects & IB DP Core** — `/dp/subjects` ✅, `/dp/ee` ✅, `/dp/tok` ✅, `/dp/cas` ✅
+3. **School Policies** — five supplied DP policies on `/dp/policies` ✅; MYP documents and relevant shared policies separately on `/myp/policies` ✅
+4. **Admissions & Fees** — `/admissions` process, Entrance Exams info, Application Form, School Fees, and parent handbooks ✅ (handbooks also on `/dp/policies`); Subject Choice Form ❌ (not supplied; `/dp/build-your-diploma` is a picker, not a form)
 5. **Activities/Events** — `/news` merged feed ✅
 6. **Gallery** — `/gallery` ✅
-7. **Staff** — Leadership + pedagogical faculty on `/teachers` ✅ (role titles updated per coordinator 2026-07-21) / Non-teaching staff ❌ / Organizational Chart ❌ (coordinator confirmed 2026-07-21 it is not required on the website; awaiting a decision on whether to render its structure natively on `/teachers`)
+7. **Staff** — DP leadership and portrait roster on `/dp/teachers` ✅; supplied MYP organisational chart on `/myp/teachers` ✅. Broader non-teaching staff content remains pending.
 8. **University Admission** — ❌ no page (where graduates go: countries/universities, entry requirements, outcomes)
 9. **Contacts** — footer only ❌ no dedicated page
 
 Gaps to build (per-page, not crammed onto `/dp`) once approved:
 
-- [x] **Policies page** — `/policies` ("Policies and guides"): five IB policies, CAS Handbook, TOK Handbook, parent handbook EN + SK, cross-link to `/admissions`. Manifest: `policyDocuments` / `guideDocuments` / `parentDocuments` in `src/data/documents.ts`
-- [x] **Mission & vision page** — `/mission`: IBO Mission Statement, School Mission, School Vision, authorized-IB-World-School statement + Certificate of Authorization PDF (July 2022)
+- [x] **Policies pages** — `/dp/policies` for five DP policies, CAS/TOK handbooks, and parent handbooks; `/myp/policies` for MYP documents and relevant shared policies. Document manifest: `src/data/documents.ts`.
+- [x] **Mission & vision pages** — `/dp/mission` and `/myp/mission`; only DP includes its authorization statement and Certificate of Authorization (July 2022), while MYP remains a candidate programme.
 - [ ] **University Admission page** — general structure; destination-university list + outcome stats are human items
 - [ ] **Contacts page** — dedicated page (school contact data already in `i18n/dictionaries.ts`)
 - [x] **Admissions docs & fees** — Entrance Exams info, Application Form (DP + Prihláška), School Fees (HTML table) wired into `/admissions`; MYP docs wired into `/myp` ✅ 2026-06-29
 - [ ] **Admissions gaps still pending** — Subject Choice Form (not yet supplied — see HUMANTODO)
-- [ ] **Staff gaps** — Non-teaching staff (content is a human item); Organizational Chart pending a decision (see above)
-- [ ] **IB Learner Profile** — surface the public IB Learner Profile framework (the mission statements are now live on `/mission`)
-- [x] **Nav wiring** — `School` dropdown (Mission and vision, Team, Policies and guides), footer "School life" group, and sitemap entries; testimonials hidden pending real consented quotes.
-- [ ] **EE guide** — coordinator said Simona is still writing it (2026-07-23); slot it into `/policies` → Core handbooks when it arrives
+- [ ] **Staff gaps** — broader non-teaching staff content remains a human item; the supplied MYP organisational chart is implemented on `/myp/teachers`.
+- [ ] **IB Learner Profile** — surface the public IB Learner Profile framework (mission statements are on each programme's `/mission` page).
+- [x] **Nav wiring** — separate MYP / IB DP menus and programme-specific footer links; shared school-life links remain outside programmes, and testimonials stay hidden pending real consented quotes.
+- [ ] **EE guide** — coordinator said Simona is still writing it (2026-07-23); slot it into `/dp/policies` → Core handbooks when it arrives.
 
 Scope rule: no empty/"coming soon" stubs shipped as finished — a page is built only when its content exists or is a human item the school will supply imminently.
 
@@ -130,7 +147,7 @@ Investigated `https://ib.gymnaziumceska.sk/documents` (Framer SPA). All 13 docum
 
 ## Ideas (unprioritized)
 
-- [x] Interactive DP subject-combination picker ("build your diploma") — `/build-your-diploma`, driven by the `offeredLevels` subject field
+- [x] Interactive DP subject-combination picker ("build your diploma") — `/dp/build-your-diploma`, driven by the `offeredLevels` subject field
 - [ ] Countdown to exam session / application deadline on homepage
 - [x] FAQ accordion for admissions
 - [ ] Instagram/social feed embed

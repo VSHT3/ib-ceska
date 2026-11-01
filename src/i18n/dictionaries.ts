@@ -7,7 +7,7 @@ export const contact = {
 const dict = {
   en: {
     site: {
-      title: 'Súkromné gymnázium Česká, IB Diploma Programme',
+      title: 'Súkromné gymnázium Česká, IB programmes',
       schoolName: 'Súkromné gymnázium Česká',
       tagline: 'To Inspire And Grow',
     },
@@ -15,13 +15,21 @@ const dict = {
       home: 'Home',
       programmes: 'Programmes',
       myp: 'MYP',
-      mypDesc: 'Middle Years Programme · ages 14-16',
+      mypDesc: 'Middle Years Programme · candidate school',
       dp: 'IB DP',
       dpDesc: 'IB Diploma Programme · ages 16-19',
       builder: 'Build your diploma',
       builderDesc: 'Plan a subject combination',
       subjects: 'Subjects',
-      core: 'IB Core',
+      core: 'IB DP Core',
+      overview: 'Overview',
+      mypCore: 'MYP core',
+      dpCore: 'IB DP Core',
+      interdisciplinaryLearning: 'Interdisciplinary learning',
+      approachesToLearning: 'Approaches to learning',
+      serviceAsAction: 'Service as action',
+      personalProject: 'Personal project',
+      primaryNavigation: 'Primary navigation',
       cas: 'CAS',
       casDesc: 'Creativity, Activity, Service',
       tok: 'TOK',
@@ -82,12 +90,12 @@ const dict = {
     },
     home: {
       badge: 'MYP & IB DP at Česká',
-      hero: 'Súkromné gymnázium Česká,',
-      heroAccent: 'IB Diploma Programme',
+      hero: 'Súkromné gymnázium Česká',
+      heroAccent: 'MYP & IB DP',
       heroTail: '',
       heroSub:
-        'Choose between MYP for ages 14 to 16 and our authorized IB Diploma Programme for ages 16 to 19.',
-      ctaPrimary: 'Explore subjects',
+        'Explore MYP for ages 14 to 16 at our candidate school, or the authorized IB Diploma Programme for ages 16 to 19.',
+      ctaPrimary: 'Explore the MYP',
       ctaSecondary: 'How to apply',
       statSchools: 'IB World Schools globally',
       statCountries: 'countries teach the IB',
@@ -98,7 +106,7 @@ const dict = {
       whatIsIBBody1:
         'The International Baccalaureate (IB) is a rigorous, internationally recognised curriculum taught in over 5,500 schools across 160 countries. It sets out to develop inquiring, knowledgeable, and caring young people who are motivated to succeed.',
       whatIsIBBody2:
-        'At Súkromné gymnázium Česká, the IB Diploma Programme combines academic depth with independent research, reflection, and community engagement.',
+        'At Súkromné gymnázium Česká, MYP connects learning across subjects, while the IB Diploma Programme combines academic depth with independent research, reflection, and community engagement.',
       programmesLabel: 'Programmes',
       programmesHeading: 'Choose the right stage',
       mypTitle: 'Middle Years Programme (MYP)',
@@ -121,12 +129,12 @@ const dict = {
       dpItem4: 'Creativity, Activity, Service (CAS)',
       mypCta: 'Explore the MYP',
       dpCta: 'Explore the IB DP',
-      benefitsLabel: 'Student work',
-      benefitsHeading: 'IB is built around work students can show',
+      benefitsLabel: 'IB DP · Student work',
+      benefitsHeading: 'IB DP is built around work students can show',
       benefitsIntro:
         'Students research questions, present findings, write extended arguments, and plan projects with a purpose.',
       workBody:
-        'Explore the course materials, reflections, and independent work already taking shape at Česká.',
+        'Explore the IB DP course materials, reflections, and independent work already taking shape at Česká.',
       workCasTitle: 'Plan and reflect through CAS',
       workCasDesc:
         'See how students connect creativity, activity, and service to clear learning outcomes.',
@@ -155,12 +163,12 @@ const dict = {
       benefit6Desc:
         'The IB Diploma is recognised by leading universities worldwide; graduates are far more likely to enrol at top institutions.',
       benefitsSource: 'Source: International Baccalaureate Organization (ibo.org)',
-      daffodilLabel: 'CAS in action',
+      daffodilLabel: 'IB DP · CAS in action',
       daffodilHeading: 'Daffodil Day 2026: thank you for your support',
       daffodilBody1:
-        'As part of their CAS project, two IB students took the lead in organising our school’s participation in Daffodil Day (Deň narcisov), Slovakia’s nationwide fundraising campaign organised by the League Against Cancer. They managed all aspects of the project, including communication with the organisation, volunteer coordination, promotion of the event, and fundraising efforts both within the school and in the local community.',
+        'As part of their CAS project, two IB DP students took the lead in organising our school’s participation in Daffodil Day (Deň narcisov), Slovakia’s nationwide fundraising campaign organised by the League Against Cancer. They managed all aspects of the project, including communication with the organisation, volunteer coordination, promotion of the event, and fundraising efforts both within the school and in the local community.',
       daffodilBody2:
-        'Working together with fellow IB students and other volunteers, they helped raise €1,637.36 in support of the League Against Cancer. This contribution will help fund services and programmes that provide assistance to cancer patients and their families across Slovakia.',
+        'Working together with fellow IB DP students and other volunteers, they helped raise €1,637.36 in support of the League Against Cancer. This contribution will help fund services and programmes that provide assistance to cancer patients and their families across Slovakia.',
       daffodilBody3:
         'We would like to thank everyone who donated, volunteered, and supported this initiative. Their generosity and commitment helped turn a student-led project into a meaningful contribution to an important cause. 💛🌼',
       daffodilCaption: 'Daffodil Day 2026, League Against Cancer certificate of thanks',
@@ -168,9 +176,11 @@ const dict = {
       galleryLabel: 'Life at Česká',
       galleryHeading: 'Inside the school, beyond the syllabus',
       exploreLabel: 'Explore',
-      exploreHeading: 'Browse the programme',
+      exploreHeading: 'Explore MYP, IB DP, and school life',
       subjectsLabel: 'Subjects',
-      subjectsDesc: 'Browse IB subjects across all 6 groups, with syllabi and teacher info.',
+      subjectsDesc: 'Browse IB DP subjects across all 6 groups, with syllabi and teacher info.',
+      mypSubjectsDesc:
+        'Explore the eight MYP subject groups and how learning connects across them.',
       casLabel: 'CAS',
       casDesc: 'Creativity, Activity, Service: student projects and learning outcomes.',
       tokLabel: 'TOK',
@@ -189,8 +199,8 @@ const dict = {
       ctaCall: 'Call Us',
     },
     subjects: {
-      title: 'IB Subjects',
-      subtitle: 'Explore the six subject groups and the courses available at Česká.',
+      title: 'IB DP subjects',
+      subtitle: 'Six subject groups and the courses available at Česká.',
       group1: 'Group 1: Studies in Language and Literature',
       group2: 'Group 2: Language Acquisition',
       group3: 'Group 3: Individuals and Societies',
@@ -202,15 +212,15 @@ const dict = {
       onThisPage: 'Subject groups',
       catalogueLabel: 'Course catalogue',
       enrolmentNote:
-        'Subjects run each year only if enough students choose them, so the exact offering and the levels available can vary from year to year. Ask the school to confirm current options.',
+        'Subjects and levels depend on student demand and may change each year. Confirm current options with the school.',
       statSubjects: 'subjects',
       statGroups: 'groups',
-      statLevels: 'levels, SL and HL',
+      statLevels: 'levels: SL and HL',
     },
     builder: {
-      title: 'Build Your Diploma',
+      title: 'Build your diploma',
       subtitle:
-        'Choose one subject from each group to see how your IB Diploma could take shape. This is a planning tool, the school confirms the subjects actually on offer each year.',
+        'Plan six subjects for your IB Diploma. The school confirms the subjects and levels available each year.',
       label: 'Plan your studies',
       pickHl: 'HL',
       pickSl: 'SL',
@@ -238,7 +248,7 @@ const dict = {
       dpLink: 'How the DP works',
       slotEmpty: 'Not chosen yet',
       hlMeter: 'Higher Level subjects',
-      hlTarget: '3 is the minimum and recommended, a 4th is allowed too',
+      hlTarget: '3 recommended; 4 allowed',
     },
     cas: {
       title: 'CAS',
@@ -266,14 +276,14 @@ const dict = {
       title: 'Theory of Knowledge',
       subtitle:
         'TOK explores the nature of knowledge and how we know what we claim to know. Students critically reflect on areas of knowledge and ways of knowing.',
-      heading: 'TOK Essays & Materials',
+      heading: 'TOK essays and materials',
       essaysIntro: 'Essays and discussion material written for the course at Česká.',
       noMaterials: 'No materials yet.',
       heroQuote: 'How do we know what we claim to know?',
       heroQuoteLabel: 'The central question',
       readEssay: 'Read',
       courseLabel: 'The course',
-      courseTitle: 'One core theme, two optional themes, five areas of knowledge',
+      courseTitle: 'Themes and areas of knowledge',
       courseIntro:
         'TOK runs alongside the six subjects for both years of the diploma, with at least 100 teaching hours. One part of the assessment is marked in school and the other by IB examiners.',
       coreLabel: 'Core theme',
@@ -376,7 +386,7 @@ const dict = {
       factPoints: '3',
       factPointsLabel: 'core points with TOK',
       whatLabel: 'What it is',
-      whatTitle: 'One question, followed properly',
+      whatTitle: 'Independent research',
       whatBody1:
         'Students take a subject they are studying, narrow it to a single research question, and answer it in an essay of up to 4,000 words. The IB assesses the essay externally and reports a grade from A to E.',
       whatBody2:
@@ -398,7 +408,7 @@ const dict = {
       reflection3Title: 'Viva voce',
       reflection3Body:
         'After submission, the supervisor interviews the student briefly on what was learned and how the essay came together.',
-      journeyLabel: 'The journey',
+      journeyLabel: 'Timeline',
       journeyTitle: 'From first idea to viva voce',
       journeyIntro:
         'Five checkpoints between choosing a topic and defending the finished essay. The coordinator confirms exact dates at the start of each school year.',
@@ -548,6 +558,10 @@ const dict = {
       documentsDpLabel: 'IB Diploma Programme',
       documentsMypLabel: 'Middle Years Programme',
       documentsParentLabel: 'Parent handbooks · English & Slovak',
+      policiesIntro:
+        'Find the policies and guidance for your programme. IB DP core handbooks apply only to the Diploma Programme.',
+      policiesMypLabel: 'MYP policies and guides',
+      policiesDpLabel: 'IB DP policies and guides',
       feesLabel: 'School fees',
       feesTitle: 'DP tuition & costs',
       feesIntro:
@@ -572,7 +586,7 @@ const dict = {
         'MYP is a programme framework for students aged 14 to 16. Súkromné gymnázium Česká is currently a Candidate School for MYP and is pursuing authorization. Students investigate real questions, connect ideas across subjects, and build the skills they will need for university and work.',
       whatIsPoints: [
         {
-          title: 'Eight subjects, connected',
+          title: 'Eight subject groups, connected',
           body: 'Your child studies language, humanities, sciences, maths, arts, and design. Teachers plan units together so a history lesson on industrialisation can link to a science lesson on energy.',
         },
         {
@@ -657,8 +671,8 @@ const dict = {
       links: [
         {
           label: 'Explore subjects',
-          body: 'See the subject materials currently published on the Česká programme site.',
-          href: '/subjects',
+          body: 'Explore the eight subject groups in the MYP framework and how they connect.',
+          href: '/myp/subjects',
         },
         {
           label: 'How to apply',
@@ -735,17 +749,17 @@ const dict = {
         {
           label: 'Theory of Knowledge',
           body: 'Question how knowledge is produced, justified, and used.',
-          href: '/tok',
+          href: '/dp/tok',
         },
         {
           label: 'Extended Essay',
           body: 'Plan and write an independent 4,000-word research paper.',
-          href: '/ee',
+          href: '/dp/ee',
         },
         {
           label: 'CAS',
           body: 'Reflect on creativity, activity, and service beyond academic courses.',
-          href: '/cas',
+          href: '/dp/cas',
         },
       ],
       note: 'The subjects shown on this website are current sample content until the school confirms its final subject offering and available combinations.',
@@ -764,7 +778,7 @@ const dict = {
   },
   sk: {
     site: {
-      title: 'Súkromné gymnázium Česká, IB Diploma Programme',
+      title: 'Súkromné gymnázium Česká, IB programy',
       schoolName: 'Súkromné gymnázium Česká',
       tagline: 'Inšpirovať a rásť',
     },
@@ -772,13 +786,21 @@ const dict = {
       home: 'Domov',
       programmes: 'Programy',
       myp: 'MYP',
-      mypDesc: 'Middle Years Programme · vek 14-16',
+      mypDesc: 'Middle Years Programme · kandidátska škola',
       dp: 'IB DP',
       dpDesc: 'IB Diploma Programme · vek 16-19',
       builder: 'Zostavte si diplom',
       builderDesc: 'Naplánujte si kombináciu predmetov',
       subjects: 'Predmety',
-      core: 'IB Core',
+      core: 'Jadro IB DP',
+      overview: 'Prehľad programu',
+      mypCore: 'Jadro MYP',
+      dpCore: 'Jadro IB DP',
+      interdisciplinaryLearning: 'Medzipredmetové učenie',
+      approachesToLearning: 'Prístupy k učeniu',
+      serviceAsAction: 'Služba ako činnosť',
+      personalProject: 'Osobný projekt',
+      primaryNavigation: 'Hlavná navigácia',
       cas: 'CAS',
       casDesc: 'Creativity, Activity, Service',
       tok: 'TOK',
@@ -839,12 +861,12 @@ const dict = {
     },
     home: {
       badge: 'MYP a IB DP na Českej',
-      hero: 'Súkromné gymnázium Česká,',
-      heroAccent: 'IB Diploma Programme',
+      hero: 'Súkromné gymnázium Česká',
+      heroAccent: 'MYP a IB DP',
       heroTail: '',
       heroSub:
-        'Vyberte si MYP pre vek 14 až 16 rokov alebo náš autorizovaný IB Diploma Programme pre vek 16 až 19 rokov.',
-      ctaPrimary: 'Preskúmať predmety',
+        'Spoznajte MYP pre vek 14 až 16 rokov na našej kandidátskej škole alebo autorizovaný IB Diploma Programme pre vek 16 až 19 rokov.',
+      ctaPrimary: 'Spoznajte MYP',
       ctaSecondary: 'Ako sa prihlásiť',
       statSchools: 'IB škôl po celom svete',
       statCountries: 'krajín vyučuje IB',
@@ -855,7 +877,7 @@ const dict = {
       whatIsIBBody1:
         'International Baccalaureate (IB) je náročný, medzinárodne uznávaný vzdelávací program vyučovaný na viac než 5 500 školách v 160 krajinách. Jeho cieľom je rozvíjať zvedavých, vzdelaných a starostlivých mladých ľudí.',
       whatIsIBBody2:
-        'Na Súkromnom gymnáziu Česká spája IB Diploma Programme akademickú hĺbku so samostatným výskumom, reflexiou a komunitnou angažovanosťou.',
+        'Na Súkromnom gymnáziu Česká prepája MYP učenie naprieč predmetmi, zatiaľ čo IB Diploma Programme spája akademickú hĺbku so samostatným výskumom, reflexiou a komunitnou angažovanosťou.',
       programmesLabel: 'Programy',
       programmesHeading: 'Vyberte si správny stupeň',
       mypTitle: 'Middle Years Programme (MYP)',
@@ -878,11 +900,12 @@ const dict = {
       dpItem4: 'Creativity, Activity, Service (CAS)',
       mypCta: 'Spoznajte MYP',
       dpCta: 'Spoznajte IB DP',
-      benefitsLabel: 'Práca študentov',
-      benefitsHeading: 'IB stojí na práci, ktorú môžu študenti ukázať',
+      benefitsLabel: 'IB DP · Práca študentov',
+      benefitsHeading: 'IB DP stojí na práci, ktorú môžu študenti ukázať',
       benefitsIntro:
         'Študenti skúmajú otázky, prezentujú zistenia, píšu rozsiahle argumenty a plánujú zmysluplné projekty.',
-      workBody: 'Pozrite si materiály, reflexie a samostatnú prácu, ktoré vznikajú na Českej.',
+      workBody:
+        'Pozrite si materiály, reflexie a samostatnú prácu IB DP, ktoré vznikajú na Českej.',
       workCasTitle: 'Plánovanie a reflexia cez CAS',
       workCasDesc:
         'Pozrite si, ako študenti prepájajú tvorivosť, aktivitu a službu s jasnými vzdelávacími cieľmi.',
@@ -911,12 +934,12 @@ const dict = {
       benefit6Desc:
         'IB diplom uznávajú popredné univerzity po celom svete; absolventi sa oveľa častejšie dostávajú na špičkové školy.',
       benefitsSource: 'Zdroj: International Baccalaureate Organization (ibo.org)',
-      daffodilLabel: 'CAS v praxi',
+      daffodilLabel: 'IB DP · CAS v praxi',
       daffodilHeading: 'Deň narcisov 2026: ďakujeme za vašu podporu',
       daffodilBody1:
-        'V rámci svojho CAS projektu dvaja IB študenti viedli organizáciu účasti našej školy na Dni narcisov, celoslovenskej zbierke Ligy proti rakovine. Postarali sa o všetky časti projektu - komunikáciu s organizáciou, koordináciu dobrovoľníkov, propagáciu podujatia aj samotnú zbierku v škole i v miestnej komunite.',
+        'V rámci svojho CAS projektu dvaja IB DP študenti viedli organizáciu účasti našej školy na Dni narcisov, celoslovenskej zbierke Ligy proti rakovine. Postarali sa o všetky časti projektu - komunikáciu s organizáciou, koordináciu dobrovoľníkov, propagáciu podujatia aj samotnú zbierku v škole i v miestnej komunite.',
       daffodilBody2:
-        'Spolu s ďalšími IB študentmi a dobrovoľníkmi pomohli vyzbierať 1 637,36 € na podporu Ligy proti rakovine. Tento príspevok pomôže financovať služby a programy, ktoré poskytujú pomoc onkologickým pacientom a ich rodinám na celom Slovensku.',
+        'Spolu s ďalšími IB DP študentmi a dobrovoľníkmi pomohli vyzbierať 1 637,36 € na podporu Ligy proti rakovine. Tento príspevok pomôže financovať služby a programy, ktoré poskytujú pomoc onkologickým pacientom a ich rodinám na celom Slovensku.',
       daffodilBody3:
         'Ďakujeme všetkým, ktorí prispeli, dobrovoľnícky pomohli a podporili túto iniciatívu. Ich štedrosť a odhodlanie premenili študentský projekt na zmysluplný príspevok k dôležitej veci. 💛🌼',
       daffodilCaption: 'Deň narcisov 2026, ďakovný certifikát Ligy proti rakovine',
@@ -924,9 +947,10 @@ const dict = {
       galleryLabel: 'Život na Českej',
       galleryHeading: 'V škole aj mimo syláb',
       exploreLabel: 'Preskúmajte',
-      exploreHeading: 'Preskúmajte program',
+      exploreHeading: 'Spoznajte MYP, IB DP a život školy',
       subjectsLabel: 'Predmety',
-      subjectsDesc: 'Prehľad IB predmetov podľa skupín, vrátane sylabov a učiteľov.',
+      subjectsDesc: 'Prehľad IB DP predmetov v šiestich skupinách, vrátane sylabov a učiteľov.',
+      mypSubjectsDesc: 'Spoznajte osem predmetových skupín MYP a prepojenia medzi nimi.',
       casLabel: 'CAS',
       casDesc: 'Creativity, Activity, Service: študentské projekty a výstupy učenia.',
       tokLabel: 'TOK',
@@ -944,8 +968,8 @@ const dict = {
       ctaCall: 'Zavolajte nám',
     },
     subjects: {
-      title: 'IB Predmety',
-      subtitle: 'Preskúmajte šesť predmetových skupín a kurzy dostupné na Českej.',
+      title: 'Predmety IB DP',
+      subtitle: 'Šesť predmetových skupín a kurzy dostupné na Českej.',
       group1: 'Skupina 1: Jazyk a literatúra',
       group2: 'Skupina 2: Osvojovanie jazyka',
       group3: 'Skupina 3: Jednotlivci a spoločnosti',
@@ -957,15 +981,15 @@ const dict = {
       onThisPage: 'Predmetové skupiny',
       catalogueLabel: 'Katalóg kurzov',
       enrolmentNote:
-        'Predmety sa každý rok otvárajú len pri dostatočnom počte záujemcov, takže konkrétna ponuka a dostupné úrovne sa môžu rok od roka líšiť. Aktuálne možnosti si overte u školy.',
+        'Ponuka predmetov a úrovní závisí od záujmu študentov a môže sa každý rok meniť. Aktuálne možnosti si overte u školy.',
       statSubjects: 'predmetov',
       statGroups: 'skupín',
-      statLevels: 'úrovne, SL a HL',
+      statLevels: 'úrovne: SL a HL',
     },
     builder: {
       title: 'Zostavte si diplom',
       subtitle:
-        'Vyberte si jeden predmet z každej skupiny a uvidíte, ako by mohol vyzerať váš IB diplom. Je to plánovací nástroj - škola každý rok potvrdzuje skutočne ponúkané predmety.',
+        'Naplánujte si šesť predmetov pre IB diplom. Dostupné predmety a úrovne každý rok potvrdzuje škola.',
       label: 'Naplánujte si štúdium',
       pickHl: 'HL',
       pickSl: 'SL',
@@ -992,7 +1016,7 @@ const dict = {
       dpLink: 'Ako funguje DP',
       slotEmpty: 'Zatiaľ nevybraté',
       hlMeter: 'Predmety na Higher Level',
-      hlTarget: '3 sú odporúčaný a minimálny počet, povolené sú aj 4',
+      hlTarget: '3 odporúčané; 4 povolené',
     },
     cas: {
       title: 'CAS',
@@ -1016,17 +1040,17 @@ const dict = {
       handbookMore: 'Všetky politiky a príručky',
     },
     tok: {
-      title: 'Teória Poznania',
+      title: 'Teória poznania',
       subtitle:
         'TOK skúma povahu vedomostí a to, ako vieme to, čo tvrdíme, že vieme. Študenti kriticky reflektujú oblasti poznania a spôsoby poznávania.',
-      heading: 'TOK Eseje a Materiály',
+      heading: 'TOK eseje a materiály',
       essaysIntro: 'Eseje a diskusné materiály napísané pre kurz na Českej.',
       noMaterials: 'Zatiaľ žiadne materiály.',
       heroQuote: 'Ako vieme to, čo tvrdíme, že vieme?',
       heroQuoteLabel: 'Ústredná otázka',
       readEssay: 'Čítať',
       courseLabel: 'Kurz',
-      courseTitle: 'Jedna ústredná téma, dve voliteľné témy, päť oblastí poznania',
+      courseTitle: 'Témy a oblasti poznania',
       courseIntro:
         'TOK prebieha popri šiestich predmetoch počas oboch rokov diplomu, v rozsahu najmenej 100 vyučovacích hodín. Jednu časť hodnotenia známkuje škola a druhú examinátori IB.',
       coreLabel: 'Ústredná téma',
@@ -1112,7 +1136,7 @@ const dict = {
       missionCta: 'Misia a vízia',
     },
     ee: {
-      title: 'Rozšírená Esej',
+      title: 'Rozšírená esej',
       subtitle:
         'Rozšírená esej je samostatná výskumná práca v rozsahu 4 000 slov. Študenti si volia tému z jedného zo šiestich IB predmetov a pracujú pod vedením školiteľa.',
       timelineItem1: 'Október: výber témy a školiteľa',
@@ -1129,7 +1153,7 @@ const dict = {
       factPoints: '3',
       factPointsLabel: 'body core spolu s TOK',
       whatLabel: 'Čo to je',
-      whatTitle: 'Jedna otázka, dôsledne preskúmaná',
+      whatTitle: 'Samostatný výskum',
       whatBody1:
         'Študent si vezme predmet, ktorý študuje, zúži ho na jednu výskumnú otázku a odpovie na ňu esejou v rozsahu do 4 000 slov. Esej hodnotí IB externe a udeľuje známku od A po E.',
       whatBody2:
@@ -1150,7 +1174,7 @@ const dict = {
       reflection3Title: 'Viva voce',
       reflection3Body:
         'Po odovzdaní eseje sa školiteľ v krátkom rozhovore pýta, čo sa študent naučil a ako práca vznikala.',
-      journeyLabel: 'Cesta',
+      journeyLabel: 'Časový plán',
       journeyTitle: 'Od prvého nápadu po viva voce',
       journeyIntro:
         'Päť míľnikov medzi výberom témy a obhajobou hotovej eseje. Presné termíny potvrdzuje koordinátor na začiatku každého školského roka.',
@@ -1300,6 +1324,10 @@ const dict = {
       documentsDpLabel: 'IB Diploma Programme',
       documentsMypLabel: 'Middle Years Programme',
       documentsParentLabel: 'Príručky pre rodičov · anglicky a slovensky',
+      policiesIntro:
+        'Nájdite politiky a usmernenia pre svoj program. Príručky k jadru IB DP platia len pre Diploma Programme.',
+      policiesMypLabel: 'Politiky a príručky MYP',
+      policiesDpLabel: 'Politiky a príručky IB DP',
       feesLabel: 'Školné',
       feesTitle: 'Školné a náklady DP',
       feesIntro:
@@ -1324,7 +1352,7 @@ const dict = {
         'MYP je programový rámec pre študentov vo veku 14 až 16 rokov. Súkromné gymnázium Česká je v súčasnosti kandidátskou školou pre MYP a uchádza sa o autorizáciu. Študenti skúmajú skutočné otázky, prepájajú myšlienky naprieč predmetmi a budujú zručnosti potrebné na univerzite aj v živote.',
       whatIsPoints: [
         {
-          title: 'Osem predmetov, prepojených',
+          title: 'Osem predmetových skupín, prepojených',
           body: 'Vaše dieťa študuje jazyk, spoločenské vedy, prírodné vedy, matematiku, umenie a dizajn. Učitelia plánujú jednotky spoločne, takže hodina dejepis o priemyselnej revolúcii môže nadväzovať na hodinu fyziky o energii.',
         },
         {
@@ -1400,8 +1428,8 @@ const dict = {
       links: [
         {
           label: 'Preskúmať predmety',
-          body: 'Pozrite si predmetové materiály aktuálne publikované na stránke programov Českej.',
-          href: '/subjects',
+          body: 'Preskúmajte osem predmetových skupín rámca MYP a ich vzájomné prepojenia.',
+          href: '/myp/subjects',
         },
         {
           label: 'Ako sa prihlásiť',
@@ -1478,17 +1506,17 @@ const dict = {
         {
           label: 'Theory of Knowledge',
           body: 'Skúmajte, ako poznanie vzniká, ako sa zdôvodňuje a používa.',
-          href: '/tok',
+          href: '/dp/tok',
         },
         {
           label: 'Extended Essay',
           body: 'Naplánujte a napíšte samostatnú výskumnú prácu v rozsahu 4 000 slov.',
-          href: '/ee',
+          href: '/dp/ee',
         },
         {
           label: 'CAS',
           body: 'Reflektujte tvorivosť, aktivitu a službu mimo akademických predmetov.',
-          href: '/cas',
+          href: '/dp/cas',
         },
       ],
       note: 'Predmety zobrazené na tejto stránke sú vzorovým obsahom, kým škola nepotvrdí finálnu ponuku predmetov a dostupné kombinácie.',

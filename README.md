@@ -10,17 +10,33 @@ Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymná
 
 ## Features
 
-- **Subject listings + detail pages**: IB groups 1–6 with HL/SL levels, rendered syllabi, and teacher info
-- **CAS journal**: Creativity, Activity, Service entries with learning outcomes and reflection pages
-- **TOK materials**: Theory of Knowledge essays and themes, with full essay pages
-- **Extended Essay**: timeline, resources, and document downloads
+- **DP subjects**: `/dp/subjects` catalogue and detail pages with IB groups 1–6, HL/SL levels, syllabi, and teacher info
+- **IB DP Core**: CAS at `/dp/cas`, TOK at `/dp/tok` (both with entry details), and Extended Essay guidance at `/dp/ee`
+- **Diploma builder**: interactive subject choices at `/dp/build-your-diploma`
+- **MYP curriculum**: bilingual subject-group reference at `/myp/subjects` and four separate MYP core pages
 - **News**: exam schedules, announcements, events, with an RSS feed at `/rss.xml`
-- **Programme pages**: dedicated MYP (`/myp`) and DP (`/dp`) curriculum overviews
+- **Programme-first navigation**: separate MYP and IB DP menus, each with its own overview, subjects, core, mission, team, and policies; desktop hover/click/keyboard support and expandable mobile sections
 - **Admissions**: application steps, programme guidance, and direct school contact at `/admissions`
-- **IB team**: verified programme leadership, subject teachers, coordinators, and support staff at `/teachers`
+- **Separate teams**: MYP organisational chart at `/myp/teachers`; DP leadership and staff portrait roster at `/dp/teachers`
 - **Bilingual**: English primary, full Slovak UI + optional Slovak content (English fallback)
 - **SEO**: complete bilingual sitemap, canonical + `hreflang`, social cards, and schema.org structured data
 - **CMS**: content edited visually through Keystatic at `/keystatic/`, no code required
+
+## Programme routes and ownership
+
+Public paths below are relative to `/en` or `/sk`.
+
+| Programme | Routes                                                                                                                                                                                                             |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| MYP       | `/myp`, `/myp/subjects`, `/myp/core/interdisciplinary-learning`, `/myp/core/approaches-to-learning`, `/myp/core/service-as-action`, `/myp/core/personal-project`, `/myp/mission`, `/myp/teachers`, `/myp/policies` |
+| IB DP     | `/dp`, `/dp/subjects`, `/dp/cas`, `/dp/tok`, `/dp/ee`, `/dp/build-your-diploma`, `/dp/mission`, `/dp/teachers`, `/dp/policies`; subjects/CAS/TOK also have `/[slug]` details                                       |
+| Shared    | `/news`, `/gallery`, `/admissions`, `/search`; news and event detail routes remain shared                                                                                                                          |
+
+Legacy locale-prefixed `/subjects`, `/cas`, `/tok`, `/ee`, `/build-your-diploma`, `/mission`, `/teachers`, and `/policies` return HTTP 301 to the corresponding `/dp` routes, including subject/CAS/TOK details. Redirects preserve query strings and reject unsupported locales.
+
+**MYP is a candidate programme, not authorized.** Keep its candidate-school disclaimer and text-only branding; candidacy does not guarantee authorization. DP authorization, official DP branding, and the certificate belong to DP, not MYP.
+
+Developers maintain bilingual MYP curriculum reference data in `src/data/myp-programme.ts`, MYP chart data in `src/data/myp-organisation.ts`, and the separate DP portrait roster in `src/data/teachers.ts`. Programme school renderers live in `src/components/programme/`; `src/pages/[locale]/[programme]/[section].astro` statically generates each programme's mission, teachers, and policies pages. These are not new Keystatic collections.
 
 ## Quick start
 
@@ -50,20 +66,22 @@ pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 
 ## Content
 
-Content is **not** managed with Astro content collections. It is managed by **Keystatic**:
+CMS content is **not** managed with Astro content collections. It is managed by **Keystatic**; programme reference content has the separate code ownership described above:
 
 - Schemas live in [`keystatic.config.ts`](keystatic.config.ts) (Keystatic `fields.*` API, not Zod).
 - Entries are `.mdoc` files (YAML frontmatter + Markdoc body) under `src/content/`.
 - Pages read content through the Reader API singleton in [`src/lib/keystatic.ts`](src/lib/keystatic.ts).
 
-| Collection | Path                    | Description             |
-| ---------- | ----------------------- | ----------------------- |
-| `subjects` | `src/content/subjects/` | IB subject offerings    |
-| `news`     | `src/content/news/`     | Announcements & updates |
-| `cas`      | `src/content/cas/`      | CAS activity logs       |
-| `tok`      | `src/content/tok/`      | TOK essays & materials  |
+| Collection | Path                    | Description                            |
+| ---------- | ----------------------- | -------------------------------------- |
+| `subjects` | `src/content/subjects/` | DP subject offerings at `/dp/subjects` |
+| `news`     | `src/content/news/`     | Shared announcements & updates         |
+| `cas`      | `src/content/cas/`      | DP CAS logs at `/dp/cas`               |
+| `tok`      | `src/content/tok/`      | DP TOK materials at `/dp/tok`          |
 
 Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files by hand. See [`humans/CONTENT.md`](humans/CONTENT.md).
+
+The programme-first URL change does not rename or move the existing DP subjects/CAS/TOK collection storage.
 
 ## Editing content (Keystatic)
 

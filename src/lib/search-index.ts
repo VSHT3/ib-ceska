@@ -1,8 +1,10 @@
+import { schoolCopy } from '../components/programme/school-copy';
+import { getMypCurriculumPages } from '../data/myp-programme';
 import type { Locale } from '../i18n/dictionaries';
 import { l } from '../i18n/dictionaries';
 import { pick, reader } from './keystatic';
 
-/** A single searchable entry, flattened from a Keystatic collection. */
+/** A single searchable public page or Keystatic collection entry. */
 export interface SearchItem {
   title: string;
   description: string;
@@ -15,7 +17,7 @@ export interface SearchItem {
 }
 
 /**
- * Build a flat, locale-resolved search index across public Keystatic content.
+ * Build a flat, locale-resolved search index across public pages and Keystatic content.
  * Runs at build time inside page frontmatter; the result is serialized to JSON
  * and filtered client-side - no runtime reader calls.
  */
@@ -30,6 +32,32 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
 
   const items: SearchItem[] = [];
 
+  for (const { href, title, description } of getMypCurriculumPages(locale)) {
+    items.push({
+      title,
+      description,
+      type: 'MYP',
+      href: l(href, locale),
+      locale,
+      body: `${title} ${description}`,
+    });
+  }
+
+  for (const programme of ['myp', 'dp'] as const) {
+    const copy = schoolCopy(locale, programme);
+    for (const section of ['mission', 'teachers', 'policies'] as const) {
+      const { title, subtitle: description } = copy[section];
+      items.push({
+        title,
+        description,
+        type: programme === 'myp' ? 'MYP' : 'IB DP',
+        href: l(`/${programme}/${section}`, locale),
+        locale,
+        body: `${title} ${description}`,
+      });
+    }
+  }
+
   for (const { slug, entry } of subjects) {
     const title = pick(locale, entry.sk.title, entry.title);
     const description = pick(locale, entry.sk.description, entry.description);
@@ -37,7 +65,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       title,
       description,
       type: 'Subject',
-      href: l(`/subjects/${slug}`, locale),
+      href: l(`/dp/subjects/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
     });
@@ -63,7 +91,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       title,
       description,
       type: 'CAS',
-      href: l(`/cas/${slug}`, locale),
+      href: l(`/dp/cas/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
     });
@@ -76,7 +104,7 @@ export async function buildSearchIndex(locale: Locale): Promise<SearchItem[]> {
       title,
       description,
       type: 'TOK',
-      href: l(`/tok/${slug}`, locale),
+      href: l(`/dp/tok/${slug}`, locale),
       locale,
       body: `${title} ${description}`,
     });
