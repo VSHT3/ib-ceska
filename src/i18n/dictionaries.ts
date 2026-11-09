@@ -358,7 +358,7 @@ const dict = {
         'These five policies are written by the school within the IB Programme Standards and Practices, and are reviewed regularly. They apply to every student in the programme.',
       guidesTitle: 'Core handbooks',
       guidesIntro:
-        'Practical guides for the three core elements. The Extended Essay guide is in preparation and will be added here.',
+        'Practical school guides for the three core elements: CAS, TOK, and the Extended Essay.',
       parentsTitle: 'For parents',
       parentsIntro:
         'A single overview of the programme and the policies that affect families most, in English and Slovak.',
@@ -415,7 +415,9 @@ const dict = {
       resourcesLabel: 'Resources',
       resourcesTitle: 'Guides and policies',
       resourcesIntro:
-        'The school EE guide is in preparation and will appear under Policies and guides. Until then, the IB pages and the academic integrity policy cover the essentials.',
+        'The school’s supervision guide sets out how EE supervision works at Česká. The IB pages and the academic integrity policy cover the wider requirements.',
+      resourceGuide: 'EE Supervision guide',
+      resourceGuideNote: 'School supervision procedures from the Extended Essay coordinator.',
       resourceIbo: 'Extended Essay at ibo.org',
       resourceIboNote: 'What the IB asks for, subject by subject.',
       resourceIntegrity: 'Academic integrity policy',
@@ -1124,8 +1126,7 @@ const dict = {
       policiesIntro:
         'Týchto päť politík píše škola v rámci IB Programme Standards and Practices a pravidelne ich aktualizuje. Platia pre každého študenta programu.',
       guidesTitle: 'Príručky ku core predmetom',
-      guidesIntro:
-        'Praktické príručky k trom core predmetom. Príručka k rozšírenej eseji sa pripravuje a doplníme ju sem.',
+      guidesIntro: 'Praktické školské príručky k trom core predmetom: CAS, TOK a rozšírenej eseji.',
       parentsTitle: 'Pre rodičov',
       parentsIntro:
         'Jeden prehľad programu a politík, ktoré sa najviac dotýkajú rodín, v angličtine a slovenčine.',
@@ -1181,7 +1182,9 @@ const dict = {
       resourcesLabel: 'Zdroje',
       resourcesTitle: 'Príručky a politiky',
       resourcesIntro:
-        'Školská príručka k rozšírenej eseji sa pripravuje a pribudne medzi Politiky a príručky. Dovtedy to podstatné pokrývajú stránky IB a politika akademickej integrity.',
+        'Školská príručka vedenia EE opisuje, ako prebieha vedenie rozšírenej eseje na Českej. Širšie požiadavky pokrývajú stránky IB a politika akademickej integrity.',
+      resourceGuide: 'Príručka vedenia EE',
+      resourceGuideNote: 'Školské postupy vedenia od koordinátorky rozšírenej eseje.',
       resourceIbo: 'Rozšírená esej na ibo.org',
       resourceIboNote: 'Čo IB vyžaduje, predmet po predmete.',
       resourceIntegrity: 'Politika akademickej integrity',

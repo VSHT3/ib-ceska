@@ -1,6 +1,6 @@
 # Content editing guide
 
-Keystatic manages **DP subjects, CAS activities, TOK materials, news, events, and unpublished testimonials** through a visual editor. Programme reference pages and team data are maintained by a developer, not through new CMS collections.
+Keystatic manages **DP subjects, CAS activities, TOK materials, news, events, and unpublished testimonials** through a visual editor. It also holds four **preparation collections** (see below) whose entries are not on the website yet. Programme reference pages and team data are maintained by a developer, not through CMS collections.
 
 ## Programme ownership
 
@@ -12,10 +12,28 @@ Keystatic manages **DP subjects, CAS activities, TOK materials, news, events, an
 
 **Authorization boundary:** MYP remains a **candidate programme** and must retain the candidate-school disclaimer and text-only branding. Candidacy is not authorization and does not guarantee authorization. DP is authorized; its authorization wording, official DP branding, and certificate must not be presented as evidence of MYP authorization. MYP service as action and personal project are not DP CAS and EE.
 
+### Preparation collections (not on the website yet)
+
+Four collections let the school collect material before their pages exist:
+**Policies and guides** (category, academic year/version, EN/SK documents or web text),
+**Gallery albums** (photos, bilingual captions/alt text, permission confirmation),
+**Assessment calendar** (subject, year/class, date, teacher), and **Vacancies**
+(employment type, dates, application contact, bilingual job details).
+Each is labelled **(not public yet)** in Keystatic. Entries start as **Draft** and
+**Unclassified**; choose MYP, DP, or Both only after confirmation, and mark
+**Approved** once the school has reviewed the material. News and Events have the
+same Programme selector; it does not change their public feed yet.
+
+Documents currently shown on the website still come from `src/data/documents.ts`;
+entries in **Policies and guides** do not replace them until that page is connected.
+
+**Uploaded files and photos are public even in drafts.** Upload only materials
+cleared for public hosting; never upload confidential documents or unconsented photos.
+
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, or Testimonials (6 collections)
+2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, Testimonials, or one of the four preparation collections (10 collections)
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -45,7 +63,7 @@ The owner still needs GitHub access to connect and maintain the repository.
 When running `pnpm run dev` locally:
 
 - The admin panel is available at `http://localhost:4321/keystatic/`
-- Edits write directly to `.mdoc` files in `src/content/`
+- Edits write `.mdoc` files, or `.json` records for the preparation collections, in `src/content/`
 - No GitHub auth required — changes stay local
 
 ## Collections

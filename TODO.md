@@ -109,7 +109,7 @@ Source: IB coordinator's proposed site map (top-level sections → sub-items). C
 
 The coordinator supplied the real PDFs (the old site had none — see below). Documents now live in `public/documents/` and are linked from the relevant pages:
 
-- `/admissions` — **School fees** rendered as an HTML table (reconstructed from the school's fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: IB DP Admissions Announcement, IB DP Application Form, Prihláška na prijímacie konanie, Informácie o prijímacom konaní (IB DP group); MYP Admissions Announcement (MYP group); Parent Handbook in English and Slovak.
+- `/admissions` — **School fees** rendered as an HTML table (updated 2026-11-09 from the coordinator's 2027–2028 fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: 2027–2028 IB DP Admissions Announcement, Informácie o prijímacom konaní, IB DP Application Form, Prihláška na prijímacie konanie, Pravidlá prijímania, and Course Selection Sheet (EN + SK) (IB DP group; replaced 2026-11-09); MYP Admissions Announcement (MYP group); Parent Handbook in English and Slovak.
 - `/myp` — **MYP guides for parents** section: MYP at Česká (short info, SK), MYP Parent Pack (official IB, EN).
 - Manifest: `src/data/documents.ts` (`admissionsDocuments`, `parentDocuments`, `mypDocuments`, `dpFees`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
 - Skipped per coordinator: `program comparison` (content already covered on the site). Fees PDF not hosted — rendered as HTML instead, per coordinator.
@@ -119,7 +119,7 @@ Section → current coverage:
 1. **What is IBDP?** — `/dp` overview and IB DP Core links; IBO Mission Statement and School Mission + Vision on `/dp/mission` ✅; IB Learner Profile ❌
 2. **Subjects & IB DP Core** — `/dp/subjects` ✅, `/dp/ee` ✅, `/dp/tok` ✅, `/dp/cas` ✅
 3. **School Policies** — five supplied DP policies on `/dp/policies` ✅; MYP documents and relevant shared policies separately on `/myp/policies` ✅
-4. **Admissions & Fees** — `/admissions` process, Entrance Exams info, Application Form, School Fees, and parent handbooks ✅ (handbooks also on `/dp/policies`); Subject Choice Form ❌ (not supplied; `/dp/build-your-diploma` is a picker, not a form)
+4. **Admissions & Fees** — `/admissions` process, Entrance Exams info, Application Form, Pravidlá prijímania, Course Selection Sheet (EN + SK), School Fees, and parent handbooks ✅ (handbooks also on `/dp/policies`)
 5. **Activities/Events** — `/news` merged feed ✅
 6. **Gallery** — `/gallery` ✅
 7. **Staff** — DP leadership and portrait roster on `/dp/teachers` ✅; supplied MYP organisational chart on `/myp/teachers` ✅. Broader non-teaching staff content remains pending.
@@ -133,11 +133,17 @@ Gaps to build (per-page, not crammed onto `/dp`) once approved:
 - [ ] **University Admission page** — general structure; destination-university list + outcome stats are human items
 - [ ] **Contacts page** — dedicated page (school contact data already in `i18n/dictionaries.ts`)
 - [x] **Admissions docs & fees** — Entrance Exams info, Application Form (DP + Prihláška), School Fees (HTML table) wired into `/admissions`; MYP docs wired into `/myp` ✅ 2026-06-29
-- [ ] **Admissions gaps still pending** — Subject Choice Form (not yet supplied — see HUMANTODO)
+- [x] **Admissions 2027–2028 update** — coordinator's 2027–2028 announcement, forms, Pravidlá prijímania, Course Selection Sheets (EN + SK), Admissions Policy (05.11.26), and fees applied ✅ 2026-11-09
 - [ ] **Staff gaps** — broader non-teaching staff content remains a human item; the supplied MYP organisational chart is implemented on `/myp/teachers`.
 - [ ] **IB Learner Profile** — surface the public IB Learner Profile framework (mission statements are on each programme's `/mission` page).
 - [x] **Nav wiring** — separate MYP / IB DP menus and programme-specific footer links; shared school-life links remain outside programmes, and testimonials stay hidden pending real consented quotes.
-- [ ] **EE guide** — coordinator said Simona is still writing it (2026-07-23); slot it into `/dp/policies` → Core handbooks when it arrives.
+- [x] **EE guide** — Simona Latková's EE Supervision guide on `/dp/policies` → Core handbooks and `/dp/ee` resources ✅ 2026-11-09
+- [ ] **Vacancies** — shared school page (subject, requirements, job description), from the teacher's handwritten notes (`humans/myp-site-structure-notes.jpg`). CMS collection `vacancies` is ready; build the page when the school supplies a real vacancy.
+- [ ] **Summative assessment calendar** — per programme (subject, year/class, date, teacher), from the same notes. CMS collection `assessments` is ready; build the page when the school supplies dates.
+- [ ] **Programme gallery and policies/guides from CMS** — `galleryAlbums` and `resources` collections are ready; connect them to public pages once approved material arrives (`resources` would then replace the hand-maintained `src/data/documents.ts`).
+- [ ] **Programme attribution for news and events** — the Programme selector exists in Keystatic; split the shared feeds per programme once items are tagged MYP/DP/both.
+
+The four preparation collections and the Programme selector were restored on `main` (2026-11-09) from the unmerged branch archived as git tag `archive/programme-sections`; that tag also holds planning notes in `humans/PROGRAMME-STRUCTURE.md`. Its CMS-managed team and MYP subject collections were superseded by code-managed data (`src/data/teachers.ts`, `myp-organisation.ts`, `myp-programme.ts`) and were not restored. Do not merge the archived branch.
 
 Scope rule: no empty/"coming soon" stubs shipped as finished — a page is built only when its content exists or is a human item the school will supply imminently.
 

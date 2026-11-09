@@ -78,6 +78,9 @@ CMS content is **not** managed with Astro content collections. It is managed by 
 | `news`     | `src/content/news/`     | Shared announcements & updates         |
 | `cas`      | `src/content/cas/`      | DP CAS logs at `/dp/cas`               |
 | `tok`      | `src/content/tok/`      | DP TOK materials at `/dp/tok`          |
+| `events`   | `src/content/events/`   | Shared events in the `/news` feed      |
+
+Four preparation collections (`resources`, `galleryAlbums`, `assessments`, `vacancies`) store JSON under `src/content/` and are labelled “(not public yet)” in Keystatic: no page reads them until their public routes are built.
 
 Editors should use the CMS at `/keystatic/` rather than touching `.mdoc` files by hand. See [`humans/CONTENT.md`](humans/CONTENT.md).
 

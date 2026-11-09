@@ -13,7 +13,7 @@ Implemented features. Production deployment is verified separately.
 
 ## CMS — Keystatic
 
-- [x] `keystatic.config.ts` — 6 collections with typed schemas
+- [x] `keystatic.config.ts` — 10 collections with typed schemas (6 public, 4 preparation-only)
 - [x] `@keystatic/astro` integration — admin UI at `/keystatic/`
 - [x] Keystatic Reader API — pages read from Keystatic instead of Astro collections
 - [x] `src/lib/keystatic.ts` — shared reader singleton
@@ -22,7 +22,7 @@ Implemented features. Production deployment is verified separately.
 - [x] Markdoc rich-text editor for long-form content (subjects, CAS, TOK, news bodies)
 - [x] Select fields, date pickers, array fields with validation
 
-## Content (6 collections)
+## Content (10 collections)
 
 - [x] `subjects` — title, group (1-6/core), optional secondaryGroup (interdisciplinary subjects surface in two groups), level (HL/SL), offeredLevels, description, teacher, order, syllabus body
 - [x] `news` — headline, date, excerpt, author, article body
@@ -30,6 +30,8 @@ Implemented features. Production deployment is verified separately.
 - [x] `tok` — title, date, theme (12 TOK themes), summary, full essay body
 - [x] `events` — title, date, endDate, time, location, description, details body; auto upcoming/past split
 - [x] `testimonials` — name, role, gradYear, photo, order, featured, quote (+ SK)
+- [x] Preparation-only collections (JSON, draft/approved status, MYP/DP/both selector; no public pages yet): `resources` (policies/guides, EN/SK files), `galleryAlbums` (photos, bilingual captions, publication consent), `assessments` (programme/class/subject/date), `vacancies` (job details, application contact)
+- [x] News and Events programme selector (unclassified, MYP, DP, both); public feeds unchanged
 
 ## Pages (routes + detail pages + admin)
 
@@ -51,7 +53,7 @@ Implemented features. Production deployment is verified separately.
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
 - [x] `/{myp,dp}/mission` — programme-specific mission and vision pages; only DP displays its authorization statement and certificate, while MYP retains candidate-school wording
-- [x] `/{myp,dp}/policies` — programme-specific policies and guides: MYP candidate documents and relevant shared policies are separate from DP policies, CAS/TOK handbooks, and DP parent handbooks
+- [x] `/{myp,dp}/policies` — programme-specific policies and guides: MYP candidate documents and relevant shared policies are separate from DP policies, CAS/TOK/EE handbooks, and DP parent handbooks
 - [x] `404` — branded bilingual not-found page
 - [x] `/keystatic/` — CMS admin UI (server-rendered, not prerendered)
 - [x] Markdoc body rendering helper (`src/lib/markdoc.ts`) with EN/SK fallback

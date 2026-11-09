@@ -27,9 +27,9 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [x] ~~The five **IB School Policies**~~ — supplied 2026-07-25 and published on `/policies`: Admissions, Assessment, Academic Integrity, Language, Inclusion.
 - [x] ~~**Handbook for parents**~~ — supplied 2026-08-15 in English and Slovak; both on `/policies`.
 - [x] ~~**CAS Handbook** and **TOK Handbook**~~ — supplied 2026-07-23; on `/policies` and linked from `/cas` and `/tok`.
-- [ ] **EE Guide** — Simona was still writing it on 2026-07-23. Send it when ready; it slots straight into `/policies` → Core handbooks.
+- [x] ~~**EE Guide**~~ — supplied 2026-11-04 (EE Supervision, Simona Latková); on `/dp/policies` and linked from `/dp/ee`.
 - [x] ~~**School Fees**~~ — supplied; rendered as an HTML table on `/admissions` (DP1/DP2, bilingual). Replace the `dpFees` data in `src/data/documents.ts` if the schedule changes.
-- [x] ~~**Application Form**~~ — supplied: `dp-application-form.pdf` (EN) + `prihlaska-na-prijimacie-konanie.pdf` (SK), linked on `/admissions`. **Subject Choice Form still needed** — the supplied set had no subject-choice form (`/build-your-diploma` is a picker, not a downloadable form).
+- [x] ~~**Application Form**~~ — 2027–2028 versions supplied 2026-11-05: `dp-application-form.pdf` (EN) + `prihlaska-na-prijimacie-konanie.pdf` (SK), plus `pravidla-prijimania-ib-dp.pdf` and the Course Selection Sheet (`dp-subject-selection.pdf` EN, `vyber-predmetov.pdf` SK), linked on `/admissions`.
 - [x] ~~**Entrance Exams info**~~ — supplied: `dp-admissions-announcement.pdf`, `informacie-o-prijimacom-konani.pdf`, `myp-admissions-announcement.pdf` (dates, subjects, interview), linked on `/admissions`.
 - [x] ~~**School Mission Statement**~~ — supplied 2026-08-27 (`Our IB Identity.docx`) together with the school vision; both live on `/mission` beside the IB mission statement.
 - [ ] **Complaints or appeals procedure** — on the coordinator's own "essential public information" list (2026-07-21) but never supplied. Send it and it goes on `/policies`.
@@ -44,7 +44,7 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [ ] Review/approve the AI-generated Slovak UI strings (`src/i18n/dictionaries.ts`)
 - [ ] Fill Slovak translations of content entries via the CMS ("Slovak translation" section in each entry — English shows wherever Slovak is left empty)
 - [ ] Review EE timeline — adjust dates to match school calendar
-- [ ] Provide downloadable EE documents (EE Guide PDF, RPPF form). Placeholder `#` download links were removed from `/ee`; it now links the IB EE page, the academic integrity policy, and `/policies`.
+- [ ] Provide the RPPF form if it should be downloadable. The EE Supervision guide is linked from `/ee`, alongside the IB EE page, the academic integrity policy, and `/policies`.
 - [ ] Confirm the IB facts written into `/ee` and `/tok` against the current guides: EE 4,000-word limit, ~40 hours of student work, 3–5 hours of supervision, three reflection sessions + RPPF, E as failing condition, up to 3 core points; TOK ≥100 hours, one core + two optional themes, five areas of knowledge, exhibition ⅓ (950 words, 35 prompts) / essay ⅔ (1,600 words, six prescribed titles). Strings live in `src/i18n/dictionaries.ts` (`ee`, `tok`).
 
 ## Branding & design

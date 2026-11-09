@@ -1,5 +1,5 @@
-import { defineMiddleware } from 'astro:middleware';
 import { middleware as i18nMiddleware } from 'astro:i18n';
+import { defineMiddleware } from 'astro:middleware';
 
 // Paths injected by integrations that live outside the /[locale]/ tree. With
 // `prefixDefaultLocale: true`, Astro's i18n middleware 404s any path without a
@@ -15,7 +15,7 @@ const i18n = i18nMiddleware({
 export const onRequest = defineMiddleware((context, next) => {
   const { pathname } = context.url;
   const bypass = BYPASS_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(prefix + '/')
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
   );
   // For Keystatic routes, go straight to the matched route, skipping i18n.
   if (bypass) return next();

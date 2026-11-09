@@ -1,11 +1,12 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+
 import cloudflare from '@astrojs/cloudflare';
-import node from '@astrojs/node';
 import mdx from '@astrojs/mdx';
+import node from '@astrojs/node';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'astro/config';
 
 // `astro dev` runs SSR in Node. The Cloudflare adapter runs dev SSR inside
 // workerd, which has no filesystem and no CommonJS: Keystatic's local-mode

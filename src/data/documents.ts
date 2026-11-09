@@ -21,16 +21,25 @@ export const admissionsDocuments: { group: 'dp' | 'myp'; items: DocItem[] }[] = 
     items: [
       {
         file: 'dp-admissions-announcement.pdf',
-        title: 'DP Admissions Announcement',
+        title: 'DP Admissions Announcement 2027–2028',
         lang: 'EN',
         note: {
-          en: 'Overview of the DP entrance exam dates, subjects, and interview.',
-          sk: 'Prehľad termínov prijímacích skúšok, predmetov a pohovoru do DP.',
+          en: 'Application deadline, entrance exam dates, subjects, and interview.',
+          sk: 'Termín podania prihlášky, termíny prijímacích skúšok, predmety a pohovor.',
+        },
+      },
+      {
+        file: 'informacie-o-prijimacom-konani.pdf',
+        title: 'Informácie o prijímacom konaní 2027/2028',
+        lang: 'SK',
+        note: {
+          en: 'Details of the DP admissions process and exam day (Slovak).',
+          sk: 'Podrobnosti o prijímacom konaní do DP a priebehu skúšok.',
         },
       },
       {
         file: 'dp-application-form.pdf',
-        title: 'DP Application Form',
+        title: 'DP Application Form 2027–2028',
         lang: 'EN',
         note: {
           en: 'Entrance exams registration form (English).',
@@ -39,7 +48,7 @@ export const admissionsDocuments: { group: 'dp' | 'myp'; items: DocItem[] }[] = 
       },
       {
         file: 'prihlaska-na-prijimacie-konanie.pdf',
-        title: 'Prihláška na prijímacie konanie',
+        title: 'Prihláška na prijímacie konanie 2027/2028',
         lang: 'SK',
         note: {
           en: 'Application form for the admissions process (Slovak).',
@@ -47,12 +56,30 @@ export const admissionsDocuments: { group: 'dp' | 'myp'; items: DocItem[] }[] = 
         },
       },
       {
-        file: 'informacie-o-prijimacom-konani.pdf',
-        title: 'Informácie o prijímacom konaní',
+        file: 'pravidla-prijimania-ib-dp.pdf',
+        title: 'Pravidlá prijímania do IB Diploma Programme 2027–2028',
         lang: 'SK',
         note: {
-          en: 'Details of the DP admissions process and exam day (Slovak).',
-          sk: 'Podrobnosti o prijímacom konaní do DP a priebehu skúšok.',
+          en: 'Admission criteria, entrance exam syllabi, and subject options (Slovak).',
+          sk: 'Kritériá prijímania, osnovy prijímacích skúšok a možnosti výberu predmetov.',
+        },
+      },
+      {
+        file: 'dp-subject-selection.pdf',
+        title: 'Course Selection Sheet 2027–2028',
+        lang: 'EN',
+        note: {
+          en: 'Non-binding subject choice form with draft subject pathways.',
+          sk: 'Nezáväzný formulár na výber predmetov s návrhmi kombinácií (v angličtine).',
+        },
+      },
+      {
+        file: 'vyber-predmetov.pdf',
+        title: 'Formulár na výber predmetov 2027–2028',
+        lang: 'SK',
+        note: {
+          en: 'Subject choice form with draft subject pathways (Slovak).',
+          sk: 'Nezáväzný formulár na výber predmetov s návrhmi kombinácií.',
         },
       },
     ],
@@ -167,6 +194,15 @@ export const guideDocuments: DocItem[] = [
       sk: 'Prehľad kurzu s pokynmi k TOK výstave a TOK eseji.',
     },
   },
+  {
+    file: 'ee-supervision-guide.pdf',
+    title: 'EE Supervision',
+    lang: 'EN',
+    note: {
+      en: 'School supervision procedures for the Extended Essay, by the EE coordinator.',
+      sk: 'Školské postupy vedenia rozšírenej eseje od koordinátorky EE.',
+    },
+  },
 ];
 
 /** Parent-facing DP handbooks, shown on `/dp/policies`. */
@@ -203,17 +239,17 @@ export const dpFees: FeeRow[] = [
   {
     item: { en: 'School fees', sk: 'Školné' },
     detail: { en: 'in 3 instalments', sk: 'v 3 splátkach' },
-    dp1: '5 100 €',
-    dp2: '5 100 €',
+    dp1: '5 700 €',
+    dp2: '5 700 €',
   },
   {
-    item: { en: 'Function fee', sk: 'Ročný poplatok' },
+    item: { en: 'Annual resources fee', sk: 'Ročný poplatok' },
     detail: {
-      en: 'Coursebooks, subscriptions, learning platforms, ManageBac, ThinkIB, Revision Village, Question Bank, etc.',
-      sk: 'Učebnice, predplatné, vzdelávacie platformy, ManageBac, ThinkIB, Revision Village, Question Bank atď.',
+      en: 'Coursebooks, subscriptions, learning platforms, ManageBac, InThinking (ThinkIB), Revision Village, question banks, etc.',
+      sk: 'Učebnice, predplatné, vzdelávacie platformy, ManageBac, InThinking (ThinkIB), Revision Village, databáza otázok a pod.',
     },
-    dp1: '350 €',
-    dp2: '350 €',
+    dp1: '400 €',
+    dp2: '400 €',
   },
   {
     item: { en: 'Entry fee (external students)', sk: 'Zápisné pre študentov z iných škôl' },
@@ -230,8 +266,8 @@ export const dpFees: FeeRow[] = [
     dp2: '100 €',
   },
   {
-    item: { en: 'IB Final Exams', sk: 'IB záverečné skúšky' },
+    item: { en: 'IB final examinations', sk: 'Záverečné skúšky IB' },
     dp1: '-',
-    dp2: '89 € × 6 = 534 €',
+    dp2: '95,50 € × 6 = 573 €',
   },
 ];

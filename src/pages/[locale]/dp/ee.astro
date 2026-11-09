@@ -40,6 +40,12 @@ const reflections = [
 
 const resources = [
   {
+    label: ee.resourceGuide,
+    note: ee.resourceGuideNote,
+    href: '/documents/ee-supervision-guide.pdf',
+    doc: 'ee-supervision-guide',
+  },
+  {
     label: ee.resourceIbo,
     note: ee.resourceIboNote,
     href: 'https://www.ibo.org/programmes/diploma-programme/curriculum/dp-core/extended-essay/',
@@ -49,7 +55,7 @@ const resources = [
     label: ee.resourceIntegrity,
     note: ee.resourceIntegrityNote,
     href: '/documents/academic-integrity-policy.pdf',
-    pdf: true,
+    doc: 'academic-integrity-policy',
   },
   { label: ee.resourcePolicies, note: ee.resourcePoliciesNote, href: l('/dp/policies', locale) },
 ];
@@ -252,8 +258,8 @@ const resources = [
                 href={r.href}
                 target={r.external ? '_blank' : undefined}
                 rel={r.external ? 'noopener' : undefined}
-                data-umami-event={r.pdf ? 'pdf-download' : undefined}
-                data-umami-event-doc={r.pdf ? 'academic-integrity-policy' : undefined}
+                data-umami-event={r.doc ? 'pdf-download' : undefined}
+                data-umami-event-doc={r.doc}
                 class="group flex items-start justify-between gap-6 border-b border-white/15 py-6 transition-colors hover:bg-white/[0.04] sm:py-7"
               >
                 <span class="min-w-0">
@@ -266,7 +272,7 @@ const resources = [
                   class="mt-1 shrink-0 text-lg text-emerald-300 transition-transform group-hover:translate-x-1"
                   aria-hidden="true"
                 >
-                  {r.external || r.pdf ? '↗' : '→'}
+                  {r.external || r.doc ? '↗' : '→'}
                 </span>
               </a>
             </li>
