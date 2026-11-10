@@ -60,6 +60,7 @@ const dict = {
       programmeGroup: 'Programme',
       schoolLifeGroup: 'School life',
       visitCta: 'Apply now',
+      privacy: 'Privacy',
     },
     detail: {
       backSubjects: 'All subjects',
@@ -87,6 +88,36 @@ const dict = {
       noResults: 'No results found',
       noQuery: 'Start typing to search across all content',
       resultsCount: '{n} results',
+    },
+    privacy: {
+      title: 'Privacy',
+      subtitle: 'How this website handles information about its visitors.',
+      updated: 'Last updated: 10 November 2026',
+      controllerHeading: 'Who is responsible',
+      controllerBody:
+        'This website is run by Súkromné gymnázium Česká, Česká 10, 831 03 Bratislava. For any privacy question or request, write to',
+      sections: [
+        {
+          heading: 'Analytics and session recordings',
+          body: 'We use Umami, a privacy-friendly analytics tool run by our website developer, to see how the website is used. It sets no cookies and does not identify individual visitors. For some visits it also makes anonymous recordings of how pages are used, such as scrolling and clicks; anything typed into fields is hidden. We use this only to improve the website.',
+        },
+        {
+          heading: 'Cookies and storage',
+          body: 'The website sets no cookies. When you switch language, your browser briefly remembers your scroll position for the current tab so the page opens in the same place.',
+        },
+        {
+          heading: 'Contacting us',
+          body: 'Email and phone links open your own email or phone app. Nothing you choose on the website, such as subjects in the diploma planner, is sent to us.',
+        },
+        {
+          heading: 'Hosting',
+          body: 'The website is delivered by Cloudflare, which processes technical data such as IP addresses to serve pages securely.',
+        },
+        {
+          heading: 'Your rights',
+          body: 'Under the GDPR you can ask for access to, correction or deletion of personal data we hold about you, and you can complain to the Office for Personal Data Protection of the Slovak Republic (dataprotection.gov.sk).',
+        },
+      ],
     },
     home: {
       badge: 'MYP & IB DP at Česká',
@@ -833,6 +864,7 @@ const dict = {
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
       visitCta: 'Prihlásiť sa',
+      privacy: 'Ochrana súkromia',
     },
     detail: {
       backSubjects: 'Všetky predmety',
@@ -860,6 +892,36 @@ const dict = {
       noResults: 'Žiadne výsledky',
       noQuery: 'Začnite písať pre vyhľadávanie',
       resultsCount: '{n} výsledkov',
+    },
+    privacy: {
+      title: 'Ochrana súkromia',
+      subtitle: 'Ako táto stránka zaobchádza s informáciami o návštevníkoch.',
+      updated: 'Posledná aktualizácia: 10. novembra 2026',
+      controllerHeading: 'Kto zodpovedá',
+      controllerBody:
+        'Túto stránku prevádzkuje Súkromné gymnázium Česká, Česká 10, 831 03 Bratislava. S otázkami alebo žiadosťami týkajúcimi sa ochrany súkromia nám napíšte na',
+      sections: [
+        {
+          heading: 'Analytika a záznamy návštev',
+          body: 'Na to, aby sme videli, ako sa stránka používa, využívame Umami, analytický nástroj šetrný k súkromiu, ktorý prevádzkuje náš vývojár stránky. Nepoužíva cookies a neidentifikuje jednotlivých návštevníkov. Pri niektorých návštevách vytvára aj anonymné záznamy používania stránky, napríklad posúvania a kliknutí; text zadaný do polí je skrytý. Používame to len na zlepšovanie stránky.',
+        },
+        {
+          heading: 'Cookies a ukladanie údajov',
+          body: 'Stránka nepoužíva cookies. Keď prepnete jazyk, prehliadač si na chvíľu zapamätá pozíciu posunutia v aktuálnej karte, aby sa stránka otvorila na rovnakom mieste.',
+        },
+        {
+          heading: 'Kontaktovanie školy',
+          body: 'Odkazy na e-mail a telefón otvoria vašu vlastnú e-mailovú alebo telefónnu aplikáciu. Nič, čo si na stránke vyberiete, napríklad predmety v plánovači diplomu, sa nám neodosiela.',
+        },
+        {
+          heading: 'Hosting',
+          body: 'Stránku doručuje Cloudflare, ktorý na bezpečné zobrazovanie stránok spracúva technické údaje, napríklad IP adresy.',
+        },
+        {
+          heading: 'Vaše práva',
+          body: 'Podľa GDPR môžete požiadať o prístup k osobným údajom, ktoré o vás máme, o ich opravu alebo vymazanie a môžete podať sťažnosť na Úrad na ochranu osobných údajov Slovenskej republiky (dataprotection.gov.sk).',
+        },
+      ],
     },
     home: {
       badge: 'MYP a IB DP na Českej',

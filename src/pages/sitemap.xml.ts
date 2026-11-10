@@ -57,6 +57,7 @@ export const GET: APIRoute = async () => {
     '/gallery',
     '/admissions',
     '/search',
+    '/privacy',
     ...subjects.map((slug) => `/dp/subjects/${slug}`),
     ...cas.map((slug) => `/dp/cas/${slug}`),
     ...tok.map((slug) => `/dp/tok/${slug}`),

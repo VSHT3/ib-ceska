@@ -59,7 +59,7 @@ sign-in, but authenticated login and Save on the school hostname have **not**
 been verified; the owner confirmed CMS editing on `workers.dev`.
 
 After changing the hostname or Worker routes, check public pages, images,
-documents, the CMS, `analytics.morumori.com/script.js`, and `morumori.com`.
+documents, the CMS, `analytics.morumori.com/script.js` and `/recorder.js`, and `morumori.com`.
 Keep the alternate Worker URL available for troubleshooting.
 
 ### School hostname without moving the school's DNS

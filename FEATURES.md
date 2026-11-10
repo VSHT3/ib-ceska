@@ -49,6 +49,7 @@ Implemented features. Production deployment is verified separately.
 - [x] `/gallery` — bilingual bento-mosaic photo gallery: gapless cell-rhythm grid (orientation-aware base/tall/big tiles, deterministic packing order, width-proportional row unit, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/dp/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
 - [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
+- [x] `/privacy` — bilingual privacy notice (controller contact, cookieless Umami analytics and session recordings, storage, hosting, GDPR rights), linked from the footer
 - [x] `/dp/teachers` — separate DP leadership, teaching, and support portrait roster; `/myp/teachers` — connected MYP organisational chart only
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band
 - [x] `/dp` — bilingual DP curriculum, subject-choice, core, and admissions overview
@@ -135,6 +136,7 @@ Implemented features. Production deployment is verified separately.
 
 - [x] Keystatic Cloud production CMS (`ib-ceska/ib-ceska`) is deployed; the owner confirmed editing on `workers.dev`. The school-hostname login/Save path still needs an authenticated check.
 - [x] Cloudflare Workers deployment at `ib.gymnaziumceska.sk` via the `morumori.com` Cloudflare for SaaS zone; originless fallback, Worker routing, and automatic HTTP-validated TLS are active. The zone routes preserve the studio site and analytics.
+- [x] Umami analytics and session replays from `analytics.morumori.com`, loaded only in production builds; CTA, PDF, phone and email clicks tracked via `data-umami-event` attributes
 
 ## DX & tooling
 

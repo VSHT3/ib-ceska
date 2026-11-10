@@ -1,8 +1,10 @@
 # TODO
 
 Tasks the AI must complete. Checked = done.
-Umami analytics
-PDFs should open in a new tab
+
+- [x] Umami analytics (`script.js`) and session replays (`recorder.js`; sample rate, masking and duration are set in the Umami dashboard), disclosed on the `/privacy` page
+- [ ] School to review the `/privacy` wording (especially the Slovak) and confirm Súkromné gymnázium Česká with `ib@gymnaziumceska.sk` as the responsible contact
+- [ ] PDFs should open in a new tab
 
 ## IB branding
 
