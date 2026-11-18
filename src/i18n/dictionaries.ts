@@ -597,8 +597,7 @@ const dict = {
       policiesDpLabel: 'IB DP policies and guides',
       feesLabel: 'School fees',
       feesTitle: 'DP tuition & costs',
-      feesIntro:
-        'Annual costs for the Diploma Programme at Česká. Fees are set by the school and may change between years. Confirm the current schedule with the IB team.',
+      feesIntro: 'Annual costs for the Diploma Programme at Česká.',
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Item',
@@ -1394,8 +1393,7 @@ const dict = {
       policiesDpLabel: 'Politiky a príručky IB DP',
       feesLabel: 'Školné',
       feesTitle: 'Školné a náklady DP',
-      feesIntro:
-        'Ročné náklady na Diploma Programme na Českej. Poplatky určuje škola a môžu sa medzi rokmi meniť. Aktuálny rozpis overte s IB tímom.',
+      feesIntro: 'Ročné náklady na Diploma Programme na Českej.',
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Položka',
