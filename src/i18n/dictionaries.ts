@@ -46,6 +46,7 @@ const dict = {
       missionDesc: 'Who we are and what we work towards',
       policies: 'Policies and guides',
       policiesDesc: 'IB policies, core handbooks, parent handbook',
+      admissions: 'Admissions',
       apply: 'Apply',
       menu: 'Menu',
       search: 'Search',
@@ -581,7 +582,7 @@ const dict = {
         },
         {
           q: 'How much does the programme cost?',
-          a: 'As a private school, Česká charges tuition. The school will share current fees and any available support during your first conversation.',
+          a: 'Česká is a private school. DP fees for each year are listed in the School fees section on this page, with the official fee sheet as a PDF. For MYP fees and any available support, contact the school.',
         },
       ],
       documentsLabel: 'Documents & forms',
@@ -848,6 +849,7 @@ const dict = {
       missionDesc: 'Kto sme a k čomu smerujeme',
       policies: 'Politiky a príručky',
       policiesDesc: 'IB politiky, príručky core predmetov, príručka pre rodičov',
+      admissions: 'Prijímacie konanie',
       apply: 'Prihlásiť sa',
       menu: 'Menu',
       search: 'Hľadať',
@@ -1377,7 +1379,7 @@ const dict = {
         },
         {
           q: 'Koľko program stojí?',
-          a: 'Ako súkromná škola Česká vyberá školné. Aktuálnu výšku školného a možnú podporu vám škola poskytne počas prvého rozhovoru.',
+          a: 'Česká je súkromná škola. Poplatky za DP na jednotlivé roky nájdete v časti Školné na tejto stránke spolu s oficiálnym prehľadom poplatkov v PDF. Informácie o poplatkoch za MYP a možnej podpore vám poskytne škola.',
         },
       ],
       documentsLabel: 'Dokumenty a formuláre',
