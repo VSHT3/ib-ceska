@@ -1,0 +1,50 @@
+{
+  "rows": [
+    {
+      "item": "Tuition",
+      "detail": "Payable in 3 instalments",
+      "dp1": "6 000 €",
+      "dp2": "6 000 €",
+      "sk": { "item": "Školné", "detail": "Platba v 3 splátkach" }
+    },
+    {
+      "item": "Annual learning resources fee",
+      "detail": "Coursebooks and subscriptions to platforms such as ManageBac, ThinkIB, Revision Village and Questionbank",
+      "dp1": "400 €",
+      "dp2": "400 €",
+      "sk": {
+        "item": "Ročný poplatok za študijné zdroje",
+        "detail": "Učebnice a predplatné platforiem, ako sú ManageBac, ThinkIB, Revision Village a Questionbank"
+      }
+    },
+    {
+      "item": "Enrolment fee for students joining from another school",
+      "detail": "",
+      "dp1": "600 €",
+      "dp2": "—",
+      "sk": { "item": "Zápisné pre študentov, ktorí prichádzajú z inej školy", "detail": "" }
+    },
+    {
+      "item": "Class fund",
+      "detail": "Cinema and theatre tickets, trips and excursions",
+      "dp1": "100 €",
+      "dp2": "100 €",
+      "sk": { "item": "Triedny fond", "detail": "Vstupenky do kina a divadla, výlety a exkurzie" }
+    },
+    {
+      "item": "IB final examination subject fees",
+      "detail": "6 subjects × 95,50 €",
+      "dp1": "—",
+      "dp2": "573 €",
+      "sk": {
+        "item": "Poplatky za predmety na záverečných skúškach IB",
+        "detail": "6 predmetov × 95,50 €"
+      }
+    }
+  ],
+  "note": "Tuition is payable in three instalments. The enrolment fee applies only to students joining from another school. Final IB examination fees are billed in DP2.",
+  "pdf": "/documents/fees/pdf.pdf",
+  "sk": {
+    "note": "Školné sa platí v troch splátkach. Zápisné sa vzťahuje len na študentov prichádzajúcich z iných škôl. Poplatky za záverečné IB skúšky sa účtujú v DP2."
+  }
+}
