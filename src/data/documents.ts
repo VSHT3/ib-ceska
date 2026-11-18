@@ -237,37 +237,44 @@ export interface FeeRow {
 
 export const dpFees: FeeRow[] = [
   {
-    item: { en: 'School fees', sk: 'Školné' },
-    detail: { en: 'in 3 instalments', sk: 'v 3 splátkach' },
-    dp1: '5 700 €',
-    dp2: '5 700 €',
+    item: { en: 'Tuition', sk: 'Školné' },
+    detail: { en: 'Payable in 3 instalments', sk: 'Platba v 3 splátkach' },
+    dp1: '6 000 €',
+    dp2: '6 000 €',
   },
   {
-    item: { en: 'Annual resources fee', sk: 'Ročný poplatok' },
+    item: { en: 'Annual learning resources fee', sk: 'Ročný poplatok za študijné zdroje' },
     detail: {
-      en: 'Coursebooks, subscriptions, learning platforms, ManageBac, InThinking (ThinkIB), Revision Village, question banks, etc.',
-      sk: 'Učebnice, predplatné, vzdelávacie platformy, ManageBac, InThinking (ThinkIB), Revision Village, databáza otázok a pod.',
+      en: 'Coursebooks and subscriptions to platforms such as ManageBac, ThinkIB, Revision Village and Questionbank',
+      sk: 'Učebnice a predplatné platforiem, ako sú ManageBac, ThinkIB, Revision Village a Questionbank',
     },
     dp1: '400 €',
     dp2: '400 €',
   },
   {
-    item: { en: 'Entry fee (external students)', sk: 'Zápisné pre študentov z iných škôl' },
-    dp1: '300 €',
-    dp2: '-',
+    item: {
+      en: 'Enrolment fee for students joining from another school',
+      sk: 'Zápisné pre študentov, ktorí prichádzajú z inej školy',
+    },
+    dp1: '600 €',
+    dp2: '—',
   },
   {
     item: { en: 'Class fund', sk: 'Triedny fond' },
     detail: {
-      en: 'cinema, theatre, trips, excursions',
-      sk: 'kino, divadlo, výlety, exkurzie',
+      en: 'Cinema and theatre tickets, trips and excursions',
+      sk: 'Vstupenky do kina a divadla, výlety a exkurzie',
     },
     dp1: '100 €',
     dp2: '100 €',
   },
   {
-    item: { en: 'IB final examinations', sk: 'Záverečné skúšky IB' },
-    dp1: '-',
-    dp2: '95,50 € × 6 = 573 €',
+    item: {
+      en: 'IB final examination subject fees',
+      sk: 'Poplatky za predmety na záverečných skúškach IB',
+    },
+    detail: { en: '6 subjects × 95,50 €', sk: '6 predmetov × 95,50 €' },
+    dp1: '—',
+    dp2: '573 €',
   },
 ];
