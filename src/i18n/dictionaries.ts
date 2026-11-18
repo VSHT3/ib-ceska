@@ -850,7 +850,7 @@ const dict = {
       policies: 'Politiky a príručky',
       policiesDesc: 'IB politiky, príručky core predmetov, príručka pre rodičov',
       admissions: 'Prijímacie konanie',
-      apply: 'Prihlásiť sa',
+      apply: 'Prihláška',
       menu: 'Menu',
       search: 'Hľadať',
     },
@@ -863,7 +863,7 @@ const dict = {
         'Medzinárodné vzdelávanie v Bratislave - pripravujeme študentov kriticky myslieť a rásť do sveta.',
       programmeGroup: 'Program',
       schoolLifeGroup: 'Život školy',
-      visitCta: 'Prihlásiť sa',
+      visitCta: 'Podať prihlášku',
       privacy: 'Ochrana súkromia',
     },
     detail: {
