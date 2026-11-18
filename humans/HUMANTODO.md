@@ -28,7 +28,7 @@ Per the coordinator's requested page structure (see root `TODO.md` → "IB site 
 - [x] ~~**Handbook for parents**~~ — supplied 2026-08-15 in English and Slovak; both on `/policies`.
 - [x] ~~**CAS Handbook** and **TOK Handbook**~~ — supplied 2026-07-23; on `/policies` and linked from `/cas` and `/tok`.
 - [x] ~~**EE Guide**~~ — supplied 2026-11-04 (EE Supervision, Simona Latková); on `/dp/policies` and linked from `/dp/ee`.
-- [x] ~~**School Fees**~~ — supplied; rendered as an HTML table on `/admissions` (DP1/DP2, bilingual). Replace the `dpFees` data in `src/data/documents.ts` if the schedule changes.
+- [x] ~~**School Fees**~~ — supplied; rendered as a bilingual DP1/DP2 table on `/admissions` with the official fee sheet as a PDF download. The school can update both in Keystatic → **DP school fees** (revised schedule applied 2026-11-18).
 - [x] ~~**Application Form**~~ — 2027–2028 versions supplied 2026-11-05: `dp-application-form.pdf` (EN) + `prihlaska-na-prijimacie-konanie.pdf` (SK), plus `pravidla-prijimania-ib-dp.pdf` and the Course Selection Sheet (`dp-subject-selection.pdf` EN, `vyber-predmetov.pdf` SK), linked on `/admissions`.
 - [x] ~~**Entrance Exams info**~~ — supplied: `dp-admissions-announcement.pdf`, `informacie-o-prijimacom-konani.pdf`, `myp-admissions-announcement.pdf` (dates, subjects, interview), linked on `/admissions`.
 - [x] ~~**School Mission Statement**~~ — supplied 2026-08-27 (`Our IB Identity.docx`) together with the school vision; both live on `/mission` beside the IB mission statement.

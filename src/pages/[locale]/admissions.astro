@@ -6,7 +6,8 @@ import DocumentList from '../../components/DocumentList.astro';
 import { school } from '../../assets/school';
 import { t, l, contact } from '../../i18n/dictionaries';
 import type { Locale } from '../../i18n/dictionaries';
-import { admissionsDocuments, dpFees, parentDocuments } from '../../data/documents';
+import { admissionsDocuments, parentDocuments } from '../../data/documents';
+import { reader, pick } from '../../lib/keystatic';
 
 export function getStaticPaths() {
   return [{ params: { locale: 'en' } }, { params: { locale: 'sk' } }];
@@ -15,6 +16,9 @@ export function getStaticPaths() {
 const locale = (Astro.params.locale ?? 'en') as Locale;
 const dict = t(locale);
 const admissions = dict.admissions;
+
+const fees = await reader.singletons.dpFees.read();
+const feesNote = fees ? pick(locale, fees.sk.note, fees.note) : '';
 
 const steps = [
   { number: '01', title: admissions.step1Title, body: admissions.step1Body },
@@ -263,63 +267,92 @@ const steps = [
     </div>
   </section>
 
-  <!-- School fees (full-bleed light band; HTML table, reconstructed from the school's fee schedule) -->
-  <section class="bg-stone-100 border-y border-stone-200/70" data-reveal>
-    <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
-      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-        <div>
-          <span
-            class="flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-700"
-          >
-            <span class="h-px w-10 bg-current" aria-hidden="true"></span>
-            {admissions.feesLabel}
-          </span>
-          <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
-            {admissions.feesTitle}
-          </h2>
-          <p class="mt-5 max-w-md text-stone-600 leading-relaxed">{admissions.feesIntro}</p>
-        </div>
-        <div class="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
-          <table class="w-full border-collapse text-sm">
-            <thead>
-              <tr class="bg-stone-50 text-left">
-                <th class="px-5 py-4 font-semibold text-stone-900">{admissions.feesItem}</th>
-                <th class="px-5 py-4 text-right font-semibold text-stone-900"
-                  >{admissions.feesDp1}</th
+  <!-- School fees (full-bleed light band; CMS-managed table plus optional official PDF) -->
+  {
+    fees && fees.rows.length > 0 && (
+      <section class="bg-stone-100 border-y border-stone-200/70" data-reveal>
+        <div class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-28">
+          <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div>
+              <span class="flex items-center gap-3 text-xs font-semibold tracking-widest uppercase text-emerald-700">
+                <span class="h-px w-10 bg-current" aria-hidden="true" />
+                {admissions.feesLabel}
+              </span>
+              <h2 class="mt-2 text-3xl sm:text-4xl font-bold tracking-tight">
+                {admissions.feesTitle}
+              </h2>
+              <p class="mt-5 max-w-md text-stone-600 leading-relaxed">{admissions.feesIntro}</p>
+              {fees.pdf && (
+                <a
+                  href={fees.pdf}
+                  data-umami-event="pdf-download"
+                  data-umami-event-doc="dp-school-fees"
+                  class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-dp-800 hover:text-dp-900"
                 >
-                <th class="px-5 py-4 text-right font-semibold text-stone-900"
-                  >{admissions.feesDp2}</th
-                >
-              </tr>
-            </thead>
-            <tbody>
-              {
-                dpFees.map((row) => (
-                  <tr class="border-t border-stone-200 align-top">
-                    <td class="px-5 py-4">
-                      <p class="font-medium text-stone-900">{row.item[locale]}</p>
-                      {row.detail && (
-                        <p class="mt-1 text-xs leading-relaxed text-stone-500">
-                          {row.detail[locale]}
-                        </p>
-                      )}
-                    </td>
-                    <td class="px-5 py-4 text-right font-semibold text-stone-900 whitespace-nowrap">
-                      {row.dp1}
-                    </td>
-                    <td class="px-5 py-4 text-right font-semibold text-stone-900 whitespace-nowrap">
-                      {row.dp2}
-                    </td>
+                  <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                    />
+                  </svg>
+                  {admissions.feesPdf}
+                </a>
+              )}
+            </div>
+            <div class="overflow-x-auto rounded-3xl border border-stone-200 bg-white">
+              <table class="w-full border-collapse text-sm">
+                <thead>
+                  <tr class="bg-stone-50 text-left">
+                    <th class="px-5 py-4 font-semibold text-stone-900">{admissions.feesItem}</th>
+                    <th class="px-5 py-4 text-right font-semibold text-stone-900">
+                      {admissions.feesDp1}
+                    </th>
+                    <th class="px-5 py-4 text-right font-semibold text-stone-900">
+                      {admissions.feesDp2}
+                    </th>
                   </tr>
-                ))
-              }
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {fees.rows.map((row) => {
+                    const detail = pick(locale, row.sk.detail, row.detail);
+                    return (
+                      <tr class="border-t border-stone-200 align-top">
+                        <td class="px-5 py-4">
+                          <p class="font-medium text-stone-900">
+                            {pick(locale, row.sk.item, row.item)}
+                          </p>
+                          {detail && (
+                            <p class="mt-1 text-xs leading-relaxed text-stone-500">{detail}</p>
+                          )}
+                        </td>
+                        <td class="px-5 py-4 text-right font-semibold text-stone-900 whitespace-nowrap">
+                          {row.dp1}
+                        </td>
+                        <td class="px-5 py-4 text-right font-semibold text-stone-900 whitespace-nowrap">
+                          {row.dp2}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {feesNote && (
+            <p class="mt-6 max-w-3xl text-xs leading-relaxed text-stone-500">{feesNote}</p>
+          )}
         </div>
-      </div>
-      <p class="mt-6 max-w-3xl text-xs leading-relaxed text-stone-500">{admissions.feesNote}</p>
-    </div>
-  </section>
+      </section>
+    )
+  }
 
   <!-- Admissions documents, forms, and parent handbooks -->
   <section class="mx-auto max-w-7xl px-6 lg:px-12 py-20 sm:py-24" data-reveal>

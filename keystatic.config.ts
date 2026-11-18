@@ -1,4 +1,4 @@
-import { collection, config, fields } from '@keystatic/core';
+import { collection, config, fields, singleton } from '@keystatic/core';
 
 const isDev = process.env.NODE_ENV !== 'production';
 
@@ -399,6 +399,66 @@ export default config({
           label: 'Job details, qualifications, required documents, and how to apply',
         }),
         sk: slovakFields({ description: 'Short description', body: 'Job details / how to apply' }),
+      },
+    }),
+  },
+  singletons: {
+    dpFees: singleton({
+      label: 'DP school fees',
+      path: 'src/content/dp-fees',
+      format: { data: 'json' },
+      schema: {
+        rows: fields.array(
+          fields.object({
+            item: fields.text({ label: 'Fee', validation: { isRequired: true } }),
+            detail: fields.text({
+              label: 'Details (optional)',
+              description: 'Short explanation shown under the fee name.',
+              multiline: true,
+            }),
+            dp1: fields.text({
+              label: 'DP1 amount',
+              description: 'e.g. 6 000 €. Use — when the fee does not apply.',
+              validation: { isRequired: true },
+            }),
+            dp2: fields.text({
+              label: 'DP2 amount',
+              description: 'e.g. 6 000 €. Use — when the fee does not apply.',
+              validation: { isRequired: true },
+            }),
+            sk: fields.object(
+              {
+                item: fields.text({ label: 'Fee (Slovak)' }),
+                detail: fields.text({ label: 'Details (Slovak)', multiline: true }),
+              },
+              { label: 'Slovak translation — optional, falls back to English' },
+            ),
+          }),
+          {
+            label: 'Fee table rows',
+            description: 'Shown as a table on the Admissions page, in this order.',
+            itemLabel: (props) => props.fields.item.value || 'Fee',
+          },
+        ),
+        note: fields.text({
+          label: 'Note under the table (optional)',
+          multiline: true,
+        }),
+        pdf: fields.file({
+          label: 'Fee schedule PDF (optional)',
+          description:
+            'Official fee sheet offered as a download under the table. When fees change, upload the new PDF together with the table changes so both match.',
+          directory: 'public/documents/fees',
+          publicPath: '/documents/fees',
+        }),
+        sk: fields.object(
+          { note: fields.text({ label: 'Note under the table (Slovak)', multiline: true }) },
+          {
+            label: 'Slovak translation',
+            description:
+              'Optional — visitors see the English version where a Slovak field is left empty.',
+          },
+        ),
       },
     }),
   },

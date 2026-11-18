@@ -48,7 +48,7 @@ Implemented features. Production deployment is verified separately.
 - [x] Events share the `/news` feed; event details remain at `/events/[slug]`
 - [x] `/gallery` — bilingual bento-mosaic photo gallery: gapless cell-rhythm grid (orientation-aware base/tall/big tiles, deterministic packing order, width-proportional row unit, CSS-columns no-JS fallback) with full-screen lightbox (1600px variants, prev/next, keyboard + backdrop close, focus restore)
 - [x] `/dp/build-your-diploma` — DP-branded interactive planner: dark DP hero with programme-model hexagon (six groups around the TOK/EE/CAS core), numbered worksheet-style group sections, live IB-rule validation, dark "Your diploma" transcript card with six fixed slots + HL target meter, mobile progress bar, anime.js micro-interactions, reduced-motion safe; promoted from `/dp` via builder CTA panel
-- [x] `/admissions` — bilingual programme guidance, application steps, and direct school contact
+- [x] `/admissions` — bilingual programme guidance, application steps, direct school contact, and a CMS-managed DP fees table (Keystatic singleton) with optional fee-sheet PDF download
 - [x] `/privacy` — bilingual privacy notice (controller contact, cookieless Umami analytics and session recordings, storage, hosting, GDPR rights), linked from the footer
 - [x] `/dp/teachers` — separate DP leadership, teaching, and support portrait roster; `/myp/teachers` — connected MYP organisational chart only
 - [x] `/myp` — bespoke bilingual MYP page: asymmetric editorial layout, hero entrance + Ken Burns, interactive global-contexts chip selector, ATL skills accordion, eight-subject-group master-detail explorer, Personal Project + Service cards, admissions band

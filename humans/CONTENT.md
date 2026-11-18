@@ -33,7 +33,7 @@ cleared for public hosting; never upload confidential documents or unconsented p
 ## How to edit content
 
 1. **Open the admin panel** — go to `/keystatic/` on the live website or `http://localhost:4321/keystatic/` during development
-2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, Testimonials, or one of the four preparation collections (10 collections)
+2. **Choose a collection** — Subjects, News, Events, CAS Activities, TOK Materials, Testimonials, or one of the four preparation collections (10 collections). Under **Singletons**, **DP school fees** holds the single fees table.
 3. **Click an entry** to edit, or **"Create"** to add a new one
 4. **Fill in the fields** — use the form controls (text inputs, dropdowns, date pickers, rich text editor)
 5. **Save** — changes are committed to GitHub
@@ -170,6 +170,19 @@ for minors). Do not share a student's name, quote or photo without that consent.
 | `featured` | checkbox | no       | Reserved for the homepage strip when testimonials are restored              |
 | `sk`       | group    | no       | Slovak translation (role, quote)                                            |
 | `quote`    | textarea | yes      | The testimonial itself                                                      |
+
+### DP school fees (singleton, `src/content/dp-fees.json`)
+
+One entry — not a collection — shown as the **School fees** table on `/admissions` (EN + SK).
+
+| Field  | Type     | Required | Description                                                                                 |
+| ------ | -------- | -------- | ------------------------------------------------------------------------------------------- |
+| `rows` | list     | yes      | Table rows in display order: fee, optional details, DP1 and DP2 amounts, Slovak fee/details |
+| `note` | textarea | no       | Small print under the table                                                                 |
+| `pdf`  | file     | no       | Official fee sheet; adds a "Download the fee schedule (PDF)" link                           |
+| `sk`   | group    | no       | Slovak note                                                                                 |
+
+When the school sends a new fee schedule, change the amounts **and** upload the matching PDF in the same save, so the table and the download never disagree. Write amounts as `6 000 €` and use `—` when a fee does not apply. The section is hidden if the table has no rows.
 
 ## Language — English + Slovak
 

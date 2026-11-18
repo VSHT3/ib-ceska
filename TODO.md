@@ -111,10 +111,10 @@ Source: IB coordinator's proposed site map (top-level sections → sub-items). C
 
 The coordinator supplied the real PDFs (the old site had none — see below). Documents now live in `public/documents/` and are linked from the relevant pages:
 
-- `/admissions` — **School fees** rendered as an HTML table (updated 2026-11-09 from the coordinator's 2027–2028 fee schedule; DP1/DP2 columns, bilingual), plus a **Documents & forms** section grouped by programme: 2027–2028 IB DP Admissions Announcement, Informácie o prijímacom konaní, IB DP Application Form, Prihláška na prijímacie konanie, Pravidlá prijímania, and Course Selection Sheet (EN + SK) (IB DP group; replaced 2026-11-09); MYP Admissions Announcement (MYP group); Parent Handbook in English and Slovak.
+- `/admissions` — **School fees** table, CMS-managed since 2026-11-18 (Keystatic singleton **DP school fees**, `src/content/dp-fees.json`: bilingual rows, note, and the official fee-sheet PDF at `/documents/fees/pdf.pdf`; amounts updated 2026-11-18 from the coordinator's revised schedule: tuition 6 000 €, enrolment fee 600 €), plus a **Documents & forms** section grouped by programme: 2027–2028 IB DP Admissions Announcement, Informácie o prijímacom konaní, IB DP Application Form, Prihláška na prijímacie konanie, Pravidlá prijímania, and Course Selection Sheet (EN + SK) (IB DP group; replaced 2026-11-09); MYP Admissions Announcement (MYP group); Parent Handbook in English and Slovak.
 - `/myp` — **MYP guides for parents** section: MYP at Česká (short info, SK), MYP Parent Pack (official IB, EN).
-- Manifest: `src/data/documents.ts` (`admissionsDocuments`, `parentDocuments`, `mypDocuments`, `dpFees`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
-- Skipped per coordinator: `program comparison` (content already covered on the site). Fees PDF not hosted — rendered as HTML instead, per coordinator.
+- Manifest: `src/data/documents.ts` (`admissionsDocuments`, `parentDocuments`, `mypDocuments`). Component: `src/components/DocumentList.astro`. i18n strings added to `admissions` + `myp` blocks (EN + SK).
+- Skipped per coordinator: `program comparison` (content already covered on the site). Fees: the coordinator originally asked for HTML instead of a PDF; the HTML table stays primary and the fee-sheet PDF was added as a secondary download on 2026-11-18 (remove it in Keystatic if the school objects).
 
 Section → current coverage:
 

@@ -602,8 +602,7 @@ const dict = {
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Item',
-      feesNote:
-        'School fees are payable in three instalments. The entry fee applies only to students coming from outside Česká. Final IB exam fees are billed in DP2.',
+      feesPdf: 'Download the fee schedule (PDF)',
     },
     myp: {
       title: 'Middle Years Programme',
@@ -1400,8 +1399,7 @@ const dict = {
       feesDp1: 'DP1',
       feesDp2: 'DP2',
       feesItem: 'Položka',
-      feesNote:
-        'Školné sa platí v troch splátkach. Zápisné sa vzťahuje len na študentov prichádzajúcich z iných škôl. Poplatky za záverečné IB skúšky saúčtujú v DP2.',
+      feesPdf: 'Stiahnuť prehľad poplatkov (PDF)',
     },
     myp: {
       title: 'Middle Years Programme',
