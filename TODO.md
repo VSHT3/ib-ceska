@@ -9,7 +9,7 @@ Tasks the AI must complete. Checked = done.
 ## IB branding
 
 - [x] Add official IB brand colors as design tokens — IB corporate blue (`#004587`) + light blue (`#2FB4E9`) added to `@theme` in `global.css` as `--color-ib-blue` / `--color-ib-blue-light`. (Programme-specific PYP/MYP/DP hexes are not publicly published by the IB; not added.)
-- [x] Add official IB logos where authorized — `public/ib-logo.svg` (IB sphere mark) in the footer + homepage What-is-IB and `public/ib-dp-logo.png` on IB DP surfaces. MYP uses text-only branding until authorization.
+- [x] Add official IB logos where authorized — `public/ib-world-school-logo.svg` (IB World School logo; replaced the plain IB sphere mark at the IB coordinator's request, November 2026) in the footer + homepage What-is-IB and `public/ib-dp-logo.png` on IB DP surfaces. MYP uses text-only branding until authorization.
 - [x] Dedicated bilingual MYP subpage (`/myp`)
 - [x] Dedicated bilingual DP subpage (`/dp`)
 

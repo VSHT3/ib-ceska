@@ -92,6 +92,8 @@ The connected organisational chart belongs **only to `/myp/teachers`**; `/dp/tea
 
 MYP remains a **candidate programme**, with text-only branding and its candidate-school disclaimer; candidacy does not guarantee authorization. DP is authorized. Its logo, authorization statement, and certificate do not confer MYP authorization and must stay on DP surfaces.
 
+The general IB mark is the official **IB World School logo** (`public/ib-world-school-logo.svg`), shown unaltered in the footer and the homepage What-is-IB section. Do not recolour, crop, or redraw it or swap it for the plain IB sphere; on dark surfaces keep it on its white plate.
+
 Legacy locale-prefixed `/subjects`, `/cas`, `/tok`, `/ee`, `/build-your-diploma`, `/mission`, `/teachers`, and `/policies` are HTTP 301 redirects to `/dp` equivalents (including subject/CAS/TOK details). Query strings are preserved and unsupported locales are rejected. New navigation must target programme URLs directly.
 
 ## Styling rules

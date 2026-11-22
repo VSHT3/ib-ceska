@@ -95,7 +95,7 @@ Implemented features. Production deployment is verified separately.
 - [x] Responsive grid cards (1 → 2 → 3 columns)
 - [x] Emerald primary / stone neutral color palette
 - [x] Official IB brand colour tokens in `@theme` (`--color-ib-blue` #004587, `--color-ib-blue-light` #2FB4E9)
-- [x] Official IB sphere mark (`/ib-logo.svg`) in the footer and What-is-IB section; official IB DP banner (`/ib-dp-logo.png`) on DP surfaces. MYP uses text-only branding while the school is awaiting authorization.
+- [x] Official IB World School logo (`/ib-world-school-logo.svg`, trilingual vector matching the artwork the school supplied) in the footer and What-is-IB section; official IB DP banner (`/ib-dp-logo.png`) on DP surfaces. MYP uses text-only branding while the school is awaiting authorization.
 - [x] Source Serif 4 + Source Sans 3 superfamily, self-hosted, latin + latin-ext only (hand-declared `@font-face`, 284 KB shipped vs 1.1 MB from a wholesale import). Serif on `h1`/`h2`/`h3`/`blockquote`, sans for UI, labels and data
 - [x] Tailwind-only CSS (animation utilities live in `global.css`)
 - [x] Full-photo homepage hero with a slow one-shot settle + staggered fade-in entrance, CTAs
