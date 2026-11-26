@@ -73,7 +73,7 @@ Completion marks implementation; confirm production deployment separately.
 ## Security & access
 
 - [x] Keystatic Cloud mode deployed on `workers.dev`; owner confirmed CMS works. Old GitHub-mode `KEYSTATIC_*` Worker secrets removed on 2026-09-27.
-- [ ] Invite two teachers to Keystatic Cloud when ready; no GitHub accounts required.
+- [x] Invite two teachers to Keystatic Cloud; no GitHub accounts required.
 - [ ] GitHub App owner: revoke the exposed `IB Ceska CMS` client secret and remove its obsolete installation/callbacks in GitHub. Deleting Worker secrets did not revoke this credential.
 - [ ] Optionally gate `/keystatic/` (and any CMS API paths still used) on each editor-facing origin behind Cloudflare Access, using the same approved individual email addresses. Keep public pages accessible and test the full sign-in flow.
 
@@ -87,7 +87,7 @@ The site is live at `https://ib.gymnaziumceska.sk`; remaining items are operatio
 - [x] Existing GitHub login + Save and automatic rebuild were verified on `https://ib-ceska.vsht.workers.dev` before migration.
 - [x] Enable SaaS on `morumori.com`, set an Active originless fallback, create `ib-ceska.morumori.com` as the CNAME target, and route `*/*` to `ib-ceska`. More-specific routes preserve `analytics.morumori.com/*` and the `morumori.com` studio site; all three were checked after the changes.
 - [x] `ib.gymnaziumceska.sk` now CNAMEs to `ib-ceska.morumori.com`. The Cloudflare for SaaS hostname and certificate are Active using automatic HTTP validation, with no school TXT records required. Both localized homepages and the CMS sign-in screen load over HTTPS.
-- [ ] Add the school hostname to Keystatic Cloud's allowed URLs if needed, then verify an authenticated login and Save from `/keystatic/` on the school origin.
+- [x] Add the school hostname to Keystatic Cloud's allowed URLs, then verify an authenticated login and Save from `/keystatic/` on the school origin.
 - [ ] Provide a professional contact email if the existing `ib@gymnaziumceska.sk` is not the intended address.
 
 ## DX

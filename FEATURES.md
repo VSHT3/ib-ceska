@@ -134,7 +134,7 @@ Implemented features. Production deployment is verified separately.
 
 ## Deployment
 
-- [x] Keystatic Cloud production CMS (`ib-ceska/ib-ceska`) is deployed; the owner confirmed editing on `workers.dev`. The school-hostname login/Save path still needs an authenticated check.
+- [x] Keystatic Cloud production CMS (`ib-ceska/ib-ceska`) is deployed; the owner confirmed editing on `workers.dev` and an authenticated login and Save on the school hostname.
 - [x] Cloudflare Workers deployment at `ib.gymnaziumceska.sk` via the `morumori.com` Cloudflare for SaaS zone; originless fallback, Worker routing, and automatic HTTP-validated TLS are active. The zone routes preserve the studio site and analytics.
 - [x] Umami analytics and session replays from `analytics.morumori.com`, loaded only in production builds; CTA, PDF, phone and email clicks tracked via `data-umami-event` attributes
 

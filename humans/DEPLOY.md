@@ -54,9 +54,8 @@ The Cloudflare adapter provisions an `ASSETS` binding for the static site and a 
 
 The school hostname serves both `/en/` and `/sk/` over HTTPS. The Cloudflare
 for SaaS custom hostname and certificate became **Active** on 2026-09-28
-after automatic HTTP validation. `/keystatic/` displays Keystatic Cloud
-sign-in, but authenticated login and Save on the school hostname have **not**
-been verified; the owner confirmed CMS editing on `workers.dev`.
+after automatic HTTP validation. The owner confirmed an authenticated Keystatic
+Cloud login and Save on both the school hostname and `workers.dev`.
 
 After changing the hostname or Worker routes, check public pages, images,
 documents, the CMS, `analytics.morumori.com/script.js` and `/recorder.js`, and `morumori.com`.
@@ -143,13 +142,10 @@ Opening a collection or saving can fail on plain HTTP. Cloudflare serves HTTPS f
 
 ## Verification boundary and rollback
 
-The owner confirmed Keystatic Cloud editing on `workers.dev`. The public
-school-origin pages and CMS sign-in screen load, but an **authenticated**
-login and Save from `https://ib.gymnaziumceska.sk/keystatic/` remain to be
-verified. If Cloud rejects the new origin, add
-`https://ib.gymnaziumceska.sk` to project `ib-ceska/ib-ceska`'s allowed URLs,
-retaining the `workers.dev` URL. Verify the resulting commit to `main` and
-automatic rebuild before onboarding editors there.
+The owner confirmed authenticated Keystatic Cloud login and Save on both
+`workers.dev` and `https://ib.gymnaziumceska.sk/keystatic/`. Keep both URLs in
+project `ib-ceska/ib-ceska`'s allowed URLs. If an origin change is made,
+re-verify a Save, the resulting commit to `main`, and the automatic rebuild.
 
 If the school hostname fails, the authorized Websupport DNS administrator
 can restore **only** its previous `ib` CNAME (`sites.framer.app`) while the

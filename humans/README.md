@@ -46,8 +46,7 @@ New to this? Start with the step-by-step [`TUTORIAL.md`](TUTORIAL.md). Full fiel
 - The site owner connects Keystatic Cloud to the GitHub repository once. The
   repository remains the source of content and each Save triggers a rebuild.
 - The live editor uses Keystatic Cloud, not the former GitHub App login. The
-  owner confirmed editing on `workers.dev`; login and Save should also be
-  checked on the school hostname before treating that origin as verified.
+  owner confirmed login and Save on both `workers.dev` and the school hostname.
 
 ## Succession — for whoever takes this over
 
