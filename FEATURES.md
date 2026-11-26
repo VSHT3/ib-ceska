@@ -8,7 +8,7 @@ Implemented features. Production deployment is verified separately.
 - [x] Tailwind CSS 4 via `@tailwindcss/vite` plugin (CSS-first config)
 - [x] MDX integration (`@astrojs/mdx`)
 - [x] Strict TypeScript (`astro/tsconfigs/strict`)
-- [x] Node >= 22.12.0 engine requirement
+- [x] Node >= 22.23.4 engine requirement
 - [x] Git + GitHub repo with topics and description
 
 ## CMS — Keystatic

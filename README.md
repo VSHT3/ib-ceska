@@ -4,7 +4,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss)](https://tailwindcss.com)
 [![Keystatic](https://img.shields.io/badge/CMS-Keystatic-6644ff)](https://keystatic.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?logo=typescript)](https://www.typescriptlang.org)
-[![Node](https://img.shields.io/badge/Node-%3E%3D22.12.0-339933?logo=nodedotjs)](https://nodejs.org)
+[![Node](https://img.shields.io/badge/Node-%3E%3D22.23.4-339933?logo=nodedotjs)](https://nodejs.org)
 
 Website for the **International Baccalaureate** (MYP & DP) at [Súkromné Gymnázium Česká](https://gymnaziumceska.sk) in Bratislava, Slovakia. Built with Astro in **hybrid mode**: pages are statically prerendered, and a Cloudflare Worker backs the Keystatic CMS admin routes.
 
@@ -62,7 +62,7 @@ pnpm run dev        # → localhost:4321  (CMS admin at /keystatic/)
 - **Keystatic CMS**: visual editor + Reader API. Content stored as `.mdoc` files
 - **MDX** (`@astrojs/mdx`): for `.astro` components that use JSX
 - **TypeScript**: strict mode via `astro/tsconfigs/strict`
-- **Node 22.12.0 or newer**
+- **Node 22.23.4 or newer**
 
 ## Content
 

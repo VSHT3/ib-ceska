@@ -60,7 +60,7 @@ The person who built this site is handing it off. If you are the new maintainer,
   - CMS schema (what fields each content type has): `keystatic.config.ts`.
   - Design tokens and styling rules: `src/styles/global.css` and [`DESIGN.md`](DESIGN.md).
 - **First steps as a developer**
-  1. Install Node ≥ 22.12.0, run `pnpm install`, then `pnpm run dev`.
+  1. Install Node ≥ 22.23.4, run `pnpm install`, then `pnpm run dev`.
   2. Read the root `AGENTS.md` — it lists the stack, commands, and easy-to-trip-on gotchas (e.g. content files are `.mdoc` not `.mdx`; Tailwind 4 has no config file).
   3. Run `pnpm run check` before committing; it type-checks the whole project.
 - **Keep these docs alive.** When you ship something, move it from `TODO.md` to `FEATURES.md` and update the relevant `humans/` file. The next person will thank you.
